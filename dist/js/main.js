@@ -12,7 +12,6 @@
         var item = this.closest('.faq-item, .faq-item-dark');
         if (!item) return;
         var isOpen = item.classList.contains('open');
-        // Close all in same container
         var parent = item.closest('.faq-list, .faq-grid, .faq-cols');
         var siblings = parent
           ? parent.querySelectorAll('.faq-item, .faq-item-dark')
@@ -25,7 +24,6 @@
         if (!isOpen) {
           item.classList.add('open');
           this.setAttribute('aria-expanded', 'true');
-          // Scroll into view on mobile
           if (window.innerWidth < 640) {
             setTimeout(function () {
               item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -79,13 +77,22 @@
     els.forEach(function (el) { obs.observe(el); });
   }
 
-  /* ── QUOTE FORM BASIC VALIDATION ──────────────────────── */
+  /* ── NETLIFY FORM SUBMISSION ───────────────────────────── */
+  function encode(data) {
+    return Object.keys(data)
+      .map(function (key) {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+      })
+      .join('&');
+  }
+
   function initForms() {
-    document.querySelectorAll('.btn-submit, .btn-form, .btn-lead').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        var form = this.closest('form, .quote-card, .lead-form-card, .lead-strip');
-        if (!form) return;
-        var inputs = form.querySelectorAll('input[type="email"], input[type="text"][required]');
+    document.querySelectorAll('form[data-netlify="true"]').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Validate required fields
+        var inputs = form.querySelectorAll('input[required], textarea[required]');
         var valid = true;
         inputs.forEach(function (inp) {
           if (!inp.value.trim()) {
@@ -94,15 +101,38 @@
             setTimeout(function () { inp.style.borderColor = ''; }, 2000);
           }
         });
-        if (valid && !this.dataset.submitting) {
-          var orig = this.textContent;
-          this.textContent = 'Sending…';
-          this.dataset.submitting = '1';
-          setTimeout(function () {
+        if (!valid) return;
+
+        var btn = form.querySelector('.btn-submit, .btn-lead');
+        if (!btn || btn.dataset.submitting) return;
+        btn.dataset.submitting = '1';
+        var origText = btn.textContent;
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+
+        // Collect form data
+        var data = { 'form-name': form.getAttribute('name') };
+        var formData = new FormData(form);
+        formData.forEach(function (val, key) { data[key] = val; });
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(data)
+        })
+          .then(function () {
             btn.textContent = '✓ Sent! We\'ll be in touch soon.';
             btn.style.background = '#1A6B4A';
-          }, 1200);
-        }
+            form.querySelectorAll('input:not([type="hidden"]), textarea, select').forEach(function (el) {
+              el.value = el.tagName === 'SELECT' ? el.options[0].value : '';
+            });
+          })
+          .catch(function () {
+            btn.textContent = origText;
+            btn.disabled = false;
+            delete btn.dataset.submitting;
+            alert('Something went wrong. Please email us directly at sales@taikatranslations.com');
+          });
       });
     });
   }
@@ -111,7 +141,6 @@
   function initTicker() {
     var track = document.querySelector('.ticker-track');
     if (!track) return;
-    // CSS handles the animation; this just ensures loop reset
   }
 
   /* ── STICKY NAV SCROLL CLASS ───────────────────────────── */

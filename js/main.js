@@ -91,7 +91,6 @@
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Validate required fields
         var inputs = form.querySelectorAll('input[required], textarea[required]');
         var valid = true;
         inputs.forEach(function (inp) {
@@ -110,10 +109,8 @@
         btn.textContent = 'Sending…';
         btn.disabled = true;
 
-        // Collect form data
         var data = { 'form-name': form.getAttribute('name') };
-        var formData = new FormData(form);
-        formData.forEach(function (val, key) { data[key] = val; });
+        new FormData(form).forEach(function (val, key) { data[key] = val; });
 
         fetch('/', {
           method: 'POST',
@@ -121,38 +118,45 @@
           body: encode(data)
         })
           .then(function () {
-            btn.textContent = '✓ Sent! We\'ll be in touch soon.';
+            // Trigger download if form has a data-download attribute
+            var downloadUrl = form.getAttribute('data-download');
+            if (downloadUrl) {
+              var a = document.createElement('a');
+              a.href = downloadUrl;
+              a.download = downloadUrl.split('/').pop();
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              btn.textContent = '✓ Downloading now!';
+            } else {
+              btn.textContent = '✓ Sent! We\'ll be in touch soon.';
+            }
             btn.style.background = '#1A6B4A';
             form.querySelectorAll('input:not([type="hidden"]), textarea, select').forEach(function (el) {
-              el.value = el.tagName === 'SELECT' ? el.options[0].value : '';
+              if (el.tagName === 'SELECT') { el.selectedIndex = 0; } else { el.value = ''; }
             });
           })
           .catch(function () {
             btn.textContent = origText;
             btn.disabled = false;
             delete btn.dataset.submitting;
-            alert('Something went wrong. Please email us directly at sales@taikatranslations.com');
+            alert('Something went wrong. Please email us at sales@taikatranslations.com');
           });
       });
     });
   }
 
-  /* ── LANGUAGE TICKER (homepage) ────────────────────────── */
+  /* ── LANGUAGE TICKER ───────────────────────────────────── */
   function initTicker() {
-    var track = document.querySelector('.ticker-track');
-    if (!track) return;
+    // CSS handles animation
   }
 
-  /* ── STICKY NAV SCROLL CLASS ───────────────────────────── */
+  /* ── STICKY NAV SHADOW ─────────────────────────────────── */
   function initNavScroll() {
     var nav = document.querySelector('.site-nav');
     if (!nav) return;
     window.addEventListener('scroll', function () {
-      if (window.scrollY > 40) {
-        nav.style.boxShadow = '0 2px 24px rgba(0,0,0,0.3)';
-      } else {
-        nav.style.boxShadow = '';
-      }
+      nav.style.boxShadow = window.scrollY > 40 ? '0 2px 24px rgba(0,0,0,0.3)' : '';
     }, { passive: true });
   }
 

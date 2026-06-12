@@ -1,7 +1,7 @@
 # Language Access Hub
 ## Powered by Taika Translations LLC + TVPTeam
 
-> Language Access Hub (languageaccesshub.com) is a comprehensive online resource for language access compliance, digital accessibility, and related services for U.S. government agencies, school districts, healthcare organizations, and nonprofits. It is operated by Taika Translations LLC and TVPTeam, both veteran-owned (VOSB), SBA-certified companies based in Austin, Texas.
+> Language Access Hub (teamtaika.com) is a comprehensive online resource for language access compliance, digital accessibility, and related services for U.S. government agencies, school districts, healthcare organizations, and nonprofits. It is operated by Taika Translations LLC and TVPTeam, both veteran-owned (VOSB), SBA-certified companies based in Austin, Texas.
 
 ---
 
@@ -107,6 +107,6 @@ State-specific pages at `/pages/states/[state-slug].html` for all 50 states, inc
 
 ## Contact
 
-Website: https://languageaccesshub.com
+Website: https://teamtaika.com
 Parent company: https://www.taikatranslations.com
 AI automation division: https://www.tvpteam.com

@@ -1,5 +1,5 @@
 # Language Access Hub — robots.txt
-# languageaccesshub.com
+# teamtaika.com
 
 User-agent: *
 Allow: /
@@ -36,4 +36,4 @@ User-agent: Googlebot
 Allow: /
 
 # Sitemap
-Sitemap: https://languageaccesshub.com/sitemap.xml
+Sitemap: https://teamtaika.com/sitemap.xml

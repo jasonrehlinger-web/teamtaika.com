@@ -1041,16 +1041,14 @@ window.tkaUnlockReport=function(){
     div+nl+'Standards: Section 508 · ADA · WCAG 2.2 (A/AA)'+nl+
     'Source: taikatranslations.com/pdf-accessibility-checker';
 
-  fetch('/',{
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:new URLSearchParams({
-      'form-name':'pdf-checker-lead',
-      'firstname':fname,'lastname':lname,
-      'email':email,'phone':phone,
-      'company':company,'message':msg
-    }).toString()
-  }).then(revealReport).catch(function(e){console.warn('Submit:',e);revealReport()});
+  fetch('https://api.hsforms.com/submissions/v3/integration/submit/'+HS_PORTAL_ID+'/'+HS_FORM_GUID,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({fields:[
+      {name:'firstname',value:fname},{name:'lastname',value:lname},
+      {name:'email',value:email},{name:'phone',value:phone},
+      {name:'company',value:company},{name:'message',value:msg}
+    ],context:{pageUri:window.location.href,pageName:document.title}})
+  }).then(revealReport).catch(function(e){console.warn('HubSpot:',e);revealReport()});
 };
 
 function revealReport(){

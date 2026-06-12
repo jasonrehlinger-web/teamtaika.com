@@ -98,11 +98,12 @@
       <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
-          <form name="industry-inquiry" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="industry-inquiry">
-            <input type="hidden" name="bot-field" style="display:none">
-            <div class="quote-card-title">School district inquiry</div>
+<div class="quote-card-title">School district inquiry</div>
           <p class="quote-card-sub">Tell us about your district and language needs. We respond within 2 hours.</p>
+          
+          <form name="industry-inquiry" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="industry-inquiry">
+          <input type="hidden" name="bot-field" style="display:none">
           <div class="field"><label class="label" for="sd-service">Services needed</label>
           <select class="select" id="sd-service" name="sd_service"><option>IEP / 504 meeting interpretation</option><option>Parent notice translation</option><option>Enrollment materials translation</option><option>Document translation (general)</option><option>Section 508 PDF remediation</option><option>Website accessibility audit</option><option>Multiple services</option></select></div>
           <div class="field"><label class="label" for="sd-size">District size</label>
@@ -111,7 +112,9 @@
           <select class="select" id="sd-lang" name="sd_lang"><option>Spanish (primary)</option><option>Spanish + Vietnamese</option><option>Spanish + Chinese/Mandarin</option><option>Spanish + Arabic</option><option>Spanish + Somali</option><option>Multiple / complex language mix</option><option>Not sure — need assessment</option></select></div>
           <div class="field"><label class="label" for="sd-email">Work email</label><input class="input" type="email" id="sd-email" name="sd_email" placeholder="you@district.edu" required></div>
           <button class="btn-submit" type="button">Submit District Inquiry →</button>
-          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>FERPA compliant · NASPO contracts available</div>
+          </form>
+          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>FERPA compliant · NASPO contracts available
+          </div>
         </div>
       </div>
     </div>
@@ -198,13 +201,16 @@
   <div class="lead-strip-title">Free: School District Language Access Compliance Checklist</div>
   <p class="lead-strip-sub">Covers every IDEA, FERPA, Title III, Section 508, and ADA obligation for K–12 districts — with a practical action checklist for compliance officers and program directors.</p>
 </div><div class="lead-strip-form">
+
 <form name="checklist" data-netlify="true" netlify-honeypot="bot-field" data-download="assets/downloads/language-access-compliance-checklist.pdf">
-  <input type="hidden" name="form-name" value="checklist">
-  <input type="hidden" name="bot-field" style="display:none">
-  <label class="sr-only" for="sl-email">Email</label>
+<input type="hidden" name="form-name" value="checklist">
+<input type="hidden" name="bot-field" style="display:none">
+<label class="sr-only" for="sl-email">Email</label>
   <input class="lead-strip-input" type="email" id="sl-email" name="email" placeholder="you@district.edu">
   <button class="btn-lead" type="button">Get Free Checklist</button>
 </form>
+
+
 </div></div></div></section>
 
 <div class="cta-band"><div class="cta-band-inner">

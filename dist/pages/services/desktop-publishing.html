@@ -96,11 +96,12 @@
       <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
-          <form name="service-quote" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="service-quote">
-            <input type="hidden" name="bot-field" style="display:none">
-            <div class="quote-card-title">Get your DTP quote</div>
+<div class="quote-card-title">Get your DTP quote</div>
           <p class="quote-card-sub">Describe your document and we'll quote within 4 hours.</p>
+          
+          <form name="service-quote" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="service-quote">
+          <input type="hidden" name="bot-field" style="display:none">
           <div class="field"><label class="label" for="d-type">Document type</label>
           <select class="select" id="d-type" name="d_type"><option>Brochure / flyer</option><option>Annual report</option><option>Government form</option><option>Parent / community guide</option><option>Newsletter</option><option>Signage / poster</option><option>Multi-page booklet</option><option>Other</option></select></div>
           <div class="field"><label class="label" for="d-lang">Target language(s)</label>
@@ -112,7 +113,9 @@
           </div>
           <div class="field"><label class="label" for="d-email">Work email</label><input class="input" type="email" id="d-email" name="d_email" placeholder="you@agency.gov" required></div>
           <button class="btn-submit" type="button">Request DTP Quote →</button>
-          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>All output can be Section 508 / PDF/UA compliant</div>
+          </form>
+          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>All output can be Section 508 / PDF/UA compliant
+          </div>
         </div>
       </div>
     </div>

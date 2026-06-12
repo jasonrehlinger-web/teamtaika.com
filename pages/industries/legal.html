@@ -38,11 +38,12 @@
       <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
-          <form name="industry-inquiry" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="industry-inquiry">
-            <input type="hidden" name="bot-field" style="display:none">
-            <div class="quote-card-title">Legal services inquiry</div>
+<div class="quote-card-title">Legal services inquiry</div>
           <p class="quote-card-sub">Describe your case or matter. We respond within 2 hours with a quote and interpreter/translator credentials.</p>
+          
+          <form name="industry-inquiry" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="industry-inquiry">
+          <input type="hidden" name="bot-field" style="display:none">
           <div class="field"><label class="label" for="l-type">Matter type</label>
           <select class="select" id="l-type" name="l_type"><option>Deposition / examination under oath</option><option>Court hearing or trial</option><option>Document translation (contracts/records)</option><option>Immigration / USCIS document</option><option>Attorney-client meeting</option><option>Arbitration</option><option>Legal aid / public defender</option></select></div>
           <div class="field"><label class="label" for="l-lang">Language</label>
@@ -54,7 +55,9 @@
           </div>
           <div class="field"><label class="label" for="l-email">Attorney or court email</label><input class="input" type="email" id="l-email" name="l_email" placeholder="you@lawfirm.com" required></div>
           <button class="btn-submit" type="button">Submit Legal Request →</button>
-          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Confidentiality guaranteed · NDA available</div>
+          </form>
+          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Confidentiality guaranteed · NDA available
+          </div>
         </div>
       </div>
     </div>

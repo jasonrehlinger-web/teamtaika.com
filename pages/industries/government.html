@@ -38,11 +38,12 @@
       <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
-          <form name="industry-inquiry" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="industry-inquiry">
-            <input type="hidden" name="bot-field" style="display:none">
-            <div class="quote-card-title">Government agency inquiry</div>
+<div class="quote-card-title">Government agency inquiry</div>
           <p class="quote-card-sub">Tell us about your agency and language access needs. We'll confirm your contract vehicle and respond within 2 hours.</p>
+          
+          <form name="industry-inquiry" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="industry-inquiry">
+          <input type="hidden" name="bot-field" style="display:none">
           <div class="field"><label class="label" for="g-level">Agency level</label>
           <select class="select" id="g-level" name="level"><option>Federal agency</option><option>State agency</option><option>County agency</option><option>City / municipal agency</option><option>Special district / authority</option></select></div>
           <div class="field"><label class="label" for="g-service">Services needed</label>
@@ -51,7 +52,9 @@
           <select class="select" id="g-vehicle" name="vehicle"><option>GSA Schedule</option><option>NASPO ValuePoint</option><option>Not sure — help me find one</option><option>Direct purchase / P-card</option></select></div>
           <div class="field"><label class="label" for="g-email">Work email (.gov)</label><input class="input" type="email" id="g-email" name="email" placeholder="you@agency.gov" required></div>
           <button class="btn-submit" type="button">Submit Agency Inquiry →</button>
-          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>GSA &amp; NASPO contracts active · Same-day confirmation</div>
+          </form>
+          <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>GSA &amp; NASPO contracts active · Same-day confirmation
+          </div>
         </div>
       </div>
     </div>
@@ -125,13 +128,16 @@
   <div class="lead-strip-title">Download the Government Language Access Compliance Checklist</div>
   <p class="lead-strip-sub">A regulation-by-regulation guide covering Title VI, EO 13166, Section 508, ADA Title II, and more — with a vendor evaluation checklist for procurement teams.</p>
 </div><div class="lead-strip-form">
+
 <form name="checklist" data-netlify="true" netlify-honeypot="bot-field" data-download="assets/downloads/language-access-compliance-checklist.pdf">
-  <input type="hidden" name="form-name" value="checklist">
-  <input type="hidden" name="bot-field" style="display:none">
-  <label class="sr-only" for="gl-email">Email</label>
+<input type="hidden" name="form-name" value="checklist">
+<input type="hidden" name="bot-field" style="display:none">
+<label class="sr-only" for="gl-email">Email</label>
   <input class="lead-strip-input" type="email" id="gl-email" name="email" placeholder="your@agency.gov">
   <button class="btn-lead" type="button">Get Free Checklist</button>
 </form>
+
+
 </div></div></div></section>
 
 <div class="cta-band"><div class="cta-band-inner">

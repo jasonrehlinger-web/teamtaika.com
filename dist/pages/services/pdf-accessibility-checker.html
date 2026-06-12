@@ -92,6 +92,24 @@
 .new-scan-btn{background:transparent;border:2px solid var(--navy);color:var(--navy);padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:16px;}
 .new-scan-btn:hover{background:var(--navy);color:#fff;}
 
+/* Email Wall */
+.email-wall{display:none;margin-top:24px;}
+.email-wall.active{display:block;}
+.email-wall-inner{background:var(--navy-deep);border-radius:16px;padding:36px 32px;text-align:center;}
+.email-wall-preview{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;margin-bottom:24px;position:relative;overflow:hidden;}
+.email-wall-preview-blur{position:absolute;inset:0;backdrop-filter:blur(4px);background:rgba(13,31,60,0.6);}
+.email-wall-preview-rows{display:flex;flex-direction:column;gap:8px;}
+.email-wall-preview-row{height:12px;border-radius:3px;background:rgba(255,255,255,0.08);}
+.email-wall h3{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px;}
+.email-wall p{color:rgba(255,255,255,0.65);font-size:14px;line-height:1.6;margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto;}
+.email-wall-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:480px;margin:0 auto;}
+.email-wall-input{flex:1;min-width:220px;padding:12px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff;font-size:14px;outline:none;}
+.email-wall-input::placeholder{color:rgba(255,255,255,0.4);}
+.email-wall-input:focus{border-color:var(--gold);}
+.email-wall-submit{background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 24px;border-radius:8px;border:none;font-size:14px;cursor:pointer;white-space:nowrap;}
+.email-wall-submit:hover{opacity:0.9;}
+.email-wall-note{font-size:11px;color:rgba(255,255,255,0.3);margin-top:12px;}
+
 @media(max-width:768px){
   .checker-hero-inner{grid-template-columns:1fr;}
   .checker-trust-card{display:none;}
@@ -213,7 +231,16 @@
       <div class="file-limit" id="fileInfo"></div>
     </div>
 
-    <button class="audit-btn" id="auditBtn" disabled>
+    <!-- Netlify form for email wall (hidden) -->
+<form name="pdf-checker-lead" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+  <input type="hidden" name="form-name" value="pdf-checker-lead">
+  <input type="hidden" name="bot-field">
+  <input type="hidden" name="filename" id="hw-filename">
+  <input type="email" name="email" id="hw-email-field">
+  <input type="hidden" name="checks-passed" id="hw-score">
+</form>
+
+<button class="audit-btn" id="auditBtn" disabled>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       Audit Document
     </button>
@@ -225,6 +252,30 @@
         <span id="scanFileLabel">Scanning…</span>
       </div>
       <ul class="scan-checks" id="scanChecks"></ul>
+    </div>
+
+    <!-- Email Wall -->
+    <div class="email-wall" id="emailWall">
+      <div class="email-wall-inner">
+        <div class="email-wall-preview">
+          <div class="email-wall-preview-rows">
+            <div class="email-wall-preview-row" style="width:60%"></div>
+            <div class="email-wall-preview-row" style="width:100%"></div>
+            <div class="email-wall-preview-row" style="width:80%"></div>
+            <div class="email-wall-preview-row" style="width:100%"></div>
+            <div class="email-wall-preview-row" style="width:70%"></div>
+          </div>
+          <div class="email-wall-preview-blur"></div>
+          <div style="position:relative;z-index:2;padding:12px 0 4px;color:rgba(255,255,255,0.5);font-size:12px;">Your report is ready ↓</div>
+        </div>
+        <h3>Your Compliance Report Is Ready</h3>
+        <p>Enter your work email to unlock the full pass/fail results with remediation guidance. We'll also send you a copy.</p>
+        <div class="email-wall-form">
+          <input class="email-wall-input" type="email" id="wallEmail" placeholder="your@agency.gov" required>
+          <button class="email-wall-submit" id="wallSubmit">Unlock My Report →</button>
+        </div>
+        <div class="email-wall-note">No spam. We may follow up about fixing any issues we found.</div>
+      </div>
     </div>
 
     <!-- Results Panel -->
@@ -601,9 +652,44 @@ async function runAudit(f) {
     return { pass: 'warn', value: 'Requires manual review' };
   });
 
-  // Show results
+  // Show email wall instead of results directly
   await delay(400);
-  showResults(results);
+  _pendingResults = results;
+  showEmailWall();
+}
+
+var _pendingResults = null;
+
+function showEmailWall() {
+  document.getElementById('emailWall').classList.add('active');
+  document.getElementById('emailWall').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.getElementById('wallSubmit').addEventListener('click', function() {
+  var email = document.getElementById('wallEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('wallEmail').style.borderColor = '#ef4444';
+    return;
+  }
+  var btn = this;
+  btn.textContent = 'Loading…';
+  btn.disabled = true;
+
+  // Submit to Netlify
+  var passed = _pendingResults ? Object.values(_pendingResults).filter(function(r){ return r.pass === true; }).length : 0;
+  var fname = document.getElementById('scanFileLabel') ? document.getElementById('scanFileLabel').textContent : '';
+  var formData = 'form-name=pdf-checker-lead&email=' + encodeURIComponent(email) +
+    '&filename=' + encodeURIComponent(fname) +
+    '&checks-passed=' + encodeURIComponent(passed + '/12');
+
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: formData
+  }).finally(function() {
+    document.getElementById('emailWall').classList.remove('active');
+    showResults(_pendingResults);
+  });
 }
 
 function showResults(results) {

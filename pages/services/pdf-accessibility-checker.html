@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8"><!-- v3 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free PDF Accessibility Checker | Section 508, ADA &amp; WCAG 2.2 | Language Access Hub</title>
 <meta name="description" content="Upload your PDF and get an instant Section 508, ADA, and WCAG 2.2 compliance audit. Free pass/fail report with certified remediation guidance. Veteran-owned. GSA &amp; NASPO contracted.">
@@ -114,6 +114,269 @@
   .checker-hero-inner{grid-template-columns:1fr;}
   .checker-trust-card{display:none;}
 }
+
+/* TKA TOOL STYLES */
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+/* print styles not needed — export uses popup window */
+
+/* ══════════════════════════════════════
+   SCREEN STYLES
+══════════════════════════════════════ */
+.tka-pdf-checker {
+  --bg:#f5f5f4;--sf:#ffffff;--s2:#f0f0ee;--s3:#e8e8e5;
+  --bd:#e0e0dc;--bd2:#d0d0cb;
+  --tx:#444444;--tx2:#878786;--tx3:#a8a8a6;
+  --grn:#0ea72c;--grn-d:rgba(14,167,44,.10);--grn-bg:rgba(14,167,44,.05);
+  --red:#e8453a;--red-d:rgba(232,69,58,.10);--red-bg:rgba(232,69,58,.04);
+  --ora:#fd7701;--ora-d:rgba(253,119,1,.10);--ora-bg:rgba(253,119,1,.05);
+  --yel:#fdc800;--yel-d:rgba(253,200,0,.12);
+  --dkgr:#444444;
+  --r:12px;--f:'Raleway',system-ui,sans-serif;--m:'IBM Plex Mono',monospace;
+  font-family:var(--f);color:var(--tx);line-height:1.5;
+  max-width:920px;margin:0 auto;padding:40px 24px 60px;
+  box-sizing:border-box;
+}
+.tka-pdf-checker *,.tka-pdf-checker *::before,.tka-pdf-checker *::after{box-sizing:border-box;margin:0;padding:0}
+
+.tka-pdf-checker .tka-hdr{text-align:center;margin-bottom:20px;animation:tkfu .55s ease-out;position:static !important;z-index:auto !important;width:auto !important;top:auto !important;left:auto !important;right:auto !important}
+.tka-pdf-checker .tka-tag{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--grn);background:var(--grn-d);border:1px solid rgba(14,167,44,.15);padding:5px 16px;border-radius:20px;margin-bottom:18px}
+.tka-pdf-checker .tka-tag svg{width:13px;height:13px}
+.tka-pdf-checker .tka-title{font-size:clamp(26px,4.5vw,40px) !important;font-weight:900 !important;letter-spacing:-.6px !important;line-height:1.1 !important;color:var(--dkgr) !important;margin:0 0 12px 0 !important;padding:0 !important;position:static !important;text-transform:none !important}
+.tka-pdf-checker .tka-title em{font-style:normal;color:var(--grn)}
+.tka-pdf-checker .sub{font-size:15px;color:var(--tx2);max-width:540px;margin:0 auto;font-weight:400}
+
+.tka-pdf-checker .dz-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:28px;margin-bottom:28px;animation:tkfu .55s ease-out .08s both;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tka-pdf-checker .dz{border:2px dashed var(--bd2);border-radius:10px;padding:48px 24px;text-align:center;cursor:pointer;transition:.25s;position:relative}
+.tka-pdf-checker .dz:hover,.tka-pdf-checker .dz.over{border-color:var(--grn);background:var(--grn-bg)}
+.tka-pdf-checker .dz-ico{width:56px;height:56px;background:var(--grn-d);border:1px solid rgba(14,167,44,.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;transition:.25s}
+.tka-pdf-checker .dz:hover .dz-ico{transform:translateY(-2px);border-color:var(--grn)}
+.tka-pdf-checker .dz-ico svg{width:26px;height:26px;color:var(--grn)}
+.tka-pdf-checker .dz-t{font-size:16px;font-weight:700;color:var(--tx);margin-bottom:6px}
+.tka-pdf-checker .dz-h{font-size:13px;color:var(--tx3)}.tka-pdf-checker .dz-h strong{color:var(--grn);cursor:pointer;font-weight:700}
+.tka-pdf-checker .dz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.tka-pdf-checker .fp{display:none;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;margin-top:16px}
+.tka-pdf-checker .fp.vis{display:flex}
+.tka-pdf-checker .fp-i{width:38px;height:38px;background:var(--red-d);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tka-pdf-checker .fp-i svg{width:18px;height:18px;color:var(--red)}
+.tka-pdf-checker .fp-inf{flex:1;min-width:0}
+.tka-pdf-checker .fp-n{font-size:13px;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tka-pdf-checker .fp-m{font-size:11px;color:var(--tx3);font-family:var(--m)}
+.tka-pdf-checker .fp-x{background:none;border:none;color:var(--tx3);cursor:pointer;padding:4px;border-radius:4px}.tka-pdf-checker .fp-x:hover{color:var(--red)}.tka-pdf-checker .fp-x svg{width:16px;height:16px}
+.tka-pdf-checker .sbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--grn);color:#fff;border:none;border-radius:8px;padding:15px;font-family:var(--f);font-size:15px;font-weight:800;letter-spacing:.3px;cursor:pointer;transition:.2s;margin-top:16px}
+.tka-pdf-checker .sbtn:hover{background:#0c9226;transform:translateY(-1px);box-shadow:0 4px 12px rgba(14,167,44,.25)}.tka-pdf-checker .sbtn:active{transform:translateY(0)}.tka-pdf-checker .sbtn:disabled{opacity:.5;cursor:not-allowed;transform:none}.tka-pdf-checker .sbtn svg{width:18px;height:18px}
+
+.tka-pdf-checker .pp{display:none;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:24px;margin-bottom:28px;animation:tkfu .4s ease-out;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tka-pdf-checker .pp.on{display:block}
+.tka-pdf-checker .pt{height:4px;background:var(--s3);border-radius:2px;overflow:hidden;margin-bottom:18px}
+.tka-pdf-checker .pf{height:100%;background:linear-gradient(90deg,var(--grn),#0ea72c);border-radius:2px;width:0%;transition:width .45s ease-out}
+.tka-pdf-checker .ps{display:flex;flex-direction:column;gap:7px}
+.tka-pdf-checker .pst{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--tx3);opacity:.4;transition:.3s}
+.tka-pdf-checker .pst.act{opacity:1;color:var(--tx)}.tka-pdf-checker .pst.dn{opacity:.55}
+.tka-pdf-checker .pst-d{width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.tka-pdf-checker .pst.dn .pst-d{color:var(--grn)}
+
+.tka-pdf-checker .res{display:none;animation:tkfu .5s ease-out}.tka-pdf-checker .res.vis{display:block}
+
+/* ═══ VERDICT HERO ═══ */
+.tka-pdf-checker .verdict-hero{border-radius:var(--r);padding:36px 32px;margin-bottom:22px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 140px;gap:28px;align-items:center}
+.tka-pdf-checker .verdict-hero.passed{background:linear-gradient(135deg,rgba(14,167,44,.05) 0%,#fff 65%);border:2px solid rgba(14,167,44,.2)}
+.tka-pdf-checker .verdict-hero.warned{background:linear-gradient(135deg,rgba(253,119,1,.05) 0%,#fff 65%);border:2px solid rgba(253,119,1,.2)}
+.tka-pdf-checker .verdict-hero.failed{background:linear-gradient(135deg,rgba(232,69,58,.05) 0%,#fff 65%);border:2px solid rgba(232,69,58,.18)}
+.tka-pdf-checker .vh-eyebrow{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px}
+.tka-pdf-checker .verdict-hero.passed .vh-eyebrow{color:var(--grn)}
+.tka-pdf-checker .verdict-hero.warned .vh-eyebrow{color:var(--ora)}
+.tka-pdf-checker .verdict-hero.failed .vh-eyebrow{color:var(--red)}
+.tka-pdf-checker .vh-title{font-size:clamp(18px,2.8vw,26px);font-weight:900;letter-spacing:-.4px;line-height:1.2;margin-bottom:10px;color:var(--dkgr)}
+.tka-pdf-checker .vh-narrative{font-size:14px;color:var(--tx2);line-height:1.65;margin-bottom:18px;max-width:500px}
+.tka-pdf-checker .vh-counts{display:flex;gap:22px;flex-wrap:wrap}
+.tka-pdf-checker .vc{display:flex;align-items:center;gap:8px}
+.tka-pdf-checker .vc-num{font-size:22px;font-weight:900;line-height:1}
+.tka-pdf-checker .vc-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--tx3)}
+.tka-pdf-checker .vh-right{text-align:center}
+.tka-pdf-checker .score-ring{position:relative;width:120px;height:120px;margin:0 auto}
+.tka-pdf-checker .score-ring svg{transform:rotate(-90deg);display:block}
+.tka-pdf-checker .ring-bg{fill:none;stroke:var(--s3);stroke-width:9}
+.tka-pdf-checker .ring-fill{fill:none;stroke-width:9;stroke-linecap:round;transition:stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1)}
+.tka-pdf-checker .score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.tka-pdf-checker .score-num{font-size:26px;font-weight:900;line-height:1}
+.tka-pdf-checker .score-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-top:2px}
+.tka-pdf-checker .score-grade{font-size:13px;font-weight:800;margin-top:8px;letter-spacing:.5px}
+
+/* ── Unlock button inside hero ── */
+.tka-pdf-checker .vh-unlock-btn{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--grn);color:#fff;border:none;border-radius:8px;padding:12px 20px;font-family:var(--f);font-size:13.5px;font-weight:800;letter-spacing:.2px;cursor:pointer;transition:.2s}
+.tka-pdf-checker .vh-unlock-btn:hover{background:#0c9226;transform:translateY(-1px);box-shadow:0 4px 12px rgba(14,167,44,.25)}
+.tka-pdf-checker .vh-unlock-btn.hidden{display:none !important}
+
+.tka-pdf-checker .pdf-info{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 20px;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--tx2);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tka-pdf-checker .pdf-info strong{color:var(--tx);font-weight:700;margin-right:4px}
+
+/* ═══ ACCURACY NOTICE ═══ */
+.tka-pdf-checker .accuracy-notice{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;margin-bottom:22px;font-size:12.5px;color:var(--tx2);line-height:1.6}
+.tka-pdf-checker .accuracy-notice svg{width:16px;height:16px;color:var(--tx3);flex-shrink:0;margin-top:1px}
+.tka-pdf-checker .accuracy-notice strong{color:var(--tx);font-weight:700}
+.tka-pdf-checker .accuracy-notice a{color:var(--grn);text-decoration:none;font-weight:600}
+
+/* ═══ EXEC SUMMARY ═══ */
+.tka-pdf-checker .exec-summary{border-radius:var(--r);padding:22px 26px;margin-bottom:22px;border-left:4px solid}
+.tka-pdf-checker .exec-summary.sev-fail{background:var(--red-bg);border-color:var(--red)}
+.tka-pdf-checker .exec-summary.sev-warn{background:var(--ora-bg);border-color:var(--ora)}
+.tka-pdf-checker .exec-summary.sev-pass{background:var(--grn-bg);border-color:var(--grn)}
+.tka-pdf-checker .exec-summary-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.tka-pdf-checker .exec-summary.sev-fail .exec-summary-label{color:var(--red)}
+.tka-pdf-checker .exec-summary.sev-warn .exec-summary-label{color:var(--ora)}
+.tka-pdf-checker .exec-summary.sev-pass .exec-summary-label{color:var(--grn)}
+.tka-pdf-checker .exec-summary-text{font-size:14.5px;color:var(--tx);line-height:1.7;font-weight:500}
+.tka-pdf-checker .exec-summary-text strong{font-weight:800}
+
+/* ═══ PRIORITY FIX ═══ */
+.tka-pdf-checker .priority-fix{background:var(--sf);border:2px solid var(--red);border-radius:var(--r);padding:22px 24px;margin-bottom:22px;position:relative;overflow:hidden}
+.tka-pdf-checker .priority-fix::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--ora))}
+.tka-pdf-checker .pf-eyebrow{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:12px;line-height:1}
+.tka-pdf-checker .pf-title{font-size:16px;font-weight:900;color:var(--dkgr);margin-bottom:8px;letter-spacing:-.2px}
+.tka-pdf-checker .pf-impact{font-size:13.5px;color:var(--tx2);line-height:1.6;margin-bottom:14px}
+.tka-pdf-checker .pf-impact strong{color:var(--tx);font-weight:700}
+.tka-pdf-checker .pf-fix{display:flex;align-items:flex-start;gap:10px;background:var(--s2);border:1px solid var(--bd);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--tx2);line-height:1.55}
+.tka-pdf-checker .pf-fix-icon{width:20px;height:20px;background:var(--grn-d);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.tka-pdf-checker .pf-fix-icon svg{width:11px;height:11px;color:var(--grn)}
+.tka-pdf-checker .pf-effort{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;padding:3px 10px;border-radius:5px;margin-top:12px}
+.tka-pdf-checker .pf-effort.easy{background:var(--grn-d);color:var(--grn)}
+.tka-pdf-checker .pf-effort.medium{background:var(--ora-d);color:var(--ora)}
+.tka-pdf-checker .pf-effort.hard{background:var(--red-d);color:var(--red)}
+
+/* ═══ INLINE CTA ═══ */
+.tka-pdf-checker .inline-cta{display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);border-radius:var(--r);padding:22px 26px;margin-bottom:22px;text-decoration:none;transition:.25s}
+.tka-pdf-checker .inline-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.18)}
+.tka-pdf-checker .inline-cta-ico{width:48px;height:48px;background:rgba(14,167,44,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tka-pdf-checker .inline-cta-ico svg{width:22px;height:22px;color:var(--grn)}
+.tka-pdf-checker .inline-cta-body{flex:1}
+.tka-pdf-checker .inline-cta-label{font-size:15px;font-weight:900;color:#fff;margin-bottom:4px}
+.tka-pdf-checker .inline-cta-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.4}
+.tka-pdf-checker .inline-cta-arrow svg{width:20px;height:20px;color:var(--grn)}
+
+/* ═══ PRINT BUTTON ═══ */
+.tka-pdf-checker .print-bar{display:flex;align-items:center;justify-content:space-between;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 20px;margin-bottom:22px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tka-pdf-checker .print-bar-label{font-size:13px;font-weight:700;color:var(--tx)}
+.tka-pdf-checker .print-bar-sub{font-size:12px;color:var(--tx3);margin-top:2px}
+.tka-pdf-checker #tka-printBtn{display:inline-flex;align-items:center;gap:8px;background:var(--dkgr);color:#fff;border:none;border-radius:8px;padding:11px 20px;font-family:var(--f);font-size:13px;font-weight:800;cursor:pointer;transition:.2s;text-decoration:none;flex-shrink:0}
+.tka-pdf-checker #tka-printBtn:hover{background:#222;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.tka-pdf-checker #tka-printBtn svg{width:15px;height:15px}
+
+/* ═══ GATE ═══ */
+.tka-pdf-checker .tka-gate{background:linear-gradient(170deg,#fff 0%,var(--s2) 100%);border:2px solid var(--bd);border-radius:var(--r);padding:24px 32px 32px;margin-bottom:22px;text-align:center;position:relative;overflow:hidden;animation:tkfu .5s ease-out}
+.tka-pdf-checker .tka-gate::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--grn),var(--ora),var(--red))}
+.tka-pdf-checker .tka-gate-lock{width:52px;height:52px;background:var(--ora-d);border:2px solid rgba(253,119,1,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.tka-pdf-checker .tka-gate-lock svg{width:24px;height:24px;color:var(--ora)}
+.tka-pdf-checker .tka-gate-title{font-size:22px;font-weight:900;color:var(--dkgr);margin-bottom:6px;letter-spacing:-.3px}
+.tka-pdf-checker .tka-gate-sub{font-size:14px;color:var(--tx2);margin-bottom:24px;max-width:420px;margin-left:auto;margin-right:auto}
+.tka-pdf-checker .tka-gate-form{display:flex;flex-direction:column;gap:12px;max-width:400px;margin:0 auto}
+.tka-pdf-checker .tka-gate-row{display:flex;gap:12px}
+.tka-pdf-checker .tka-gate-form input{width:100%;padding:13px 16px;border:1px solid var(--bd2);border-radius:8px;font-family:var(--f);font-size:14px;color:var(--tx);background:var(--sf);outline:none;transition:.2s}
+.tka-pdf-checker .tka-gate-form input:focus{border-color:var(--grn);box-shadow:0 0 0 3px var(--grn-d)}
+.tka-pdf-checker .tka-gate-form input::placeholder{color:var(--tx3)}
+.tka-pdf-checker .tka-gate-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--grn);color:#fff;border:none;border-radius:8px;padding:15px;font-family:var(--f);font-size:15px;font-weight:800;letter-spacing:.3px;cursor:pointer;transition:.2s}
+.tka-pdf-checker .tka-gate-btn:hover{background:#0c9226;transform:translateY(-1px);box-shadow:0 4px 12px rgba(14,167,44,.25)}
+.tka-pdf-checker .tka-gate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.tka-pdf-checker .tka-gate-btn svg{width:18px;height:18px}
+.tka-pdf-checker .tka-gate-trust{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:var(--tx3);margin-top:8px}
+.tka-pdf-checker .tka-gate-trust svg{width:13px;height:13px;color:var(--grn)}
+.tka-pdf-checker .tka-gate-err{color:var(--red);font-size:12px;font-weight:600;margin-top:4px;display:none}
+
+/* ── Blurred preview ── */
+.tka-pdf-checker .tka-blurred{position:relative;max-height:120px;overflow:hidden;margin-bottom:0}
+.tka-pdf-checker .tka-blurred::after{content:'';position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,var(--bg) 90%);pointer-events:none}
+.tka-pdf-checker .tka-blurred .cat-section{filter:blur(4px);pointer-events:none;user-select:none}
+
+/* ═══ CATEGORIES ═══ */
+.tka-pdf-checker .cat-section{margin-bottom:10px}
+.tka-pdf-checker .cat-head{display:flex;align-items:center;gap:10px;padding:15px 18px;cursor:pointer;user-select:none;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tka-pdf-checker .cat-section.open .cat-head{border-radius:var(--r) var(--r) 0 0;border-bottom-color:transparent}
+.tka-pdf-checker .cat-head:hover{background:var(--s2)}
+.tka-pdf-checker .cat-arrow{width:18px;height:18px;color:var(--tx3);transition:transform .25s;flex-shrink:0}
+.tka-pdf-checker .cat-section.open .cat-arrow{transform:rotate(90deg)}
+.tka-pdf-checker .cat-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tka-pdf-checker .cat-ico svg{width:16px;height:16px}
+.tka-pdf-checker .cat-name{flex:1;font-size:14.5px;font-weight:800;letter-spacing:-.1px;color:var(--tx)}
+.tka-pdf-checker .cat-badges{display:flex;gap:5px}
+.tka-pdf-checker .cat-b{font-size:11px;font-weight:800;padding:3px 10px;border-radius:5px;font-family:var(--m);display:flex;align-items:center;gap:4px}
+.tka-pdf-checker .cat-b svg{width:11px;height:11px}
+.tka-pdf-checker .cat-b.pass{background:var(--grn-d);color:var(--grn)}
+.tka-pdf-checker .cat-b.fail{background:var(--red-d);color:var(--red)}
+.tka-pdf-checker .cat-b.warn{background:var(--ora-d);color:var(--ora)}
+.tka-pdf-checker .cat-body{display:none;background:var(--sf);border:1px solid var(--bd);border-top:none;border-radius:0 0 var(--r) var(--r);padding:6px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tka-pdf-checker .cat-section.open .cat-body{display:block}
+.tka-pdf-checker .iss{background:var(--s2);border:1px solid var(--bd);border-radius:8px;margin-bottom:4px;overflow:hidden;transition:.2s}
+.tka-pdf-checker .iss:last-child{margin-bottom:0}
+.tka-pdf-checker .iss:hover{border-color:var(--bd2)}
+.tka-pdf-checker .iss-head{display:flex;align-items:center;gap:11px;padding:14px 16px;cursor:pointer;user-select:none;flex-wrap:wrap}
+.tka-pdf-checker .sev{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.tka-pdf-checker .sev.fail{background:var(--red);box-shadow:0 0 8px var(--red-d)}
+.tka-pdf-checker .sev.warn{background:var(--ora);box-shadow:0 0 8px var(--ora-d)}
+.tka-pdf-checker .sev.pass{background:var(--grn);box-shadow:0 0 8px var(--grn-d)}
+.tka-pdf-checker .iss-status{font-size:10.5px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;padding:3px 11px;border-radius:5px;flex-shrink:0}
+.tka-pdf-checker .iss-status.pass{background:var(--grn-d);color:var(--grn)}
+.tka-pdf-checker .iss-status.fail{background:var(--red-d);color:var(--red)}
+.tka-pdf-checker .iss-status.warn{background:var(--ora-d);color:var(--ora)}
+.tka-pdf-checker .iss-title-wrap{flex:1;min-width:180px}
+.tka-pdf-checker .iss-title{font-size:13.5px;font-weight:700;color:var(--tx)}
+.tka-pdf-checker .iss-tag{font-size:10.5px;font-family:var(--m);font-weight:500;color:var(--tx3);background:var(--s3);padding:2px 8px;border-radius:4px;white-space:nowrap}
+.tka-pdf-checker .iss-effort{font-size:10px;font-weight:800;padding:2px 9px;border-radius:4px;white-space:nowrap;letter-spacing:.3px;flex-shrink:0}
+.tka-pdf-checker .iss-effort.easy{background:var(--grn-d);color:var(--grn)}
+.tka-pdf-checker .iss-effort.medium{background:var(--ora-d);color:var(--ora)}
+.tka-pdf-checker .iss-effort.hard{background:var(--red-d);color:var(--red)}
+.tka-pdf-checker .iss-effort.manual{background:var(--yel-d);color:#9a7200}
+.tka-pdf-checker .iss-chev{width:15px;height:15px;color:var(--tx3);transition:transform .2s;flex-shrink:0}
+.tka-pdf-checker .iss.open .iss-chev{transform:rotate(180deg)}
+.tka-pdf-checker .iss-detail{display:none;padding:0 16px 16px 42px;font-size:13px;line-height:1.7;color:var(--tx2)}
+.tka-pdf-checker .iss.open .iss-detail{display:block}
+.tka-pdf-checker .iss-detail strong{color:var(--tx);font-weight:700}
+.tka-pdf-checker .iss-rw{display:flex;align-items:flex-start;gap:10px;border-radius:7px;padding:10px 14px;margin-bottom:10px;font-size:12.5px;line-height:1.55;border:1px solid}
+.tka-pdf-checker .iss-rw.fail-type{background:var(--red-bg);border-color:var(--red-d);color:var(--tx)}
+.tka-pdf-checker .iss-rw.warn-type{background:var(--ora-bg);border-color:var(--ora-d);color:var(--tx)}
+.tka-pdf-checker .iss-rw.pass-type{background:var(--grn-bg);border-color:var(--grn-d);color:var(--tx)}
+.tka-pdf-checker .iss-rw svg{width:14px;height:14px;flex-shrink:0;margin-top:1px}
+.tka-pdf-checker .iss-rw.fail-type svg{color:var(--red)}
+.tka-pdf-checker .iss-rw.warn-type svg{color:var(--ora)}
+.tka-pdf-checker .iss-rw.pass-type svg{color:var(--grn)}
+/* verified badge */
+.tka-pdf-checker .iss-verified{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;color:var(--grn);background:var(--grn-d);padding:2px 8px;border-radius:4px;margin-bottom:8px}
+.tka-pdf-checker .iss-verified svg{width:11px;height:11px}
+.tka-pdf-checker .iss-508{display:inline-flex;align-items:center;gap:3px;font-family:var(--m);font-size:11px;font-weight:600;color:var(--ora);background:var(--ora-d);padding:2px 8px;border-radius:4px;margin-top:4px}
+.tka-pdf-checker .code-blk{background:var(--s3);border:1px solid var(--bd);border-radius:6px;padding:10px 14px;margin-top:8px;font-family:var(--m);font-size:12px;color:var(--ora);overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.tka-pdf-checker .fix-tip{background:var(--grn-bg);border-left:3px solid var(--grn);padding:10px 14px;margin-top:8px;border-radius:0 6px 6px 0;font-size:12.5px;color:var(--tx2);line-height:1.55}
+.tka-pdf-checker .fix-tip strong{color:var(--grn);font-weight:700}
+.tka-pdf-checker .wcag-link{display:inline-flex;align-items:center;gap:4px;font-family:var(--m);font-size:11px;font-weight:600;color:var(--grn);background:var(--grn-d);padding:2px 8px;border-radius:4px;margin-top:8px;text-decoration:none}
+.tka-pdf-checker .wcag-link:hover{text-decoration:underline}
+
+/* ═══ SERVICE CTAs ═══ */
+.tka-pdf-checker .tka-ctas{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;margin-bottom:10px}
+.tka-pdf-checker .tka-cta-card{background:var(--sf);border:2px solid var(--bd);border-radius:var(--r);padding:28px 24px;text-align:center;transition:.25s;text-decoration:none;display:block}
+.tka-pdf-checker .tka-cta-card:hover{border-color:var(--grn);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.tka-pdf-checker .tka-cta-ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.tka-pdf-checker .tka-cta-ico svg{width:24px;height:24px}
+.tka-pdf-checker .tka-cta-label{font-size:16px;font-weight:900;color:var(--dkgr);margin-bottom:6px;letter-spacing:-.2px}
+.tka-pdf-checker .tka-cta-desc{font-size:13px;color:var(--tx2);line-height:1.5;margin-bottom:14px}
+.tka-pdf-checker .tka-cta-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--f);font-size:13px;font-weight:800;padding:10px 22px;border-radius:7px;border:none;cursor:pointer;transition:.2s;text-decoration:none}
+.tka-pdf-checker .tka-cta-btn.primary{background:var(--grn);color:#fff}
+.tka-pdf-checker .tka-cta-btn.primary:hover{background:#0c9226}
+.tka-pdf-checker .tka-cta-btn.secondary{background:var(--s2);color:var(--tx);border:1px solid var(--bd)}
+.tka-pdf-checker .tka-cta-btn.secondary:hover{border-color:var(--grn);color:var(--grn)}
+.tka-pdf-checker .tka-cta-btn svg{width:14px;height:14px}
+.tka-pdf-checker .foot{text-align:center;margin-top:36px;padding-top:20px;border-top:1px solid var(--bd);font-size:11.5px;color:var(--tx3)}
+.tka-pdf-checker .foot a{color:var(--grn);text-decoration:none;font-weight:700}.tka-pdf-checker .foot a:hover{text-decoration:underline}
+
+@media(max-width:680px){
+  .tka-pdf-checker .verdict-hero{grid-template-columns:1fr}
+  .tka-pdf-checker .vh-right{display:flex;flex-direction:column;align-items:center;margin-top:4px}
+  .tka-pdf-checker .tka-gate-row,.tka-pdf-checker .tka-ctas{flex-direction:column;grid-template-columns:1fr}
+  .tka-pdf-checker .inline-cta{flex-direction:column;text-align:center}
+  .tka-pdf-checker .print-bar{flex-direction:column;gap:12px;text-align:center}
+}
+@keyframes tkfu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tksp{to{transform:rotate(360deg)}}
+.tka-pdf-checker .spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:tksp .55s linear infinite}
+
 </style>
 </head>
 <body>
@@ -211,6 +474,8 @@
 
   </div>
 </div>
+
+
 <!-- HERO -->
 <section class="checker-hero">
   <div class="checker-hero-inner">
@@ -240,142 +505,125 @@
 </section>
 
 <!-- TOOL -->
-<section class="tool-section">
-  <div class="tool-inner">
-    <div style="text-align:center;margin-bottom:32px;">
-      <div class="tool-kicker">📄 PDF Compliance Audit</div>
-      <div class="tool-heading">Upload a PDF to scan for Section 508, ADA, and WCAG 2.2 compliance.</div>
-      <div class="tool-subhead">Get a full pass/fail report with remediation guidance — free, instant, no account needed.</div>
-    </div>
+<section style="background:#f5f5f4;padding:48px 24px 64px;">
+  <div style="max-width:860px;margin:0 auto;">
+    <div class="tka-pdf-checker">
 
-    <!-- Upload Zone -->
-    <div class="upload-zone" id="uploadZone">
-      <input type="file" id="pdfInput" accept=".pdf" aria-label="Upload PDF file">
-      <div class="upload-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+<div class="tka-hdr">
+  <div class="tka-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF Compliance Audit</div>
+  <h2 class="sub" style="font-weight:800;font-size:clamp(15px,2vw,19px);color:#444444;max-width:520px;line-height:1.45;margin:0 auto">Upload a PDF to scan for Section 508, ADA, and WCAG 2.2 compliance. Get a full pass/fail report with remediation guidance.</h2>
+</div>
+
+<div class="dz-card">
+  <div class="dz" id="tka-dz">
+    <div class="dz-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+    <div class="dz-t">Drop your PDF here</div>
+    <div class="dz-h">or <strong>browse</strong> to select &middot; .pdf up to 50 MB</div>
+    <input type="file" id="tka-fi" accept=".pdf,application/pdf">
+  </div>
+  <div class="fp" id="tka-fp">
+    <div class="fp-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <div class="fp-inf"><div class="fp-n" id="tka-fn"></div><div class="fp-m" id="tka-fm"></div></div>
+    <button class="fp-x" onclick="tkaClrFile()" title="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  </div>
+  <button class="sbtn" id="tka-sb" onclick="tkaStartAudit()" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Audit Document
+  </button>
+</div>
+
+<div class="pp" id="tka-pp">
+  <div class="pt"><div class="pf" id="tka-pfl"></div></div>
+  <div class="ps">
+    <div class="pst" data-s="meta"><span class="pst-d">&#9675;</span>Reading PDF metadata &amp; structure</div>
+    <div class="pst" data-s="tags"><span class="pst-d">&#9675;</span>Checking tagged PDF &amp; reading order</div>
+    <div class="pst" data-s="text"><span class="pst-d">&#9675;</span>Analyzing text layer &amp; fonts</div>
+    <div class="pst" data-s="images"><span class="pst-d">&#9675;</span>Scanning images &amp; alt text attributes</div>
+    <div class="pst" data-s="forms"><span class="pst-d">&#9675;</span>Inspecting form fields &amp; link text</div>
+    <div class="pst" data-s="nav"><span class="pst-d">&#9675;</span>Validating bookmarks &amp; headings</div>
+    <div class="pst" data-s="contrast"><span class="pst-d">&#9675;</span>Evaluating contrast &amp; color usage</div>
+    <div class="pst" data-s="report"><span class="pst-d">&#9675;</span>Compiling compliance report</div>
+  </div>
+</div>
+
+<div class="res" id="tka-res">
+  <div id="tka-verdictHero"></div>
+  <div id="tka-execSummary"></div>
+  <div id="tka-priorityFix"></div>
+  <div id="tka-inlineCta"></div>
+  <div class="tka-blurred" id="tka-blurPreview"></div>
+
+  <div class="tka-gate" id="tka-gate">
+    <div class="tka-gate-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+    <div class="tka-gate-title">Unlock Your Full Report — Free</div>
+    <div class="tka-gate-sub">See every issue, WCAG reference, and step-by-step remediation guide. No cost, no commitment.</div>
+    <div class="tka-gate-form">
+      <div class="tka-gate-row">
+        <input type="text"  id="tka-gFname"   placeholder="First name *" required>
+        <input type="text"  id="tka-gLname"   placeholder="Last name">
       </div>
-      <div class="upload-title">Drop your PDF here</div>
-      <div class="upload-sub">or <strong>browse</strong> to select &nbsp;·&nbsp; .pdf up to 50 MB</div>
-      <div class="file-limit" id="fileInfo"></div>
+      <input type="email"  id="tka-gEmail"   placeholder="Work email *" required>
+      <input type="tel"    id="tka-gPhone"   placeholder="Phone number *" required>
+      <input type="text"   id="tka-gCompany" placeholder="Company (optional)">
+      <button class="tka-gate-btn" id="tka-gBtn" onclick="tkaUnlockReport()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        View Full Report
+      </button>
+      <div class="tka-gate-err" id="tka-gErr"></div>
+      <div class="tka-gate-trust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Your data is safe. No spam, ever.</div>
     </div>
+  </div>
 
-    <!-- Netlify form for email wall (hidden) -->
+  <!-- Print bar — shown after gate unlock -->
+  <div class="print-bar" id="tka-printBar" style="display:none">
+    <div>
+      <div class="print-bar-label">Save this report</div>
+      <div class="print-bar-sub">Download a PDF copy of your full audit results</div>
+    </div>
+    <button id="tka-printBtn" onclick="tkaPrint()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Download Report (PDF)
+    </button>
+  </div>
+
+  <!-- PDF info + accuracy notice shown only after unlock -->
+  <div class="pdf-info" id="tka-pdfInfo" style="display:none"></div>
+  <div id="tka-accuracyNotice"></div>
+
+  <div id="tka-catTree" style="display:none"></div>
+
+  <div class="tka-ctas" id="tka-ctas" style="display:none">
+    <a class="tka-cta-card" href="/pages/services/508-compliance.html" target="_blank" rel="noopener">
+      <div class="tka-cta-ico" style="background:var(--red-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+      <div class="tka-cta-label">PDF Remediation</div>
+      <div class="tka-cta-desc">We fix your PDF to meet Section 508, ADA, and WCAG 2.2 standards. Fast turnaround.</div>
+      <span class="tka-cta-btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Get a Free Quote</span>
+    </a>
+    <a class="tka-cta-card" href="/pages/services/508-compliance.html" target="_blank" rel="noopener">
+      <div class="tka-cta-ico" style="background:var(--grn-d)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--grn)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="tka-cta-label">Full Compliance Consulting</div>
+      <div class="tka-cta-desc">End-to-end audit, remediation, and team training for lasting compliance.</div>
+      <span class="tka-cta-btn secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Schedule a Call</span>
+    </a>
+  </div>
+</div>
+
+<div class="foot">Powered by <a href="https://teamtaika.com">Language Access Hub</a> &middot; [ the power to understand ]</div>
+</div>
+  </div>
+</section>
+
+<!-- Netlify form for email capture (hidden) -->
 <form name="pdf-checker-lead" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
   <input type="hidden" name="form-name" value="pdf-checker-lead">
   <input type="hidden" name="bot-field">
-  <input type="hidden" name="filename" id="hw-filename">
-  <input type="email" name="email" id="hw-email-field">
-  <input type="hidden" name="checks-passed" id="hw-score">
+  <input type="text" name="firstname">
+  <input type="text" name="lastname">
+  <input type="email" name="email">
+  <input type="tel" name="phone">
+  <input type="text" name="company">
+  <input type="text" name="message">
 </form>
 
-<button class="audit-btn" id="auditBtn" disabled>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      Audit Document
-    </button>
-
-    <!-- Scan Progress Panel -->
-    <div class="scan-panel" id="scanPanel">
-      <div class="scan-filename" id="scanFilename">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
-        <span id="scanFileLabel">Scanning…</span>
-      </div>
-      <ul class="scan-checks" id="scanChecks"></ul>
-    </div>
-
-    <!-- Email Wall -->
-    <div class="email-wall" id="emailWall">
-      <div class="email-wall-inner">
-        <div class="email-wall-preview">
-          <div class="email-wall-preview-rows">
-            <div class="email-wall-preview-row" style="width:60%"></div>
-            <div class="email-wall-preview-row" style="width:100%"></div>
-            <div class="email-wall-preview-row" style="width:80%"></div>
-            <div class="email-wall-preview-row" style="width:100%"></div>
-            <div class="email-wall-preview-row" style="width:70%"></div>
-          </div>
-          <div class="email-wall-preview-blur"></div>
-          <div style="position:relative;z-index:2;padding:12px 0 4px;color:rgba(255,255,255,0.5);font-size:12px;">Your report is ready ↓</div>
-        </div>
-        <h3>Your Compliance Report Is Ready</h3>
-        <p>Enter your work email to unlock the full pass/fail results with remediation guidance. We'll also send you a copy.</p>
-        <div class="email-wall-form">
-          <input class="email-wall-input" type="email" id="wallEmail" placeholder="your@agency.gov" required>
-          <button class="email-wall-submit" id="wallSubmit">Unlock My Report →</button>
-        </div>
-        <div class="email-wall-note">No spam. We may follow up about fixing any issues we found.</div>
-      </div>
-    </div>
-
-    <!-- Results Panel -->
-    <div class="results-panel" id="resultsPanel">
-      <div class="results-score">
-        <div class="results-score-num" id="scoreNum">0/12</div>
-        <div class="results-score-label">checks passed</div>
-        <div class="results-score-bar"><div class="results-score-fill" id="scoreFill" style="width:0%"></div></div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;" id="scoreMsg"></div>
-      </div>
-      <div class="results-grid" id="resultsGrid"></div>
-      <div class="results-cta">
-        <h3>Issues found? We fix PDFs for full compliance.</h3>
-        <p>Our certified specialists remediate PDFs to meet Section 508, ADA, and WCAG 2.2 requirements. Fast turnaround. GSA &amp; NASPO contract ordering available.</p>
-        <div class="results-cta-buttons">
-          <a href="/pages/services/508-compliance.html" class="btn-cta-gold">Fix My PDF →</a>
-          <a href="/index.html#quote" class="btn-cta-outline">Get a Free Quote</a>
-        </div>
-      </div>
-      <div style="text-align:center;">
-        <button class="new-scan-btn" id="newScanBtn">← Scan Another PDF</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section section-light" style="padding:60px 0;">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:40px;">
-      <span class="kicker">How It Works</span>
-      <h2 class="section-heading">What We Check</h2>
-      <p class="section-lead" style="max-width:600px;margin:0 auto;">Our scanner checks 12 accessibility criteria required under Section 508, ADA Title II, and WCAG 2.2 Level AA.</p>
-    </div>
-    <div class="grid-3" style="gap:24px;">
-      <div class="card" style="padding:24px;">
-        <div style="font-size:28px;margin-bottom:12px;">🏷️</div>
-        <h3 style="font-weight:700;font-size:15px;margin-bottom:8px;">Document Structure</h3>
-        <p style="font-size:13px;color:var(--slate);line-height:1.6;">Tagged PDF, reading order, heading hierarchy, bookmarks — the scaffolding screen readers rely on.</p>
-      </div>
-      <div class="card" style="padding:24px;">
-        <div style="font-size:28px;margin-bottom:12px;">🖼️</div>
-        <h3 style="font-weight:700;font-size:15px;margin-bottom:8px;">Content Accessibility</h3>
-        <p style="font-size:13px;color:var(--slate);line-height:1.6;">Alt text on images, selectable text layer, meaningful link text — what makes content understandable.</p>
-      </div>
-      <div class="card" style="padding:24px;">
-        <div style="font-size:28px;margin-bottom:12px;">📋</div>
-        <h3 style="font-weight:700;font-size:15px;margin-bottom:8px;">Metadata &amp; Forms</h3>
-        <p style="font-size:13px;color:var(--slate);line-height:1.6;">Document title, language, author, and form field labels — the invisible properties that matter for compliance.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BOTTOM CTA -->
-<div class="cta-band">
-  <div class="cta-band-inner">
-    <span class="cta-band-kicker">Section 508 · ADA Title II · WCAG 2.2 · GSA &amp; NASPO Contracted</span>
-    <h2>Need your PDFs professionally remediated?</h2>
-    <p class="cta-band-sub">We fix PDFs to meet full compliance requirements. Fast turnaround, certified specialists, and GSA/NASPO contract ordering available for government agencies.</p>
-    <div class="cta-band-buttons">
-      <a href="/pages/services/508-compliance.html" class="btn-primary btn-primary-lg">PDF Remediation Services →</a>
-      <a href="/index.html#quote" class="btn-secondary">Get a Free Quote</a>
-    </div>
-    <div class="cta-trust-items">
-      <span class="cta-trust-item">GSA &amp; NASPO contracted</span>
-      <span class="cta-trust-item">VOSB / SBA certified</span>
-      <span class="cta-trust-item">SAM registered</span>
-      <span class="cta-trust-item">5.0 Google rating</span>
-    </div>
-  </div>
-</div>
 
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
@@ -457,328 +705,733 @@
 <script src="../../js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-(function() {
-'use strict';
+(function(){
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+var selFile=null,pdfDoc=null,findings=[];
+var root=document.querySelector('.tka-pdf-checker');
 
-// Set PDF.js worker
-if (typeof pdfjsLib !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
+var HS_PORTAL_ID='47509323';
+var HS_FORM_GUID='a2c15341-e287-4b14-bc2c-ed20dc17acff';
 
-var CHECKS = [
-  { id:'title',    label:'Document Title',         cat:'Metadata',   wcag:'WCAG 2.4.2',   fail:'No title found in document properties. Screen reader users cannot identify the document.',    fix:'Add a descriptive title via File > Properties > Description in Adobe Acrobat.' },
-  { id:'language', label:'Language Declaration',    cat:'Metadata',   wcag:'WCAG 3.1.1',   fail:'Document language is not specified. Screen readers cannot select the correct voice.',         fix:'Set document language via File > Properties > Advanced > Reading Options.' },
-  { id:'tagged',   label:'Tagged PDF',              cat:'Structure',  wcag:'WCAG 1.3.1',   fail:'PDF is not tagged. Screen readers and assistive technology cannot interpret content structure.',fix:'Add accessibility tags using Acrobat Pro: Accessibility > Add Tags to Document.' },
-  { id:'text',     label:'Selectable Text',         cat:'Content',    wcag:'WCAG 1.4.5',   fail:'No selectable text detected. This PDF may be a scanned image — text is invisible to screen readers.', fix:'Run OCR (optical character recognition) to add a text layer to scanned pages.' },
-  { id:'alt',      label:'Image Alt Text',          cat:'Content',    wcag:'WCAG 1.1.1',   fail:'Images may lack alternative text. Non-decorative images must describe their content for screen readers.', fix:'Tag each figure and add /Alt attribute text in Acrobat Pro's Tags panel.' },
-  { id:'headings', label:'Heading Structure',       cat:'Structure',  wcag:'WCAG 1.3.1',   fail:'No heading tags detected. Users cannot navigate by headings — a core screen reader feature.', fix:'Apply heading tags (H1, H2, H3) to title and section headings using the Tags panel.' },
-  { id:'bookmarks',label:'Bookmarks / Outline',     cat:'Navigation', wcag:'WCAG 2.4.1',   fail:'No bookmarks found. Longer documents require bookmarks so users can navigate by section.',    fix:'Generate bookmarks via Acrobat Pro: View > Show/Hide > Navigation Panes > Bookmarks.' },
-  { id:'forms',    label:'Form Field Labels',       cat:'Forms',      wcag:'WCAG 1.3.1',   fail:'Form fields found without accessible labels. Screen reader users cannot identify what to enter.',fix:'Add tooltip text to each field via form field Properties > General > Tooltip.' },
-  { id:'links',    label:'Link Text',               cat:'Navigation', wcag:'WCAG 2.4.4',   fail:'Links may use non-descriptive text like "click here" or bare URLs.',                         fix:'Update link text to describe the destination. Use Link Properties in Acrobat Pro.' },
-  { id:'author',   label:'Document Author',         cat:'Metadata',   wcag:'Best Practice',fail:'Author metadata is missing.',                                                                  fix:'Add author name via File > Properties > Description > Author.' },
-  { id:'order',    label:'Reading Order',           cat:'Structure',  wcag:'WCAG 1.3.2',   fail:'Structure tags needed to confirm logical reading order.',                                      fix:'Use Acrobat Pro's Reading Order tool to verify and correct the tag sequence.' },
-  { id:'contrast', label:'Color Contrast',          cat:'Visual',     wcag:'WCAG 1.4.3',   fail:'Color contrast requires manual review — automated tools cannot reliably check PDF contrast.',  fix:'Use Adobe Acrobat's Accessibility Checker or Color Contrast Analyzer to verify 4.5:1 ratio.' },
+var SVG={
+  chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>',
+  pass:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>',
+  fail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 9v4"/><circle cx="12" cy="16" r=".5"/></svg>',
+  ext:'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+  alert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  wrench:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+};
+
+var CATS=[
+  {id:'structure', name:'Document Structure',     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>'},
+  {id:'content',   name:'Content Accessibility',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>'},
+  {id:'navigation',name:'Navigation & Wayfinding', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>'},
+  {id:'forms',     name:'Forms & Interaction',     icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>'},
+  {id:'metadata',  name:'Metadata & Conformance',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>'}
 ];
 
-var file = null;
-var pdfInput   = document.getElementById('pdfInput');
-var uploadZone = document.getElementById('uploadZone');
-var fileInfo   = document.getElementById('fileInfo');
-var auditBtn   = document.getElementById('auditBtn');
-var scanPanel  = document.getElementById('scanPanel');
-var scanChecks = document.getElementById('scanChecks');
-var scanFileLabel = document.getElementById('scanFileLabel');
-var resultsPanel = document.getElementById('resultsPanel');
-var resultsGrid = document.getElementById('resultsGrid');
-var scoreNum   = document.getElementById('scoreNum');
-var scoreFill  = document.getElementById('scoreFill');
-var scoreMsg   = document.getElementById('scoreMsg');
-var newScanBtn = document.getElementById('newScanBtn');
+var IMPACT={
+  'tagged':     {impact:'Screen readers cannot read this document at all — it is completely invisible to blind users.',                                  effort:'hard',  effortLabel:'Requires Acrobat Pro'},
+  'read-order': {impact:'Users navigating with a screen reader may encounter content in a scrambled or backwards sequence.',                             effort:'medium',effortLabel:'Acrobat Pro required'},
+  'text-layer': {impact:'This document is a scanned image. No assistive technology can access any of its content.',                                     effort:'hard',  effortLabel:'OCR + full remediation'},
+  'security':   {impact:'Security settings are actively blocking screen readers from reading this file.',                                               effort:'easy',  effortLabel:'Quick settings fix'},
+  'img-alt':    {impact:'Blind users will hear nothing when a screen reader reaches an image — no description, no context.',                            effort:'medium',effortLabel:'Manual tagging required'},
+  'contrast':   {impact:'Users with low vision or color blindness may struggle to read the text.',                                                      effort:'manual',effortLabel:'Manual visual check'},
+  'tables':     {impact:'Screen readers cannot convey table structure — data loses meaning without row and column headers.',                            effort:'manual',effortLabel:'Manual tag review'},
+  'bookmarks':  {impact:'Users cannot jump between sections — they must scroll the entire document linearly.',                                          effort:'easy',  effortLabel:'Quick fix in Acrobat'},
+  'tab-order':  {impact:'Keyboard-only users may tab through fields and links in a random, unpredictable order.',                                       effort:'easy',  effortLabel:'One-click fix per page'},
+  'links':      {impact:'Screen readers may announce links as raw URLs with no indication of where they lead.',                                         effort:'medium',effortLabel:'Manual link review'},
+  'form-fields':{impact:'Users with disabilities cannot fill in this form — fields are invisible to assistive technology.',                             effort:'hard',  effortLabel:'Full remediation needed'},
+  'doc-title':  {impact:'Screen readers announce the raw filename instead of the document title, confusing users.',                                     effort:'easy',  effortLabel:'30-second fix'},
+  'doc-lang':   {impact:'Screen readers apply the wrong language engine, causing mispronounced or garbled text.',                                       effort:'easy',  effortLabel:'30-second fix'},
+  'pdfua':      {impact:'The document has not been validated against the ISO gold standard for PDF accessibility.',                                     effort:'medium',effortLabel:'Preflight validation'}
+};
 
-// Drag & drop
-uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
-uploadZone.addEventListener('drop', function(e) {
-  e.preventDefault(); uploadZone.classList.remove('drag-over');
-  var f = e.dataTransfer.files[0];
-  if (f && f.type === 'application/pdf') setFile(f);
-});
+/* ── File handling ── */
+var dz=document.getElementById('tka-dz'),finp=document.getElementById('tka-fi');
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave',function(){dz.classList.remove('over')});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('over');var f=e.dataTransfer.files[0];if(f&&f.type==='application/pdf')pick(f)});
+finp.addEventListener('change',function(e){if(e.target.files[0])pick(e.target.files[0])});
+function pick(f){selFile=f;document.getElementById('tka-fn').textContent=f.name;document.getElementById('tka-fm').textContent=(f.size/1024/1024).toFixed(2)+' MB';document.getElementById('tka-fp').classList.add('vis');document.getElementById('tka-sb').disabled=false}
+window.tkaClrFile=function(){selFile=null;pdfDoc=null;finp.value='';document.getElementById('tka-fp').classList.remove('vis');document.getElementById('tka-sb').disabled=true;document.getElementById('tka-res').classList.remove('vis')};
 
-pdfInput.addEventListener('change', function() {
-  if (this.files[0]) setFile(this.files[0]);
-});
+/* ── Print / PDF export — isolated popup window ── */
+window.tkaPrint=function(){
+  var pi=window._tka_pi;
+  var date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-function setFile(f) {
-  file = f;
-  fileInfo.textContent = f.name + ' (' + (f.size / 1024 / 1024).toFixed(1) + ' MB)';
-  auditBtn.disabled = false;
-  auditBtn.textContent = 'Audit Document';
+  /* Collect category tree HTML (all sections open) */
+  var treeEl=document.getElementById('tka-catTree');
+  var treeHtml=treeEl?treeEl.innerHTML:'';
+
+  /* Collect hero + summary + priority fix HTML */
+  var heroHtml=document.getElementById('tka-verdictHero').innerHTML;
+  var execHtml=document.getElementById('tka-execSummary').innerHTML;
+  var pfHtml=document.getElementById('tka-priorityFix').innerHTML;
+  var pdfInfoHtml=document.getElementById('tka-pdfInfo').innerHTML;
+  var noticeHtml=document.getElementById('tka-accuracyNotice').innerHTML;
+
+  /* CSS variables and key styles inlined for the popup */
+  var css=`
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Raleway',system-ui,sans-serif;color:#444;line-height:1.5;background:#fff;padding:32px 40px 60px;max-width:860px;margin:0 auto;
+      -webkit-print-color-adjust:exact;print-color-adjust:exact}
+    :root{
+      --bg:#f5f5f4;--sf:#fff;--s2:#f0f0ee;--s3:#e8e8e5;--bd:#e0e0dc;--bd2:#d0d0cb;
+      --tx:#444;--tx2:#878786;--tx3:#a8a8a6;--r:10px;--m:'IBM Plex Mono',monospace;
+      --grn:#0ea72c;--grn-d:rgba(14,167,44,.10);--grn-bg:rgba(14,167,44,.05);
+      --red:#e8453a;--red-d:rgba(232,69,58,.10);--red-bg:rgba(232,69,58,.04);
+      --ora:#fd7701;--ora-d:rgba(253,119,1,.10);--ora-bg:rgba(253,119,1,.05);
+      --yel:#fdc800;--yel-d:rgba(253,200,0,.12);
+    }
+    /* Report header */
+    .rpt-hdr{border-bottom:2px solid #e0e0dc;padding-bottom:16px;margin-bottom:28px}
+    .rpt-hdr h1{font-size:22px;font-weight:900;color:#444;letter-spacing:-.3px}
+    .rpt-hdr p{font-size:12px;color:#878786;margin-top:4px}
+    /* Verdict hero */
+    .verdict-hero{border-radius:var(--r);padding:28px 24px;margin-bottom:18px;display:grid;grid-template-columns:1fr 120px;gap:24px;align-items:center}
+    .verdict-hero.passed{background:linear-gradient(135deg,rgba(14,167,44,.05) 0%,#fff 65%);border:2px solid rgba(14,167,44,.2)}
+    .verdict-hero.warned{background:linear-gradient(135deg,rgba(253,119,1,.05) 0%,#fff 65%);border:2px solid rgba(253,119,1,.2)}
+    .verdict-hero.failed{background:linear-gradient(135deg,rgba(232,69,58,.05) 0%,#fff 65%);border:2px solid rgba(232,69,58,.18)}
+    .vh-eyebrow{font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px}
+    .verdict-hero.passed .vh-eyebrow{color:var(--grn)}.verdict-hero.warned .vh-eyebrow{color:var(--ora)}.verdict-hero.failed .vh-eyebrow{color:var(--red)}
+    .vh-title{font-size:20px;font-weight:900;letter-spacing:-.3px;line-height:1.2;margin-bottom:8px;color:#444}
+    .vh-narrative{font-size:13px;color:#878786;line-height:1.6;margin-bottom:14px}
+    .vh-counts{display:flex;gap:18px;flex-wrap:wrap}
+    .vc{display:flex;align-items:center;gap:7px}
+    .vc-num{font-size:20px;font-weight:900;line-height:1}
+    .vc-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--tx3)}
+    .vh-right{text-align:center}
+    .score-ring{position:relative;width:100px;height:100px;margin:0 auto}
+    .score-ring svg{transform:rotate(-90deg);display:block}
+    .ring-bg{fill:none;stroke:var(--s3);stroke-width:8}
+    .ring-fill{fill:none;stroke-width:8;stroke-linecap:round}
+    .score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .score-num{font-size:22px;font-weight:900;line-height:1}
+    .score-lbl{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-top:2px}
+    .score-grade{font-size:12px;font-weight:800;margin-top:6px}
+    /* Exec summary */
+    .exec-summary{border-radius:var(--r);padding:16px 20px;margin-bottom:18px;border-left:4px solid}
+    .exec-summary.sev-fail{background:var(--red-bg);border-color:var(--red)}
+    .exec-summary.sev-warn{background:var(--ora-bg);border-color:var(--ora)}
+    .exec-summary.sev-pass{background:var(--grn-bg);border-color:var(--grn)}
+    .exec-summary-label{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+    .exec-summary.sev-fail .exec-summary-label{color:var(--red)}
+    .exec-summary.sev-warn .exec-summary-label{color:var(--ora)}
+    .exec-summary.sev-pass .exec-summary-label{color:var(--grn)}
+    .exec-summary-text{font-size:13.5px;color:var(--tx);line-height:1.65;font-weight:500}
+    .exec-summary-text strong{font-weight:800}
+    /* Priority fix */
+    .priority-fix{background:#fff;border:2px solid var(--red);border-radius:var(--r);padding:16px 20px;margin-bottom:18px;position:relative;overflow:hidden}
+    .priority-fix::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--ora))}
+    .pf-eyebrow{display:flex;align-items:center;gap:7px;font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:10px;line-height:1}
+    .pf-title{font-size:15px;font-weight:900;color:#444;margin-bottom:7px}
+    .pf-impact{font-size:12.5px;color:var(--tx2);line-height:1.55;margin-bottom:12px}
+    .pf-impact strong{color:var(--tx);font-weight:700}
+    .pf-fix{display:flex;align-items:flex-start;gap:9px;background:var(--s2);border:1px solid var(--bd);border-radius:7px;padding:10px 14px;font-size:12px;color:var(--tx2);line-height:1.5}
+    .pf-fix-icon{width:18px;height:18px;background:var(--grn-d);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+    .pf-fix-icon svg{width:10px;height:10px;color:var(--grn)}
+    .pf-effort{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:800;padding:2px 9px;border-radius:4px;margin-top:10px}
+    .pf-effort.easy{background:var(--grn-d);color:var(--grn)}
+    .pf-effort.medium{background:var(--ora-d);color:var(--ora)}
+    .pf-effort.hard{background:var(--red-d);color:var(--red)}
+    /* PDF info */
+    .pdf-info{background:#fff;border:1px solid var(--bd);border-radius:var(--r);padding:12px 18px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:var(--tx2)}
+    .pdf-info strong{color:var(--tx);font-weight:700;margin-right:3px}
+    /* Accuracy notice */
+    .accuracy-notice{display:flex;align-items:flex-start;gap:10px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r);padding:12px 16px;margin-bottom:22px;font-size:11.5px;color:var(--tx2);line-height:1.6}
+    .accuracy-notice svg{width:14px;height:14px;color:var(--tx3);flex-shrink:0;margin-top:1px}
+    .accuracy-notice strong{color:var(--tx);font-weight:700}
+    /* Categories */
+    .cat-section{margin-bottom:10px;break-inside:avoid}
+    .cat-head{display:flex;align-items:center;gap:9px;padding:13px 16px;background:#fff;border:1px solid var(--bd);border-radius:var(--r) var(--r) 0 0;border-bottom-color:transparent}
+    .cat-ico{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .cat-ico svg{width:14px;height:14px}
+    .cat-name{flex:1;font-size:13.5px;font-weight:800;color:var(--tx)}
+    .cat-badges{display:flex;gap:4px}
+    .cat-b{font-size:10px;font-weight:800;padding:2px 9px;border-radius:4px;font-family:var(--m);display:flex;align-items:center;gap:3px}
+    .cat-b svg{width:10px;height:10px}
+    .cat-b.pass{background:var(--grn-d);color:var(--grn)}
+    .cat-b.fail{background:var(--red-d);color:var(--red)}
+    .cat-b.warn{background:var(--ora-d);color:var(--ora)}
+    .cat-body{background:#fff;border:1px solid var(--bd);border-top:none;border-radius:0 0 var(--r) var(--r);padding:5px}
+    .iss{background:var(--s2);border:1px solid var(--bd);border-radius:7px;margin-bottom:4px;overflow:hidden;break-inside:avoid}
+    .iss:last-child{margin-bottom:0}
+    .iss-head{display:flex;align-items:center;gap:10px;padding:12px 14px;flex-wrap:wrap}
+    .sev{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+    .sev.fail{background:var(--red)}.sev.warn{background:var(--ora)}.sev.pass{background:var(--grn)}
+    .iss-status{font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;padding:2px 10px;border-radius:4px;flex-shrink:0}
+    .iss-status.pass{background:var(--grn-d);color:var(--grn)}
+    .iss-status.fail{background:var(--red-d);color:var(--red)}
+    .iss-status.warn{background:var(--ora-d);color:var(--ora)}
+    .iss-title-wrap{flex:1;min-width:140px}
+    .iss-title{font-size:12.5px;font-weight:700;color:var(--tx)}
+    .iss-tag{font-size:9.5px;font-family:var(--m);font-weight:500;color:var(--tx3);background:var(--s3);padding:2px 7px;border-radius:4px;white-space:nowrap}
+    .iss-effort{font-size:9px;font-weight:800;padding:2px 8px;border-radius:4px;white-space:nowrap}
+    .iss-effort.easy{background:var(--grn-d);color:var(--grn)}
+    .iss-effort.medium{background:var(--ora-d);color:var(--ora)}
+    .iss-effort.hard{background:var(--red-d);color:var(--red)}
+    .iss-effort.manual{background:var(--yel-d);color:#9a7200}
+    .iss-chev{display:none}
+    .iss-detail{padding:0 14px 14px 38px;font-size:12px;line-height:1.65;color:var(--tx2)}
+    .iss-detail strong{color:var(--tx);font-weight:700}
+    .iss-verified{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:800;color:var(--grn);background:var(--grn-d);padding:2px 7px;border-radius:3px;margin-bottom:7px}
+    .iss-verified svg{width:10px;height:10px}
+    .iss-rw{display:flex;align-items:flex-start;gap:9px;border-radius:6px;padding:8px 12px;margin-bottom:8px;font-size:11.5px;line-height:1.5;border:1px solid}
+    .iss-rw.fail-type{background:var(--red-bg);border-color:var(--red-d);color:var(--tx)}
+    .iss-rw.warn-type{background:var(--ora-bg);border-color:var(--ora-d);color:var(--tx)}
+    .iss-rw.pass-type{background:var(--grn-bg);border-color:var(--grn-d);color:var(--tx)}
+    .iss-rw svg{width:13px;height:13px;flex-shrink:0;margin-top:1px}
+    .iss-rw.fail-type svg{color:var(--red)}.iss-rw.warn-type svg{color:var(--ora)}.iss-rw.pass-type svg{color:var(--grn)}
+    .iss-508{display:inline-flex;align-items:center;gap:3px;font-family:var(--m);font-size:10px;font-weight:600;color:var(--ora);background:var(--ora-d);padding:2px 7px;border-radius:3px;margin-top:4px}
+    .code-blk{background:var(--s3);border:1px solid var(--bd);border-radius:5px;padding:8px 12px;margin-top:7px;font-family:var(--m);font-size:11px;color:var(--ora);white-space:pre-wrap;word-break:break-all}
+    .fix-tip{background:var(--grn-bg);border-left:3px solid var(--grn);padding:8px 12px;margin-top:7px;border-radius:0 5px 5px 0;font-size:11.5px;color:var(--tx2);line-height:1.5}
+    .fix-tip strong{color:var(--grn);font-weight:700}
+    .wcag-link{display:none}
+    .inline-cta{display:none}
+    /* Page numbers */
+    @page{margin:20mm 15mm}
+    @media print{
+      body{padding:0}
+      .cat-section{break-inside:avoid}
+      .iss{break-inside:avoid}
+      *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
+  `;
+
+  /* Build full report HTML for popup */
+  var html=`<!DOCTYPE html>
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US"  lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PDF Accessibility Report — ${pi?pi.title:'Report'}</title>
+<style>${css}</style>
+</head>
+<body>
+<div class="rpt-hdr">
+  <h1>PDF Accessibility Audit Report</h1>
+  <p>Powered by Taika Translations &mdash; taikatranslations.com &mdash; Generated ${date}</p>
+</div>
+${heroHtml}
+${execHtml}
+${pfHtml}
+<div class="pdf-info">${pdfInfoHtml}</div>
+<div class="accuracy-notice">${noticeHtml}</div>
+${treeHtml}
+</body></html>`;
+
+  var w=window.open('','_blank','width=900,height=700');
+  if(!w){alert('Pop-up blocked. Please allow pop-ups for this site and try again.');return}
+  w.document.write(html);
+  w.document.close();
+  w.onload=function(){
+    /* Ensure all sections and details are expanded */
+    w.document.querySelectorAll('.cat-section').forEach(function(s){s.classList.add('open')});
+    w.document.querySelectorAll('.iss').forEach(function(s){s.classList.add('open')});
+    /* Animate ring to correct position */
+    var ring=w.document.getElementById('tka-ringFill');
+    if(ring){
+      var C=272.3; /* r=43, c=2*pi*43 */
+      var scoreEl=w.document.querySelector('.score-num');
+      if(scoreEl){var sc=parseInt(scoreEl.textContent)||0;ring.style.strokeDashoffset=C-(sc/100*C)}
+    }
+    setTimeout(function(){w.print();},400);
+  };
+};
+
+/* ── Progress ── */
+function animProg(cb){
+  var p=document.getElementById('tka-pp');p.classList.add('on');
+  var st=['meta','tags','text','images','forms','nav','contrast','report'];var i=0;
+  root.querySelectorAll('.pst').forEach(function(s){s.classList.remove('act','dn');s.querySelector('.pst-d').textContent='\u25CB'});
+  document.getElementById('tka-pfl').style.width='0%';
+  function nx(){
+    if(i>0){var pr=root.querySelector('[data-s="'+st[i-1]+'"]');pr.classList.replace('act','dn');pr.querySelector('.pst-d').textContent='\u2713'}
+    if(i<st.length){var c=root.querySelector('[data-s="'+st[i]+'"]');c.classList.add('act');c.querySelector('.pst-d').textContent='\u25C9';document.getElementById('tka-pfl').style.width=((i+1)/st.length*100)+'%';i++;setTimeout(nx,300+Math.random()*350)}
+    else setTimeout(function(){p.classList.remove('on');cb()},300)
+  }
+  setTimeout(nx,150)
 }
 
-auditBtn.addEventListener('click', function() {
-  if (!file) return;
-  runAudit(file);
-});
+window.tkaStartAudit=async function(){
+  if(!selFile)return;
+  var b=document.getElementById('tka-sb');b.disabled=true;b.innerHTML='<span class="spin"></span> Analyzing\u2026';
+  document.getElementById('tka-res').classList.remove('vis');
+  document.getElementById('tka-gate').style.display='';
+  document.getElementById('tka-catTree').style.display='none';
+  document.getElementById('tka-ctas').style.display='none';
+  document.getElementById('tka-printBar').style.display='none';
+  document.getElementById('tka-blurPreview').style.display='';
+  var buf=await selFile.arrayBuffer();
+  try{pdfDoc=await pdfjsLib.getDocument({data:buf}).promise}catch(e){alert('Cannot read this PDF.');rstB();return}
+  animProg(async function(){findings=await runChecks();render();rstB()})
+};
+function rstB(){var b=document.getElementById('tka-sb');b.disabled=false;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Audit Document'}
 
-newScanBtn.addEventListener('click', function() {
-  resultsPanel.classList.remove('active');
-  scanPanel.classList.remove('active');
-  auditBtn.disabled = true;
-  fileInfo.textContent = '';
-  pdfInput.value = '';
-  file = null;
-  auditBtn.textContent = 'Audit Document';
-  auditBtn.disabled = true;
-});
+/* ── Gate unlock ── */
+window.tkaUnlockReport=function(){
+  var fname=document.getElementById('tka-gFname').value.trim();
+  var lname=document.getElementById('tka-gLname').value.trim();
+  var email=document.getElementById('tka-gEmail').value.trim();
+  var phone=document.getElementById('tka-gPhone').value.trim();
+  var company=document.getElementById('tka-gCompany').value.trim();
+  var errEl=document.getElementById('tka-gErr');errEl.style.display='none';
+  if(!fname){errEl.textContent='Please enter your first name.';errEl.style.display='block';return}
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){errEl.textContent='Please enter a valid email address.';errEl.style.display='block';return}
+  if(!phone){errEl.textContent='Please enter your phone number.';errEl.style.display='block';return}
+  var btn=document.getElementById('tka-gBtn');btn.disabled=true;btn.innerHTML='<span class="spin"></span> Unlocking\u2026';
 
-function delay(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+  var fails=findings.filter(function(f){return f.severity==='fail'});
+  var warns=findings.filter(function(f){return f.severity==='warn'});
+  var passes=findings.filter(function(f){return f.severity==='pass'});
+  var score=Math.round((passes.length/findings.length)*100);
+  var pi=window._tka_pi;
+  var nl='\n',div='─────────────────────────────────────';
 
-function setCheckState(li, state) {
-  li.className = 'scan-check ' + state;
-  var icon = li.querySelector('.scan-check-icon');
-  if (state === 'running') { icon.textContent = ''; }
-  else if (state === 'done-pass') { icon.textContent = '✓'; }
-  else if (state === 'done-fail') { icon.textContent = '✗'; }
-  else if (state === 'done-warn') { icon.textContent = '!'; }
+  /* Insight */
+  var hasOCR=findings.find(function(f){return f.id==='text-layer'&&f.severity==='fail'});
+  var hasTagF=findings.find(function(f){return f.id==='tagged'&&f.severity==='fail'});
+  var hasTitleF=findings.find(function(f){return f.id==='doc-title'&&f.severity==='fail'});
+  var hasLangF=findings.find(function(f){return f.id==='doc-lang'&&f.severity==='fail'});
+  var hasFormsF=findings.find(function(f){return f.id==='form-fields'&&f.severity==='fail'});
+  var insight='';
+  if(hasOCR)insight='Scanned image without OCR — completely inaccessible. OCR and full remediation required before anything else.';
+  else if(hasTagF&&fails.length>=4)insight='Missing tag structure is the root cause of most failures. Tagging in Acrobat Pro will resolve several issues simultaneously.';
+  else if(fails.length===0&&warns.length<=2)insight='Document is in excellent shape. Only manual review items remain.';
+  else if(hasFormsF&&hasTagF)insight='Form fields present but untagged — invisible to screen readers. Priority: tag document and add field tooltips.';
+  else if(fails.length<=2&&(hasTitleF||hasLangF))insight='Structure is mostly solid. Missing metadata are quick wins under a minute each.';
+  else insight='Multiple barriers found. Structured remediation pass in Acrobat Pro recommended.';
+
+  var grade=score>=90?'A':score>=70?'B':score>=50?'C':score>=30?'D':'F';
+  var msg=
+    'PDF ACCESSIBILITY AUDIT REPORT'+nl+'Taika Translations'+nl+div+nl+nl+
+    '📄 DOCUMENT'+nl+
+    '  File:     '+selFile.name+nl+
+    '  Title:    '+(pi.title!=='(none)'?pi.title:'⚠ Not set')+nl+
+    '  Author:   '+(pi.author!=='(none)'?pi.author:'—')+nl+
+    '  Pages:    '+pi.pages+nl+
+    '  Producer: '+pi.producer+nl+nl+
+    div+nl+
+    '📊 RESULTS — '+(fails.length===0?'PASSED':'FAILED')+' ('+score+'% | Grade '+grade+')'+nl+div+nl+
+    '  ✅ Passed:   '+passes.length+' of '+findings.length+' checks'+nl+
+    '  ⚠️  Warnings: '+warns.length+' (manual review)'+nl+
+    '  ❌ Failed:   '+fails.length+' critical issues'+nl+nl;
+  if(fails.length>0){
+    msg+='❌ CRITICAL FAILURES'+nl;
+    fails.forEach(function(f){
+      var imp=IMPACT[f.id]||{};
+      msg+='  • '+f.title+' ['+f.wcag+']'+nl;
+      if(imp.impact)msg+='    Impact: '+imp.impact+nl;
+      if(imp.effortLabel)msg+='    Effort: '+imp.effortLabel+nl;
+      if(f.fix)msg+='    Fix: '+f.fix.substring(0,110)+(f.fix.length>110?'…':'')+nl;
+    });msg+=nl;
+  }
+  if(warns.length>0){
+    msg+='⚠️  WARNINGS'+nl;
+    warns.forEach(function(f){msg+='  • '+f.title+' ['+f.wcag+']'+nl;});msg+=nl;
+  }
+  msg+=div+nl+'💡 INSIGHT'+nl+insight+nl+nl+
+    div+nl+'Standards: Section 508 · ADA · WCAG 2.2 (A/AA)'+nl+
+    'Source: taikatranslations.com/pdf-accessibility-checker';
+
+  fetch('https://api.hsforms.com/submissions/v3/integration/submit/'+HS_PORTAL_ID+'/'+HS_FORM_GUID,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({fields:[
+      {name:'firstname',value:fname},{name:'lastname',value:lname},
+      {name:'email',value:email},{name:'phone',value:phone},
+      {name:'company',value:company},{name:'message',value:msg}
+    ],context:{pageUri:window.location.href,pageName:document.title}})
+  }).then(revealReport).catch(function(e){console.warn('HubSpot:',e);revealReport()});
+};
+
+function revealReport(){
+  document.getElementById('tka-gate').style.display='none';
+  document.getElementById('tka-blurPreview').style.display='none';
+  document.getElementById('tka-catTree').style.display='';
+  document.getElementById('tka-ctas').style.display='';
+  document.getElementById('tka-printBar').style.display='';
+  document.getElementById('tka-pdfInfo').style.display='';
+  var heroBtn=document.getElementById('tka-heroUnlockBtn');
+  if(heroBtn)heroBtn.classList.add('hidden');
+  document.getElementById('tka-catTree').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-async function runAudit(f) {
-  auditBtn.disabled = true;
-  auditBtn.textContent = 'Scanning…';
-  resultsPanel.classList.remove('active');
-  scanChecks.innerHTML = '';
-  scanFileLabel.textContent = f.name;
-  scanPanel.classList.add('active');
+/* ════════════════════════════════════════
+   IMPROVED CHECKS
+   ════════════════════════════════════════ */
+async function runChecks(){
+  var R=[];
+  var meta=await pdfDoc.getMetadata().catch(function(){return null});
+  var info=meta?.info||{};var N=pdfDoc.numPages;
+  window._tka_pi={title:info.Title||'(none)',author:info.Author||'(none)',producer:(info.Producer||'Unknown').substring(0,50),pages:N,creator:(info.Creator||'Unknown').substring(0,50)};
 
-  // Build check list items
-  var items = {};
-  CHECKS.forEach(function(c) {
-    var li = document.createElement('li');
-    li.className = 'scan-check';
-    li.innerHTML = '<span class="scan-check-icon"></span><span>' + c.label + '</span>';
-    scanChecks.appendChild(li);
-    items[c.id] = li;
-  });
+  /* ── Tags & structure ── */
+  var isTagged=false,structTree=null;
+  try{
+    var pg1=await pdfDoc.getPage(1);
+    structTree=await(pg1.getStructTree?pg1.getStructTree():Promise.resolve(null));
+    if(structTree?.children?.length>0)isTagged=true;
+    if(!isTagged&&meta?.metadata&&meta.metadata.get('pdfuaid:part'))isTagged=true;
+    if(!isTagged){var mi=await(pdfDoc.getMarkInfo?pdfDoc.getMarkInfo():Promise.resolve(null));if(mi?.Marked)isTagged=true}
+  }catch(e){}
 
-  // Read file as ArrayBuffer
-  var buf = await f.arrayBuffer();
-  var bytes = new Uint8Array(buf);
-  var raw = '';
-  // Read raw text (limit to first 300KB for performance)
-  var limit = Math.min(bytes.length, 300000);
-  for (var i = 0; i < limit; i++) { raw += String.fromCharCode(bytes[i]); }
+  /* ── Text layer / OCR ── */
+  var totalChars=0,emptyPg=0,smp=Math.min(N,10);
+  for(var i=1;i<=smp;i++){var pg2=await pdfDoc.getPage(i);var tc=await pg2.getTextContent();var c=tc.items.reduce(function(s,it){return s+(it.str||'').length},0);totalChars+=c;if(c<10)emptyPg++}
+  var isScanned=emptyPg>smp*0.5;
 
-  var results = {};
+  /* ── Images: try to read /Alt from struct tree ── */
+  var hasImg=false,imgsMissingAlt=0,imgsWithAlt=0,imgsTotal=0;
+  for(var j=1;j<=Math.min(N,6);j++){
+    var pg3=await pdfDoc.getPage(j);
+    var ops=await pg3.getOperatorList();
+    if(ops.fnArray.some(function(fn){return fn===pdfjsLib.OPS.paintImageXObject||fn===pdfjsLib.OPS.paintJpegXObject})){hasImg=true}
+  }
+  /* Walk struct tree for Figure nodes and check /Alt */
+  if(hasImg&&structTree){
+    (function walkTree(node){
+      if(!node)return;
+      if(node.role==='Figure'){
+        imgsTotal++;
+        if(node.alt&&node.alt.trim()!==''){imgsWithAlt++}
+        else{imgsMissingAlt++}
+      }
+      if(node.children)node.children.forEach(walkTree);
+    })(structTree);
+  }
 
-  // Helper: search raw PDF bytes
-  function hasPattern(pattern) { return raw.indexOf(pattern) !== -1; }
+  /* ── Links: check if text is a bare URL ── */
+  var linkCt=0,bareUrlLinks=0,linkAnnots=[];
+  var formCt=0,formsMissingTooltip=0,formsWithTooltip=0;
 
-  // Load with PDF.js
-  var pdfDoc = null;
-  var metadata = null;
-  var outline = null;
-  var allText = '';
-  var annotations = [];
-
-  try {
-    if (typeof pdfjsLib !== 'undefined') {
-      var loadingTask = pdfjsLib.getDocument({ data: buf });
-      pdfDoc = await loadingTask.promise;
-      try { metadata = await pdfDoc.getMetadata(); } catch(e) {}
-      try { outline = await pdfDoc.getOutline(); } catch(e) {}
-      // Extract text from up to 5 pages
-      var pageCount = Math.min(pdfDoc.numPages, 5);
-      for (var p = 1; p <= pageCount; p++) {
-        try {
-          var pg = await pdfDoc.getPage(p);
-          var tc = await pg.getTextContent();
-          tc.items.forEach(function(item) { if (item.str) allText += item.str + ' '; });
-          var annots = await pg.getAnnotations();
-          annotations = annotations.concat(annots);
-        } catch(e) {}
+  try{
+    for(var k=1;k<=N;k++){
+      var pg4=await pdfDoc.getPage(k);var an=await pg4.getAnnotations();
+      /* Forms */
+      var fields=an.filter(function(a){return a.subtype==='Widget'});
+      formCt+=fields.length;
+      fields.forEach(function(f){
+        if(f.alternativeText&&f.alternativeText.trim())formsWithTooltip++;
+        else formsMissingTooltip++;
+      });
+      /* Links */
+      if(k<=12){
+        var links=an.filter(function(a){return a.subtype==='Link'});
+        linkCt+=links.length;
+        links.forEach(function(lk){
+          var txt=(lk.contents||lk.alternativeText||'').trim();
+          if(!txt||/^https?:\/\//i.test(txt))bareUrlLinks++;
+        });
       }
     }
-  } catch(e) { console.warn('PDF.js error:', e); }
+  }catch(e){}
 
-  // Run checks one by one with animation
-  async function check(id, fn) {
-    setCheckState(items[id], 'running');
-    await delay(280);
-    var r = fn();
-    results[id] = r;
-    setCheckState(items[id], r.pass === true ? 'done-pass' : r.pass === 'warn' ? 'done-warn' : 'done-fail');
-    await delay(80);
+  /* ── Bookmarks ── */
+  var outline=await pdfDoc.getOutline().catch(function(){return null});
+  var hasBk=outline&&outline.length>0;
+
+  /* ── Language ── */
+  var hasLang=false;
+  try{if(info.Language)hasLang=true;if(!hasLang&&meta?.metadata&&meta.metadata.get('dc:language'))hasLang=true}catch(e){}
+
+  /* ── PDF/UA ── */
+  var isUA=false;
+  try{if(meta?.metadata&&meta.metadata.get('pdfuaid:part'))isUA=true}catch(e){}
+
+  /* ══ Build findings ══ */
+
+  /* Tagged PDF */
+  R.push(mk('structure','tagged','Tagged PDF (Structure Tree)',isTagged?'pass':'fail','WCAG 1.3.1 (A)','\u00a71194.22(a)',
+    isTagged?'The document contains a complete structural tag tree — headings, paragraphs, lists, and tables are all defined for assistive technology.':'No tag structure found. This is the single most critical PDF accessibility failure.',
+    isTagged?null:'/MarkInfo \u2192 /Marked: false or absent',
+    isTagged?null:'Acrobat Pro \u2192 Accessibility \u2192 Auto-Tag Document. Then verify and correct the tag tree.',
+    true));
+
+  /* Reading order */
+  R.push(mk('structure','read-order','Reading Order',!isTagged?'fail':'warn','WCAG 1.3.2 (A)','\u00a71194.22(d)',
+    !isTagged?'Without tags, reading order defaults to the raw content stream — often wrong for multi-column layouts, sidebars, and footnotes.':'Document is tagged and reading order is defined. Manual verification recommended.',
+    null,
+    !isTagged?'Tag the document first, then verify order in the Tags panel.':'Use Acrobat \u2192 Read Out Loud to verify sequence.',
+    false));
+
+  /* OCR / text layer */
+  R.push(mk('structure','text-layer','Text Layer / OCR',isScanned?'fail':'pass','WCAG 1.4.5 (AA)','\u00a71194.22(a)',
+    isScanned?emptyPg+' of '+smp+' sampled pages have no extractable text — likely a scanned image without OCR.':'Text layer present across all sampled pages. Document is machine-readable.',
+    isScanned?'Extracted: '+totalChars+' chars across '+smp+' pages':null,
+    isScanned?'Acrobat \u2192 Scan & OCR \u2192 Recognize Text. Then proceed with full accessibility tagging.':null,
+    true));
+
+  /* Security */
+  if(totalChars===0&&emptyPg===smp)R.push(mk('structure','security','Assistive Technology Access','fail','WCAG 4.1.1 (A)','\u00a71194.22(a)',
+    'No text could be extracted. Security permissions may be blocking screen reader access.',
+    'Extracted: 0 chars across '+smp+' pages',
+    'File \u2192 Properties \u2192 Security \u2192 allow "Content Copying for Accessibility."',true));
+
+  /* Images / alt text — now with actual data */
+  var imgSev,imgDesc,imgVerified=false;
+  if(!hasImg){
+    imgSev='pass';imgDesc='No raster images found in the sampled pages.';imgVerified=true;
+  }else if(!isTagged){
+    imgSev='fail';imgDesc='Images present but document is untagged — no image can carry alt text in an untagged PDF.';imgVerified=true;
+  }else if(imgsTotal>0){
+    imgVerified=true;
+    if(imgsMissingAlt===0){imgSev='pass';imgDesc=imgsTotal+' image'+(imgsTotal!==1?'s':'')+' found, all have alternative text defined. ✓';}
+    else if(imgsWithAlt>0){imgSev='fail';imgDesc=imgsMissingAlt+' of '+imgsTotal+' images are missing alternative text. '+imgsWithAlt+' have alt text correctly defined.'}
+    else{imgSev='fail';imgDesc=imgsTotal+' image'+(imgsTotal!==1?'s':'')+' found — none have alternative text defined in the tag structure.'}
+  }else{
+    imgSev='fail';imgDesc='Images detected but no <Figure> tags found in the structure tree. Alt text cannot be assigned.';imgVerified=true;
   }
+  R.push(mk('content','img-alt','Image Alternative Text',imgSev,'WCAG 1.1.1 (A)','\u00a71194.22(a)',imgDesc,
+    imgsTotal>0?'Images found: '+imgsTotal+(imgsWithAlt?' | With alt: '+imgsWithAlt:'')+( imgsMissingAlt?' | Missing alt: '+imgsMissingAlt:''):null,
+    hasImg?'Tags panel \u2192 each <Figure> \u2192 Properties \u2192 Alt Text. Mark decorative images as Artifacts.':null,
+    imgVerified));
 
-  var info = (metadata && metadata.info) ? metadata.info : {};
+  /* Contrast */
+  R.push(mk('content','contrast','Color Contrast','warn','WCAG 1.4.3 (AA)','\u00a71194.21(j)',
+    'Automated contrast analysis is not possible in PDFs. Manual check required: 4.5:1 minimum for normal text.',
+    null,'Use the Colour Contrast Analyser (CCA) tool or Acrobat \u2192 Accessibility \u2192 Full Check.',false));
 
-  await check('title', function() {
-    var t = info.Title || '';
-    return { pass: t.trim().length > 0, value: t };
-  });
+  /* Tables */
+  if(isTagged)R.push(mk('content','tables','Table Header Structure','warn','WCAG 1.3.1 (A)','\u00a71194.22(g)',
+    'If data tables exist, each must have <TH> header cells with Scope attributes. Cannot verify automatically.',
+    null,'Tags panel \u2192 locate <Table> elements \u2192 verify <TH> headers with Row/Column scope.',false));
 
-  await check('language', function() {
-    var lang = info.Language || '';
-    var hasLang = lang.length > 0 || hasPattern('/Lang') || hasPattern('xml:lang');
-    return { pass: hasLang, value: lang };
-  });
+  /* Bookmarks */
+  R.push(mk('navigation','bookmarks','Bookmarks / Document Outline',hasBk?'pass':(N>5?'fail':'warn'),'WCAG 2.4.5 (AA)','\u00a71194.22(o)',
+    hasBk?outline.length+' top-level bookmarks found. Users can navigate directly to any section.':N+'-page document has no bookmarks.'+(N>5?' Required for multi-page documents.':''),
+    hasBk?null:'/Outlines: (none)',
+    hasBk?null:'Create bookmarks from heading structure in the Bookmarks panel.',true));
 
-  await check('tagged', function() {
-    var marked = hasPattern('Marked true') || hasPattern('/Marked true') || hasPattern('Marked\ntrue');
-    return { pass: marked };
-  });
+  /* Tab order */
+  R.push(mk('navigation','tab-order','Tab Order Follows Structure',isTagged?'warn':'fail','WCAG 2.4.3 (A)','\u00a71194.21(a)',
+    isTagged?'Tab order should be set to follow document structure on every page. Cannot verify automatically.':'Without tags, tab order is undefined and unpredictable.',
+    null,'Page Properties \u2192 Tab Order \u2192 "Use Document Structure" for every page.',false));
 
-  await check('text', function() {
-    var words = allText.trim().split(/\s+/).filter(function(w) { return w.length > 1; }).length;
-    if (words > 30) return { pass: true, value: words + ' words extracted' };
-    if (words > 5) return { pass: 'warn', value: 'Very little text — may be a scanned PDF' };
-    return { pass: false, value: 'No selectable text found' };
-  });
+  /* Links — now with bare URL detection */
+  var linkSev,linkDesc,linkVerified=false;
+  if(linkCt===0){
+    linkSev='pass';linkDesc='No hyperlinks detected in the sampled pages.';linkVerified=true;
+  }else if(bareUrlLinks===0){
+    linkSev='pass';linkDesc=linkCt+' links found. All appear to have descriptive text — no bare URLs detected. Manual review still recommended.';linkVerified=false;
+  }else{
+    linkSev='fail';linkDesc=bareUrlLinks+' of '+linkCt+' links appear to use bare URLs or have no accessible name. Descriptive link text is required.';linkVerified=true;
+  }
+  R.push(mk('navigation','links','Hyperlink Text'+(linkCt?' ('+linkCt+' found)':''),linkSev,'WCAG 2.4.4 (A)','\u00a71194.22(a)',
+    linkDesc,
+    linkCt?'Links found: '+linkCt+(bareUrlLinks?' | Bare URLs: '+bareUrlLinks:''):null,
+    linkCt?'Ensure all links use descriptive text. Replace bare URLs with meaningful labels.':null,
+    linkVerified));
 
-  await check('alt', function() {
-    var hasFigures = hasPattern('/Figure') || hasPattern('/figure');
-    var hasAlt = hasPattern('/Alt ') || hasPattern('/Alt(') || hasPattern('/Alt\n');
-    if (!hasFigures) return { pass: true, value: 'No figures detected' };
-    return { pass: hasAlt ? true : 'warn', value: hasAlt ? 'Alt attributes found' : 'Figures present — alt text not confirmed' };
-  });
+  /* Forms — now with tooltip detection */
+  var formSev,formDesc,formVerified=false;
+  if(formCt===0){
+    formSev='pass';formDesc='No interactive form fields detected.';formVerified=true;
+  }else if(!isTagged){
+    formSev='fail';formDesc=formCt+' form fields found but document is untagged — screen readers cannot detect or interact with any field.';formVerified=true;
+  }else if(formsMissingTooltip===0){
+    formSev='pass';formDesc=formCt+' form field'+(formCt!==1?'s':'')+' found. All have tooltips/labels defined. ✓';formVerified=true;
+  }else if(formsWithTooltip>0){
+    formSev='fail';formDesc=formsMissingTooltip+' of '+formCt+' fields are missing tooltips. '+formsWithTooltip+' have labels correctly defined.';formVerified=true;
+  }else{
+    formSev='fail';formDesc=formCt+' fields found — none have accessible tooltips. Screen readers cannot identify what each field is asking for.';formVerified=true;
+  }
+  R.push(mk('forms','form-fields',formCt>0?formCt+' Form Field'+(formCt!==1?'s':''):'Interactive Form Fields',formSev,'WCAG 1.3.1 (A)','\u00a71194.22(n)',
+    formDesc,
+    formCt?'Fields: '+formCt+(formsWithTooltip?' | With tooltips: '+formsWithTooltip:'')+( formsMissingTooltip?' | Missing tooltips: '+formsMissingTooltip:''):null,
+    formCt&&formSev==='fail'?'Field Properties \u2192 General \u2192 Tooltip. Add a descriptive label to every field.':null,
+    formVerified));
 
-  await check('headings', function() {
-    var hasH = hasPattern('/H1') || hasPattern('/H2') || hasPattern('/H3') || (hasPattern('/H ') && hasPattern('/H>'));
-    return { pass: hasH };
-  });
+  /* Title */
+  var hasTitle=!!(info.Title&&info.Title.trim());
+  R.push(mk('metadata','doc-title','Document Title',hasTitle?'pass':'fail','WCAG 2.4.2 (A)','\u00a71194.22(i)',
+    hasTitle?'Title set: \u201c'+info.Title.trim().substring(0,80)+'\u201d':'No document title set. Screen readers announce the raw filename.',
+    hasTitle?null:'File \u2192 Properties \u2192 Description \u2192 Title: (empty)',
+    hasTitle?'Also check: Initial View \u2192 Show "Document Title."':'File \u2192 Properties \u2192 Description \u2192 Title.',true));
 
-  await check('bookmarks', function() {
-    if (outline && outline.length > 0) return { pass: true, value: outline.length + ' bookmarks' };
-    if (pdfDoc && pdfDoc.numPages < 4) return { pass: 'warn', value: 'Short document — bookmarks optional' };
-    return { pass: false };
-  });
+  /* Language */
+  R.push(mk('metadata','doc-lang','Document Language',hasLang?'pass':'fail','WCAG 3.1.1 (A)','\u00a71194.22(a)',
+    hasLang?'Language declared. Screen readers will apply correct pronunciation.':'No language declared. Screen readers cannot determine which language engine to use.',
+    hasLang?null:'/Catalog \u2192 /Lang: (missing)',
+    hasLang?null:'File \u2192 Properties \u2192 Advanced \u2192 Language.',true));
 
-  await check('forms', function() {
-    var widgets = annotations.filter(function(a) { return a.subtype === 'Widget'; });
-    if (widgets.length === 0) return { pass: true, value: 'No form fields detected' };
-    var unlabeled = widgets.filter(function(a) { return !a.fieldName && !a.alternativeText; });
-    return { pass: unlabeled.length === 0 ? true : false, value: widgets.length + ' field(s) found' };
-  });
+  /* PDF/UA */
+  R.push(mk('metadata','pdfua','PDF/UA Conformance (ISO 14289)',isUA?'pass':'warn','WCAG 4.1.1 (A)','\u00a71194.22(a)',
+    isUA?'PDF/UA conformance declared — gold standard for accessible PDFs.':'No PDF/UA identifier found.',
+    null,isUA?null:'Acrobat Preflight \u2192 PDF/UA-1 profile.',false));
 
-  await check('links', function() {
-    var links = annotations.filter(function(a) { return a.subtype === 'Link'; });
-    if (links.length === 0) return { pass: true, value: 'No links detected' };
-    return { pass: 'warn', value: links.length + ' link(s) found — review text' };
-  });
-
-  await check('author', function() {
-    var a = info.Author || info.Creator || '';
-    return { pass: a.trim().length > 0, value: a };
-  });
-
-  await check('order', function() {
-    var hasStructure = hasPattern('/Document') || hasPattern('/Article') || hasPattern('/Sect');
-    return { pass: hasStructure ? true : 'warn' };
-  });
-
-  await check('contrast', function() {
-    return { pass: 'warn', value: 'Requires manual review' };
-  });
-
-  // Show email wall instead of results directly
-  await delay(400);
-  _pendingResults = results;
-  showEmailWall();
+  return R;
 }
 
-var _pendingResults = null;
-
-function showEmailWall() {
-  document.getElementById('emailWall').classList.add('active');
-  document.getElementById('emailWall').scrollIntoView({ behavior: 'smooth', block: 'start' });
+function mk(cat,id,title,sev,wcag,s508,desc,code,fix,verified){
+  return{cat:cat,id:id,title:title,severity:sev,wcag:wcag,s508:s508,description:desc,code:code,fix:fix,verified:!!verified}
 }
 
-document.getElementById('wallSubmit').addEventListener('click', function() {
-  var email = document.getElementById('wallEmail').value.trim();
-  if (!email || !email.includes('@')) {
-    document.getElementById('wallEmail').style.borderColor = '#ef4444';
-    return;
-  }
-  var btn = this;
-  btn.textContent = 'Loading…';
-  btn.disabled = true;
-
-  // Submit to Netlify
-  var passed = _pendingResults ? Object.values(_pendingResults).filter(function(r){ return r.pass === true; }).length : 0;
-  var fname = document.getElementById('scanFileLabel') ? document.getElementById('scanFileLabel').textContent : '';
-  var formData = 'form-name=pdf-checker-lead&email=' + encodeURIComponent(email) +
-    '&filename=' + encodeURIComponent(fname) +
-    '&checks-passed=' + encodeURIComponent(passed + '/12');
-
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: formData
-  }).finally(function() {
-    document.getElementById('emailWall').classList.remove('active');
-    showResults(_pendingResults);
+/* ── Build category tree ── */
+function buildCatTree(container){
+  container.innerHTML='';
+  CATS.forEach(function(cat){
+    var cf=findings.filter(function(f){return f.cat===cat.id});if(!cf.length)return;
+    var nf=cf.filter(function(f){return f.severity==='fail'}).length,nw=cf.filter(function(f){return f.severity==='warn'}).length,np=cf.filter(function(f){return f.severity==='pass'}).length;
+    var ok=nf===0;
+    var sec=document.createElement('div');sec.className='cat-section'+(nf>0?' open':'');
+    var badges='';if(np)badges+='<span class="cat-b pass">'+SVG.pass+' '+np+'</span>';if(nw)badges+='<span class="cat-b warn">'+SVG.warn+' '+nw+'</span>';if(nf)badges+='<span class="cat-b fail">'+SVG.fail+' '+nf+'</span>';
+    sec.innerHTML='<div class="cat-head" onclick="this.parentElement.classList.toggle(\'open\')" tabindex="0" role="button"><span class="cat-arrow">'+SVG.arrow+'</span><div class="cat-ico" style="background:'+(ok?'var(--grn-d)':'var(--red-d)')+'">'+cat.icon.replace('stroke="currentColor"','stroke="'+(ok?'var(--grn)':'var(--red)')+'"')+'</div><span class="cat-name">'+cat.name+'</span><div class="cat-badges">'+badges+'</div></div><div class="cat-body"></div>';
+    container.appendChild(sec);
+    var body=sec.querySelector('.cat-body');
+    cf.sort(function(a,b){var o={fail:0,warn:1,pass:2};return o[a.severity]-o[b.severity]});
+    cf.forEach(function(chk){
+      var card=document.createElement('div');card.className='iss';
+      var imp=IMPACT[chk.id]||{};
+      var effortBadge=imp.effortLabel?'<span class="iss-effort '+(imp.effort||'medium')+'">'+esc(imp.effortLabel)+'</span>':'';
+      var rwType=chk.severity==='pass'?'pass-type':chk.severity==='warn'?'warn-type':'fail-type';
+      var rwIcon=chk.severity==='pass'?SVG.pass:chk.severity==='warn'?SVG.warn:SVG.alert;
+      var rwBlock=imp.impact?'<div class="iss-rw '+rwType+'">'+rwIcon+'<span>'+esc(imp.impact)+'</span></div>':'';
+      var verifiedBadge=chk.verified?'<div class="iss-verified">'+SVG.pass+' Automatically verified</div>':'<div class="iss-verified" style="background:var(--yel-d);color:#9a7200">&#9888; Requires manual review</div>';
+      card.innerHTML=
+        '<div class="iss-head" onclick="this.parentElement.classList.toggle(\'open\')" tabindex="0" role="button">'+
+          '<span class="sev '+chk.severity+'"></span>'+
+          '<span class="iss-status '+chk.severity+'">'+(chk.severity==='pass'?'PASS':chk.severity==='fail'?'FAIL':'WARN')+'</span>'+
+          '<div class="iss-title-wrap"><div class="iss-title">'+esc(chk.title)+'</div></div>'+
+          '<span class="iss-tag">'+esc(chk.wcag)+'</span>'+
+          effortBadge+
+          '<span class="iss-chev">'+SVG.chev+'</span>'+
+        '</div>'+
+        '<div class="iss-detail">'+
+          verifiedBadge+
+          rwBlock+
+          '<p style="margin-bottom:8px">'+chk.description+'</p>'+
+          (chk.s508&&chk.s508!=='\u2014'?'<div class="iss-508">Section 508: '+esc(chk.s508)+'</div>':'')+
+          (chk.code?'<div class="code-blk">'+esc(chk.code)+'</div>':'')+
+          (chk.fix?'<div class="fix-tip"><strong>How to fix: </strong>'+chk.fix+'</div>':'')+
+          '<a class="wcag-link" href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">'+SVG.ext+' WCAG 2.2 Quick Reference</a>'+
+        '</div>';
+      body.appendChild(card);
+    });
   });
 }
 
-function showResults(results) {
-  resultsGrid.innerHTML = '';
-  var pass = 0, fail = 0, warn = 0;
+/* ── Render ── */
+function render(){
+  var pi=window._tka_pi;
+  var total=findings.length;
+  var fails =findings.filter(function(f){return f.severity==='fail'});
+  var warns =findings.filter(function(f){return f.severity==='warn'});
+  var passes=findings.filter(function(f){return f.severity==='pass'});
+  var score =total?Math.round(passes.length/total*100):0;
+  var grade,gradeColor;
+  if(score>=90){grade='A';gradeColor='var(--grn)'}
+  else if(score>=70){grade='B';gradeColor='#5aaa2a'}
+  else if(score>=50){grade='C';gradeColor='var(--ora)'}
+  else if(score>=30){grade='D';gradeColor='#d46020'}
+  else{grade='F';gradeColor='var(--red)'}
 
-  CHECKS.forEach(function(c) {
-    var r = results[c.id] || {};
-    var state = r.pass === true ? 'pass' : r.pass === 'warn' ? 'warn' : 'fail';
-    if (state === 'pass') pass++;
-    else if (state === 'warn') warn++;
-    else fail++;
+  /* Hero */
+  var heroClass=fails.length===0?(warns.length===0?'passed':'warned'):'failed';
+  var eyebrow=fails.length===0?(warns.length===0?'✓ Fully Compliant':'⚠ Needs Manual Review'):'✗ Non-Compliant';
+  var heroTitle,heroNarrative;
+  if(fails.length===0&&warns.length===0){heroTitle='This document is fully accessible.';heroNarrative='Every check passed. No barriers found for users of screen readers, keyboard navigation, or other assistive technology.'}
+  else if(fails.length===0){heroTitle='No critical failures — but a few things need your attention.';heroNarrative=warns.length+' item'+(warns.length!==1?'s need':' needs')+' manual review. They\'re not automated failures, but could still affect some users if left unverified.'}
+  else if(fails.length===1){heroTitle='One issue needs to be fixed before this document is compliant.';heroNarrative='Most checks passed, but this single failure blocks full compliance with Section 508, ADA, and WCAG 2.2.'+(warns.length?' '+warns.length+' warning'+(warns.length!==1?'s':'')+' also need manual review.':'')}
+  else if(fails.length<=3){heroTitle=fails.length+' issues need to be fixed before this document is compliant.';heroNarrative='Most of the document checks out — but these failures block full compliance. Users relying on assistive technology will encounter real barriers.'}
+  else if(fails.length<=6){heroTitle='Significant accessibility barriers were found.';heroNarrative=fails.length+' checks failed. Users relying on screen readers or keyboard navigation will have real difficulty with this document as it stands.'}
+  else{heroTitle='This document is not accessible.';heroNarrative=fails.length+' critical checks failed. This PDF cannot be used by people with disabilities and likely does not meet Section 508 or ADA requirements.'}
 
-    var icon = state === 'pass' ? '✓' : state === 'warn' ? '!' : '✗';
-    var div = document.createElement('div');
-    div.className = 'result-item ' + state;
-    div.innerHTML =
-      '<div class="result-badge">' + icon + '</div>' +
-      '<div>' +
-        '<div class="result-name">' + c.label + '</div>' +
-        '<div class="result-desc">' + c.cat + ' &nbsp;·&nbsp; ' + (r.value || (state === 'pass' ? 'Passed' : state === 'warn' ? 'Manual review recommended' : 'Not found')) + '</div>' +
-        (state === 'fail' ? '<div class="result-fix">Fix: ' + c.fix + '</div>' : '') +
-        (state === 'warn' && c.fix ? '<div class="result-fix" style="color:#b45309;">Tip: ' + c.fix + '</div>' : '') +
-      '</div>' +
-      '<span class="result-wcag">' + c.wcag + '</span>';
-    resultsGrid.appendChild(div);
-  });
+  var C=326.7,ringOffset=C-(score/100*C);
+  document.getElementById('tka-verdictHero').innerHTML=
+    '<div class="verdict-hero '+heroClass+'">'+
+      '<div class="vh-left">'+
+        '<div class="vh-eyebrow">'+eyebrow+'</div>'+
+        '<div class="vh-title">'+heroTitle+'</div>'+
+        '<div class="vh-narrative">'+heroNarrative+'</div>'+
+        '<div class="vh-counts">'+
+          '<div class="vc"><div class="vc-num" style="color:var(--grn)">'+passes.length+'</div><div class="vc-lbl">Passed</div></div>'+
+          (warns.length?'<div class="vc"><div class="vc-num" style="color:var(--ora)">'+warns.length+'</div><div class="vc-lbl">Warnings</div></div>':'')+
+          (fails.length?'<div class="vc"><div class="vc-num" style="color:var(--red)">'+fails.length+'</div><div class="vc-lbl">Failed</div></div>':'')+
+        '</div>'+
+        '<button class="vh-unlock-btn" id="tka-heroUnlockBtn" onclick="document.getElementById(\'tka-gate\').scrollIntoView({behavior:\'smooth\',block:\'center\'});document.getElementById(\'tka-gFname\').focus()">'+
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>'+
+          'Unlock Full Report For Free'+
+        '</button>'+
+      '</div>'+
+      '<div class="vh-right">'+
+        '<div class="score-ring"><svg width="120" height="120" viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"/><circle class="ring-fill" cx="60" cy="60" r="52" stroke="'+gradeColor+'" stroke-dasharray="'+C+'" stroke-dashoffset="'+C+'" id="tka-ringFill"/></svg>'+
+          '<div class="score-inner"><div class="score-num" style="color:'+gradeColor+'">'+score+'%</div><div class="score-lbl">Score</div></div></div>'+
+        '<div class="score-grade" style="color:'+gradeColor+'">Grade '+grade+'</div>'+
+      '</div>'+
+    '</div>';
+  setTimeout(function(){var el=document.getElementById('tka-ringFill');if(el)el.style.strokeDashoffset=ringOffset;},80);
 
-  var total = CHECKS.length;
-  scoreNum.textContent = pass + '/' + total;
-  var pct = Math.round((pass / total) * 100);
-  setTimeout(function() { scoreFill.style.width = pct + '%'; }, 100);
-  if (fail === 0 && warn <= 2) { scoreMsg.textContent = 'Excellent — this PDF is highly accessible.'; }
-  else if (fail <= 2) { scoreMsg.textContent = 'Good start — a few issues to address.'; }
-  else if (fail <= 5) { scoreMsg.textContent = 'Multiple issues found — remediation recommended.'; }
-  else { scoreMsg.textContent = 'Significant accessibility barriers found. Professional remediation needed.'; }
+  /* Exec summary */
+  var hasOCR=findings.find(function(f){return f.id==='text-layer'&&f.severity==='fail'});
+  var hasTagF=findings.find(function(f){return f.id==='tagged'&&f.severity==='fail'});
+  var hasTitleF=findings.find(function(f){return f.id==='doc-title'&&f.severity==='fail'});
+  var hasLangF=findings.find(function(f){return f.id==='doc-lang'&&f.severity==='fail'});
+  var hasFormsF=findings.find(function(f){return f.id==='form-fields'&&f.severity==='fail'});
+  var execText,execSev;
+  if(fails.length===0&&warns.length===0){execText='<strong>All clear.</strong> This document passed every automated check. No action required. You may still want to manually verify color contrast if the document contains images of text.';execSev='sev-pass'}
+  else if(fails.length===0){execText='<strong>No critical failures detected.</strong> The '+warns.length+' warning'+(warns.length!==1?'s':'')+' below require a human eye — checks that automation cannot fully verify, like color contrast and table header accuracy.';execSev='sev-warn'}
+  else if(hasOCR){execText='<strong>This document is a scanned image without an OCR text layer.</strong> Assistive technology cannot read a single word of it. OCR processing is required first, followed by complete accessibility remediation.';execSev='sev-fail'}
+  else if(hasTagF&&fails.length>=4){execText='<strong>The missing tag structure is the root cause of most failures here.</strong> Tags define headings, paragraphs, lists, and reading order. Once properly tagged in Acrobat Pro, several other failures will likely resolve simultaneously. Start there.';execSev='sev-fail'}
+  else if(hasFormsF){execText='<strong>Form fields in this document are inaccessible to users with disabilities.</strong> Without proper tags and field tooltips, screen reader users cannot identify what each field asks for, or interact with it at all.';execSev='sev-fail'}
+  else if(fails.length<=2&&(hasTitleF||hasLangF)){execText='<strong>The document structure is mostly solid.</strong> The remaining failures are metadata issues — missing title or language declaration. These take under a minute each to fix, and they\'re the difference between passing and failing.';execSev='sev-fail'}
+  else{execText='<strong>Accessibility barriers were found across multiple categories.</strong> A structured remediation pass in Acrobat Pro — working through failures in priority order — is the recommended path forward.';execSev='sev-fail'}
+  document.getElementById('tka-execSummary').innerHTML=
+    '<div class="exec-summary '+execSev+'"><div class="exec-summary-label">What This Means</div><div class="exec-summary-text">'+execText+'</div></div>';
 
-  resultsPanel.classList.add('active');
-  resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  // Update CTA based on results
-  if (fail === 0 && warn <= 1) {
-    var ctaH = resultsPanel.querySelector('.results-cta h3');
-    var ctaP = resultsPanel.querySelector('.results-cta p');
-    if (ctaH) ctaH.textContent = 'Looking good! Want a full human-reviewed audit?';
-    if (ctaP) ctaP.textContent = 'Automated checks catch common issues, but a certified specialist review ensures full compliance with every Section 508 and WCAG 2.2 requirement.';
+  /* Priority fix */
+  var pfHtml='';
+  if(fails.length>0){
+    var top=fails[0];var topImp=IMPACT[top.id]||{};
+    pfHtml='<div class="priority-fix">'+
+      '<div class="pf-eyebrow"><span style="font-size:13px">&#128295;</span> Fix This First</div>'+
+      '<div class="pf-title">'+esc(top.title)+'</div>'+
+      '<div class="pf-impact">'+(topImp.impact?'<strong>Who it affects:</strong> '+esc(topImp.impact)+'<br><br>':'')+
+        '<strong>Standard:</strong> '+esc(top.wcag)+(top.s508?' &nbsp;&middot;&nbsp; <strong>Section 508:</strong> '+esc(top.s508):'')+
+      '</div>'+
+      (top.fix?'<div class="pf-fix"><div class="pf-fix-icon">'+SVG.pass+'</div><span>'+top.fix+'</span></div>':'')+
+      (topImp.effortLabel?'<div style="margin-top:12px"><span class="pf-effort '+(topImp.effort||'medium')+'">&#x23F1; '+esc(topImp.effortLabel)+'</span></div>':'')+
+    '</div>';
   }
+  document.getElementById('tka-priorityFix').innerHTML=pfHtml;
+
+  /* Inline CTA */
+  document.getElementById('tka-inlineCta').innerHTML=score<60?
+    '<a class="inline-cta" href="/pages/services/508-compliance.html" target="_blank" rel="noopener">'+
+      '<div class="inline-cta-ico">'+SVG.shield+'</div>'+
+      '<div class="inline-cta-body"><div class="inline-cta-label">Let us remediate this for you</div><div class="inline-cta-desc">Our team fixes PDFs to meet Section 508, ADA, and WCAG 2.2. Fast turnaround, certified results.</div></div>'+
+      '<div class="inline-cta-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg></div>'+
+    '</a>':'';
+
+  /* PDF info strip */
+  document.getElementById('tka-pdfInfo').innerHTML=
+    '<div><strong>File:</strong>'+esc(selFile.name)+'</div>'+
+    '<div><strong>Title:</strong>'+esc(pi.title)+'</div>'+
+    '<div><strong>Pages:</strong>'+pi.pages+'</div>'+
+    '<div><strong>Author:</strong>'+esc(pi.author)+'</div>'+
+    '<div><strong>Producer:</strong>'+esc(pi.producer)+'</div>';
+
+  /* Accuracy notice */
+  var manualCount=findings.filter(function(f){return !f.verified}).length;
+  var verifiedCount=findings.filter(function(f){return f.verified}).length;
+  document.getElementById('tka-accuracyNotice').innerHTML=
+    '<div class="accuracy-notice">'+SVG.info+'<span><strong>About this report:</strong> '+verifiedCount+' of '+total+' checks were verified automatically by reading the PDF structure directly. '+manualCount+' checks require manual review and are marked accordingly. Automated tools cannot replace a full human audit — for complete certification, <a href="/pages/services/508-compliance.html">contact our team</a>.</span></div>';
+
+  buildCatTree(document.getElementById('tka-blurPreview'));
+  buildCatTree(document.getElementById('tka-catTree'));
+
+  document.getElementById('tka-res').classList.add('vis');
+  document.getElementById('tka-res').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// Load PDF.js dynamically if not yet loaded
-window.addEventListener('load', function() {
-  if (typeof pdfjsLib === 'undefined') {
-    var s = document.createElement('script');
-    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-    s.onload = function() {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    };
-    document.head.appendChild(s);
-  }
-});
-
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&(e.target.classList.contains('cat-head')||e.target.classList.contains('iss-head'))){e.preventDefault();e.target.click()}});
 })();
 </script>
 </body></html>

@@ -821,4 +821,71 @@ ul, ol { list-style: none; }
   .btn-nav-ghost { display: none; }
   .nav-logo-sub { display: none; }
   .nav-links {
- 
+    display: none;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: var(--navy-mid);
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    flex-direction: column; align-items: stretch;
+    padding: 8px 0; gap: 0; z-index: 199;
+  }
+  .site-nav.nav-open .nav-links { display: flex; }
+  .site-nav { position: relative; }
+  .nav-links a { padding: 13px 20px; border-radius: 0; font-size: 15px; }
+  .nav-links .nav-dropdown > a::after { float: right; }
+  .nav-dropdown-menu {
+    position: static; display: none; box-shadow: none;
+    border: none; border-radius: 0; min-width: 0;
+    background: rgba(255,255,255,0.04); padding: 0;
+  }
+  .nav-dropdown.open .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a { padding: 11px 32px; font-size: 13.5px; }
+
+  /* Trust wall: fixed-width seals, scroll horizontally */
+  .trust-seal { flex: 0 0 130px; min-width: 130px; }
+
+  /* Hero */
+  .page-hero { padding: 48px 0 40px; }
+  .page-hero h1 { font-size: 28px; }
+  .page-hero-sub { font-size: 15px; }
+
+  /* Grids */
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-2-1 { grid-template-columns: 1fr; }
+  .grid-1-2 { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+  /* CTA */
+  .cta-band-buttons { flex-direction: column; align-items: center; }
+  .section-header-row { flex-direction: column; align-items: flex-start; }
+
+  /* Quote card full width */
+  .quote-card { margin: 0; }
+
+  /* Lead strip */
+  .lead-strip { padding: 28px 20px; }
+
+  /* Buttons */
+  .btn-primary-lg { font-size: 15px; padding: 13px 22px; }
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+.animate-fade-up { animation: fadeUp 0.5s ease both; }
+.animate-fade-up-delay { animation: fadeUp 0.5s 0.15s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

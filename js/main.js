@@ -80,10 +80,47 @@
   }
 
   /* ── FORM SUBMISSION ───────────────────────────────────── */
+  var HS_PORTAL = '47509323';
+  var HS_FORM   = 'a2c15341-e287-4b14-bc2c-ed20dc17acff';
+  var HS_URL    = 'https://api.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL + '/' + HS_FORM;
+
   function encode(data) {
     return Object.keys(data).map(function (key) {
       return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
     }).join('&');
+  }
+
+  function submitToHubSpot(data, formName) {
+    // Find email — any key containing 'email'
+    var emailVal = '';
+    Object.keys(data).forEach(function (k) {
+      if (!emailVal && k.toLowerCase().indexOf('email') !== -1) emailVal = data[k];
+    });
+    if (!emailVal) return;
+
+    // Find org/company field
+    var companyVal = data['org-type'] || data['l_org'] || data['ai_org'] || data['level'] || '';
+
+    // Build message from all remaining fields
+    var skip = ['form-name', 'bot-field'];
+    var msgParts = ['[Form: ' + formName + ']'];
+    Object.keys(data).forEach(function (k) {
+      if (skip.indexOf(k) !== -1 || k.toLowerCase().indexOf('email') !== -1) return;
+      if (data[k]) msgParts.push(k + ': ' + data[k]);
+    });
+
+    var fields = [{ name: 'email', value: emailVal }];
+    if (companyVal) fields.push({ name: 'company', value: companyVal });
+    fields.push({ name: 'message', value: msgParts.join(' | ') });
+
+    fetch(HS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fields: fields,
+        context: { pageUri: window.location.href, pageName: document.title }
+      })
+    }).catch(function () {}); // fire-and-forget, don't block UX
   }
 
   function initForms() {
@@ -116,47 +153,5 @@
           form.querySelectorAll('input, select, textarea').forEach(function (el) {
             if (el.name) data[el.name] = el.value;
           });
-          var downloadUrl = form.getAttribute('data-download');
-          fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: encode(data)
-          }).then(function () {
-            if (downloadUrl) {
-              var a = document.createElement('a');
-              a.href = downloadUrl;
-              a.download = downloadUrl.split('/').pop();
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              btn.textContent = '✓ Downloading now!';
-            } else {
-              btn.textContent = '✓ Sent! We\'ll be in touch soon.';
-            }
-            btn.style.background = '#1A6B4A';
-          }).catch(function () {
-            btn.textContent = 'Error — please email sales@taikatranslations.com';
-            btn.style.background = '#DC2626';
-            btn.dataset.submitting = '';
-          });
-        } else {
-          // Fallback for non-form cards
-          setTimeout(function () {
-            btn.textContent = '✓ Sent! We\'ll be in touch soon.';
-            btn.style.background = '#1A6B4A';
-          }, 1200);
-        }
-      });
-    });
-  }
-
-  /* ── INIT ──────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', function () {
-    initFaq();
-    initSmoothScroll();
-    initActiveNav();
-    initReveal();
-    initForms();
-  });
-
-}());
+          var formName = data['form-name'] || 'unknown';
+          var downloadUrl = form.getAttribute('data-d

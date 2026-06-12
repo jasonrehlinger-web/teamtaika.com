@@ -44,6 +44,7 @@
           <a href="/pages/services/transcription.html">Transcription</a>
           <a href="/pages/services/desktop-publishing.html">Desktop Publishing (DTP)</a>
           <a href="/pages/services/ai-automation.html">AI Automation (TVPTeam)</a>
+          <a href="/pages/services/pdf-accessibility-checker.html">Free PDF Accessibility Checker</a>
         </div>
       </li>
       <li class="nav-dropdown">
@@ -65,13 +66,16 @@
       <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
       <a href="/pages/resources/compliance-faq.html#checklist" class="btn-nav-ghost">Free Checklist</a>
       <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
+      <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
 
 <!-- TRUST WALL -->
 <div style="background:#0a1729;border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 24px;">
-  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap;overflow:hidden;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" class="trust-wall-scroll">
 
     <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
       <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg>
@@ -105,7 +109,8 @@
 
   </div>
 </div>
-
+                                                                                                                                                                                                                                                                                                                                                                                                                
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">[[STATE_NAME]]</span></nav></div>
 
 <section class="page-hero" aria-labelledby="hero-h1">
   <div class="container">
@@ -123,7 +128,7 @@
         </div>
         <div class="callout" style="margin-top:28px;">
           <div class="callout-title">[[STATE_NAME]] NASPO Status: [[NASPO_STATUS_DETAIL]]</div>
-          <p style="color:rgba(255,255,255,0.85);font-size:14px;line-height:1.6;margin:0;">[[STATE_NASPO_NOTE]] Contact us to confirm your agency's specific ordering path.</p>
+          <p>[[STATE_NASPO_NOTE]] Contact us to confirm your agency's specific ordering path.</p>
         </div>
       </div>
       <div class="quote-card" id="quote">

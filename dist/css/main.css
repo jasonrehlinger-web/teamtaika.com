@@ -235,7 +235,7 @@ ul, ol { list-style: none; }
   min-width: 120px;
 }
 .trust-seal:last-child { border-right: none; }
-.trust-seal-icon { font-size: 20px; }
+.trust-seal-icon { font-size: 20px; display:flex; align-items:center; justify-content:center; }
 .trust-seal-name {
   font-family: var(--font-mono);
   font-size: 9.5px; letter-spacing: 0.8px; text-transform: uppercase;

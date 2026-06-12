@@ -225,10 +225,13 @@
           <div style="text-align:center;"><div style="font-size:24px;margin-bottom:8px;">♿</div><div style="font-size:13.5px;color:rgba(255,255,255,0.65);">Section 508 &amp; ADA<br>digital checklist</div></div>
           <div style="text-align:center;"><div style="font-size:24px;margin-bottom:8px;">🏫</div><div style="font-size:13.5px;color:rgba(255,255,255,0.65);">Education (IDEA, FERPA,<br>Title III) checklist</div></div>
         </div>
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                  <form name="checklist" data-netlify="true" netlify-honeypot="bot-field" data-download="/assets/downloads/language-access-compliance-checklist.pdf" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <input type="hidden" name="form-name" value="checklist">
+          <input type="hidden" name="bot-field" style="display:none">
           <label class="sr-only" for="faq-email">Your work email</label>
-          <input class="lead-strip-input" type="email" id="faq-email" placeholder="your@agency.gov" style="width:280px;max-width:100%;">
+          <input class="lead-strip-input" type="email" id="faq-email" name="email" placeholder="your@agency.gov" style="width:280px;max-width:100%;">
           <button class="btn-lead" type="button">Send Me the Checklist</button>
+          </form>
         </div>
         <p style="font-size:12px;color:rgba(255,255,255,0.28);margin-top:12px;">No spam. Unsubscribe any time. We send the checklist plus a monthly compliance update digest.</p>
       </div>

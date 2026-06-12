@@ -71,6 +71,12 @@
   to = "/pages/resources/compliance-faq.html"
   status = 301
 
+
+[[redirects]]
+  from = "/pdf-accessibility-checker"
+  to = "/pages/services/pdf-accessibility-checker.html"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]

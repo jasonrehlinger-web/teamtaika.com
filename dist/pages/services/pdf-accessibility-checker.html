@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free PDF Accessibility Checker | Section 508, ADA &amp; WCAG 2.2 | Language Access Hub</title>
+<meta name="description" content="Upload your PDF and get an instant Section 508, ADA, and WCAG 2.2 compliance audit. Free pass/fail report with certified remediation guidance. Veteran-owned. GSA &amp; NASPO contracted.">
+<link rel="canonical" href="https://teamtaika.com/pdf-accessibility-checker">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../css/main.css">
+<style>
+/* ── PDF CHECKER TOOL STYLES ─────────────────────────── */
+.checker-hero{background:var(--navy-deep);padding:60px 0 0;}
+.checker-hero-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.checker-hero-text h1{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:16px;line-height:1.15;}
+.checker-hero-text p{font-size:17px;color:rgba(255,255,255,0.72);line-height:1.65;margin-bottom:0;}
+.checker-trust-card{background:rgba(255,255,255,0.06);border:1px solid rgba(201,168,76,0.3);border-radius:16px;padding:28px;}
+.checker-trust-row{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.checker-trust-stars{color:var(--gold);font-size:18px;letter-spacing:2px;}
+.checker-trust-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(255,255,255,0.8);line-height:1.5;}
+.checker-trust-check{color:var(--emerald,#1a6b4a);font-size:18px;flex-shrink:0;margin-top:1px;}
+.checker-wave{width:100%;height:40px;display:block;}
+
+.tool-section{background:#f8f9fa;padding:60px 0;}
+.tool-inner{max-width:800px;margin:0 auto;padding:0 24px;}
+.tool-kicker{display:inline-flex;align-items:center;gap:8px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:#1b5e20;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;}
+.tool-heading{font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:700;color:var(--navy);text-align:center;margin-bottom:8px;}
+.tool-subhead{font-size:15px;color:var(--slate);text-align:center;margin-bottom:32px;}
+
+/* Upload Zone */
+.upload-zone{border:2px dashed #c8d0dc;border-radius:16px;background:#fff;padding:48px 32px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--gold);background:#fffdf5;}
+.upload-zone input[type=file]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;}
+.upload-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--navy),#1a3a6b);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.upload-icon svg{color:#fff;}
+.upload-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.upload-sub{font-size:13px;color:var(--slate);}
+.upload-sub strong{color:var(--navy);cursor:pointer;text-decoration:underline;}
+.file-limit{font-size:11px;color:#aaa;margin-top:8px;}
+
+/* Scan Progress */
+.scan-panel{display:none;background:#fff;border:1px solid #e8ecf0;border-radius:16px;padding:28px;margin-top:24px;}
+.scan-panel.active{display:block;}
+.scan-filename{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.scan-checks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
+.scan-check{display:flex;align-items:center;gap:12px;font-size:13.5px;color:#666;}
+.scan-check-icon{width:20px;height:20px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all 0.3s;}
+.scan-check.running .scan-check-icon{border-color:var(--gold);animation:spin 1s linear infinite;}
+.scan-check.done-pass .scan-check-icon{border-color:#22c55e;background:#22c55e;color:#fff;}
+.scan-check.done-fail .scan-check-icon{border-color:#ef4444;background:#ef4444;color:#fff;}
+.scan-check.done-warn .scan-check-icon{border-color:#f59e0b;background:#f59e0b;color:#fff;}
+.scan-check.done-pass,.scan-check.done-fail,.scan-check.done-warn{color:var(--navy);}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Results */
+.results-panel{display:none;margin-top:24px;}
+.results-panel.active{display:block;}
+.results-score{background:var(--navy-deep);border-radius:16px;padding:28px;text-align:center;margin-bottom:24px;color:#fff;}
+.results-score-num{font-size:52px;font-weight:800;color:var(--gold);line-height:1;}
+.results-score-label{font-size:14px;color:rgba(255,255,255,0.6);margin-top:4px;}
+.results-score-bar{width:100%;height:8px;background:rgba(255,255,255,0.15);border-radius:4px;margin:16px auto;max-width:300px;overflow:hidden;}
+.results-score-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),#e8c56a);transition:width 1s ease;}
+
+.results-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.result-item{background:#fff;border:1px solid #e8ecf0;border-radius:12px;padding:16px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;}
+.result-item.fail{border-color:#fecaca;background:#fff5f5;}
+.result-item.warn{border-color:#fde68a;background:#fffbeb;}
+.result-item.pass{border-color:#bbf7d0;background:#f0fdf4;}
+.result-badge{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.result-item.pass .result-badge{background:#dcfce7;color:#16a34a;}
+.result-item.fail .result-badge{background:#fee2e2;color:#dc2626;}
+.result-item.warn .result-badge{background:#fef3c7;color:#d97706;}
+.result-name{font-weight:700;font-size:14px;color:var(--navy);}
+.result-desc{font-size:12.5px;color:#666;margin-top:2px;line-height:1.5;}
+.result-fix{font-size:11.5px;color:#dc2626;margin-top:4px;font-style:italic;}
+.result-wcag{font-size:11px;font-family:var(--font-mono);background:#f1f5f9;padding:2px 7px;border-radius:4px;color:#64748b;white-space:nowrap;align-self:start;}
+
+.results-cta{background:linear-gradient(135deg,var(--navy),#1a3a6b);border-radius:16px;padding:28px;text-align:center;}
+.results-cta h3{color:#fff;font-size:18px;font-weight:700;margin-bottom:8px;}
+.results-cta p{color:rgba(255,255,255,0.7);font-size:14px;margin-bottom:20px;}
+.results-cta-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-cta-gold{background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:14px;transition:opacity 0.2s;}
+.btn-cta-gold:hover{opacity:0.9;}
+.btn-cta-outline{border:2px solid rgba(255,255,255,0.4);color:#fff;font-weight:600;padding:11px 24px;border-radius:8px;text-decoration:none;font-size:14px;transition:all 0.2s;}
+.btn-cta-outline:hover{border-color:#fff;}
+
+.audit-btn{background:var(--navy);color:#fff;border:none;padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;margin:20px auto 0;transition:opacity 0.2s;}
+.audit-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.audit-btn:not(:disabled):hover{opacity:0.9;}
+.new-scan-btn{background:transparent;border:2px solid var(--navy);color:var(--navy);padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:16px;}
+.new-scan-btn:hover{background:var(--navy);color:#fff;}
+
+@media(max-width:768px){
+  .checker-hero-inner{grid-template-columns:1fr;}
+  .checker-trust-card{display:none;}
+}
+</style>
+</head>
+<body>
+<!-- URGENCY BANNER -->
+<div class="urgency-bar" role="alert">
+  <div class="urgency-bar-inner">
+    <span class="urgency-tag">⚠ Compliance Deadline</span>
+    <p class="urgency-copy"><strong>State &amp; local government WCAG 2.1 AA compliance required as of April 2026.</strong> Healthcare Section 504 deadline: May 11, 2026.</p>
+    <a href="/pages/resources/compliance-faq.html" class="urgency-link">Am I compliant? →</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo" aria-label="Language Access Hub home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </div>
+      <div class="nav-logo-wordmark">
+        <span class="nav-logo-name">Language Access Hub</span>
+        <span class="nav-logo-sub">Powered by Taika Translations + TVPTeam</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li class="nav-dropdown">
+        <a href="/pages/services/translation.html">Services</a>
+        <div class="nav-dropdown-menu">
+          <a href="/pages/services/translation.html">Certified Translation</a>
+          <a href="/pages/services/interpretation.html">Interpretation (OPI/VRI)</a>
+          <a href="/pages/services/508-compliance.html">ADA / Section 508 Compliance</a>
+          <a href="/pages/services/captioning.html">Video Captioning</a>
+          <a href="/pages/services/transcription.html">Transcription</a>
+          <a href="/pages/services/desktop-publishing.html">Desktop Publishing (DTP)</a>
+          <a href="/pages/services/ai-automation.html">AI Automation (TVPTeam)</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/pages/industries/government.html">Who We Serve</a>
+        <div class="nav-dropdown-menu">
+          <a href="/pages/industries/government.html">Government Agencies</a>
+          <a href="/pages/industries/schools.html">School Districts</a>
+          <a href="/pages/industries/healthcare.html">Healthcare</a>
+          <a href="/pages/industries/legal.html">Legal &amp; Courts</a>
+          <a href="/pages/industries/nonprofits.html">Nonprofits</a>
+        </div>
+      </li>
+      <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
+      <li><a href="/index.html#products">Store</a></li>
+      <li><a href="/index.html#about">About</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
+      <a href="/pages/resources/compliance-faq.html#checklist" class="btn-nav-ghost">Free Checklist</a>
+      <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
+    </div>
+  </div>
+</nav>
+
+<!-- TRUST WALL -->
+<div class="trust-wall" role="complementary" aria-label="Certifications and credentials">
+  <p class="trust-wall-label">Verified credentials &amp; active procurement vehicles</p>
+  <div class="trust-seals">
+    <div class="trust-seal"><span class="trust-seal-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg></span><span class="trust-seal-name">GSA Schedule<br>Certified</span><span class="trust-seal-desc">Federal contract vehicle</span></div>
+    <div class="trust-seal"><span class="trust-seal-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg></span><span class="trust-seal-name">NASPO ValuePo
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><a href="/pages/services/508-compliance.html">ADA / 508 Compliance</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Free PDF Checker</span></nav></div>
+
+<!-- HERO -->
+<section class="checker-hero">
+  <div class="checker-hero-inner">
+    <div class="checker-hero-text">
+      <div style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);margin-bottom:16px;">● FREE TOOL</div>
+      <h1>Free PDF Accessibility Checker</h1>
+      <p>Upload any PDF and get an instant compliance audit against Section 508, ADA Title II, and WCAG 2.2. Get pass/fail results with real-world impact explanations and step-by-step remediation guidance — at no cost.</p>
+    </div>
+    <div class="checker-trust-card">
+      <div class="checker-trust-row">
+        <span class="checker-trust-stars">★★★★★</span>
+        <span style="font-size:13px;color:rgba(255,255,255,0.7);">5.0 Google Rating · GSA &amp; NASPO Contracted</span>
+      </div>
+      <div class="checker-trust-item">
+        <span class="checker-trust-check">✓</span>
+        <span>Instant audit with pass/fail results, real-world impact analysis, and certified remediation guidance.</span>
+      </div>
+      <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:11px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-light);padding:4px 10px;border-radius:4px;">Section 508</span>
+        <span style="font-size:11px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-light);padding:4px 10px;border-radius:4px;">ADA Title II</span>
+        <span style="font-size:11px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-light);padding:4px 10px;border-radius:4px;">WCAG 2.2 AA</span>
+        <span style="font-size:11px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold-light);padding:4px 10px;border-radius:4px;">100% Free</span>
+      </div>
+    </div>
+  </div>
+  <svg class="checker-wave" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 L0,20 Q300,0 600,20 Q900,40 1200,20 L1200,40 Z" fill="#f8f9fa"/></svg>
+</section>
+
+<!-- TOOL -->
+<section class="tool-section">
+  <div class="tool-inner">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div class="tool-kicker">📄 PDF Compliance Audit</div>
+      <div class="tool-heading">Upload a PDF to scan for Section 508, ADA, and WCAG 2.2 compliance.</div>
+      <div class="tool-subhead">Get a full pass/fail report with remediation guidance — free, instant, no account needed.</div>
+    </div>
+
+    <!-- Upload Zone -->
+    <div class="upload-zone" id="uploadZone">
+      <input type="file" id="pdfInput" accept=".pdf" aria-label="Upload PDF file">
+      <div class="upload-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <div class="upload-title">Drop your PDF here</div>
+      <div class="upload-sub">or <strong>browse</strong> to select &nbsp;·&nbsp; .pdf up to 50 MB</div>
+      <div class="file-limit" id="fileInfo"></div>
+    </div>
+
+    <button class="audit-btn" id="auditBtn" disabled>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Audit Document
+    </button>
+
+    <!-- Scan Progress Panel -->
+    <div class="scan-panel" id="scanPanel">
+      <div class="scan-filename" id="scanFilename">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+        <span id="scanFileLabel">Scanning…</span>
+      </div>
+      <ul class="scan-checks" id="scanChecks"></ul>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="results-panel" id="resultsPanel">
+      <div class="results-score">
+        <div class="results-score-num" id="scoreNum">0/12</div>
+        <div class="results-score-label">checks passed</div>
+        <div class="results-score-bar"><div class="results-score-fill" id="scoreFill" style="width:0%"></div></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;" id="scoreMsg"></div>
+      </div>
+      <div class="results-grid" id="resultsGrid"></div>
+      <div class="results-cta">
+        <h3>Issues found? We fix PDFs for full compliance.</h3>
+        <p>Our certified specialists remediate PDFs to meet Section 508, ADA, and WCAG 2.2 requirements. Fast turnaround. GSA &amp; NASPO contract ordering available.</p>
+        <div class="results-cta-buttons">
+          <a href="/pages/services/508-compliance.html" class="btn-cta-gold">Fix My PDF →</a>
+          <a href="/index.html#quote" class="btn-cta-outline">Get a Free Quote</a>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <button class="new-scan-btn" id="newScanBtn">← Scan Another PDF</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-light" style="padding:60px 0;">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <span class="kicker">How It Works</span>
+      <h2 class="section-heading">What We Check</h2>
+      <p class="section-lead" style="max-width:600px;margin:0 auto;">Our scanner checks 12 accessibility criteria required under Section 508, ADA Title II, and WCAG 2.2 Level AA.</p>
+    </div>
+    <div class="grid-3" style="gap:24px;">
+      <div class="card" style="padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">🏷️</div>
+        <h3 style="font-weight:700;font-size:15px;margin-bottom:8px;">Document Structure</h3>
+        <p style="font-size:13px;color:var(--slate);line-height:1.6;">Tagged PDF, reading order, heading hierarchy, bookmarks — the scaffolding screen readers rely on.</p>
+      </div>
+      <div class="card" style="padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">🖼️</div>
+        <h3 style="font-weight:700;font-size:15px;margin-bottom:8px;">Content Accessibility</h3>
+        <p style="font-size:13px;color:var(--slate);line-height:1.6;">Alt text on images, selectable text layer, meaningful link text — what makes content understandable.</p>
+      </div>
+      <div class="card" style="padding:24px;">
+        <div style="font-size:28px;margin-bottom:12px;">📋</div>
+        <h3 style="font-weight:700;font-size:15px;margin-bottom:8px;">Metadata &amp; Forms</h3>
+        <p style="font-size:13px;color:var(--slate);line-height:1.6;">Document title, language, author, and form field labels — the invisible properties that matter for compliance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<div class="cta-band">
+  <div class="cta-band-inner">
+    <span class="cta-band-kicker">Section 508 · ADA Title II · WCAG 2.2 · GSA &amp; NASPO Contracted</span>
+    <h2>Need your PDFs professionally remediated?</h2>
+    <p class="cta-band-sub">We fix PDFs to meet full compliance requirements. Fast turnaround, certified specialists, and GSA/NASPO contract ordering available for government agencies.</p>
+    <div class="cta-band-buttons">
+      <a href="/pages/services/508-compliance.html" class="btn-primary btn-primary-lg">PDF Remediation Services →</a>
+      <a href="/index.html#quote" class="btn-secondary">Get a Free Quote</a>
+    </div>
+    <div class="cta-trust-items">
+      <span class="cta-trust-item">GSA &amp; NASPO contracted</span>
+      <span class="cta-trust-item">VOSB / SBA certified</span>
+      <span class="cta-trust-item">SAM registered</span>
+      <span class="cta-trust-item">5.0 Google rating</span>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Language Access Hub</div>
+      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
+      <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
+      <div class="footer-family-links">
+        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">→ taikatranslations.com</a>
+        <a href="https://www.tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">→ tvpteam.com</a>
+      </div>
+      <div class="footer-comp-tags">
+        <span class="footer-comp-tag">HIPAA</span>
+        <span class="footer-comp-tag">FERPA</span>
+        <span class="footer-comp-tag">WCAG 2.2</span>
+        <span class="footer-comp-tag">GDPR</span>
+        <span class="footer-comp-tag">SOC 2</span>
+        <span class="footer-comp-tag">VOSB</span>
+        <span class="footer-comp-tag">GSA</span>
+        <span class="footer-comp-tag">NASPO</span>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/pages/services/translation.html">Certified Translation</a></li>
+        <li><a href="/pages/services/interpretation.html">Interpretation (OPI/VRI)</a></li>
+        <li><a href="/pages/services/508-compliance.html">ADA / Section 508</a></li>
+        <li><a href="/pages/services/captioning.html">Video Captioning</a></li>
+        <li><a href="/pages/services/transcription.html">Transcription</a></li>
+        <li><a href="/pages/services/desktop-publishing.html">Desktop Publishing</a></li>
+        <li><a href="/pages/services/ai-automation.html">AI Automation</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Who We Serve</h4>
+      <ul>
+        <li><a href="/pages/industries/government.html">Government Agencies</a></li>
+        <li><a href="/pages/industries/schools.html">School Districts</a></li>
+        <li><a href="/pages/industries/healthcare.html">Healthcare</a></li>
+        <li><a href="/pages/industries/legal.html">Legal &amp; Courts</a></li>
+        <li><a href="/pages/industries/nonprofits.html">Nonprofits</a></li>
+        <li><a href="/index.html#gsa">GSA Buyers</a></li>
+        <li><a href="/index.html#naspo">NASPO States</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
+        <li><a href="/pages/resources/compliance-faq.html#checklist">Free Compliance Checklist</a></li>
+        <li><a href="/pages/resources/compliance-faq.html#title6">Title VI &amp; EO 13166</a></li>
+        <li><a href="/pages/resources/compliance-faq.html#508">Section 508 &amp; WCAG</a></li>
+        <li><a href="/index.html#products">Online Store</a></li>
+        <li><a href="/index.html#about">About Taika</a></li>
+        <li><a href="/index.html#quote">Contact / Quote</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>© 2026 Language Access Hub — Powered by Taika Translations LLC. Austin, TX. All rights reserved.</p>
+      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
+    </div>
+    <nav class="footer-social" aria-label="Social media">
+      <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+      <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+      <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">TikTok</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+(function() {
+'use strict';
+
+// Set PDF.js worker
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+var CHECKS = [
+  { id:'title',    label:'Document Title',         cat:'Metadata',   wcag:'WCAG 2.4.2',   fail:'No title found in document properties. Screen reader users cannot identify the document.',    fix:'Add a descriptive title via File > Properties > Description in Adobe Acrobat.' },
+  { id:'language', label:'Language Declaration',    cat:'Metadata',   wcag:'WCAG 3.1.1',   fail:'Document language is not specified. Screen readers cannot select the correct voice.',         fix:'Set document language via File > Properties > Advanced > Reading Options.' },
+  { id:'tagged',   label:'Tagged PDF',              cat:'Structure',  wcag:'WCAG 1.3.1',   fail:'PDF is not tagged. Screen readers and assistive technology cannot interpret content structure.',fix:'Add accessibility tags using Acrobat Pro: Accessibility > Add Tags to Document.' },
+  { id:'text',     label:'Selectable Text',         cat:'Content',    wcag:'WCAG 1.4.5',   fail:'No selectable text detected. This PDF may be a scanned image — text is invisible to screen readers.', fix:'Run OCR (optical character recognition) to add a text layer to scanned pages.' },
+  { id:'alt',      label:'Image Alt Text',          cat:'Content',    wcag:'WCAG 1.1.1',   fail:'Images may lack alternative text. Non-decorative images must describe their content for screen readers.', fix:'Tag each figure and add /Alt attribute text in Acrobat Pro's Tags panel.' },
+  { id:'headings', label:'Heading Structure',       cat:'Structure',  wcag:'WCAG 1.3.1',   fail:'No heading tags detected. Users cannot navigate by headings — a core screen reader feature.', fix:'Apply heading tags (H1, H2, H3) to title and section headings using the Tags panel.' },
+  { id:'bookmarks',label:'Bookmarks / Outline',     cat:'Navigation', wcag:'WCAG 2.4.1',   fail:'No bookmarks found. Longer documents require bookmarks so users can navigate by section.',    fix:'Generate bookmarks via Acrobat Pro: View > Show/Hide > Navigation Panes > Bookmarks.' },
+  { id:'forms',    label:'Form Field Labels',       cat:'Forms',      wcag:'WCAG 1.3.1',   fail:'Form fields found without accessible labels. Screen reader users cannot identify what to enter.',fix:'Add tooltip text to each field via form field Properties > General > Tooltip.' },
+  { id:'links',    label:'Link Text',               cat:'Navigation', wcag:'WCAG 2.4.4',   fail:'Links may use non-descriptive text like "click here" or bare URLs.',                         fix:'Update link text to describe the destination. Use Link Properties in Acrobat Pro.' },
+  { id:'author',   label:'Document Author',         cat:'Metadata',   wcag:'Best Practice',fail:'Author metadata is missing.',                                                                  fix:'Add author name via File > Properties > Description > Author.' },
+  { id:'order',    label:'Reading Order',           cat:'Structure',  wcag:'WCAG 1.3.2',   fail:'Structure tags needed to confirm logical reading order.',                                      fix:'Use Acrobat Pro's Reading Order tool to verify and correct the tag sequence.' },
+  { id:'contrast', label:'Color Contrast',          cat:'Visual',     wcag:'WCAG 1.4.3',   fail:'Color contrast requires manual review — automated tools cannot reliably check PDF contrast.',  fix:'Use Adobe Acrobat's Accessibility Checker or Color Contrast Analyzer to verify 4.5:1 ratio.' },
+];
+
+var file = null;
+var pdfInput   = document.getElementById('pdfInput');
+var uploadZone = document.getElementById('uploadZone');
+var fileInfo   = document.getElementById('fileInfo');
+var auditBtn   = document.getElementById('auditBtn');
+var scanPanel  = document.getElementById('scanPanel');
+var scanChecks = document.getElementById('scanChecks');
+var scanFileLabel = document.getElementById('scanFileLabel');
+var resultsPanel = document.getElementById('resultsPanel');
+var resultsGrid = document.getElementById('resultsGrid');
+var scoreNum   = document.getElementById('scoreNum');
+var scoreFill  = document.getElementById('scoreFill');
+var scoreMsg   = document.getElementById('scoreMsg');
+var newScanBtn = document.getElementById('newScanBtn');
+
+// Drag & drop
+uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('drag-over'); });
+uploadZone.addEventListener('drop', function(e) {
+  e.preventDefault(); uploadZone.classList.remove('drag-over');
+  var f = e.dataTransfer.files[0];
+  if (f && f.type === 'application/pdf') setFile(f);
+});
+
+pdfInput.addEventListener('change', function() {
+  if (this.files[0]) setFile(this.files[0]);
+});
+
+function setFile(f) {
+  file = f;
+  fileInfo.textContent = f.name + ' (' + (f.size / 1024 / 1024).toFixed(1) + ' MB)';
+  auditBtn.disabled = false;
+  auditBtn.textContent = 'Audit Document';
+}
+
+auditBtn.addEventListener('click', function() {
+  if (!file) return;
+  runAudit(file);
+});
+
+newScanBtn.addEventListener('click', function() {
+  resultsPanel.classList.remove('active');
+  scanPanel.classList.remove('active');
+  auditBtn.disabled = true;
+  fileInfo.textContent = '';
+  pdfInput.value = '';
+  file = null;
+  auditBtn.textContent = 'Audit Document';
+  auditBtn.disabled = true;
+});
+
+function delay(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+function setCheckState(li, state) {
+  li.className = 'scan-check ' + state;
+  var icon = li.querySelector('.scan-check-icon');
+  if (state === 'running') { icon.textContent = ''; }
+  else if (state === 'done-pass') { icon.textContent = '✓'; }
+  else if (state === 'done-fail') { icon.textContent = '✗'; }
+  else if (state === 'done-warn') { icon.textContent = '!'; }
+}
+
+async function runAudit(f) {
+  auditBtn.disabled = true;
+  auditBtn.textContent = 'Scanning…';
+  resultsPanel.classList.remove('active');
+  scanChecks.innerHTML = '';
+  scanFileLabel.textContent = f.name;
+  scanPanel.classList.add('active');
+
+  // Build check list items
+  var items = {};
+  CHECKS.forEach(function(c) {
+    var li = document.createElement('li');
+    li.className = 'scan-check';
+    li.innerHTML = '<span class="scan-check-icon"></span><span>' + c.label + '</span>';
+    scanChecks.appendChild(li);
+    items[c.id] = li;
+  });
+
+  // Read file as ArrayBuffer
+  var buf = await f.arrayBuffer();
+  var bytes = new Uint8Array(buf);
+  var raw = '';
+  // Read raw text (limit to first 300KB for performance)
+  var limit = Math.min(bytes.length, 300000);
+  for (var i = 0; i < limit; i++) { raw += String.fromCharCode(bytes[i]); }
+
+  var results = {};
+
+  // Helper: search raw PDF bytes
+  function hasPattern(pattern) { return raw.indexOf(pattern) !== -1; }
+
+  // Load with PDF.js
+  var pdfDoc = null;
+  var metadata = null;
+  var outline = null;
+  var allText = '';
+  var annotations = [];
+
+  try {
+    if (typeof pdfjsLib !== 'undefined') {
+      var loadingTask = pdfjsLib.getDocument({ data: buf });
+      pdfDoc = await loadingTask.promise;
+      try { metadata = await pdfDoc.getMetadata(); } catch(e) {}
+      try { outline = await pdfDoc.getOutline(); } catch(e) {}
+      // Extract text from up to 5 pages
+      var pageCount = Math.min(pdfDoc.numPages, 5);
+      for (var p = 1; p <= pageCount; p++) {
+        try {
+          var pg = await pdfDoc.getPage(p);
+          var tc = await pg.getTextContent();
+          tc.items.forEach(function(item) { if (item.str) allText += item.str + ' '; });
+          var annots = await pg.getAnnotations();
+          annotations = annotations.concat(annots);
+        } catch(e) {}
+      }
+    }
+  } catch(e) { console.warn('PDF.js error:', e); }
+
+  // Run checks one by one with animation
+  async function check(id, fn) {
+    setCheckState(items[id], 'running');
+    await delay(280);
+    var r = fn();
+    results[id] = r;
+    setCheckState(items[id], r.pass === true ? 'done-pass' : r.pass === 'warn' ? 'done-warn' : 'done-fail');
+    await delay(80);
+  }
+
+  var info = (metadata && metadata.info) ? metadata.info : {};
+
+  await check('title', function() {
+    var t = info.Title || '';
+    return { pass: t.trim().length > 0, value: t };
+  });
+
+  await check('language', function() {
+    var lang = info.Language || '';
+    var hasLang = lang.length > 0 || hasPattern('/Lang') || hasPattern('xml:lang');
+    return { pass: hasLang, value: lang };
+  });
+
+  await check('tagged', function() {
+    var marked = hasPattern('Marked true') || hasPattern('/Marked true') || hasPattern('Marked\ntrue');
+    return { pass: marked };
+  });
+
+  await check('text', function() {
+    var words = allText.trim().split(/\s+/).filter(function(w) { return w.length > 1; }).length;
+    if (words > 30) return { pass: true, value: words + ' words extracted' };
+    if (words > 5) return { pass: 'warn', value: 'Very little text — may be a scanned PDF' };
+    return { pass: false, value: 'No selectable text found' };
+  });
+
+  await check('alt', function() {
+    var hasFigures = hasPattern('/Figure') || hasPattern('/figure');
+    var hasAlt = hasPattern('/Alt ') || hasPattern('/Alt(') || hasPattern('/Alt\n');
+    if (!hasFigures) return { pass: true, value: 'No figures detected' };
+    return { pass: hasAlt ? true : 'warn', value: hasAlt ? 'Alt attributes found' : 'Figures present — alt text not confirmed' };
+  });
+
+  await check('headings', function() {
+    var hasH = hasPattern('/H1') || hasPattern('/H2') || hasPattern('/H3') || (hasPattern('/H ') && hasPattern('/H>'));
+    return { pass: hasH };
+  });
+
+  await check('bookmarks', function() {
+    if (outline && outline.length > 0) return { pass: true, value: outline.length + ' bookmarks' };
+    if (pdfDoc && pdfDoc.numPages < 4) return { pass: 'warn', value: 'Short document — bookmarks optional' };
+    return { pass: false };
+  });
+
+  await check('forms', function() {
+    var widgets = annotations.filter(function(a) { return a.subtype === 'Widget'; });
+    if (widgets.length === 0) return { pass: true, value: 'No form fields detected' };
+    var unlabeled = widgets.filter(function(a) { return !a.fieldName && !a.alternativeText; });
+    return { pass: unlabeled.length === 0 ? true : false, value: widgets.length + ' field(s) found' };
+  });
+
+  await check('links', function() {
+    var links = annotations.filter(function(a) { return a.subtype === 'Link'; });
+    if (links.length === 0) return { pass: true, value: 'No links detected' };
+    return { pass: 'warn', value: links.length + ' link(s) found — review text' };
+  });
+
+  await check('author', function() {
+    var a = info.Author || info.Creator || '';
+    return { pass: a.trim().length > 0, value: a };
+  });
+
+  await check('order', function() {
+    var hasStructure = hasPattern('/Document') || hasPattern('/Article') || hasPattern('/Sect');
+    return { pass: hasStructure ? true : 'warn' };
+  });
+
+  await check('contrast', function() {
+    return { pass: 'warn', value: 'Requires manual review' };
+  });
+
+  // Show results
+  await delay(400);
+  showResults(results);
+}
+
+function showResults(results) {
+  resultsGrid.innerHTML = '';
+  var pass = 0, fail = 0, warn = 0;
+
+  CHECKS.forEach(function(c) {
+    var r = results[c.id] || {};
+    var state = r.pass === true ? 'pass' : r.pass === 'warn' ? 'warn' : 'fail';
+    if (state === 'pass') pass++;
+    else if (state === 'warn') warn++;
+    else fail++;
+
+    var icon = state === 'pass' ? '✓' : state === 'warn' ? '!' : '✗';
+    var div = document.createElement('div');
+    div.className = 'result-item ' + state;
+    div.innerHTML =
+      '<div class="result-badge">' + icon + '</div>' +
+      '<div>' +
+        '<div class="result-name">' + c.label + '</div>' +
+        '<div class="result-desc">' + c.cat + ' &nbsp;·&nbsp; ' + (r.value || (state === 'pass' ? 'Passed' : state === 'warn' ? 'Manual review recommended' : 'Not found')) + '</div>' +
+        (state === 'fail' ? '<div class="result-fix">Fix: ' + c.fix + '</div>' : '') +
+        (state === 'warn' && c.fix ? '<div class="result-fix" style="color:#b45309;">Tip: ' + c.fix + '</div>' : '') +
+      '</div>' +
+      '<span class="result-wcag">' + c.wcag + '</span>';
+    resultsGrid.appendChild(div);
+  });
+
+  var total = CHECKS.length;
+  scoreNum.textContent = pass + '/' + total;
+  var pct = Math.round((pass / total) * 100);
+  setTimeout(function() { scoreFill.style.width = pct + '%'; }, 100);
+  if (fail === 0 && warn <= 2) { scoreMsg.textContent = 'Excellent — this PDF is highly accessible.'; }
+  else if (fail <= 2) { scoreMsg.textContent = 'Good start — a few issues to address.'; }
+  else if (fail <= 5) { scoreMsg.textContent = 'Multiple issues found — remediation recommended.'; }
+  else { scoreMsg.textContent = 'Significant accessibility barriers found. Professional remediation needed.'; }
+
+  resultsPanel.classList.add('active');
+  resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Update CTA based on results
+  if (fail === 0 && warn <= 1) {
+    var ctaH = resultsPanel.querySelector('.results-cta h3');
+    var ctaP = resultsPanel.querySelector('.results-cta p');
+    if (ctaH) ctaH.textContent = 'Looking good! Want a full human-reviewed audit?';
+    if (ctaP) ctaP.textContent = 'Automated checks catch common issues, but a certified specialist review ensures full compliance with every Section 508 and WCAG 2.2 requirement.';
+  }
+}
+
+// Load PDF.js dynamically if not yet loaded
+window.addEventListener('load', function() {
+  if (typeof pdfjsLib === 'undefined') {
+    var s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload = function() {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    };
+    document.head.appendChild(s);
+  }
+});
+
+})();
+</script>
+</body></html>

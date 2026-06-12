@@ -169,10 +169,14 @@
         <p class="lead-strip-sub">100+ compliance checkpoints covering Title VI, EO 13166, Section 508, ADA Title II, WCAG 2.1/2.2, HIPAA, FERPA, and IDEA. For compliance officers, procurement directors, and IT leads.</p>
       </div>
       <div class="lead-strip-form">
-        <label class="sr-only" for="idx-checklist-email">Your work email</label>
-        <input class="lead-strip-input" type="email" id="idx-checklist-email" placeholder="your@agency.gov">
+<form name="checklist" data-netlify="true" netlify-honeypot="bot-field" data-download="assets/downloads/language-access-compliance-checklist.pdf">
+  <input type="hidden" name="form-name" value="checklist">
+  <input type="hidden" name="bot-field" style="display:none">
+  <label class="sr-only" for="idx-checklist-email">Your work email</label>
+        <input class="lead-strip-input" type="email" id="idx-checklist-email" name="checklist_email" placeholder="your@agency.gov">
         <button class="btn-lead" type="button">Get Free Checklist</button>
-      </div>
+</form>
+</div>
     </div>
   </div>
 </section>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Certified Translation Services | ATA-Certified | GSA & NASPO | Language Access Hub</title>
 <meta name="description" content="ATA-certified translation for government agencies, school districts, and nonprofits. Legal, medical, USCIS, and technical documents. 300+ language pairs. GSA and NASPO cooperative contracts available. Veteran-owned.">
-<link rel="canonical" href="https://languageaccesshub.com/translation">
+<link rel="canonical" href="https://teamtaika.com/translation">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -69,11 +69,14 @@
       <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
-          <div class="quote-card-title">Get your translation quote</div>
+          <form name="service-quote" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="service-quote">
+            <input type="hidden" name="bot-field" style="display:none">
+            <div class="quote-card-title">Get your translation quote</div>
           <p class="quote-card-sub">Upload your document or describe your project. We respond within 2 hours.</p>
           <div class="field">
             <label class="label" for="q-service">Document type</label>
-            <select class="select" id="q-service">
+            <select class="select" id="q-service" name="service">
               <option value="">Select type…</option>
               <option>Legal document (contract, court record)</option>
               <option>Medical / clinical records</option>
@@ -88,7 +91,7 @@
           <div class="field-row">
             <div class="field">
               <label class="label" for="q-from">From language</label>
-              <select class="select" id="q-from">
+              <select class="select" id="q-from" name="from">
                 <option>English</option><option>Spanish</option><option>Mandarin</option>
                 <option>French</option><option>Arabic</option><option>Vietnamese</option>
                 <option>Portuguese</option><option>Other</option>
@@ -96,7 +99,7 @@
             </div>
             <div class="field">
               <label class="label" for="q-to">To language</label>
-              <select class="select" id="q-to">
+              <select class="select" id="q-to" name="to">
                 <option>Spanish</option><option>English</option><option>Mandarin</option>
                 <option>French</option><option>Arabic</option><option>Vietnamese</option>
                 <option>Portuguese</option><option>Other</option>
@@ -106,11 +109,11 @@
           <div class="field-row">
             <div class="field">
               <label class="label" for="q-pages">Est. page count</label>
-              <input class="input" type="number" id="q-pages" placeholder="e.g. 5" min="1">
+              <input class="input" type="number" id="q-pages" name="pages" placeholder="e.g. 5" min="1">
             </div>
             <div class="field">
               <label class="label" for="q-speed">Delivery speed</label>
-              <select class="select" id="q-speed">
+              <select class="select" id="q-speed" name="speed">
                 <option>Standard (24–72 hr)</option>
                 <option>Rush (12–24 hr, +25%)</option>
                 <option>Urgent (same day, +50%)</option>
@@ -119,7 +122,7 @@
           </div>
           <div class="field">
             <label class="label" for="q-email">Work email</label>
-            <input class="input" type="email" id="q-email" placeholder="you@agency.gov" required>
+            <input class="input" type="email" id="q-email" name="email" placeholder="you@agency.gov" required>
           </div>
           <button class="btn-submit" type="button">Get My Free Quote →</button>
           <div class="form-trust-line">
@@ -359,10 +362,14 @@
         <p class="lead-strip-sub">Download our free Language Access Compliance Checklist — it covers every document type, every regulation, and every scenario government and education clients encounter.</p>
       </div>
       <div class="lead-strip-form">
-        <label class="sr-only" for="strip-email">Work email address</label>
-        <input class="lead-strip-input" type="email" id="strip-email" placeholder="your@agency.gov">
+<form name="checklist" data-netlify="true" netlify-honeypot="bot-field" data-download="assets/downloads/language-access-compliance-checklist.pdf">
+  <input type="hidden" name="form-name" value="checklist">
+  <input type="hidden" name="bot-field" style="display:none">
+  <label class="sr-only" for="strip-email">Work email address</label>
+        <input class="lead-strip-input" type="email" id="strip-email" name="email" placeholder="your@agency.gov">
         <button class="btn-lead" type="button">Get Free Checklist</button>
-      </div>
+</form>
+</div>
     </div>
   </div>
 </section>

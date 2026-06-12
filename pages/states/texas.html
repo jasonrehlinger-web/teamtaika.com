@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Language Access Services in Texas | NASPO Contract | Language Access Hub</title>
 <meta name="description" content="Certified translation, interpretation, and ADA/Section 508 compliance for government agencies, school districts, and healthcare organizations in Texas. NASPO ValuePoint cooperative contract Active Participating Addendum.">
-<link rel="canonical" href="https://languageaccesshub.com/texas">
+<link rel="canonical" href="https://teamtaika.com/texas">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
@@ -36,13 +36,16 @@
       <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
-          <div class="quote-card-title">Texas agency inquiry</div>
+          <form name="state-inquiry" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="state-inquiry">
+            <input type="hidden" name="bot-field" style="display:none">
+            <div class="quote-card-title">Texas agency inquiry</div>
           <p class="quote-card-sub">Tell us about your agency. We confirm your contract vehicle and respond within 2 hours.</p>
           <div class="field"><label class="label" for="s-type">Agency type</label>
-          <select class="select" id="s-type"><option>State agency</option><option>County agency</option><option>City/municipal</option><option>School district</option><option>Healthcare / FQHC</option><option>Nonprofit with federal funding</option></select></div>
+          <select class="select" id="s-type" name="type"><option>State agency</option><option>County agency</option><option>City/municipal</option><option>School district</option><option>Healthcare / FQHC</option><option>Nonprofit with federal funding</option></select></div>
           <div class="field"><label class="label" for="s-service">Services needed</label>
-          <select class="select" id="s-service"><option>Document translation</option><option>Interpretation (OPI/VRI)</option><option>Section 508 / ADA compliance</option><option>Multiple services</option></select></div>
-          <div class="field"><label class="label" for="s-email">Work email (.gov)</label><input class="input" type="email" id="s-email" placeholder="you@agency.tx.gov" required></div>
+          <select class="select" id="s-service" name="service"><option>Document translation</option><option>Interpretation (OPI/VRI)</option><option>Section 508 / ADA compliance</option><option>Multiple services</option></select></div>
+          <div class="field"><label class="label" for="s-email">Work email (.gov)</label><input class="input" type="email" id="s-email" name="email" placeholder="you@agency.tx.gov" required></div>
           <button class="btn-submit" type="button">Submit Texas Inquiry →</button>
           <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>NASPO &amp; GSA contracts · Same-day confirmation</div>
         </div>

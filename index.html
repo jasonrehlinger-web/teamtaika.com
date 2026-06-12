@@ -59,7 +59,7 @@
           <div class="quote-card-title">Get a quote or order now</div>
           <p class="quote-card-sub">Describe your project. We respond within 2 hours with pricing and availability.</p>
 
-          <form name="quote" data-netlify="true" netlify-honeypot="bot-field">
+          <form name="quote" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
           <input type="hidden" name="form-name" value="quote">
           <input type="hidden" name="bot-field" style="display:none">
           <div class="field"><label class="label" for="idx-service">Service needed</label>
@@ -68,6 +68,16 @@
             <select class="select" id="idx-org" name="org-type"><option>Federal agency</option><option>State agency</option><option>Local government</option><option>School district</option><option>Healthcare organization</option><option>Nonprofit</option><option>Legal / law firm</option><option>Other</option></select></div>
             <div class="field"><label class="label" for="idx-email">Work email</label><input class="input" type="email" id="idx-email" name="email" placeholder="you@agency.gov" required></div>
             <div class="field"><label class="label" for="idx-notes">Brief description</label><textarea class="textarea" id="idx-notes" name="description" placeholder="Tell us what you need..." style="min-height:70px;"></textarea></div>
+            <div class="field">
+              <label class="label">Attach a document <span style="color:rgba(74,94,116,0.6);font-weight:400;">(optional)</span></label>
+              <div class="upload-drop" id="upload-drop">
+                <input type="file" name="file" id="quote-file" class="upload-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.rtf">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span class="upload-label">Drop a file here or <u>browse</u></span>
+                <span class="upload-hint">PDF, Word, PowerPoint, Excel — up to 20 MB</span>
+                <span class="upload-filename" id="upload-filename"></span>
+              </div>
+            </div>
             <button class="btn-submit" type="button">Get My Quote →</button>
           </form>
             <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>GSA &amp; NASPO contracts · HIPAA &amp; FERPA compliant
@@ -286,19 +296,4 @@
         <li><a href="/pages/resources/compliance-faq.html#508">Section 508 &amp; WCAG</a></li>
         <li><a href="/index.html#products">Online Store</a></li>
         <li><a href="/index.html#about">About Taika</a></li>
-        <li><a href="/index.html#quote">Contact / Quote</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <div class="footer-legal">
-      <p>© 2026 Language Access Hub — Powered by Taika Translations LLC. Austin, TX. All rights reserved.</p>
-      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
-    </div>
-    <nav class="footer-social" aria-label="Social media">
-      <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-      <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
-      <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
-      <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">Tik
+        <li><a href="/index.html#qu

@@ -77,6 +77,44 @@
     els.forEach(function (el) { obs.observe(el); });
   }
 
+  /* -- FILE UPLOAD DROP ZONE -------------------------------- */
+  function initUploadDrop() {
+    document.querySelectorAll('.upload-drop').forEach(function (drop) {
+      var input = drop.querySelector('.upload-input');
+      var nameEl = drop.querySelector('.upload-filename');
+      if (!input) return;
+
+      function setFile(file) {
+        if (!file) return;
+        drop.classList.add('has-file');
+        if (nameEl) nameEl.textContent = file.name;
+      }
+
+      input.addEventListener('change', function () {
+        if (this.files && this.files[0]) setFile(this.files[0]);
+      });
+
+      drop.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        drop.classList.add('drag-over');
+      });
+      drop.addEventListener('dragleave', function () {
+        drop.classList.remove('drag-over');
+      });
+      drop.addEventListener('drop', function (e) {
+        e.preventDefault();
+        drop.classList.remove('drag-over');
+        var file = e.dataTransfer && e.dataTransfer.files[0];
+        if (file && input) {
+          var dt = new DataTransfer();
+          dt.items.add(file);
+          input.files = dt.files;
+          setFile(file);
+        }
+      });
+    });
+  }
+
   /* -- FORM SUBMISSION -------------------------------------- */
   var HS_PORTAL = '47509323';
   var HS_FORM   = 'a2c15341-e287-4b14-bc2c-ed20dc17acff';
@@ -88,7 +126,7 @@
     }).join('&');
   }
 
-  function submitToHubSpot(data, formName) {
+  function submitToHubSpot(data, formName, fileName) {
     var emailVal = '';
     Object.keys(data).forEach(function (k) {
       if (!emailVal && k.toLowerCase().indexOf('email') !== -1) emailVal = data[k];
@@ -103,6 +141,7 @@
       if (skip.indexOf(k) !== -1 || k.toLowerCase().indexOf('email') !== -1) return;
       if (data[k]) msgParts.push(k + ': ' + data[k]);
     });
+    if (fileName) msgParts.push('attachment: ' + fileName);
 
     var fields = [{ name: 'email', value: emailVal }];
     if (companyVal) fields.push({ name: 'company', value: companyVal });
@@ -144,17 +183,31 @@
         if (form) {
           var data = {};
           form.querySelectorAll('input, select, textarea').forEach(function (el) {
-            if (el.name) data[el.name] = el.value;
+            if (el.name && el.type !== 'file') data[el.name] = el.value;
           });
           var formName = data['form-name'] || 'unknown';
           var downloadUrl = form.getAttribute('data-download');
 
-          submitToHubSpot(data, formName);
+          // Check for file attachment
+          var fileInput = form.querySelector('input[type="file"]');
+          var fileName = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0].name : null;
+
+          submitToHubSpot(data, formName, fileName);
+
+          // Use FormData if there's a file, otherwise URL-encoded
+          var body, headers;
+          if (fileInput && fileInput.files && fileInput.files.length > 0) {
+            body = new FormData(form);
+            headers = {};
+          } else {
+            body = encode(data);
+            headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+          }
 
           fetch('/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: encode(data)
+            headers: headers,
+            body: body
           }).then(function () {
             if (downloadUrl) {
               var a = document.createElement('a');
@@ -195,7 +248,6 @@
       btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
     });
 
-    // Toggle dropdowns on tap in mobile menu
     document.querySelectorAll('.nav-dropdown > a').forEach(function (a) {
       a.addEventListener('click', function (e) {
         if (window.innerWidth >= 641) return;
@@ -205,7 +257,6 @@
       });
     });
 
-    // Close menu when a leaf link is clicked
     document.querySelectorAll('.nav-links a:not(.nav-dropdown > a)').forEach(function (a) {
       a.addEventListener('click', function () {
         nav.classList.remove('nav-open');
@@ -213,7 +264,6 @@
       });
     });
 
-    // Close menu on outside click
     document.addEventListener('click', function (e) {
       if (!nav.contains(e.target)) {
         nav.classList.remove('nav-open');
@@ -230,6 +280,7 @@
     initReveal();
     initForms();
     initHamburger();
+    initUploadDrop();
   });
 
 }());

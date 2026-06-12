@@ -889,3 +889,48 @@ ul, ol { list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ── FILE UPLOAD DROP ZONE ────────────────────────────────── */
+.upload-drop {
+  position: relative;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 18px 16px 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  background: var(--body-bg);
+}
+.upload-drop:hover, .upload-drop.drag-over {
+  border-color: var(--gold);
+  background: var(--gold-bg);
+}
+.upload-drop.has-file {
+  border-color: var(--emerald);
+  background: var(--emerald-bg);
+  border-style: solid;
+}
+.upload-input {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  opacity: 0; cursor: pointer;
+}
+.upload-icon {
+  width: 24px; height: 24px;
+  color: var(--slate-light);
+  margin: 0 auto 6px; display: block;
+}
+.upload-drop.has-file .upload-icon { color: var(--emerald); }
+.upload-label {
+  display: block; font-size: 13px; font-weight: 500;
+  color: var(--navy); margin-bottom: 3px;
+}
+.upload-hint {
+  display: block; font-size: 11.5px; color: var(--slate-light);
+}
+.upload-filename {
+  display: none; font-size: 12.5px; font-weight: 600;
+  color: var(--emerald); margin-top: 4px;
+}
+.upload-drop.has-file .upload-filename { display: block; }
+.upload-drop.has-file .upload-hint { display: none; }

@@ -17,6 +17,9 @@
   "description": "Certified Korean translation and professional interpretation for government agencies, school districts, and healthcare organizations. HIPAA and FERPA compliant. GSA and NASPO cooperative contracts available."
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../../css/main.css">
 </head>
 <body>
@@ -58,7 +61,7 @@
         </div>
       </div>
 
-      <form class="quote-card" data-netlify="true" name="languages-korean-quote" method="POST"><input type="hidden" name="form-name" value="languages-korean-quote">
+      <div class="quote-card" id="quote">
         <div class="quote-card-header"></div>
         <div class="quote-card-body">
           <div class="quote-card-title">Get your Korean services quote</div>
@@ -97,13 +100,13 @@
             <label class="label" for="l-email">Work email</label>
             <input class="input" type="email" id="l-email" placeholder="you@agency.gov" required>
           </div>
-          <button class="btn-submit" type="submit">Get My Quote →</button>
+          <button class="btn-submit" type="button">Get My Quote →</button>
           <div class="form-trust-line">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
             GSA &amp; NASPO contracts · HIPAA &amp; FERPA compliant
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>
@@ -205,11 +208,11 @@
         <div class="lead-strip-title" id="checklist-h">Need Korean language access for your organization?</div>
         <p class="lead-strip-sub">Download our free Language Access Compliance Checklist — covering Title VI, IDEA, Section 1557, and EO 13166 requirements with a practical vendor evaluation guide.</p>
       </div>
-      <div class="lead-strip-form"><form data-netlify="true" name="languages-korean-newsletter" method="POST"><input type="hidden" name="form-name" value="languages-korean-newsletter">
+      <div class="lead-strip-form">
         <label class="sr-only" for="lang-email">Work email</label>
         <input class="lead-strip-input" type="email" id="lang-email" placeholder="your@agency.gov">
-        <button class="btn-lead" type="submit">Get Free Checklist</button>
-      </form></div>
+        <button class="btn-lead" type="button">Get Free Checklist</button>
+      </div>
     </div>
   </div>
 </section>

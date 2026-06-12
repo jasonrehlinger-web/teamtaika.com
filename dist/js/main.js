@@ -12,6 +12,7 @@
         var item = this.closest('.faq-item, .faq-item-dark');
         if (!item) return;
         var isOpen = item.classList.contains('open');
+        // Close all in same container
         var parent = item.closest('.faq-list, .faq-grid, .faq-cols');
         var siblings = parent
           ? parent.querySelectorAll('.faq-item, .faq-item-dark')
@@ -24,6 +25,7 @@
         if (!isOpen) {
           item.classList.add('open');
           this.setAttribute('aria-expanded', 'true');
+          // Scroll into view on mobile
           if (window.innerWidth < 640) {
             setTimeout(function () {
               item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -77,21 +79,24 @@
     els.forEach(function (el) { obs.observe(el); });
   }
 
-  /* ── NETLIFY FORM SUBMISSION ───────────────────────────── */
+  /* ── FORM SUBMISSION ───────────────────────────────────── */
   function encode(data) {
-    return Object.keys(data)
-      .map(function (key) {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-      })
-      .join('&');
+    return Object.keys(data).map(function (key) {
+      return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }).join('&');
   }
 
   function initForms() {
-    document.querySelectorAll('form[data-netlify="true"]').forEach(function (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
+    document.querySelectorAll('.btn-submit, .btn-form, .btn-lead').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        var btn = this;
+        var form = btn.closest('form');
+        var card = btn.closest('.quote-card, .lead-form-card, .lead-strip');
 
-        var inputs = form.querySelectorAll('input[required], textarea[required]');
+        // Validate email fields
+        var container = form || card;
+        if (!container) return;
+        var inputs = container.querySelectorAll('input[type="email"], input[type="text"][required]');
         var valid = true;
         inputs.forEach(function (inp) {
           if (!inp.value.trim()) {
@@ -100,26 +105,23 @@
             setTimeout(function () { inp.style.borderColor = ''; }, 2000);
           }
         });
-        if (!valid) return;
+        if (!valid || btn.dataset.submitting) return;
 
-        var btn = form.querySelector('.btn-submit, .btn-lead');
-        if (!btn || btn.dataset.submitting) return;
         btn.dataset.submitting = '1';
-        var origText = btn.textContent;
         btn.textContent = 'Sending…';
-        btn.disabled = true;
 
-        var data = { 'form-name': form.getAttribute('name') };
-        new FormData(form).forEach(function (val, key) { data[key] = val; });
-
-        fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: encode(data)
-        })
-          .then(function () {
-            // Trigger download if form has a data-download attribute
-            var downloadUrl = form.getAttribute('data-download');
+        if (form) {
+          // Real Netlify form — collect named fields and POST
+          var data = {};
+          form.querySelectorAll('input, select, textarea').forEach(function (el) {
+            if (el.name) data[el.name] = el.value;
+          });
+          var downloadUrl = form.getAttribute('data-download');
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encode(data)
+          }).then(function () {
             if (downloadUrl) {
               var a = document.createElement('a');
               a.href = downloadUrl;
@@ -132,43 +134,4 @@
               btn.textContent = '✓ Sent! We\'ll be in touch soon.';
             }
             btn.style.background = '#1A6B4A';
-            form.querySelectorAll('input:not([type="hidden"]), textarea, select').forEach(function (el) {
-              if (el.tagName === 'SELECT') { el.selectedIndex = 0; } else { el.value = ''; }
-            });
-          })
-          .catch(function () {
-            btn.textContent = origText;
-            btn.disabled = false;
-            delete btn.dataset.submitting;
-            alert('Something went wrong. Please email us at sales@taikatranslations.com');
-          });
-      });
-    });
-  }
-
-  /* ── LANGUAGE TICKER ───────────────────────────────────── */
-  function initTicker() {
-    // CSS handles animation
-  }
-
-  /* ── STICKY NAV SHADOW ─────────────────────────────────── */
-  function initNavScroll() {
-    var nav = document.querySelector('.site-nav');
-    if (!nav) return;
-    window.addEventListener('scroll', function () {
-      nav.style.boxShadow = window.scrollY > 40 ? '0 2px 24px rgba(0,0,0,0.3)' : '';
-    }, { passive: true });
-  }
-
-  /* ── INIT ──────────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', function () {
-    initFaq();
-    initSmoothScroll();
-    initActiveNav();
-    initReveal();
-    initForms();
-    initTicker();
-    initNavScroll();
-  });
-
-})();
+          }).catch(func

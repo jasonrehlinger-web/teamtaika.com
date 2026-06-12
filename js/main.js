@@ -134,4 +134,29 @@
               btn.textContent = '✓ Sent! We\'ll be in touch soon.';
             }
             btn.style.background = '#1A6B4A';
-          }).catch(func
+          }).catch(function () {
+            btn.textContent = 'Error — please email sales@taikatranslations.com';
+            btn.style.background = '#DC2626';
+            btn.dataset.submitting = '';
+          });
+        } else {
+          // Fallback for non-form cards
+          setTimeout(function () {
+            btn.textContent = '✓ Sent! We\'ll be in touch soon.';
+            btn.style.background = '#1A6B4A';
+          }, 1200);
+        }
+      });
+    });
+  }
+
+  /* ── INIT ──────────────────────────────────────────── */
+  document.addEventListener('DOMContentLoaded', function () {
+    initFaq();
+    initSmoothScroll();
+    initActiveNav();
+    initReveal();
+    initForms();
+  });
+
+}());

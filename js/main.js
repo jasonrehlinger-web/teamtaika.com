@@ -354,9 +354,9 @@
   // ── EmailJS configuration ──────────────────────────────────────────────
   // Replace these three values after creating your EmailJS account.
   // See setup instructions at the bottom of this file.
-  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Account → API Keys
-  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // Email Services → Service ID
-  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // Email Templates → Template ID
+  var EMAILJS_PUBLIC_KEY  = 'eMvjaN3wAkKGNHzFw';
+  var EMAILJS_SERVICE_ID  = 'service_3ehbwfs';
+  var EMAILJS_TEMPLATE_ID = 'template_wlqinrc';
 
   var emailjsReady = false;
 
@@ -387,6 +387,7 @@
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         to_name:        name,
         to_email:       email,
+        email:          email,
         product:        description,
         amount:         amount,
         transaction_id: txn,

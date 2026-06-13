@@ -351,6 +351,52 @@
     });
   }
 
+  // ── EmailJS configuration ──────────────────────────────────────────────
+  // Replace these three values after creating your EmailJS account.
+  // See setup instructions at the bottom of this file.
+  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Account → API Keys
+  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // Email Services → Service ID
+  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // Email Templates → Template ID
+
+  var emailjsReady = false;
+
+  function loadEmailJS(callback) {
+    if (emailjsReady) { callback(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.onload = function() {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      emailjsReady = true;
+      callback();
+    };
+    s.onerror = function() { console.warn('[EmailJS] SDK failed to load'); callback(); };
+    document.head.appendChild(s);
+  }
+
+  function sendConfirmationEmail(details, description) {
+    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') return; // not configured yet
+    var payer      = details.payer || {};
+    var name       = (payer.name ? payer.name.given_name + ' ' + payer.name.surname : 'Customer').trim();
+    var email      = payer.email_address || '';
+    var amount     = details.purchase_units && details.purchase_units[0]
+                     ? '$' + details.purchase_units[0].amount.value
+                     : '';
+    var txn        = details.id || '';
+    if (!email) return;
+    loadEmailJS(function() {
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_name:        name,
+        to_email:       email,
+        product:        description,
+        amount:         amount,
+        transaction_id: txn,
+        reply_to:       'sales@taikatranslations.com'
+      }).catch(function(err) {
+        console.warn('[EmailJS] send failed', err);
+      });
+    });
+  }
+
   function validateForm(form) {
     var ok = true;
     form.querySelectorAll('input[required], select[required]').forEach(function (el) {
@@ -406,11 +452,13 @@
       onApprove: function (data, actions) {
         container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing payment…</p>';
         return actions.order.capture().then(function (details) {
+          var desc = getOrderDescription(form);
           submitNetlifyForm(form, {
             'paypal-transaction-id': details.id,
             'paypal-payer-email':    details.payer ? details.payer.email_address : '',
             'paypal-amount':         details.purchase_units[0].amount.value
           }).finally(function () {
+            sendConfirmationEmail(details, desc);
             showSuccess(form, details);
           });
         });
@@ -487,11 +535,15 @@
           onApprove: function(data, actions) {
             container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing…</p>';
             return actions.order.capture().then(function(details) {
+              var desc = getOrderDescription(form);
               submitNetlifyForm(form, {
                 'paypal-transaction-id': details.id,
                 'paypal-payer-email': details.payer ? details.payer.email_address : '',
                 'paypal-amount': details.purchase_units[0].amount.value
-              }).finally(function() { showSuccess(form, details); });
+              }).finally(function() {
+                sendConfirmationEmail(details, desc);
+                showSuccess(form, details);
+              });
             });
           },
           onError: function(err) {

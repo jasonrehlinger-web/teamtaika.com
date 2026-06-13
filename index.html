@@ -22,6 +22,12 @@
 .product-price{font-family:var(--font-display);font-size:28px;color:var(--gold);margin-bottom:4px;}
 @media(max-width:640px){.hero-section{padding:40px 0 32px;}.hero-lead{font-size:16px;}}
 .product-unit{font-size:13px;color:var(--slate-light);}
+
+.lang-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 12px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-md,12px);text-decoration:none;transition:all 0.18s;text-align:center;}
+.lang-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(184,145,58,0.12);transform:translateY(-2px);}
+.lang-flag{font-size:28px;line-height:1;}
+.lang-name{font-size:14px;font-weight:700;color:var(--navy);}
+.lang-native{font-size:12px;color:var(--slate);}
 </style>
 </head>
 <body>
@@ -239,6 +245,33 @@
     </div>
   </div>
 </div>
+
+<!-- LANGUAGES SECTION -->
+<section class="section" id="languages" aria-labelledby="lang-h2">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <span class="kicker">300+ Languages Supported</span>
+      <h2 class="section-heading" id="lang-h2" style="margin-top:12px;">Translation services by language</h2>
+      <p class="section-lead">Certified translation with USCIS acceptance for immigration, legal, medical, and government documents.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;max-width:1000px;margin:0 auto 48px;">
+      <a href="/spanish-translation" class="lang-card"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span><span class="lang-native">Español</span></a>
+      <a href="/french-translation" class="lang-card"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span><span class="lang-native">Français</span></a>
+      <a href="/portuguese-translation" class="lang-card"><span class="lang-flag">🇧🇷</span><span class="lang-name">Portuguese</span><span class="lang-native">Português</span></a>
+      <a href="/german-translation" class="lang-card"><span class="lang-flag">🇩🇪</span><span class="lang-name">German</span><span class="lang-native">Deutsch</span></a>
+      <a href="/italian-translation" class="lang-card"><span class="lang-flag">🇮🇹</span><span class="lang-name">Italian</span><span class="lang-native">Italiano</span></a>
+      <a href="/chinese-translation" class="lang-card"><span class="lang-flag">🇨🇳</span><span class="lang-name">Chinese</span><span class="lang-native">中文</span></a>
+      <a href="/arabic-translation" class="lang-card"><span class="lang-flag">🇸🇦</span><span class="lang-name">Arabic</span><span class="lang-native">العربية</span></a>
+      <a href="/hindi-translation" class="lang-card"><span class="lang-flag">🇮🇳</span><span class="lang-name">Hindi</span><span class="lang-native">हिन्दी</span></a>
+      <a href="/russian-translation" class="lang-card"><span class="lang-flag">🇷🇺</span><span class="lang-name">Russian</span><span class="lang-native">Русский</span></a>
+      <a href="/polish-translation" class="lang-card"><span class="lang-flag">🇵🇱</span><span class="lang-name">Polish</span><span class="lang-native">Polski</span></a>
+      <a href="/urdu-translation" class="lang-card"><span class="lang-flag">🇵🇰</span><span class="lang-name">Urdu</span><span class="lang-native">اردو</span></a>
+      <a href="/bengali-translation" class="lang-card"><span class="lang-flag">🇧🇩</span><span class="lang-name">Bengali</span><span class="lang-native">বাংলা</span></a>
+    </div>
+    <p style="text-align:center;font-size:14px;color:var(--slate);">Need a different language? We cover 300+ — <a href="/index.html#quote" style="color:var(--navy);font-weight:600;">request a quote</a>.</p>
+  </div>
+</section>
+
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-brand">
@@ -290,7 +323,42 @@
     <div class="footer-col">
       <h4>Resources</h4>
       <ul>
-        <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
+              <li class="nav-dropdown">
+        <a href="/pages/services/translation.html#languages">Languages</a>
+        <div class="nav-dropdown-menu" style="min-width:520px;display:grid;grid-template-columns:1fr 1fr;gap:0;">
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">English Pages</div>
+            <a href="/spanish-translation">Spanish Translation</a>
+            <a href="/french-translation">French Translation</a>
+            <a href="/portuguese-translation">Portuguese Translation</a>
+            <a href="/german-translation">German Translation</a>
+            <a href="/italian-translation">Italian Translation</a>
+            <a href="/chinese-translation">Chinese Translation</a>
+            <a href="/arabic-translation">Arabic Translation</a>
+            <a href="/hindi-translation">Hindi Translation</a>
+            <a href="/russian-translation">Russian Translation</a>
+            <a href="/polish-translation">Polish Translation</a>
+            <a href="/urdu-translation">Urdu Translation</a>
+            <a href="/bengali-translation">Bengali Translation</a>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">Native Language Pages</div>
+            <a href="/traduccion-certificada-espanol">Español</a>
+            <a href="/traduction-certifiee-francais">Français</a>
+            <a href="/traducao-certificada-portugues">Português</a>
+            <a href="/beglaubigte-uebersetzung-deutsch">Deutsch</a>
+            <a href="/traduzione-certificata-italiano">Italiano</a>
+            <a href="/fanyi-zhongwen">中文</a>
+            <a href="/tarjama-arabiya-rasmiya">العربية</a>
+            <a href="/praman-patra-anuvad-hindi">हिन्दी</a>
+            <a href="/zaverenniy-perevod-russkiy">Русский</a>
+            <a href="/tlumaczenia-uwierzytelnione-polskie">Polski</a>
+            <a href="/tarjuma-rasmi-urdu">اردو</a>
+            <a href="/praman-anuvad-bangla">বাংলা</a>
+          </div>
+        </div>
+      </li>
+      <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
         <li><a href="/pages/resources/compliance-faq.html#checklist">Free Compliance Checklist</a></li>
         <li><a href="/pages/resources/compliance-faq.html#title6">Title VI &amp; EO 13166</a></li>
         <li><a href="/pages/resources/compliance-faq.html#508">Section 508 &amp; WCAG</a></li>

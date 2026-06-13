@@ -443,8 +443,11 @@
     };
 
     sdk.onload = function () {
+      if (typeof paypal === 'undefined' || !paypal.Buttons) {
+        console.error('[PayPal] SDK loaded but paypal.Buttons unavailable');
+        return;
+      }
       forms.forEach(function (form) {
-        // Replace the existing submit button with a PayPal container
         var oldBtn = form.querySelector('.btn-submit, .btn-order');
         if (!oldBtn) return;
 
@@ -455,15 +458,58 @@
         oldBtn.parentNode.insertBefore(container, oldBtn);
         oldBtn.style.display = 'none';
 
-        // Update price whenever service/page count changes
-        var svcEl  = form.querySelector('[name="service-type"]');
-        var pgEl   = form.querySelector('[name="page-count"]');
+        var svcEl = form.querySelector('[name="service-type"]');
 
-        renderPayPalButtons(form, container);
+        var btns = paypal.Buttons({
+          style: { layout:'vertical', color:'gold', shape:'rect', label:'pay', height:48 },
+          onClick: function(data, actions) {
+            if (!validateForm(form)) return actions.reject();
+            var amount = getOrderAmount(form);
+            if (!amount) { window.location.href='/index.html#quote'; return actions.reject(); }
+            return actions.resolve();
+          },
+          createOrder: function(data, actions) {
+            var amount = getOrderAmount(form);
+            return actions.order.create({
+              purchase_units:[{
+                amount:{ value: amount, currency_code:'USD' },
+                description: getOrderDescription(form),
+                soft_descriptor:'TaikaTranslations'
+              }]
+            });
+          },
+          onApprove: function(data, actions) {
+            container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing…</p>';
+            return actions.order.capture().then(function(details) {
+              submitNetlifyForm(form, {
+                'paypal-transaction-id': details.id,
+                'paypal-payer-email': details.payer ? details.payer.email_address : '',
+                'paypal-amount': details.purchase_units[0].amount.value
+              }).finally(function() { showSuccess(form, details); });
+            });
+          },
+          onError: function(err) {
+            console.error('[PayPal]', err);
+            container.innerHTML = '';
+            oldBtn.style.display = 'block';
+          },
+          onCancel: function() {}
+        });
 
-        // Re-render if switching to/from interpretation (no price → quote only)
+        if (btns.isEligible()) {
+          btns.render(container).catch(function(err) {
+            console.error('[PayPal render]', err);
+            container.innerHTML = '';
+            oldBtn.style.display = 'block';
+          });
+        } else {
+          console.warn('[PayPal] Buttons not eligible for this merchant/browser');
+          container.remove();
+          oldBtn.style.display = 'block';
+        }
+
         if (svcEl) {
-          svcEl.addEventListener('change', function () {
+          svcEl.addEventListener('change', function() {
             var isQuote = (this.value === 'interpretation' || this.value === 'both');
             oldBtn.style.display = isQuote ? 'block' : 'none';
             container.style.display = isQuote ? 'none' : 'block';

@@ -435,7 +435,7 @@
       + '?client-id=' + PAYPAL_CLIENT_ID
       + '&currency=USD'
       + '&intent=capture'
-      + '&components=buttons';
+      + '&components=buttons,googlepay';
     sdk.setAttribute('data-sdk-integration-source', 'button-factory');
 
     sdk.onerror = function () {

@@ -426,7 +426,7 @@
 
   function initPayPal() {
     // Find all Netlify order forms on this page
-    var forms = document.querySelectorAll('form[data-netlify="true"]');
+    var forms = document.querySelectorAll('form[name^="lang-order"], form[name^="lang-native"]');
     if (!forms.length) return;
 
     // Load PayPal SDK

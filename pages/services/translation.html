@@ -283,7 +283,7 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>24–72 hour delivery</li>
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>PDF + editable format</li>
         </ul>
-        <a href="#order-now" class="btn-ghost-navy" style="display:block;text-align:center;">Order Now →</a>
+        <a href="#order-now" class="btn-ghost-navy" style="display:block;text-align:center;" onclick="var s=document.getElementById('tr-service');if(s){s.value='standard';s.dispatchEvent(new Event('change'));}">Order Now →</a>
       </div>
       <div class="card" style="border-top:3px solid var(--gold);">
         <div style="font-family:var(--font-display);font-size:32px;color:var(--navy);margin-bottom:4px;">$31.24 <span style="font-size:16px;font-family:var(--font-body);color:var(--slate-light);">/ page</span></div>
@@ -294,7 +294,7 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Priority queue assignment</li>
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Project manager check-ins</li>
         </ul>
-        <a href="#order-now" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Order Rush →</a>
+        <a href="#order-now" class="btn-primary" style="display:block;text-align:center;justify-content:center;" onclick="var s=document.getElementById('tr-service');if(s){s.value='rush';s.dispatchEvent(new Event('change'));}">Order Rush →</a>
       </div>
       <div class="card" style="border-top:3px solid var(--navy);">
         <div style="font-family:var(--font-display);font-size:32px;color:var(--navy);margin-bottom:4px;">Custom <span style="font-size:16px;font-family:var(--font-body);color:var(--slate-light);">GSA / NASPO</span></div>
@@ -510,6 +510,6 @@
 </div>
 
 <!-- @footer -->
-<script src="../../js/main.js?v=7"></script>
+<script src="../../js/main.js?v=8"></script>
 </body>
 </html>

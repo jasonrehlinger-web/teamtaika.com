@@ -286,6 +286,50 @@
 }());
 
 /* ============================================================
+   Interpretation Policy Notice
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var POLICY_HTML = [
+    '<div class="interp-policy-notice" style="',
+    'background:#fef9ec;border:1px solid #e0d5b8;border-radius:8px;',
+    'padding:14px 16px;margin-top:12px;font-size:13px;color:#4a5e74;line-height:1.6;">',
+    '<strong style="color:#1a2e4a;">📋 Booking policy:</strong>',
+    '<ul style="margin:6px 0 0;padding-left:18px;">',
+    '<li><strong>2-hour minimum</strong> applies to all VRI and in-person bookings.</li>',
+    '<li>Cancellations made <strong>less than 2 weeks in advance</strong> may be subject to a cancellation fee.</li>',
+    '</ul></div>'
+  ].join('');
+
+  function handleServiceChange(select) {
+    var val = select.value;
+    var isInterp = (val === 'interpretation' || val === 'both');
+    // Find or create the notice div
+    var notice = select.parentNode.querySelector('.interp-policy-notice');
+    if (isInterp) {
+      if (!notice) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = POLICY_HTML;
+        notice = tmp.firstChild;
+        select.parentNode.appendChild(notice);
+      }
+      notice.style.display = 'block';
+    } else {
+      if (notice) notice.style.display = 'none';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('select[name="service-type"]').forEach(function (sel) {
+      sel.addEventListener('change', function () { handleServiceChange(sel); });
+      // Run once on load in case default is interpretation
+      handleServiceChange(sel);
+    });
+  });
+}());
+
+/* ============================================================
    PayPal Smart Checkout
    ============================================================ */
 (function () {

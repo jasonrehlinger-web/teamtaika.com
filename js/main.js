@@ -296,6 +296,9 @@
   var PRICES = { standard: 24.99, rush: 31.24, sameday: 37.49 };
 
   function getOrderAmount(form) {
+    // Fixed-price store forms (data-price attribute)
+    if (form.dataset && form.dataset.price) return parseFloat(form.dataset.price).toFixed(2);
+    // Language/translation forms (dynamic price)
     var svc   = form.querySelector('[name="service-type"]');
     var pages = form.querySelector('[name="page-count"]');
     if (!svc) return null;
@@ -306,6 +309,9 @@
   }
 
   function getOrderDescription(form) {
+    // Fixed-price store forms
+    if (form.dataset && form.dataset.product) return form.dataset.product;
+    // Language/translation forms
     var svc  = form.querySelector('[name="service-type"]');
     var pg   = form.querySelector('[name="page-count"]');
     var lang = form.querySelector('[name="language"]');
@@ -426,7 +432,7 @@
 
   function initPayPal() {
     // Find all Netlify order forms on this page
-    var forms = document.querySelectorAll('form[name^="lang-order"], form[name^="lang-native"]');
+    var forms = document.querySelectorAll('form[name^="lang-order"], form[name^="lang-native"], form[name^="store-order"]');
     if (!forms.length) return;
 
     // Load PayPal SDK

@@ -283,7 +283,7 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>24–72 hour delivery</li>
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>PDF + editable format</li>
         </ul>
-        <a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;">Order Now</a>
+        <a href="#order-now" class="btn-ghost-navy" style="display:block;text-align:center;">Order Now →</a>
       </div>
       <div class="card" style="border-top:3px solid var(--gold);">
         <div style="font-family:var(--font-display);font-size:32px;color:var(--navy);margin-bottom:4px;">$31.24 <span style="font-size:16px;font-family:var(--font-body);color:var(--slate-light);">/ page</span></div>
@@ -294,7 +294,7 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Priority queue assignment</li>
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Project manager check-ins</li>
         </ul>
-        <a href="#quote" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Order Rush Translation</a>
+        <a href="#order-now" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Order Rush →</a>
       </div>
       <div class="card" style="border-top:3px solid var(--navy);">
         <div style="font-family:var(--font-display);font-size:32px;color:var(--navy);margin-bottom:4px;">Custom <span style="font-size:16px;font-family:var(--font-body);color:var(--slate-light);">GSA / NASPO</span></div>
@@ -307,6 +307,79 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Dedicated account manager</li>
         </ul>
         <a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;">Request Volume Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ORDER FORM -->
+<section class="section-mist section-sm" id="order-now" aria-label="Order certified translation">
+  <div class="container" style="max-width:680px;">
+    <div class="quote-card" style="border:2px solid var(--border-gold);">
+      <div class="quote-card-header"></div>
+      <div class="quote-card-body">
+        <div class="quote-card-title">Order Certified Translation</div>
+        <p class="quote-card-sub">Select your service level, enter your details, and pay securely via PayPal. We'll confirm your order within 1 hour.</p>
+
+        <form name="lang-order-translation" method="POST" action="/"
+              data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data"
+              id="lang-order-translation-form">
+          <input type="hidden" name="form-name" value="lang-order-translation">
+          <input type="hidden" name="language" value="(specified in notes)">
+          <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div class="field">
+            <label class="label" for="tr-service">Service Type</label>
+            <select class="select" id="tr-service" name="service-type" onchange="(function(){var s=document.getElementById('tr-service').value;var pg=document.getElementById('tr-page-group');var pc=document.getElementById('tr-price-calc');var PRICES={standard:24.99,rush:31.24,sameday:37.49};pg.style.display=(s==='interpretation'||s==='both')?'none':'block';pc.style.display=(s==='interpretation'||s==='both')?'none':'flex';var pages=Math.max(1,parseInt(document.getElementById('tr-pages').value||'1',10));var price=PRICES[s]||24.99;document.getElementById('tr-price-total').textContent='$'+(price*pages).toFixed(2);})()">
+              <option value="standard">Standard Certified Translation — $24.99/page</option>
+              <option value="rush">Rush Translation (+25%) — $31.24/page</option>
+              <option value="sameday">Same-Day Translation (+50%) — $37.49/page</option>
+              <option value="interpretation">Interpretation (OPI/VRI) — Request a Quote</option>
+              <option value="both">Translation + Interpretation — Request a Quote</option>
+            </select>
+          </div>
+
+          <div class="field" id="tr-page-group">
+            <label class="label" for="tr-pages">Number of Pages</label>
+            <input class="input" type="number" id="tr-pages" name="page-count" min="1" max="500" value="1"
+                   oninput="(function(){var s=document.getElementById('tr-service').value;var PRICES={standard:24.99,rush:31.24,sameday:37.49};var price=PRICES[s]||24.99;var pages=Math.max(1,parseInt(this.value||'1',10));document.getElementById('tr-price-total').textContent='$'+(price*pages).toFixed(2);}).call(this)">
+          </div>
+
+          <div class="price-calc" id="tr-price-calc" style="display:flex;justify-content:space-between;align-items:center;background:var(--navy-deep);color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:16px;">
+            <div>
+              <div style="font-size:12px;font-weight:600;opacity:.7;text-transform:uppercase;letter-spacing:.05em;">Estimated Total</div>
+              <div style="font-size:11px;opacity:.5;margin-top:2px;">Final price confirmed after document review</div>
+            </div>
+            <div id="tr-price-total" style="font-family:var(--font-display);font-size:28px;color:var(--gold);">$24.99</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="field">
+              <label class="label" for="tr-name">Full Name *</label>
+              <input class="input" type="text" id="tr-name" name="full-name" required placeholder="Your name">
+            </div>
+            <div class="field">
+              <label class="label" for="tr-email">Email Address *</label>
+              <input class="input" type="email" id="tr-email" name="email" required placeholder="you@email.com">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="tr-lang">Language Pair (e.g. Spanish → English)</label>
+            <input class="input" type="text" id="tr-lang" name="language-pair" placeholder="e.g. Spanish → English">
+          </div>
+
+          <div class="field">
+            <label class="label" for="tr-notes">Notes / Special Instructions</label>
+            <textarea class="textarea" id="tr-notes" name="notes" rows="2"
+                      placeholder="Rush deadline, document type, notarization needed, etc."></textarea>
+          </div>
+
+          <button type="button" class="btn-submit">Complete Order &amp; Pay →</button>
+        </form>
+        <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Secure PayPal checkout · HIPAA &amp; FERPA compliant · ATA-certified translators
+        </div>
       </div>
     </div>
   </div>
@@ -437,6 +510,6 @@
 </div>
 
 <!-- @footer -->
-<script src="../../js/main.js?v=4"></script>
+<script src="../../js/main.js?v=5"></script>
 </body>
 </html>

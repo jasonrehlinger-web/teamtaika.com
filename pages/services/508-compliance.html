@@ -36,7 +36,7 @@
           <span class="comp-badge">VPAT Creation</span>
         </div>
         <div class="page-hero-ctas" style="margin-top:32px;">
-          <a href="#audit" class="btn-primary btn-primary-lg">Start Your Free Audit <span class="arrow">→</span></a>
+          <a href="#order-audit" class="btn-primary btn-primary-lg">Order PDF Audit — $299 <span class="arrow">→</span></a>
           <a href="#quote" class="btn-secondary">Get Remediation Quote</a>
         </div>
         <div class="callout" style="margin-top:32px;background:rgba(124,45,18,0.12);border-color:rgba(124,45,18,0.3);">
@@ -148,7 +148,7 @@
         <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:8px;">PDF Accessibility Audit &amp; Remediation</h3>
         <p style="font-size:14px;color:var(--slate);line-height:1.6;margin-bottom:16px;">Upload your PDFs. We audit against WCAG 2.1 / Section 508 / PDF/UA standards, provide a detailed findings report, and remediate every failure. Delivered within 48 hours for standard jobs.</p>
         <div style="font-family:var(--font-display);font-size:22px;color:var(--gold);margin-bottom:16px;">$299 <span style="font-size:14px;font-family:var(--font-body);color:var(--slate-light);">audit · $799 audit + remediation</span></div>
-        <a href="#quote" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Start PDF Audit →</a>
+        <a href="#order-audit" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Order PDF Audit — $299 →</a>
       </div>
       <div class="card">
         <div class="icon-block">🌐</div>
@@ -189,6 +189,64 @@
         <p style="font-size:14px;color:var(--slate);line-height:1.6;margin-bottom:16px;">Staff training on creating accessible documents (PDFs, Word, PowerPoint), a customized accessibility policy, and a procurement checklist for ICT purchases that include ACR requirements.</p>
         <div style="font-family:var(--font-display);font-size:22px;color:var(--gold);margin-bottom:16px;">Custom <span style="font-size:14px;font-family:var(--font-body);color:var(--slate-light);">based on team size</span></div>
         <a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;">Request Training</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- PDF AUDIT ORDER FORM -->
+<section class="section-mist section-sm" id="order-audit" aria-label="Order PDF Accessibility Audit">
+  <div class="container" style="max-width:680px;">
+    <div class="quote-card" style="border:2px solid var(--border-gold);">
+      <div class="quote-card-header"></div>
+      <div class="quote-card-body">
+        <div class="quote-card-title">Order PDF Accessibility Audit — $299</div>
+        <p class="quote-card-sub">Upload up to 5 PDFs. We audit against WCAG 2.1, Section 508, and PDF/UA. Findings delivered in 48 hours. Pay securely via PayPal.</p>
+
+        <form name="store-order-audit" method="POST" action="/"
+              data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data"
+              data-price="299.00" data-product="PDF Accessibility Audit — WCAG 2.1 / Section 508"
+              id="store-order-audit-form">
+          <input type="hidden" name="form-name" value="store-order-audit">
+          <input type="hidden" name="product" value="PDF Accessibility Audit">
+          <input type="hidden" name="price" value="$299.00">
+          <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div style="background:var(--navy-deep);color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:12px;font-weight:600;opacity:.7;text-transform:uppercase;letter-spacing:.05em;">Order Total</div>
+              <div style="font-size:11px;opacity:.5;margin-top:2px;">Audit only · Add remediation after delivery</div>
+            </div>
+            <div style="font-family:var(--font-display);font-size:28px;color:var(--gold);">$299.00</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="field">
+              <label class="label" for="audit-name">Full Name *</label>
+              <input class="input" type="text" id="audit-name" name="full-name" required placeholder="Your name">
+            </div>
+            <div class="field">
+              <label class="label" for="audit-email">Work Email *</label>
+              <input class="input" type="email" id="audit-email" name="email" required placeholder="you@agency.gov">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="audit-org">Organization</label>
+            <input class="input" type="text" id="audit-org" name="organization" placeholder="Agency or organization name">
+          </div>
+
+          <div class="field">
+            <label class="label" for="audit-notes">What needs to be audited?</label>
+            <textarea class="textarea" id="audit-notes" name="notes" rows="3"
+                      placeholder="Describe the documents, website, or application. You can email files after checkout to projects@taikatranslations.com."></textarea>
+          </div>
+
+          <button type="button" class="btn-submit">Order Audit &amp; Pay $299 →</button>
+        </form>
+        <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Secure PayPal checkout · WCAG 2.1 + Section 508 + PDF/UA · 48-hour findings delivery
+        </div>
       </div>
     </div>
   </div>
@@ -341,6 +399,6 @@
   </div>
 </div>
 <!-- @footer -->
-<script src="../../js/main.js?v=4"></script>
+<script src="../../js/main.js?v=5"></script>
 </body>
 </html>

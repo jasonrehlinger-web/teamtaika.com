@@ -185,3 +185,64 @@
   from = "/bengali-translation"
   to = "/pages/languages/bengali.html"
   status = 301
+
+# Native-language pages
+[[redirects]]
+  from = "/traduccion-certificada-espanol"
+  to = "/pages/languages/es.html"
+  status = 301
+
+[[redirects]]
+  from = "/traduzione-certificata-italiano"
+  to = "/pages/languages/it.html"
+  status = 301
+
+[[redirects]]
+  from = "/fanyi-zhongwen"
+  to = "/pages/languages/zh.html"
+  status = 301
+
+[[redirects]]
+  from = "/traduction-certifiee-francais"
+  to = "/pages/languages/fr.html"
+  status = 301
+
+[[redirects]]
+  from = "/beglaubigte-uebersetzung-deutsch"
+  to = "/pages/languages/de.html"
+  status = 301
+
+[[redirects]]
+  from = "/tlumaczenia-uwierzytelnione-polskie"
+  to = "/pages/languages/pl.html"
+  status = 301
+
+[[redirects]]
+  from = "/zaverenniy-perevod-russkiy"
+  to = "/pages/languages/ru.html"
+  status = 301
+
+[[redirects]]
+  from = "/traducao-certificada-portugues"
+  to = "/pages/languages/pt.html"
+  status = 301
+
+[[redirects]]
+  from = "/praman-patra-anuvad-hindi"
+  to = "/pages/languages/hi.html"
+  status = 301
+
+[[redirects]]
+  from = "/tarjama-arabiya-rasmiya"
+  to = "/pages/languages/ar.html"
+  status = 301
+
+[[redirects]]
+  from = "/tarjuma-rasmi-urdu"
+  to = "/pages/languages/ur.html"
+  status = 301
+
+[[redirects]]
+  from = "/praman-anuvad-bangla"
+  to = "/pages/languages/bn.html"
+  status = 301

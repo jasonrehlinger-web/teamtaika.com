@@ -95,3 +95,33 @@
   for = "/js/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+  from = "/blog"
+  to = "/pages/resources/blog.html"
+  status = 301
+
+[[redirects]]
+  from = "/blog/opi-vri-guide"
+  to = "/pages/resources/blog/opi-vri-guide.html"
+  status = 301
+
+[[redirects]]
+  from = "/blog/translation-for-government"
+  to = "/pages/resources/blog/translation-for-government.html"
+  status = 301
+
+[[redirects]]
+  from = "/blog/wcag-ada-compliance-tips"
+  to = "/pages/resources/blog/wcag-ada-compliance-tips.html"
+  status = 301
+
+[[redirects]]
+  from = "/blog/pdf-remediation-guide"
+  to = "/pages/resources/blog/pdf-remediation-guide.html"
+  status = 301
+
+[[redirects]]
+  from = "/blog/most-spoken-languages"
+  to = "/pages/resources/blog/most-spoken-languages.html"
+  status = 301

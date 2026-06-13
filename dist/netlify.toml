@@ -125,3 +125,64 @@
   from = "/blog/most-spoken-languages"
   to = "/pages/resources/blog/most-spoken-languages.html"
   status = 301
+
+[[redirects]]
+  from = "/spanish-translation"
+  to = "/pages/languages/spanish.html"
+  status = 301
+
+[[redirects]]
+  from = "/italian-translation"
+  to = "/pages/languages/italian.html"
+  status = 301
+
+[[redirects]]
+  from = "/chinese-translation"
+  to = "/pages/languages/chinese.html"
+  status = 301
+
+[[redirects]]
+  from = "/french-translation"
+  to = "/pages/languages/french.html"
+  status = 301
+
+[[redirects]]
+  from = "/german-translation"
+  to = "/pages/languages/german.html"
+  status = 301
+
+[[redirects]]
+  from = "/polish-translation"
+  to = "/pages/languages/polish.html"
+  status = 301
+
+[[redirects]]
+  from = "/russian-translation"
+  to = "/pages/languages/russian.html"
+  status = 301
+
+[[redirects]]
+  from = "/portuguese-translation"
+  to = "/pages/languages/portuguese.html"
+  status = 301
+
+[[redirects]]
+  from = "/hindi-translation"
+  to = "/pages/languages/hindi.html"
+  status = 301
+
+[[redirects]]
+  from = "/arabic-translation"
+  to = "/pages/languages/arabic.html"
+  status = 301
+
+[[redirects]]
+  from = "/urdu-translation"
+  to = "/pages/languages/urdu.html"
+  status = 301
+
+[[redirects]]
+  from = "/bengali-translation"
+  to = "/pages/languages/bengali.html"
+  status = 301
+

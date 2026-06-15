@@ -1,6 +1,13 @@
 [build]
   publish = "."
 
+# Serve Apple Pay domain association file
+[[redirects]]
+  from = "/.well-known/apple-developer-merchantid-domain-association"
+  to = "/.well-known/apple-developer-merchantid-domain-association"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/services"
   to = "/pages/services/translation.html"

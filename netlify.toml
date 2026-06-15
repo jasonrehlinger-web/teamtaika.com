@@ -4,7 +4,7 @@
 # Serve Apple Pay domain association file
 [[redirects]]
   from = "/.well-known/apple-developer-merchantid-domain-association"
-  to = "/apple-pay-domain-association.txt"
+  to = "/apple-pay-verify"
   status = 200
   force = true
 

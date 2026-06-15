@@ -388,6 +388,13 @@
   function submitNetlifyForm(form, extraFields) {
     var data = new FormData(form);
     Object.keys(extraFields).forEach(function (k) { data.append(k, extraFields[k]); });
+    var fileInput = form.querySelector('input[type="file"]');
+    var hasFile = fileInput && fileInput.files && fileInput.files.length > 0;
+    if (hasFile) {
+      // Multipart — preserves file data for Netlify to receive
+      return fetch('/', { method: 'POST', body: data });
+    }
+    // No file — standard URL-encoded (lighter, works everywhere)
     return fetch('/', {
       method: 'POST',
       body: new URLSearchParams(data).toString(),

@@ -376,6 +376,18 @@
                       placeholder="Rush deadline, document type, notarization needed, etc."></textarea>
           </div>
 
+          <div class="field">
+            <label class="label" for="tr-file">Upload Your Document <span style="color:var(--slate-light);font-weight:400;">(optional — you can also email it after checkout)</span></label>
+            <div class="upload-drop">
+              <input class="upload-input" type="file" id="tr-file" name="document"
+                     accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.tiff,.tif">
+              <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span class="upload-label">Drop your document here or click to browse</span>
+              <span class="upload-hint">PDF, Word, JPG, PNG, TIFF — max 10 MB</span>
+              <span class="upload-filename"></span>
+            </div>
+          </div>
+
           <button type="button" class="btn-submit">Complete Order &amp; Pay →</button>
         </form>
         <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Secure PayPal checkout · HIPAA &amp; FERPA compliant · ATA-certified translators
@@ -601,6 +613,6 @@
     </nav>
   </div>
 </footer>
-<script src="../../js/main.js?v=9"></script>
+<script src="../../js/main.js?v=10"></script>
 </body>
 </html>

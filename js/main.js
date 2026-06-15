@@ -592,23 +592,30 @@
             });
           },
           onApprove: function(data, actions) {
-            container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing…</p>';
+            container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing payment…</p>';
             return actions.order.capture().then(function(details) {
               var desc = getOrderDescription(form);
+              // Show confirmation immediately — don't wait on background calls
+              showSuccess(form, details);
+              // Fire-and-forget: email + Netlify record
+              sendConfirmationEmail(details, desc);
               submitNetlifyForm(form, {
                 'paypal-transaction-id': details.id,
                 'paypal-payer-email': details.payer ? details.payer.email_address : '',
                 'paypal-amount': details.purchase_units[0].amount.value
-              }).finally(function() {
-                sendConfirmationEmail(details, desc);
-                showSuccess(form, details);
-              });
+              }).catch(function() {}); // swallow network errors silently
+            }).catch(function(err) {
+              console.error('[PayPal capture error]', err);
+              container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
+                + 'Payment could not be completed. Please try again or '
+                + '<a href="mailto:sales@taikatranslations.com" style="color:#DC2626;">contact us</a>.</p>';
             });
           },
           onError: function(err) {
             console.error('[PayPal]', err);
-            container.innerHTML = '';
-            oldBtn.style.display = 'block';
+            container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
+              + 'Something went wrong. Please try again or '
+              + '<a href="mailto:sales@taikatranslations.com" style="color:#DC2626;">contact us</a>.</p>';
           },
           onCancel: function() {}
         });

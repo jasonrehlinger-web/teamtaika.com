@@ -606,16 +606,18 @@
                 'paypal-amount': details.purchase_units[0].amount.value
               }).catch(function() {}); // swallow network errors silently
             }).catch(function(err) {
-              console.error('[PayPal capture error]', err);
+              var code = (err && err.details && err.details[0] && err.details[0].issue) || (err && err.message) || 'unknown';
+              console.error('[PayPal capture error]', code, err);
               container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
-                + 'Payment could not be completed. Please try again or '
+                + 'Payment could not be completed (code: ' + code + '). Please try again or '
                 + '<a href="mailto:sales@taikatranslations.com" style="color:#DC2626;">contact us</a>.</p>';
             });
           },
           onError: function(err) {
-            console.error('[PayPal]', err);
+            var code = (err && err.message) || JSON.stringify(err) || 'unknown';
+            console.error('[PayPal onError]', code, err);
             container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
-              + 'Something went wrong. Please try again or '
+              + 'Payment error (code: ' + code + '). Please try again or '
               + '<a href="mailto:sales@taikatranslations.com" style="color:#DC2626;">contact us</a>.</p>';
           },
           onCancel: function() {}

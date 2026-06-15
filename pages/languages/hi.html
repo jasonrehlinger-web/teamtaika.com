@@ -315,6 +315,14 @@
           <label for="hi-notes">नोट्स / विशेष निर्देश</label>
           <textarea id="hi-notes" name="notes" rows="3" placeholder="अत्यावश्यक समयसीमा, विशेष आवश्यकताएं या प्रश्न बताएं..."></textarea>
         </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;font-size:13.5px;">
+            <input type="checkbox" name="notarization" id="hi-notarization" value="yes"
+                   onchange="calcPrice_hi()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+            <span>Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+          </label>
+        </div>
+
         <button type="button" class="btn-submit btn-order" data-form="lang-native-hi-form">ऑर्डर जमा करें और पुष्टि प्राप्त करें →</button>
         <div class="form-guarantee"><span>🔒</span> सुरक्षित सबमिशन · HIPAA और FERPA अनुपालन · जमा करने के लिए कोई भुगतान नहीं</div>
       </form>
@@ -501,7 +509,8 @@ function calcPrice_hi() {
     calc.style.display='none'; grp.style.display='none';
   } else {
     calc.style.display='flex'; grp.style.display='block';
-    tot.textContent = '$' + ((PRICES_HI[svc]||24.99)*pg).toFixed(2);
+    var notarize = document.getElementById('hi-notarization') && document.getElementById('hi-notarization').checked ? 40 : 0;
+    tot.textContent = '$' + ((PRICES_HI[svc]||24.99)*pg + notarize).toFixed(2);
   }
 }
 (function(){
@@ -519,6 +528,6 @@ function calcPrice_hi() {
   });
 })();
 </script>
-<script src="/js/main.js?v=10"></script>
+<script src="/js/main.js?v=11"></script>
 </body>
 </html>

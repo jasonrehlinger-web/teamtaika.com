@@ -315,6 +315,14 @@
           <label for="pl-notes">Uwagi / Szczególne Instrukcje</label>
           <textarea id="pl-notes" name="notes" rows="3" placeholder="Podaj pilne terminy, szczególne wymagania lub pytania..."></textarea>
         </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;font-size:13.5px;">
+            <input type="checkbox" name="notarization" id="pl-notarization" value="yes"
+                   onchange="calcPrice_pl()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+            <span>Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+          </label>
+        </div>
+
         <button type="button" class="btn-submit btn-order" data-form="lang-native-pl-form">Wyślij Zamówienie i Otrzymaj Potwierdzenie →</button>
         <div class="form-guarantee"><span>🔒</span> Bezpieczne przesłanie · Zgodność HIPAA i FERPA · Brak płatności wymaganej do przesłania</div>
       </form>
@@ -501,7 +509,8 @@ function calcPrice_pl() {
     calc.style.display='none'; grp.style.display='none';
   } else {
     calc.style.display='flex'; grp.style.display='block';
-    tot.textContent = '$' + ((PRICES_PL[svc]||24.99)*pg).toFixed(2);
+    var notarize = document.getElementById('pl-notarization') && document.getElementById('pl-notarization').checked ? 40 : 0;
+    tot.textContent = '$' + ((PRICES_PL[svc]||24.99)*pg + notarize).toFixed(2);
   }
 }
 (function(){
@@ -519,6 +528,6 @@ function calcPrice_pl() {
   });
 })();
 </script>
-<script src="/js/main.js?v=10"></script>
+<script src="/js/main.js?v=11"></script>
 </body>
 </html>

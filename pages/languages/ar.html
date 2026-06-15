@@ -321,6 +321,14 @@
           <label for="ar-notes">ملاحظات / تعليمات خاصة</label>
           <textarea id="ar-notes" name="notes" rows="3" placeholder="حدّد المواعيد النهائية العاجلة أو المتطلبات الخاصة أو الأسئلة..."></textarea>
         </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;font-size:13.5px;">
+            <input type="checkbox" name="notarization" id="ar-notarization" value="yes"
+                   onchange="calcPrice_ar()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+            <span>Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+          </label>
+        </div>
+
         <button type="button" class="btn-submit btn-order" data-form="lang-native-ar-form">إرسال الطلب والحصول على التأكيد ←</button>
         <div class="form-guarantee"><span>🔒</span> إرسال آمن · التزام HIPAA وFERPA · لا يلزم الدفع للإرسال</div>
       </form>
@@ -507,7 +515,8 @@ function calcPrice_ar() {
     calc.style.display='none'; grp.style.display='none';
   } else {
     calc.style.display='flex'; grp.style.display='block';
-    tot.textContent = '$' + ((PRICES_AR[svc]||24.99)*pg).toFixed(2);
+    var notarize = document.getElementById('ar-notarization') && document.getElementById('ar-notarization').checked ? 40 : 0;
+    tot.textContent = '$' + ((PRICES_AR[svc]||24.99)*pg + notarize).toFixed(2);
   }
 }
 (function(){
@@ -525,6 +534,6 @@ function calcPrice_ar() {
   });
 })();
 </script>
-<script src="/js/main.js?v=10"></script>
+<script src="/js/main.js?v=11"></script>
 </body>
 </html>

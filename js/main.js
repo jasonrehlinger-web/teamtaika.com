@@ -341,7 +341,12 @@
 
   function getOrderAmount(form) {
     // Fixed-price store forms (data-price attribute)
-    if (form.dataset && form.dataset.price) return parseFloat(form.dataset.price).toFixed(2);
+    if (form.dataset && form.dataset.price) {
+      var base = parseFloat(form.dataset.price);
+      var notarizeEl = form.querySelector('[name="notarization"]');
+      if (notarizeEl && notarizeEl.checked) base += 40;
+      return base.toFixed(2);
+    }
     // Language/translation forms (dynamic price)
     var svc   = form.querySelector('[name="service-type"]');
     var pages = form.querySelector('[name="page-count"]');
@@ -349,7 +354,9 @@
     if (svc.value === 'interpretation' || svc.value === 'both') return null; // quote only
     var price = PRICES[svc.value] || 24.99;
     var count = Math.max(1, parseInt((pages && pages.value) || '1', 10));
-    return (price * count).toFixed(2);
+    var notarizeEl = form.querySelector('[name="notarization"]');
+    var notarize = (notarizeEl && notarizeEl.checked) ? 40 : 0;
+    return (price * count + notarize).toFixed(2);
   }
 
   function getOrderDescription(form) {

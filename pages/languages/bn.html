@@ -315,6 +315,14 @@
           <label for="bn-notes">নোট / বিশেষ নির্দেশনা</label>
           <textarea id="bn-notes" name="notes" rows="3" placeholder="জরুরি সময়সীমা, বিশেষ প্রয়োজনীয়তা বা প্রশ্ন জানান..."></textarea>
         </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;font-size:13.5px;">
+            <input type="checkbox" name="notarization" id="bn-notarization" value="yes"
+                   onchange="calcPrice_bn()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+            <span>Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+          </label>
+        </div>
+
         <button type="button" class="btn-submit btn-order" data-form="lang-native-bn-form">অর্ডার জমা দিন এবং নিশ্চিতকরণ পান →</button>
         <div class="form-guarantee"><span>🔒</span> নিরাপদ জমা · HIPAA ও FERPA সম্মতি · জমা দেওয়ার জন্য কোনো অর্থপ্রদান নেই</div>
       </form>
@@ -501,7 +509,8 @@ function calcPrice_bn() {
     calc.style.display='none'; grp.style.display='none';
   } else {
     calc.style.display='flex'; grp.style.display='block';
-    tot.textContent = '$' + ((PRICES_BN[svc]||24.99)*pg).toFixed(2);
+    var notarize = document.getElementById('bn-notarization') && document.getElementById('bn-notarization').checked ? 40 : 0;
+    tot.textContent = '$' + ((PRICES_BN[svc]||24.99)*pg + notarize).toFixed(2);
   }
 }
 (function(){
@@ -519,6 +528,6 @@ function calcPrice_bn() {
   });
 })();
 </script>
-<script src="/js/main.js?v=10"></script>
+<script src="/js/main.js?v=11"></script>
 </body>
 </html>

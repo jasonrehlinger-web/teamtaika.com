@@ -315,6 +315,14 @@
           <label for="ru-notes">Примечания / Особые Инструкции</label>
           <textarea id="ru-notes" name="notes" rows="3" placeholder="Укажите срочные сроки, особые требования или вопросы..."></textarea>
         </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;font-size:13.5px;">
+            <input type="checkbox" name="notarization" id="ru-notarization" value="yes"
+                   onchange="calcPrice_ru()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+            <span>Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+          </label>
+        </div>
+
         <button type="button" class="btn-submit btn-order" data-form="lang-native-ru-form">Отправить Заказ и Получить Подтверждение →</button>
         <div class="form-guarantee"><span>🔒</span> Безопасная отправка · Соответствие HIPAA и FERPA · Оплата не требуется</div>
       </form>
@@ -501,7 +509,8 @@ function calcPrice_ru() {
     calc.style.display='none'; grp.style.display='none';
   } else {
     calc.style.display='flex'; grp.style.display='block';
-    tot.textContent = '$' + ((PRICES_RU[svc]||24.99)*pg).toFixed(2);
+    var notarize = document.getElementById('ru-notarization') && document.getElementById('ru-notarization').checked ? 40 : 0;
+    tot.textContent = '$' + ((PRICES_RU[svc]||24.99)*pg + notarize).toFixed(2);
   }
 }
 (function(){
@@ -519,6 +528,6 @@ function calcPrice_ru() {
   });
 })();
 </script>
-<script src="/js/main.js?v=10"></script>
+<script src="/js/main.js?v=11"></script>
 </body>
 </html>

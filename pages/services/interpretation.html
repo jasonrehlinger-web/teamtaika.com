@@ -55,7 +55,7 @@
 <div class="quote-card-title">Schedule an interpreter</div>
           <p class="quote-card-sub">On-demand OPI or scheduled VRI/in-person. We confirm within 2 hours.</p>
           
-          <form name="service-quote" data-netlify="true" netlify-honeypot="bot-field">
+          <form name="service-quote" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
           <input type="hidden" name="form-name" value="service-quote">
           <input type="hidden" name="bot-field" style="display:none">
           <div class="field">
@@ -113,6 +113,18 @@
               <li>Cancellations made <strong>less than 2 weeks in advance</strong> may be subject to a cancellation fee.</li>
             </ul>
           </div>
+          <div class="field">
+            <label class="label" for="i-reffile">Reference Materials <span style="color:var(--slate-light);font-weight:400;">(optional — slideshows, agendas, meeting info)</span></label>
+            <div class="upload-drop">
+              <input class="upload-input" type="file" id="i-reffile" name="reference-document"
+                     accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png">
+              <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span class="upload-label">Drop file here or click to browse</span>
+              <span class="upload-hint">PDF, Word, PowerPoint, JPG — max 10 MB</span>
+              <span class="upload-filename"></span>
+            </div>
+          </div>
+
           <button class="btn-submit" type="button">Book My Interpreter →</button>
           </form>
           <div class="form-trust-line">
@@ -458,6 +470,6 @@
     </nav>
   </div>
 </footer>
-<script src="../../js/main.js?v=10"></script>
+<script src="../../js/main.js?v=11"></script>
 </body>
 </html>

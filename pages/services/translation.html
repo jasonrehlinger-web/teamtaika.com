@@ -331,7 +331,7 @@
 
           <div class="field">
             <label class="label" for="tr-service">Service Type</label>
-            <select class="select" id="tr-service" name="service-type" onchange="(function(){var s=document.getElementById('tr-service').value;var pg=document.getElementById('tr-page-group');var pc=document.getElementById('tr-price-calc');var PRICES={standard:24.99,rush:31.24,sameday:37.49};pg.style.display=(s==='interpretation'||s==='both')?'none':'block';pc.style.display=(s==='interpretation'||s==='both')?'none':'flex';var pages=Math.max(1,parseInt(document.getElementById('tr-pages').value||'1',10));var price=PRICES[s]||24.99;document.getElementById('tr-price-total').textContent='$'+(price*pages).toFixed(2);})()">
+            <select class="select" id="tr-service" name="service-type" onchange="calcPriceTR()">
               <option value="standard">Standard Certified Translation — $24.99/page</option>
               <option value="rush">Rush Translation (+25%) — $31.24/page</option>
               <option value="sameday">Same-Day Translation (+50%) — $37.49/page</option>
@@ -343,7 +343,7 @@
           <div class="field" id="tr-page-group">
             <label class="label" for="tr-pages">Number of Pages</label>
             <input class="input" type="number" id="tr-pages" name="page-count" min="1" max="500" value="1"
-                   oninput="(function(){var s=document.getElementById('tr-service').value;var PRICES={standard:24.99,rush:31.24,sameday:37.49};var price=PRICES[s]||24.99;var pages=Math.max(1,parseInt(this.value||'1',10));document.getElementById('tr-price-total').textContent='$'+(price*pages).toFixed(2);}).call(this)">
+                   oninput="calcPriceTR()">
           </div>
 
           <div class="price-calc" id="tr-price-calc" style="display:flex;justify-content:space-between;align-items:center;background:var(--navy-deep);color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:16px;">
@@ -386,6 +386,14 @@
               <span class="upload-hint">PDF, Word, JPG, PNG, TIFF — max 10 MB</span>
               <span class="upload-filename"></span>
             </div>
+          </div>
+
+          <div class="field">
+            <label class="label" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;">
+              <input type="checkbox" name="notarization" id="tr-notarization" value="yes"
+                     onchange="calcPriceTR()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold);flex-shrink:0;">
+              <span>Add Notarization <strong style="color:var(--gold);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+            </label>
           </div>
 
           <button type="button" class="btn-submit">Complete Order &amp; Pay →</button>
@@ -613,6 +621,23 @@
     </nav>
   </div>
 </footer>
-<script src="../../js/main.js?v=10"></script>
+<script>
+function calcPriceTR() {
+  var PRICES = {standard:24.99, rush:31.24, sameday:37.49};
+  var s = document.getElementById('tr-service').value;
+  var pg = document.getElementById('tr-page-group');
+  var pc = document.getElementById('tr-price-calc');
+  var isQuote = (s === 'interpretation' || s === 'both');
+  if (pg) pg.style.display = isQuote ? 'none' : 'block';
+  if (pc) pc.style.display = isQuote ? 'none' : 'flex';
+  if (!isQuote) {
+    var pages = Math.max(1, parseInt(document.getElementById('tr-pages').value || '1', 10));
+    var notarize = document.getElementById('tr-notarization') && document.getElementById('tr-notarization').checked ? 40 : 0;
+    var price = (PRICES[s] || 24.99) * pages + notarize;
+    document.getElementById('tr-price-total').textContent = '$' + price.toFixed(2);
+  }
+}
+</script>
+<script src="../../js/main.js?v=11"></script>
 </body>
 </html>

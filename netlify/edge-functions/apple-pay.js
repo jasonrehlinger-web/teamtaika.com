@@ -3,7 +3,7 @@ export default async function handler(request, context) {
   return new Response(content, {
     status: 200,
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/octet-stream",
       "Cache-Control": "public, max-age=86400",
     },
   });

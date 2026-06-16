@@ -587,7 +587,7 @@
       'Payment received, ' + firstName + '!</h3>',
       '<p style="color:var(--slate);font-size:14px;line-height:1.7;max-width:420px;margin:0 auto 12px;">',
       'Your order is confirmed',
-      email ? '. We'll email you at <strong>' + email + '</strong> within 1 business hour with next steps.' : '.',
+      email ? '. We\'ll email you at <strong>' + email + '</strong> within 1 business hour with next steps.' : '.',
       '</p>',
       amount ? '<p style="font-size:13px;color:var(--slate);opacity:.8;">Amount charged: <strong>' + amount + '</strong></p>' : '',
       '</div>'

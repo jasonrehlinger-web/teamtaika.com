@@ -555,13 +555,10 @@
 
     var bodyHtml = isZelle
       ? '<ol style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);'
-        + 'font-size:14px;line-height:1.7;padding-left:20px;">'
-        + '<li>Open your banking app and go to <strong>Zelle</strong></li>'
-        + '<li style="margin-top:6px;">Send <strong>$' + amount + '</strong> to '
-        + '<strong>' + ZELLE_EMAIL + '</strong></li>'
-        + '<li style="margin-top:6px;">Use memo: <em>' + custName + '</em></li>'
-        + '<li style="margin-top:6px;">Reply to our confirmation email once sent — '
-        + 'we\'ll start your project immediately</li>'
+        + 'font-size:15px;line-height:1.8;padding-left:24px;">'
+        + '<li>Open your banking app and send <strong>$' + amount + '</strong> via <strong>Zelle</strong></li>'
+        + '<li style="margin-top:10px;">Send to <strong>' + ZELLE_EMAIL + '</strong> · Memo: <em>' + custName + '</em></li>'
+        + '<li style="margin-top:10px;">Reply to your confirmation email — we\'ll start immediately</li>'
         + '</ol>'
       : '<p style="color:var(--slate);font-size:14px;max-width:400px;margin:0 auto 16px;line-height:1.7;">'
         + 'Click below to open our Wise page. Enter <strong>$' + amount + '</strong> as the amount.'

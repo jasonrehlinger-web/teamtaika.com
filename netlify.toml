@@ -531,3 +531,63 @@
   from = "/wyoming"
   to = "/pages/states/wyoming.html"
   status = 301
+
+[[redirects]]
+  from = "/certified-translation"
+  to = "/pages/certified/certified-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/uscis-translation-services"
+  to = "/pages/certified/uscis-translation-services.html"
+  status = 301
+
+[[redirects]]
+  from = "/immigration-document-translation"
+  to = "/pages/certified/immigration-document-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/birth-certificate-translation"
+  to = "/pages/certified/birth-certificate-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/marriage-certificate-translation"
+  to = "/pages/certified/marriage-certificate-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/legal-translation"
+  to = "/pages/industries/legal-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/legal-document-translation"
+  to = "/pages/industries/legal-document-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/spanish-translation-services"
+  to = "/pages/services/spanish-translation-services.html"
+  status = 301
+
+[[redirects]]
+  from = "/website-translation"
+  to = "/pages/services/website-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/website-localization"
+  to = "/pages/services/website-localization.html"
+  status = 301
+
+[[redirects]]
+  from = "/managed-translation-services"
+  to = "/pages/services/managed-translation-services.html"
+  status = 301
+
+[[redirects]]
+  from = "/enterprise-localization-services"
+  to = "/pages/services/enterprise-localization-services.html"
+  status = 301

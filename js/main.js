@@ -571,10 +571,8 @@
         + 'border-radius:6px;text-decoration:none;font-weight:700;font-size:15px;margin-bottom:20px;">'
         + 'Open Wise →</a>';
 
-    var emailLine = custEmail
-      ? '<p style="font-size:13px;color:var(--slate);opacity:.75;margin-top:8px;">'
-        + 'A summary is on its way to <strong>' + custEmail + '</strong>.</p>'
-      : '';
+    var emailLine = '<p style="font-size:13px;color:var(--slate);opacity:.75;margin-top:8px;">'
+      + 'Our team has received a summary of this order.</p>';
 
     var card   = form.closest('.order-form-card');
     var target = card || form;

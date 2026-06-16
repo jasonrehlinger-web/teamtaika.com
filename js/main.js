@@ -487,7 +487,7 @@
     paypal: { label: 'PayPal', bg: '#0070ba', text: '#fff' },
     venmo:  { label: 'Venmo',  bg: '#008CFF', text: '#fff' },
     zelle:  { label: 'Zelle',  bg: '#6d1ed4', text: '#fff' },
-    wise:   { label: 'Wise',   bg: '#163300', text: '#9fe870' }
+    wise:   { label: 'Card / Google Pay / Apple Pay', bg: '#163300', text: '#9fe870', btn: 'Pay by Card · Google Pay · Apple Pay →' }
   };
 
   function buildPaymentSelector(form) {
@@ -537,7 +537,7 @@
 
   function refreshBtn(btn, method) {
     var cfg = PM_CONFIG[method] || PM_CONFIG.paypal;
-    btn.innerHTML     = 'Pay with ' + cfg.label + ' →';
+    btn.innerHTML     = cfg.btn || ('Pay with ' + cfg.label + ' →');
     btn.style.background = cfg.bg;
     btn.style.color      = cfg.text;
   }

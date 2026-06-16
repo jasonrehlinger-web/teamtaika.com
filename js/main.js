@@ -474,180 +474,147 @@
     return ok;
   }
 
-  function renderPayPalButtons(form, container) {
-    paypal.Buttons({
-      style: {
-        layout: 'vertical',
-        color:  'gold',
-        shape:  'rect',
-        label:  'pay',
-        height: 48
-      },
+  // ── PayPal Redirect Checkout ──────────────────────────────────────────
+  // Replaces the JS SDK popup flow (which broke on iOS Safari with
+  // "postrobot_method: Target window is closed"). This redirect approach
+  // sends the user to PayPal's hosted checkout page and brings them back.
+  // Works on every browser and device — no SDK, no popups, no iframes.
 
-      onClick: function (data, actions) {
-        if (!validateForm(form)) {
-          return actions.reject();
-        }
-        var amount = getOrderAmount(form);
-        if (!amount) {
-          // Interpretation — skip PayPal, go to quote
-          window.location.href = '/index.html#quote';
-          return actions.reject();
-        }
-        return actions.resolve();
-      },
-
-      createOrder: function (data, actions) {
-        var amount = getOrderAmount(form);
-        return actions.order.create({
-          purchase_units: [{
-            amount: { value: amount, currency_code: 'USD' },
-            description: getOrderDescription(form),
-            soft_descriptor: 'TaikaTranslations'
-          }]
-        });
-      },
-
-      onApprove: function (data, actions) {
-        container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing payment…</p>';
-        return actions.order.capture().then(function (details) {
-          var desc = getOrderDescription(form);
-          submitNetlifyForm(form, {
-            'paypal-transaction-id': details.id,
-            'paypal-payer-email':    details.payer ? details.payer.email_address : '',
-            'paypal-amount':         details.purchase_units[0].amount.value
-          }).finally(function () {
-            sendConfirmationEmail(details, desc);
-            showSuccess(form, details);
-          });
-        });
-      },
-
-      onError: function (err) {
-        console.error('[PayPal]', err);
-        container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
-          + 'Payment failed. Please try again or <a href="mailto:sales@taikatranslations.com">contact us</a>.</p>';
-      },
-
-      onCancel: function () {
-        container.innerHTML = '';
-        renderPayPalButtons(form, container);
-      }
-
-    }).render(container);
-  }
+  var PAYPAL_BUSINESS = 'payments@taikatranslations.com';
 
   function initPayPal() {
-    // Find all Netlify order forms on this page
     var forms = document.querySelectorAll('form[name^="lang-order"], form[name^="lang-native"], form[name^="store-order"]');
     if (!forms.length) return;
 
-    // Load PayPal SDK
-    var sdk = document.createElement('script');
-    sdk.src = 'https://www.paypal.com/sdk/js'
-      + '?client-id=' + PAYPAL_CLIENT_ID
-      + '&currency=USD'
-      + '&intent=capture'
-      + '&components=buttons'
-      + '&disable-funding=card,credit';  // re-enable card once ACDC approved in PayPal dashboard
-    sdk.setAttribute('data-sdk-integration-source', 'button-factory');
+    forms.forEach(function(form) {
+      var oldBtn = form.querySelector('.btn-submit, .btn-order');
+      if (!oldBtn) return;
 
-    sdk.onerror = function () {
-      console.warn('[PayPal] SDK failed to load.');
-    };
+      // Build a "Pay with PayPal" button that inherits existing styles
+      var ppBtn = document.createElement('button');
+      ppBtn.type = 'button';
+      ppBtn.className = 'btn-submit';
+      ppBtn.innerHTML = 'Pay with PayPal →';
+      ppBtn.style.cssText = 'background:#0070ba;color:#fff;width:100%;border:none;'
+        + 'border-radius:6px;padding:14px;font-size:15px;font-weight:600;'
+        + 'cursor:pointer;margin-top:4px;letter-spacing:.01em;';
 
-    sdk.onload = function () {
-      if (typeof paypal === 'undefined' || !paypal.Buttons) {
-        console.error('[PayPal] SDK loaded but paypal.Buttons unavailable');
-        return;
-      }
-      forms.forEach(function (form) {
-        var oldBtn = form.querySelector('.btn-submit, .btn-order');
-        if (!oldBtn) return;
+      oldBtn.parentNode.insertBefore(ppBtn, oldBtn);
+      oldBtn.style.display = 'none';
 
-        var container = document.createElement('div');
-        container.className = 'paypal-btn-container';
-        container.style.cssText = 'margin-top:4px;';
+      ppBtn.addEventListener('click', function() {
+        if (!validateForm(form)) return;
+        var amount = getOrderAmount(form);
+        if (!amount) { window.location.href = '/index.html#quote'; return; }
 
-        oldBtn.parentNode.insertBefore(container, oldBtn);
-        oldBtn.style.display = 'none';
+        var desc    = getOrderDescription(form);
+        var nameEl  = form.querySelector('[name="name"], [name="full-name"], [name="full_name"]');
+        var emailEl = form.querySelector('[name="email"]');
+        var custName  = nameEl  ? nameEl.value.trim()  : '';
+        var custEmail = emailEl ? emailEl.value.trim() : '';
 
-        var svcEl = form.querySelector('[name="service-type"]');
+        // Persist order data so we can show success UI on return
+        try {
+          sessionStorage.setItem('taika-pending-order', JSON.stringify({
+            name: custName, email: custEmail,
+            amount: amount, desc: desc,
+            returnPath: window.location.pathname
+          }));
+        } catch(e) {}
 
-        var btns = paypal.Buttons({
-          style: { layout:'vertical', color:'gold', shape:'rect', label:'pay', height:48 },
-          onClick: function(data, actions) {
-            if (!validateForm(form)) return actions.reject();
-            var amount = getOrderAmount(form);
-            if (!amount) { window.location.href='/index.html#quote'; return actions.reject(); }
-            return actions.resolve();
-          },
-          createOrder: function(data, actions) {
-            var amount = getOrderAmount(form);
-            return actions.order.create({
-              purchase_units:[{
-                amount:{ value: amount, currency_code:'USD' },
-                description: getOrderDescription(form),
-                soft_descriptor:'TaikaTranslations'
-              }]
-            });
-          },
-          onApprove: function(data, actions) {
-            container.innerHTML = '<p style="text-align:center;font-size:13px;color:var(--slate);padding:16px 0;">Processing payment…</p>';
-            return actions.order.capture().then(function(details) {
-              var desc = getOrderDescription(form);
-              // Show confirmation immediately — don't wait on background calls
-              showSuccess(form, details);
-              // Fire-and-forget: email + Netlify record
-              sendConfirmationEmail(details, desc);
-              submitNetlifyForm(form, {
-                'paypal-transaction-id': details.id,
-                'paypal-payer-email': details.payer ? details.payer.email_address : '',
-                'paypal-amount': details.purchase_units[0].amount.value
-              }).catch(function() {}); // swallow network errors silently
-            }).catch(function(err) {
-              var code = (err && err.details && err.details[0] && err.details[0].issue) || (err && err.message) || 'unknown';
-              console.error('[PayPal capture error]', code, err);
-              container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
-                + 'Payment could not be completed (code: ' + code + '). Please try again or '
-                + '<a href="mailto:sales@taikatranslations.com" style="color:#DC2626;">contact us</a>.</p>';
-            });
-          },
-          onError: function(err) {
-            var code = (err && err.message) || JSON.stringify(err) || 'unknown';
-            console.error('[PayPal onError]', code, err);
-            container.innerHTML = '<p style="color:#DC2626;font-size:13px;text-align:center;padding:12px 0;">'
-              + 'Payment error (code: ' + code + '). Please try again or '
-              + '<a href="mailto:sales@taikatranslations.com" style="color:#DC2626;">contact us</a>.</p>';
-          },
-          onCancel: function() {}
-        });
+        // Record the order in Netlify Forms (fire-and-forget)
+        submitNetlifyForm(form, {
+          'paypal-amount':  amount,
+          'payment-method': 'paypal-redirect'
+        }).catch(function(){});
 
-        if (btns.isEligible()) {
-          btns.render(container).catch(function(err) {
-            console.error('[PayPal render]', err);
-            container.innerHTML = '';
-            oldBtn.style.display = 'block';
-          });
-        } else {
-          console.warn('[PayPal] Buttons not eligible for this merchant/browser');
-          container.remove();
-          oldBtn.style.display = 'block';
-        }
+        // Build PayPal standard checkout URL and redirect
+        var base       = window.location.origin || 'https://teamtaika.com';
+        var returnUrl  = base + window.location.pathname + '?payment=success';
+        var cancelUrl  = base + window.location.pathname;
+        var qs = [
+          'cmd=_xclick',
+          'business='    + encodeURIComponent(PAYPAL_BUSINESS),
+          'amount='      + encodeURIComponent(amount),
+          'currency_code=USD',
+          'item_name='   + encodeURIComponent(desc.substring(0, 127)),
+          'return='      + encodeURIComponent(returnUrl),
+          'cancel_return=' + encodeURIComponent(cancelUrl),
+          'no_shipping=1',
+          'rm=0'
+        ].join('&');
 
-        if (svcEl) {
-          svcEl.addEventListener('change', function() {
-            var isQuote = (this.value === 'interpretation' || this.value === 'both');
-            oldBtn.style.display = isQuote ? 'block' : 'none';
-            container.style.display = isQuote ? 'none' : 'block';
-          });
-        }
+        ppBtn.innerHTML = 'Redirecting to PayPal…';
+        ppBtn.disabled  = true;
+        window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + qs;
       });
-    };
 
-    document.head.appendChild(sdk);
+      // Hide/show based on service type (interpretation = quote only)
+      var svcEl = form.querySelector('[name="service-type"]');
+      if (svcEl) {
+        svcEl.addEventListener('change', function() {
+          var isQuote = (this.value === 'interpretation' || this.value === 'both');
+          oldBtn.style.display = isQuote ? 'block' : 'none';
+          ppBtn.style.display  = isQuote ? 'none'  : 'block';
+        });
+      }
+    });
   }
 
-  document.addEventListener('DOMContentLoaded', initPayPal);
+  // Show confirmation when PayPal redirects back with ?payment=success
+  function handlePayPalReturn() {
+    if (!window.location.search.includes('payment=success')) return;
+
+    var pending = null;
+    try { pending = JSON.parse(sessionStorage.getItem('taika-pending-order') || 'null'); } catch(e) {}
+
+    var forms = document.querySelectorAll('form[name^="lang-order"], form[name^="lang-native"], form[name^="store-order"]');
+    if (!forms.length) return;
+
+    var form     = forms[0];
+    var firstName = pending && pending.name  ? pending.name.split(' ')[0] : 'there';
+    var email     = pending && pending.email ? pending.email : '';
+    var amount    = pending && pending.amount ? '$' + pending.amount : '';
+    var desc      = pending && pending.desc  ? pending.desc : 'Translation Order';
+
+    // Replace form with success card
+    var card   = form.closest('.order-form-card');
+    var target = card || form;
+    target.innerHTML = [
+      '<div style="text-align:center;padding:40px 16px;">',
+      '<div style="font-size:56px;line-height:1;margin-bottom:16px;">✅</div>',
+      '<h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin-bottom:8px;">',
+      'Payment received, ' + firstName + '!</h3>',
+      '<p style="color:var(--slate);font-size:14px;line-height:1.7;max-width:420px;margin:0 auto 12px;">',
+      'Your order is confirmed',
+      email ? '. We'll email you at <strong>' + email + '</strong> within 1 business hour with next steps.' : '.',
+      '</p>',
+      amount ? '<p style="font-size:13px;color:var(--slate);opacity:.8;">Amount charged: <strong>' + amount + '</strong></p>' : '',
+      '</div>'
+    ].join('');
+
+    // Send confirmation email via EmailJS
+    if (email && pending) {
+      var nameParts = (pending.name || '').split(' ');
+      var mockDetails = {
+        payer: {
+          name: { given_name: nameParts[0] || 'Customer', surname: nameParts.slice(1).join(' ') },
+          email_address: email
+        },
+        purchase_units: [{ amount: { value: pending.amount || '0' } }],
+        id: ''
+      };
+      sendConfirmationEmail(mockDetails, desc);
+      try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
+    }
+
+    // Clean the ?payment=success param from the URL bar
+    history.replaceState(null, '', window.location.pathname);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    handlePayPalReturn();
+    initPayPal();
+  });
 
 }());

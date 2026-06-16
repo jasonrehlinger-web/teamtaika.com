@@ -474,13 +474,133 @@
     return ok;
   }
 
-  // ── PayPal Redirect Checkout ──────────────────────────────────────────
-  // Replaces the JS SDK popup flow (which broke on iOS Safari with
-  // "postrobot_method: Target window is closed"). This redirect approach
-  // sends the user to PayPal's hosted checkout page and brings them back.
-  // Works on every browser and device — no SDK, no popups, no iframes.
+  // ── Multi-Method Checkout ─────────────────────────────────────────────
+  // Supports PayPal (redirect), Venmo (deep link), Zelle (instructions),
+  // and Wise (redirect). Works on all devices — no SDK, no popups.
 
   var PAYPAL_BUSINESS = 'payments@taikatranslations.com';
+  var VENMO_HANDLE    = 'taikallc';
+  var ZELLE_EMAIL     = 'ceo@taikatranslations.com';
+  var WISE_URL        = 'https://wise.com/pay/business/thevisionpeoplellc';
+
+  var PM_CONFIG = {
+    paypal: { label: 'PayPal', bg: '#0070ba', text: '#fff' },
+    venmo:  { label: 'Venmo',  bg: '#008CFF', text: '#fff' },
+    zelle:  { label: 'Zelle',  bg: '#6d1ed4', text: '#fff' },
+    wise:   { label: 'Wise',   bg: '#163300', text: '#9fe870' }
+  };
+
+  function buildPaymentSelector(form) {
+    var wrap = document.createElement('div');
+    wrap.className = 'pm-selector';
+    wrap.style.cssText = 'margin-bottom:12px;';
+    wrap.innerHTML = '<p style="font-size:12px;font-weight:700;color:var(--navy);'
+      + 'text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Pay with</p>'
+      + '<div style="display:flex;gap:6px;flex-wrap:wrap;">'
+      + Object.keys(PM_CONFIG).map(function(m) {
+          var cfg = PM_CONFIG[m];
+          return '<label class="pm-pill" data-method="' + m + '" style="display:flex;'
+            + 'align-items:center;gap:5px;cursor:pointer;border:2px solid #e5e7eb;'
+            + 'border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;'
+            + 'transition:all .15s;user-select:none;">'
+            + '<input type="radio" name="pm-choice-' + form.name + '" value="' + m + '"'
+            + (m === 'paypal' ? ' checked' : '') + ' style="display:none;">'
+            + cfg.label + '</label>';
+        }).join('')
+      + '</div>';
+
+    // Click handler — select pill
+    wrap.querySelectorAll('.pm-pill').forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        var radio = this.querySelector('input');
+        radio.checked = true;
+        refreshPills(wrap);
+        var btn = wrap.nextSibling;
+        if (btn) refreshBtn(btn, this.getAttribute('data-method'));
+      });
+    });
+
+    refreshPills(wrap);
+    return wrap;
+  }
+
+  function refreshPills(wrap) {
+    wrap.querySelectorAll('.pm-pill').forEach(function(pill) {
+      var m = pill.getAttribute('data-method');
+      var cfg = PM_CONFIG[m];
+      var checked = pill.querySelector('input').checked;
+      pill.style.borderColor   = checked ? cfg.bg : '#e5e7eb';
+      pill.style.background    = checked ? cfg.bg : '';
+      pill.style.color         = checked ? cfg.text : '';
+    });
+  }
+
+  function refreshBtn(btn, method) {
+    var cfg = PM_CONFIG[method] || PM_CONFIG.paypal;
+    btn.innerHTML     = 'Pay with ' + cfg.label + ' →';
+    btn.style.background = cfg.bg;
+    btn.style.color      = cfg.text;
+  }
+
+  function getSelectedMethod(form) {
+    var radio = form.closest('*').querySelector
+      ? (form.closest('.order-form-card') || form).querySelector('input[name^="pm-choice-"]:checked')
+      : null;
+    return radio ? radio.value : 'paypal';
+  }
+
+  function showManualPaymentCard(method, custName, custEmail, amount, desc, form) {
+    var firstName = custName ? custName.split(' ')[0] : 'there';
+    var isZelle   = (method === 'zelle');
+
+    var bodyHtml = isZelle
+      ? '<ol style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);'
+        + 'font-size:14px;line-height:1.7;padding-left:20px;">'
+        + '<li>Open your banking app and go to <strong>Zelle</strong></li>'
+        + '<li style="margin-top:6px;">Send <strong>$' + amount + '</strong> to '
+        + '<strong>' + ZELLE_EMAIL + '</strong></li>'
+        + '<li style="margin-top:6px;">Use memo: <em>' + desc.substring(0, 80) + '</em></li>'
+        + '<li style="margin-top:6px;">Reply to our confirmation email once sent — '
+        + 'we\'ll start your project immediately</li>'
+        + '</ol>'
+      : '<p style="color:var(--slate);font-size:14px;max-width:400px;margin:0 auto 16px;line-height:1.7;">'
+        + 'Click below to open our Wise page. Enter <strong>$' + amount + '</strong> as the amount.'
+        + '</p>'
+        + '<a href="' + WISE_URL + '" target="_blank" rel="noopener" '
+        + 'style="display:inline-block;background:#163300;color:#9fe870;padding:12px 28px;'
+        + 'border-radius:6px;text-decoration:none;font-weight:700;font-size:15px;margin-bottom:20px;">'
+        + 'Open Wise →</a>';
+
+    var emailLine = custEmail
+      ? '<p style="font-size:13px;color:var(--slate);opacity:.75;margin-top:8px;">'
+        + 'A summary is on its way to <strong>' + custEmail + '</strong>.</p>'
+      : '';
+
+    var card   = form.closest('.order-form-card');
+    var target = card || form;
+    target.innerHTML = [
+      '<div style="text-align:center;padding:40px 16px;">',
+      '<div style="font-size:48px;line-height:1;margin-bottom:14px;">',
+      isZelle ? '💜' : '💚', '</div>',
+      '<h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:12px;',
+      'color:', isZelle ? '#6d1ed4' : '#163300', ';">',
+      isZelle ? 'Send your Zelle payment' : 'Complete your Wise payment', '</h3>',
+      bodyHtml, emailLine,
+      '</div>'
+    ].join('');
+
+    if (custEmail) {
+      var nameParts  = (custName || '').split(' ');
+      var mockDetails = {
+        payer: { name: { given_name: nameParts[0] || 'Customer', surname: nameParts.slice(1).join(' ') },
+                 email_address: custEmail },
+        purchase_units: [{ amount: { value: amount } }],
+        id: ''
+      };
+      sendConfirmationEmail(mockDetails, desc);
+      try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
+    }
+  }
 
   function initPayPal() {
     var forms = document.querySelectorAll('form[name^="lang-order"], form[name^="lang-native"], form[name^="store-order"]');
@@ -490,86 +610,97 @@
       var oldBtn = form.querySelector('.btn-submit, .btn-order');
       if (!oldBtn) return;
 
-      // Build a "Pay with PayPal" button that inherits existing styles
-      var ppBtn = document.createElement('button');
-      ppBtn.type = 'button';
-      ppBtn.className = 'btn-submit';
-      ppBtn.innerHTML = 'Pay with PayPal →';
-      ppBtn.style.cssText = 'background:#0070ba;color:#fff;width:100%;border:none;'
-        + 'border-radius:6px;padding:14px;font-size:15px;font-weight:600;'
-        + 'cursor:pointer;margin-top:4px;letter-spacing:.01em;';
+      // Payment method selector pills
+      var selector = buildPaymentSelector(form);
+      oldBtn.parentNode.insertBefore(selector, oldBtn);
 
-      oldBtn.parentNode.insertBefore(ppBtn, oldBtn);
+      // Pay button
+      var payBtn = document.createElement('button');
+      payBtn.type      = 'button';
+      payBtn.className = 'btn-submit';
+      payBtn.style.cssText = 'width:100%;border:none;border-radius:6px;padding:14px;'
+        + 'font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;letter-spacing:.01em;'
+        + 'transition:background .15s,color .15s;';
+      refreshBtn(payBtn, 'paypal');
+
+      oldBtn.parentNode.insertBefore(payBtn, oldBtn);
       oldBtn.style.display = 'none';
 
-      ppBtn.addEventListener('click', function() {
+      payBtn.addEventListener('click', function() {
         if (!validateForm(form)) return;
         var amount = getOrderAmount(form);
         if (!amount) { window.location.href = '/index.html#quote'; return; }
 
-        var desc    = getOrderDescription(form);
-        var nameEl  = form.querySelector('[name="name"], [name="full-name"], [name="full_name"]');
-        var emailEl = form.querySelector('[name="email"]');
-        var custName  = nameEl  ? nameEl.value.trim()  : '';
+        var method    = getSelectedMethod(form);
+        var desc      = getOrderDescription(form);
+        var nameEl    = form.querySelector('[name="name"], [name="full-name"], [name="full_name"]');
+        var emailEl   = form.querySelector('[name="email"]');
+        var custName  = nameEl  ? nameEl.value.trim() : '';
         var custEmail = emailEl ? emailEl.value.trim() : '';
 
-        // Persist order data so we can show success UI on return
         try {
           sessionStorage.setItem('taika-pending-order', JSON.stringify({
-            name: custName, email: custEmail,
-            amount: amount, desc: desc,
-            returnPath: window.location.pathname
+            name: custName, email: custEmail, amount: amount, desc: desc,
+            returnPath: window.location.pathname, method: method
           }));
         } catch(e) {}
 
-        // Build PayPal standard checkout URL
-        var base       = window.location.origin || 'https://teamtaika.com';
-        var returnUrl  = base + window.location.pathname + '?payment=success';
-        var cancelUrl  = base + window.location.pathname;
-        var qs = [
-          'cmd=_xclick',
-          'business='    + encodeURIComponent(PAYPAL_BUSINESS),
-          'amount='      + encodeURIComponent(amount),
-          'currency_code=USD',
-          'item_name='   + encodeURIComponent(desc.substring(0, 127)),
-          'return='      + encodeURIComponent(returnUrl),
-          'cancel_return=' + encodeURIComponent(cancelUrl),
-          'no_shipping=1',
-          'rm=0'
-        ].join('&');
-        var paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' + qs;
-
         var fileInput = form.querySelector('input[type="file"]');
         var hasFile   = fileInput && fileInput.files && fileInput.files.length > 0;
-        ppBtn.innerHTML = hasFile ? 'Uploading document…' : 'Redirecting to PayPal…';
-        ppBtn.disabled  = true;
+        payBtn.innerHTML = hasFile ? 'Uploading document…' : 'Processing…';
+        payBtn.disabled  = true;
 
-        // Submit to Netlify Forms; if there's a file, wait for it to finish
-        // before redirecting so the browser doesn't abort the upload mid-flight.
-        // A 5-second timeout ensures a slow network never blocks the payment.
-        var timeout = new Promise(function(resolve) { setTimeout(resolve, 5000); });
+        var timeout     = new Promise(function(r) { setTimeout(r, 5000); });
         var netlifyPost = submitNetlifyForm(form, {
-          'paypal-amount':  amount,
-          'payment-method': 'paypal-redirect'
+          'paypal-amount': amount, 'payment-method': method
         }).catch(function(){});
+
         Promise.race([netlifyPost, timeout]).then(function() {
-          window.location.href = paypalUrl;
+          if (method === 'paypal') {
+            var base      = window.location.origin || 'https://teamtaika.com';
+            var returnUrl = base + window.location.pathname + '?payment=success';
+            var cancelUrl = base + window.location.pathname;
+            var qs = [
+              'cmd=_xclick',
+              'business='      + encodeURIComponent(PAYPAL_BUSINESS),
+              'amount='        + encodeURIComponent(amount),
+              'currency_code=USD',
+              'item_name='     + encodeURIComponent(desc.substring(0, 127)),
+              'return='        + encodeURIComponent(returnUrl),
+              'cancel_return=' + encodeURIComponent(cancelUrl),
+              'no_shipping=1', 'rm=0'
+            ].join('&');
+            window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + qs;
+
+          } else if (method === 'venmo') {
+            window.location.href = 'https://venmo.com/' + VENMO_HANDLE
+              + '?txn=pay&amount=' + encodeURIComponent(amount)
+              + '&note='           + encodeURIComponent(desc.substring(0, 100));
+
+          } else if (method === 'zelle') {
+            showManualPaymentCard('zelle', custName, custEmail, amount, desc, form);
+
+          } else if (method === 'wise') {
+            showManualPaymentCard('wise', custName, custEmail, amount, desc, form);
+          }
         });
       });
 
-      // Hide/show based on service type (interpretation = quote only)
+      // Interpretation/quote toggle hides payment UI
       var svcEl = form.querySelector('[name="service-type"]');
       if (svcEl) {
         svcEl.addEventListener('change', function() {
           var isQuote = (this.value === 'interpretation' || this.value === 'both');
-          oldBtn.style.display = isQuote ? 'block' : 'none';
-          ppBtn.style.display  = isQuote ? 'none'  : 'block';
+          oldBtn.style.display    = isQuote ? 'block' : 'none';
+          payBtn.style.display    = isQuote ? 'none'  : 'block';
+          selector.style.display  = isQuote ? 'none'  : 'block';
         });
       }
     });
   }
 
-  // Show confirmation when PayPal redirects back with ?payment=success
+
+    // Show confirmation when PayPal redirects back with ?payment=success
   function handlePayPalReturn() {
     if (!window.location.search.includes('payment=success')) return;
 

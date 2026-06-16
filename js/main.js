@@ -554,12 +554,11 @@
     var isZelle   = (method === 'zelle');
 
     var bodyHtml = isZelle
-      ? '<ol style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);'
-        + 'font-size:15px;line-height:1.8;padding-left:24px;">'
-        + '<li>Open your banking app and send <strong>$' + amount + '</strong> via <strong>Zelle</strong></li>'
-        + '<li style="margin-top:10px;">Send to <strong>' + ZELLE_EMAIL + '</strong> · Memo: <em>' + custName + '</em></li>'
-        + '<li style="margin-top:10px;">Reply to your confirmation email — we\'ll start immediately</li>'
-        + '</ol>'
+      ? '<div style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);font-size:14px;line-height:1.7;">'
+        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 1.</strong> Open your banking app and send <strong>$' + amount + '</strong> via <strong>Zelle</strong></div>'
+        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 2.</strong> Send to <strong>' + ZELLE_EMAIL + '</strong> &mdash; Memo: <em>' + custName + '</em></div>'
+        + '<div><strong style="color:var(--navy);">Step 3.</strong> Reply to your confirmation email &mdash; we\'ll start immediately</div>'
+        + '</div>'
       : '<p style="color:var(--slate);font-size:14px;max-width:400px;margin:0 auto 16px;line-height:1.7;">'
         + 'Click below to open our Wise page. Enter <strong>$' + amount + '</strong> as the amount.'
         + '</p>'

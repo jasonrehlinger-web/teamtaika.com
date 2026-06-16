@@ -522,13 +522,7 @@
           }));
         } catch(e) {}
 
-        // Record the order in Netlify Forms (fire-and-forget)
-        submitNetlifyForm(form, {
-          'paypal-amount':  amount,
-          'payment-method': 'paypal-redirect'
-        }).catch(function(){});
-
-        // Build PayPal standard checkout URL and redirect
+        // Build PayPal standard checkout URL
         var base       = window.location.origin || 'https://teamtaika.com';
         var returnUrl  = base + window.location.pathname + '?payment=success';
         var cancelUrl  = base + window.location.pathname;
@@ -543,10 +537,24 @@
           'no_shipping=1',
           'rm=0'
         ].join('&');
+        var paypalUrl = 'https://www.paypal.com/cgi-bin/webscr?' + qs;
 
-        ppBtn.innerHTML = 'Redirecting to PayPal…';
+        var fileInput = form.querySelector('input[type="file"]');
+        var hasFile   = fileInput && fileInput.files && fileInput.files.length > 0;
+        ppBtn.innerHTML = hasFile ? 'Uploading document…' : 'Redirecting to PayPal…';
         ppBtn.disabled  = true;
-        window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + qs;
+
+        // Submit to Netlify Forms; if there's a file, wait for it to finish
+        // before redirecting so the browser doesn't abort the upload mid-flight.
+        // A 5-second timeout ensures a slow network never blocks the payment.
+        var timeout = new Promise(function(resolve) { setTimeout(resolve, 5000); });
+        var netlifyPost = submitNetlifyForm(form, {
+          'paypal-amount':  amount,
+          'payment-method': 'paypal-redirect'
+        }).catch(function(){});
+        Promise.race([netlifyPost, timeout]).then(function() {
+          window.location.href = paypalUrl;
+        });
       });
 
       // Hide/show based on service type (interpretation = quote only)

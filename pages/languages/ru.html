@@ -285,6 +285,14 @@
             <div class="price-calc-label">Ориентировочная стоимость</div>
             <div class="price-calc-note">Итоговая цена после проверки документа</div>
           </div>
+
+          <div style="margin:4px 0 16px;padding:14px 16px;background:rgba(201,168,76,.08);border:2px solid rgba(201,168,76,.35);border-radius:10px;">
+            <label style="display:flex;align-items:flex-start;gap:14px;cursor:pointer;">
+              <input type="checkbox" name="notarization" id="ru-notarization" value="yes"
+                     onchange="calcPrice_ru()" style="margin-top:3px;width:22px;height:22px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+              <span style="font-size:15px;line-height:1.5;">Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+            </label>
+          </div>
           <div class="price-calc-total" id="ru-price-total">$24.99</div>
         </div>
         <div class="form-row">
@@ -314,13 +322,6 @@
         <div class="form-group">
           <label for="ru-notes">Примечания / Особые Инструкции</label>
           <textarea id="ru-notes" name="notes" rows="3" placeholder="Укажите срочные сроки, особые требования или вопросы..."></textarea>
-        </div>
-        <div class="form-group" style="margin-bottom:12px;">
-          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;font-size:13.5px;">
-            <input type="checkbox" name="notarization" id="ru-notarization" value="yes"
-                   onchange="calcPrice_ru()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
-            <span>Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
-          </label>
         </div>
 
         <button type="button" class="btn-submit btn-order" data-form="lang-native-ru-form">Отправить Заказ и Получить Подтверждение →</button>
@@ -528,6 +529,6 @@ function calcPrice_ru() {
   });
 })();
 </script>
-<script src="/js/main.js?v=24"></script>
+<script src="/js/main.js?v=25"></script>
 </body>
 </html>

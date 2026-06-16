@@ -84,6 +84,32 @@
   to = "/pages/services/pdf-accessibility-checker.html"
   status = 301
 
+# Medical translation pages
+[[redirects]]
+  from = "/medical-translation"
+  to = "/pages/industries/medical-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/medical-device-translation"
+  to = "/pages/industries/medical-device-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/medical-document-translation"
+  to = "/pages/industries/medical-document-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/life-sciences-translation"
+  to = "/pages/industries/life-sciences-translation.html"
+  status = 301
+
+[[redirects]]
+  from = "/clinical-trial-translation"
+  to = "/pages/industries/clinical-trial-translation.html"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]

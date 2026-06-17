@@ -591,3 +591,8 @@
   from = "/enterprise-localization-services"
   to = "/pages/services/enterprise-localization-services.html"
   status = 301
+
+[[redirects]]
+  from = "/blog/certified-vs-notarized-translation"
+  to = "/pages/resources/blog/certified-vs-notarized-translation.html"
+  status = 301

@@ -617,3 +617,8 @@
   from = "/blog/certified-translation-cost"
   to = "/pages/resources/blog/certified-translation-cost.html"
   status = 301
+
+[[redirects]]
+  from = "/translate"
+  to = "/pages/tools/translate.html"
+  status = 301

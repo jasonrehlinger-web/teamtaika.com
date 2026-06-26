@@ -682,26 +682,27 @@ function renderPortalNav(containerId) {
   var isAccount  = path.includes('/account');
   var isProject  = path.includes('/project');
 
-  el.innerHTML = [
-    '<nav class="portal-nav" role="navigation" aria-label="Portal navigation">',
-    '  <div class="portal-nav-inner">',
-    '    <a href="/" class="portal-nav-back" aria-label="Back to main site">← teamtaika.com</a>',
-    '    <a href="/portal/dashboard" class="portal-logo">Taika Portal</a>',
-    '    <div class="portal-nav-links">',
-    '      <a href="/portal/dashboard"' + (!isSubmit && !isAccount && !isProject ? ' class="active"' : '') + '>Dashboard</a>',
-    '      <a href="/portal/submit"'   + (isSubmit  ? ' class="active"' : '') + '>New Project</a>',
-    '      <a href="/portal/account"'  + (isAccount ? ' class="active"' : '') + '>Account</a>',
-    '    </div>',
-    '    <div class="portal-nav-user">',
-    '      <span id="user-greeting">Loading...</span>',
-    '      <button id="signout-btn" class="btn-signout">Sign Out</button>',
-    '    </div>',
-    '  </div>',
-    '</nav>'
-  ].join('\n');
+  var dashClass    = (!isSubmit && !isAccount && !isProject) ? ' active' : '';
+  var submitClass  = isSubmit  ? ' active' : '';
+  var accountClass = isAccount ? ' active' : '';
+
+  el.innerHTML =
+    '<nav class="portal-nav" role="navigation" aria-label="Portal navigation">' +
+      '<a href="/" class="portal-nav-back" aria-label="Back to main site">← teamtaika.com</a>' +
+      '<a href="/portal/dashboard" class="portal-nav__logo">Taika</a>' +
+      '<div class="portal-nav__links">' +
+        '<a href="/portal/dashboard" class="portal-nav__link' + dashClass    + '">Dashboard</a>' +
+        '<a href="/portal/submit"    class="portal-nav__link' + submitClass  + '">New Project</a>' +
+        '<a href="/portal/account"   class="portal-nav__link' + accountClass + '">Account</a>' +
+      '</div>' +
+      '<div class="portal-nav__right">' +
+        '<span class="portal-nav__greeting" id="nav-greeting"></span>' +
+        '<button class="portal-nav__signout" id="nav-signout">Sign Out</button>' +
+      '</div>' +
+    '</nav>';
 
   /* Wire sign-out */
-  var signOutBtn = el.querySelector('#signout-btn');
+  var signOutBtn = el.querySelector('#nav-signout');
   if (signOutBtn) {
     signOutBtn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -709,14 +710,15 @@ function renderPortalNav(containerId) {
     });
   }
 
-  /* Fill greeting if user already loaded */
+  /* Fill greeting */
   try {
     getCurrentUser().then(function(result) {
-      var greet = el.querySelector('#user-greeting');
-      if (greet && result && result.profile) {
-        greet.textContent = result.profile.full_name
-          ? 'Hello, ' + result.profile.full_name.split(' ')[0]
-          : result.user.email;
+      var greet = el.querySelector('#nav-greeting');
+      if (greet && result) {
+        var name = (result.profile && result.profile.full_name)
+          ? result.profile.full_name.split(' ')[0]
+          : (result.user && result.user.email ? result.user.email.split('@')[0] : '');
+        if (name) greet.textContent = 'Hello, ' + name;
       }
     }).catch(function(){});
   } catch(e) {}

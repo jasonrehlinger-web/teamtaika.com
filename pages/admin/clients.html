@@ -380,12 +380,14 @@ document.getElementById('btn-send-invite').addEventListener('click', async () =>
   btn.innerHTML = '<span class="spin"></span> Sending…';
 
   try {
-    // Invite via Supabase Admin API (requires service role in production — this calls through your API layer)
-    // If using client-side anon key, call your Netlify function instead:
-    const resp = await fetch('/.netlify/functions/admin-invite', {
+    const { data: { session } } = await _sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/portal-admin', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, full_name: name, organization: org }),
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${session?.access_token}`
+      },
+      body: JSON.stringify({ action: 'inviteClient', email, full_name: name, organization: org }),
     });
 
     if (!resp.ok) {

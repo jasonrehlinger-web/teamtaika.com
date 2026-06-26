@@ -331,8 +331,9 @@ async function handleInviteTeamMember(body, adminProfile) {
   }
 
   const linkData = await genRes.json();
-  const inviteUrl = linkData?.properties?.action_link;
-  const newUserId = linkData?.user?.id;
+  // Raw REST API returns flat structure; JS client wraps in {properties, user} — we use fetch directly
+  const inviteUrl = linkData?.action_link || linkData?.properties?.action_link;
+  const newUserId = linkData?.id || linkData?.user?.id;
   if (!inviteUrl) throw new Error('Invite link generation returned no action link');
   if (!newUserId) throw new Error('Invite link generation returned no user ID');
 
@@ -487,8 +488,9 @@ async function handleInviteClient(body, _adminProfile) {
   }
 
   const linkData = await genRes.json();
-  const inviteUrl = linkData?.properties?.action_link;
-  const newUserId = linkData?.user?.id;
+  // Raw REST API returns flat structure; JS client wraps in {properties, user} — we use fetch directly
+  const inviteUrl = linkData?.action_link || linkData?.properties?.action_link;
+  const newUserId = linkData?.id || linkData?.user?.id;
   if (!inviteUrl) throw new Error('Invite link generation returned no action link');
   if (!newUserId) throw new Error('Invite link generation returned no user ID');
 

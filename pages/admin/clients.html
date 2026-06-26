@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clients — Taika Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/portal.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B1E35; --navy-mid: #132844; --navy-light: #1e3a5f;
+      --gold: #B8913A; --gold-light: #d4a84e;
+      --emerald: #1A6B4A; --red: #DC2626;
+      --slate: #4A5E74; --slate-light: #8fa3b8;
+      --white: #F9F8F5; --gray-50: #f8f9fa; --gray-100: #f0f2f5;
+      --gray-200: #e2e6ea; --gray-300: #ced4da;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08); --shadow-md: 0 4px 12px rgba(0,0,0,.10);
+    }
+    html, body { font-family: var(--font-body); background: var(--gray-100); color: #1a2b3c; font-size: 14px; line-height: 1.5; }
+    /* Nav */
+    .admin-nav { position: sticky; top: 0; z-index: 100; background: var(--navy); height: 56px; display: flex; align-items: center; padding: 0 24px; gap: 32px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+    .admin-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .admin-nav-brand .shield { font-size: 20px; color: var(--gold); }
+    .admin-nav-brand span { font-family: var(--font-display); font-size: 18px; color: var(--white); letter-spacing: .02em; }
+    .admin-nav-links { display: flex; gap: 4px; flex: 1; }
+    .admin-nav-links a { color: rgba(255,255,255,.65); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); transition: all .15s; }
+    .admin-nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .admin-nav-links a.active { color: var(--gold); background: rgba(184,145,58,.12); }
+    .admin-nav-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+    .admin-nav-user { color: rgba(255,255,255,.7); font-size: 13px; }
+    .btn-signout { background: transparent; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.7); font-family: var(--font-body); font-size: 12.5px; padding: 5px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: all .15s; }
+    .btn-signout:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    /* Page */
+    .page-wrapper { max-width: 1300px; margin: 0 auto; padding: 28px 24px 60px; }
+    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .page-header h1 { font-family: var(--font-display); font-size: 26px; color: var(--navy); }
+    .btn-gold { background: var(--gold); color: #fff; border: none; padding: 9px 20px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background .15s; }
+    .btn-gold:hover { background: var(--gold-light); }
+    /* Filter bar */
+    .filter-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-search { background: #fff; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); padding: 8px 14px; font-family: var(--font-body); font-size: 13px; color: #1a2b3c; min-width: 260px; outline: none; transition: border-color .15s; }
+    .filter-search:focus { border-color: var(--navy); }
+    .filter-search::placeholder { color: var(--slate-light); }
+    .status-toggle { display: flex; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); overflow: hidden; }
+    .status-toggle button { padding: 7px 16px; font-family: var(--font-body); font-size: 13px; border: none; background: #fff; color: var(--slate); cursor: pointer; transition: all .15s; }
+    .status-toggle button.active { background: var(--navy); color: #fff; }
+    .results-meta { margin-left: auto; font-size: 13px; color: var(--slate); }
+    /* Table */
+    .table-card { background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; border: 1px solid var(--gray-200); }
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: var(--gray-50); }
+    th { padding: 10px 16px; text-align: left; font-size: 11.5px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--gray-200); white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid var(--gray-100); transition: background .1s; cursor: pointer; }
+    tbody tr:hover { background: #f0f4f8; }
+    tbody tr:last-child { border-bottom: none; }
+    td { padding: 12px 16px; font-size: 13px; color: #1a2b3c; vertical-align: middle; }
+    .client-name-cell .name { font-weight: 600; color: #1a2b3c; }
+    .client-name-cell .org { font-size: 12px; color: var(--slate); margin-top: 1px; }
+    .count-badge { display: inline-flex; align-items: center; justify-content: center; background: var(--gray-100); color: var(--slate); font-size: 12px; font-weight: 600; min-width: 28px; height: 22px; border-radius: 20px; padding: 0 8px; }
+    .count-badge.has-projects { background: #d6e8ff; color: #0d4ea0; }
+    .status-badge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 20px; font-size: 11.5px; font-weight: 600; }
+    .status-active { background: #d0f0e8; color: #0a5535; }
+    .status-inactive { background: var(--gray-100); color: var(--slate); }
+    .btn-view { background: var(--navy); color: #fff; border: none; padding: 5px 14px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 12px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block; transition: background .15s; }
+    .btn-view:hover { background: var(--navy-light); }
+    .empty-state { padding: 64px 0; text-align: center; }
+    .empty-state p { color: var(--slate); font-size: 14px; }
+    /* Skeleton */
+    .skeleton { background: linear-gradient(90deg, #e8ecf0 25%, #f0f4f8 50%, #e8ecf0 75%); background-size: 400% 100%; animation: shimmer 1.4s infinite; border-radius: 4px; height: 14px; display: inline-block; }
+    @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+    td .skeleton { width: 85%; }
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,.2); width: 100%; max-width: 480px; margin: 16px; overflow: hidden; animation: modal-in .2s ease; }
+    @keyframes modal-in { from { opacity: 0; transform: translateY(-16px) scale(.97); } to { opacity: 1; transform: none; } }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid var(--gray-200); }
+    .modal-header h2 { font-family: var(--font-display); font-size: 20px; color: var(--navy); }
+    .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--slate); line-height: 1; padding: 0; }
+    .modal-close:hover { color: var(--navy); }
+    .modal-body { padding: 24px; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 10px; }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+    .field input { width: 100%; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); padding: 9px 12px; font-family: var(--font-body); font-size: 13.5px; color: #1a2b3c; outline: none; transition: border-color .15s; }
+    .field input:focus { border-color: var(--navy); }
+    .field-req { color: var(--red); }
+    .modal-success { text-align: center; padding: 16px 0 8px; }
+    .modal-success .success-icon { font-size: 40px; margin-bottom: 10px; }
+    .modal-success p { color: var(--emerald); font-size: 14px; font-weight: 500; }
+    .modal-error { background: #fff5f5; border: 1px solid #fca5a5; border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--red); margin-bottom: 14px; display: none; }
+    .btn-cancel { background: none; border: 1px solid var(--gray-300); color: #1a2b3c; padding: 9px 20px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13.5px; cursor: pointer; transition: all .15s; }
+    .btn-cancel:hover { border-color: var(--slate); }
+    .btn-invite { background: var(--gold); color: #fff; border: none; padding: 9px 22px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background .15s; display: flex; align-items: center; gap: 8px; }
+    .btn-invite:hover:not(:disabled) { background: var(--gold-light); }
+    .btn-invite:disabled { opacity: .6; cursor: not-allowed; }
+    .spin { display: inline-block; width: 13px; height: 13px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Toast */
+    #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast { background: var(--navy); color: #fff; padding: 12px 20px; border-radius: var(--radius-md); font-size: 13.5px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(8px); transition: all .25s; max-width: 320px; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: var(--emerald); }
+    .toast.error { background: var(--red); }
+  </style>
+</head>
+<body>
+<nav class="admin-nav">
+  <a class="admin-nav-brand" href="/admin/dashboard">
+    <span class="shield">🛡</span>
+    <span>Taika Admin</span>
+  </a>
+  <div class="admin-nav-links">
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/projects">Projects</a>
+    <a href="/admin/clients" class="active">Clients</a>
+    <a href="/admin/team">Team</a>
+  </div>
+  <div class="admin-nav-right">
+    <span class="admin-nav-user" id="nav-username">—</span>
+    <button class="btn-signout" id="btn-signout">Sign Out</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>Clients</h1>
+    <button class="btn-gold" id="btn-add-client">+ Add Client</button>
+  </div>
+
+  <div class="filter-bar">
+    <input type="text" class="filter-search" id="filter-search" placeholder="Search name, organization, or email…" />
+    <div class="status-toggle">
+      <button class="active" id="toggle-all" data-status="all">All</button>
+      <button id="toggle-active" data-status="active">Active</button>
+      <button id="toggle-inactive" data-status="inactive">Inactive</button>
+    </div>
+    <span class="results-meta" id="results-meta"></span>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Projects</th>
+          <th>Last Project</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="clients-tbody"></tbody>
+    </table>
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <p>No clients match your search.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Add Client Modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-header">
+      <h2 id="modal-title">Add Client</h2>
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-error" id="modal-error"></div>
+      <div id="modal-form-wrap">
+        <div class="field">
+          <label for="inv-name">Full Name <span class="field-req">*</span></label>
+          <input type="text" id="inv-name" placeholder="Jane Smith" autocomplete="name" />
+        </div>
+        <div class="field">
+          <label for="inv-email">Email <span class="field-req">*</span></label>
+          <input type="email" id="inv-email" placeholder="jane@example.com" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="inv-org">Organization</label>
+          <input type="text" id="inv-org" placeholder="Acme Corp (optional)" autocomplete="organization" />
+        </div>
+      </div>
+      <div class="modal-success" id="modal-success" style="display:none;">
+        <div class="success-icon">✅</div>
+        <p id="modal-success-msg">Invite sent!</p>
+      </div>
+    </div>
+    <div class="modal-footer" id="modal-footer">
+      <button class="btn-cancel" id="btn-modal-cancel">Cancel</button>
+      <button class="btn-invite" id="btn-send-invite">Send Invite</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
+const { createClient } = supabase;
+const _sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let allClients = [];
+let filteredClients = [];
+let statusFilter = 'all';
+
+async function requireAdmin() {
+  const { data: { session } } = await _sb.auth.getSession();
+  if (!session) { window.location.href = '/portal/login'; return null; }
+  const { data: profile } = await _sb.from('profiles').select('role, full_name').eq('id', session.user.id).single();
+  if (!profile || profile.role !== 'admin') { window.location.href = '/portal/dashboard'; return null; }
+  document.getElementById('nav-username').textContent = profile.full_name || session.user.email;
+  return session;
+}
+
+function showToast(msg, type) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  c.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3500);
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+// ── Load Clients ──────────────────────────────────────
+async function loadClients() {
+  showSkeleton();
+  try {
+    // Load profiles with role=client + project counts
+    const { data: profiles, error } = await _sb
+      .from('profiles')
+      .select('id, full_name, email, organization, phone, is_active, created_at')
+      .eq('role', 'client')
+      .order('full_name');
+    if (error) throw error;
+
+    // Load project counts per client
+    const { data: projectCounts } = await _sb
+      .from('projects')
+      .select('client_id, created_at')
+      .order('created_at', { ascending: false });
+
+    const countMap = {};
+    const lastMap = {};
+    (projectCounts || []).forEach(p => {
+      if (!p.client_id) return;
+      countMap[p.client_id] = (countMap[p.client_id] || 0) + 1;
+      if (!lastMap[p.client_id]) lastMap[p.client_id] = p.created_at;
+    });
+
+    allClients = (profiles || []).map(p => ({
+      ...p,
+      project_count: countMap[p.id] || 0,
+      last_project: lastMap[p.id] || null,
+      is_active: p.is_active !== false,
+    }));
+
+    applyFilterAndRender();
+  } catch (e) {
+    showToast('Failed to load clients: ' + e.message, 'error');
+  }
+}
+
+// ── Filter + Render ───────────────────────────────────
+function applyFilterAndRender() {
+  const q = document.getElementById('filter-search').value.trim().toLowerCase();
+
+  filteredClients = allClients.filter(c => {
+    if (statusFilter === 'active' && !c.is_active) return false;
+    if (statusFilter === 'inactive' && c.is_active) return false;
+    if (q) {
+      const name = (c.full_name || '').toLowerCase();
+      const email = (c.email || '').toLowerCase();
+      const org = (c.organization || '').toLowerCase();
+      if (!name.includes(q) && !email.includes(q) && !org.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('results-meta').textContent = filteredClients.length + ' client' + (filteredClients.length !== 1 ? 's' : '');
+  document.getElementById('empty-state').style.display = filteredClients.length === 0 ? 'block' : 'none';
+  renderRows(filteredClients);
+}
+
+function renderRows(clients) {
+  const tbody = document.getElementById('clients-tbody');
+  if (!clients.length) { tbody.innerHTML = ''; return; }
+  tbody.innerHTML = clients.map(c => {
+    const hasProjects = c.project_count > 0;
+    const statusCls = c.is_active ? 'status-active' : 'status-inactive';
+    const statusLabel = c.is_active ? 'Active' : 'Inactive';
+    return '<tr data-id="' + c.id + '">' +
+      '<td class="client-name-cell"><div class="name">' + (c.full_name || '—') + '</div>' + (c.organization ? '<div class="org">' + c.organization + '</div>' : '') + '</td>' +
+      '<td>' + (c.email || '—') + '</td>' +
+      '<td><span class="count-badge' + (hasProjects ? ' has-projects' : '') + '">' + c.project_count + '</span></td>' +
+      '<td>' + fmtDate(c.last_project) + '</td>' +
+      '<td><span class="status-badge ' + statusCls + '">' + statusLabel + '</span></td>' +
+      '<td><a class="btn-view" href="/admin/client?id=' + c.id + '" onclick="event.stopPropagation()">View →</a></td>' +
+    '</tr>';
+  }).join('');
+
+  tbody.querySelectorAll('tr[data-id]').forEach(row => {
+    row.addEventListener('click', () => { window.location.href = '/admin/client?id=' + row.dataset.id; });
+  });
+}
+
+function showSkeleton() {
+  const tbody = document.getElementById('clients-tbody');
+  tbody.innerHTML = Array.from({length: 6}).map(() =>
+    '<tr>' + Array.from({length: 6}).map(() => '<td><span class="skeleton" style="width:' + (55 + Math.random()*35) + '%"></span></td>').join('') + '</tr>'
+  ).join('');
+  document.getElementById('empty-state').style.display = 'none';
+}
+
+// ── Search + Status Filter ────────────────────────────
+document.getElementById('filter-search').addEventListener('input', applyFilterAndRender);
+document.getElementById('filter-search').addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('filter-search').value = ''; applyFilterAndRender(); } });
+
+document.querySelectorAll('.status-toggle button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.status-toggle button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    statusFilter = btn.dataset.status;
+    applyFilterAndRender();
+  });
+});
+
+// ── Add Client Modal ──────────────────────────────────
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-form-wrap').style.display = '';
+  document.getElementById('modal-success').style.display = 'none';
+  document.getElementById('modal-error').style.display = 'none';
+  document.getElementById('modal-footer').style.display = '';
+  document.getElementById('inv-name').value = '';
+  document.getElementById('inv-email').value = '';
+  document.getElementById('inv-org').value = '';
+  document.getElementById('btn-send-invite').disabled = false;
+  document.getElementById('btn-send-invite').textContent = 'Send Invite';
+  document.getElementById('inv-name').focus();
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.getElementById('btn-add-client').addEventListener('click', openModal);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('btn-modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === document.getElementById('modal-overlay')) closeModal(); });
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+document.getElementById('btn-send-invite').addEventListener('click', async () => {
+  const name = document.getElementById('inv-name').value.trim();
+  const email = document.getElementById('inv-email').value.trim();
+  const org = document.getElementById('inv-org').value.trim();
+  const errEl = document.getElementById('modal-error');
+
+  errEl.style.display = 'none';
+  if (!name) { errEl.textContent = 'Full name is required.'; errEl.style.display = 'block'; document.getElementById('inv-name').focus(); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'A valid email address is required.'; errEl.style.display = 'block'; document.getElementById('inv-email').focus(); return; }
+
+  const btn = document.getElementById('btn-send-invite');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Sending…';
+
+  try {
+    // Invite via Supabase Admin API (requires service role in production — this calls through your API layer)
+    // If using client-side anon key, call your Netlify function instead:
+    const resp = await fetch('/.netlify/functions/admin-invite', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, full_name: name, organization: org }),
+    });
+
+    if (!resp.ok) {
+      const body = await resp.json().catch(() => ({}));
+      throw new Error(body.error || 'Invite failed (' + resp.status + ')');
+    }
+
+    // Show success
+    document.getElementById('modal-form-wrap').style.display = 'none';
+    document.getElementById('modal-footer').style.display = 'none';
+    document.getElementById('modal-success-msg').textContent = 'Invite sent to ' + email;
+    document.getElementById('modal-success').style.display = 'block';
+    showToast('Invite sent to ' + email, 'success');
+
+    // Reload clients after short delay
+    setTimeout(async () => { closeModal(); await loadClients(); }, 2200);
+  } catch (e) {
+    errEl.textContent = e.message || 'Failed to send invite.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Send Invite';
+  }
+});
+
+// ── Sign Out ──────────────────────────────────────────
+document.getElementById('btn-signout').addEventListener('click', async () => { await _sb.auth.signOut(); window.location.href = '/portal/login'; });
+
+// ── Init ──────────────────────────────────────────────
+(async () => {
+  const session = await requireAdmin();
+  if (!session) return;
+  await loadClients();
+})();
+</script>
+</body>
+</html>

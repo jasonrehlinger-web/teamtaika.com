@@ -611,7 +611,7 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
     # Content Security Policy — restricts where scripts/styles/fonts/connections can load from
     # unsafe-inline required: site uses inline event handlers (onchange, onclick) and inline styles
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.emailjs.com; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'none';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.emailjs.com https://ijwgdzrunkxrpzsrcqir.supabase.co wss://ijwgdzrunkxrpzsrcqir.supabase.co https://cdn.jsdelivr.net; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'none';"
 
 [[redirects]]
   from = "/blog/certified-translation-cost"
@@ -622,3 +622,65 @@
   from = "/translate"
   to = "/pages/tools/translate.html"
   status = 301
+
+# ── Client Portal ────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/portal"
+  to = "/pages/portal/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/dashboard"
+  to = "/pages/portal/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/submit"
+  to = "/pages/portal/submit.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/project"
+  to = "/pages/portal/project.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/account"
+  to = "/pages/portal/account.html"
+  status = 200
+
+# ── Admin Panel ───────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/admin"
+  to = "/pages/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/dashboard"
+  to = "/pages/admin/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/projects"
+  to = "/pages/admin/projects.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/project"
+  to = "/pages/admin/project.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/clients"
+  to = "/pages/admin/clients.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/client"
+  to = "/pages/admin/client.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/team"
+  to = "/pages/admin/team.html"
+  status = 200

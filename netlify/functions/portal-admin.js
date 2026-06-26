@@ -14,17 +14,42 @@ const SERVICE_KEY  = process.env.SUPABASE_SERVICE_KEY;
 
 /* ── CORS headers ── */
 const headers = {
-  'Access-Control-Allow-Origin':  '*',
+  'Access-Control-Allow-Origin':  'https://teamtaika.com',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Content-Type': 'application/json'
 };
+
+/* ── Rate limiter ────────────────────────────────────────────────────────────
+   Simple in-memory IP throttle: max 30 requests per minute per IP.
+   Resets on cold start (acceptable — Netlify functions are ephemeral).
+   ─────────────────────────────────────────────────────────────────────────── */
+const _rateLimitMap = new Map();
+function isRateLimited(ip) {
+  const now = Date.now();
+  const window = 60_000; // 1 minute
+  const limit  = 30;
+  const entry  = _rateLimitMap.get(ip) || { count: 0, start: now };
+  if (now - entry.start > window) {
+    _rateLimitMap.set(ip, { count: 1, start: now });
+    return false;
+  }
+  entry.count++;
+  _rateLimitMap.set(ip, entry);
+  return entry.count > limit;
+}
 
 /* ── Main handler ── */
 exports.handler = async function(event, context) {
   // Preflight
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
+  }
+
+  // Rate limit check
+  const clientIp = (event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown').split(',')[0].trim();
+  if (isRateLimited(clientIp)) {
+    return { statusCode: 429, headers, body: JSON.stringify({ error: 'Too many requests — please wait a moment and try again.' }) };
   }
 
   if (event.httpMethod !== 'POST') {

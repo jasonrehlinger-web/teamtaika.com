@@ -678,22 +678,25 @@ function renderPortalNav(containerId) {
   if (!el) return;
 
   var path = window.location.pathname;
-  var isSubmit   = path.includes('/submit');
-  var isAccount  = path.includes('/account');
-  var isProject  = path.includes('/project');
+  var isSubmit    = path.includes('/submit');
+  var isAccount   = path.includes('/account');
+  var isProject   = path.includes('/project');
+  var isTranslate = path.includes('/translate');
 
-  var dashClass    = (!isSubmit && !isAccount && !isProject) ? ' active' : '';
-  var submitClass  = isSubmit  ? ' active' : '';
-  var accountClass = isAccount ? ' active' : '';
+  var dashClass      = (!isSubmit && !isAccount && !isProject && !isTranslate) ? ' active' : '';
+  var translateClass = isTranslate ? ' active' : '';
+  var submitClass    = isSubmit    ? ' active' : '';
+  var accountClass   = isAccount   ? ' active' : '';
 
   el.innerHTML =
     '<nav class="portal-nav" role="navigation" aria-label="Portal navigation">' +
       '<a href="/" class="portal-nav-back" aria-label="Back to main site">← teamtaika.com</a>' +
       '<a href="/portal/dashboard" class="portal-nav__logo">Taika</a>' +
       '<div class="portal-nav__links">' +
-        '<a href="/portal/dashboard" class="portal-nav__link' + dashClass    + '">Dashboard</a>' +
-        '<a href="/portal/submit"    class="portal-nav__link' + submitClass  + '">New Project</a>' +
-        '<a href="/portal/account"   class="portal-nav__link' + accountClass + '">Account</a>' +
+        '<a href="/portal/dashboard"  class="portal-nav__link' + dashClass      + '">Dashboard</a>' +
+        '<a href="/portal/translate"  class="portal-nav__link' + translateClass + '">MT Preview</a>' +
+        '<a href="/portal/submit"     class="portal-nav__link' + submitClass    + '">New Project</a>' +
+        '<a href="/portal/account"    class="portal-nav__link' + accountClass   + '">Account</a>' +
       '</div>' +
       '<div class="portal-nav__right">' +
         '<span class="portal-nav__greeting" id="nav-greeting"></span>' +

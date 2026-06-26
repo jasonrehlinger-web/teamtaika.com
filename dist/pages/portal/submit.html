@@ -797,6 +797,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderPortalNav('portal-nav');
   }
 
+  // Pre-fill from MT preview tool (/portal/translate?service=...&target_lang=...&mt_preview=...)
+  const _params = new URLSearchParams(window.location.search);
+  if (_params.get('service')) {
+    const svcEl = document.getElementById('service');
+    if (svcEl) {
+      svcEl.value = _params.get('service');
+      svcEl.dispatchEvent(new Event('change'));
+    }
+  }
+  if (_params.get('mt_preview')) {
+    const notesEl = document.getElementById('client-notes');
+    if (notesEl && !notesEl.value) {
+      notesEl.value = '[MT Preview text for reference]:
+' + _params.get('mt_preview');
+    }
+  }
+
   const LANGUAGES = [
     'English','Spanish','French','German','Portuguese','Italian',
     'Chinese Simplified','Chinese Traditional','Japanese','Korean',
@@ -818,6 +835,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     opt.textContent = lang;
     sourceSelect.appendChild(opt);
   });
+
+  // Pre-select target language from URL param (set after dropdown is built below)
+  const _preTargetLang = _params.get('target_lang') || '';
 
   // Populate target language multi-select
   const targetDropdown = document.getElementById('target-lang-dropdown');
@@ -844,6 +864,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     targetDropdown.appendChild(div);
   });
+
+  // Pre-check target language from URL param (e.g. coming from /portal/translate)
+  if (_preTargetLang) {
+    const matchLang = _preTargetLang.replace(' (Simplified)','').replace('/Farsi','');
+    targetDropdown.querySelectorAll('input[type=checkbox]').forEach(function(cb) {
+      if (cb.value === _preTargetLang || cb.value.startsWith(matchLang)) {
+        cb.checked = true;
+        if (!selectedTargetLanguages.includes(cb.value)) selectedTargetLanguages.push(cb.value);
+      }
+    });
+    if (selectedTargetLanguages.length) updateTargetLangDisplay();
+  }
 
   function updateTargetLangDisplay() {
     const display = document.getElementById('target-lang-display');

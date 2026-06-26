@@ -697,6 +697,7 @@ function renderPortalNav(containerId) {
         '<a href="/portal/translate"  class="portal-nav__link' + translateClass + '">MT Preview</a>' +
         '<a href="/portal/submit"     class="portal-nav__link' + submitClass    + '">New Project</a>' +
         '<a href="/portal/account"    class="portal-nav__link' + accountClass   + '">Account</a>' +
+        '<a href="/admin/dashboard"   class="portal-nav__link portal-nav__admin-link" id="nav-admin-link" style="display:none">Admin Panel →</a>' +
       '</div>' +
       '<div class="portal-nav__right">' +
         '<span class="portal-nav__greeting" id="nav-greeting"></span>' +
@@ -713,7 +714,7 @@ function renderPortalNav(containerId) {
     });
   }
 
-  /* Fill greeting */
+  /* Fill greeting + show admin link for admin/super_admin */
   try {
     getCurrentUser().then(function(result) {
       var greet = el.querySelector('#nav-greeting');
@@ -722,6 +723,11 @@ function renderPortalNav(containerId) {
           ? result.profile.full_name.split(' ')[0]
           : (result.user && result.user.email ? result.user.email.split('@')[0] : '');
         if (name) greet.textContent = 'Hello, ' + name;
+      }
+      var role = result && result.profile && result.profile.role;
+      var adminLink = el.querySelector('#nav-admin-link');
+      if (adminLink && (role === 'admin' || role === 'super_admin')) {
+        adminLink.style.display = '';
       }
     }).catch(function(){});
   } catch(e) {}

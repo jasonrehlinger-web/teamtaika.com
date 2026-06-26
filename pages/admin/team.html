@@ -185,6 +185,7 @@
     }
     .status-active   { background: #d1fae5; color: #065f46; }
     .status-inactive { background: #f3f4f6; color: #6b7280; }
+    .status-invited  { background: #fef3c7; color: #92400e; }
 
     /* ── Empty / loading ── */
     .empty-state { padding: 2.5rem; text-align: center; color: #9ca3af; font-size: 0.875rem; }
@@ -516,18 +517,22 @@
 
   /* ── Load team ── */
   async function loadTeam() {
-    const { data, error } = await sb.from('profiles')
-      .select('id, full_name, email, role, is_active, created_at')
-      .in('role', ['admin','super_admin'])
-      .order('created_at', { ascending: true });
-
-    if (error) {
+    let members;
+    try {
+      const res = await fetch('/.netlify/functions/portal-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${(await sb.auth.getSession()).data.session?.access_token}` },
+        body: JSON.stringify({ action: 'getTeamMembers' })
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Failed');
+      members = json.members || [];
+    } catch (e) {
       document.getElementById('team-tbody').innerHTML =
         '<tr><td colspan="6" class="empty-state">Failed to load team members.</td></tr>';
       return;
     }
-
-    renderTeam(data || []);
+    renderTeam(members);
   }
 
   function renderTeam(members) {
@@ -542,8 +547,9 @@
     tbody.innerHTML = members.map(m => {
       const roleClass  = m.role === 'super_admin' ? 'role-super_admin' : 'role-admin';
       const roleLabel  = m.role === 'super_admin' ? 'Super Admin' : 'Admin';
-      const statusCls  = m.is_active ? 'status-active' : 'status-inactive';
-      const statusLbl  = m.is_active ? 'Active' : 'Inactive';
+      const isInvited  = !m.email_confirmed_at;
+      const statusCls  = isInvited ? 'status-invited' : (m.is_active ? 'status-active' : 'status-inactive');
+      const statusLbl  = isInvited ? 'Invited' : (m.is_active ? 'Active' : 'Inactive');
       const isSelf     = m.id === currentUser.id;
       const isSA       = m.role === 'super_admin';
 

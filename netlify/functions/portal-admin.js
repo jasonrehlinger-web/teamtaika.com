@@ -106,6 +106,9 @@ exports.handler = async function(event, context) {
       case 'removeTeamMember':
         return await handleRemoveTeamMember(body, adminProfile);
 
+      case 'getTeamMembers':
+        return await handleGetTeamMembers(adminProfile);
+
       case 'exportProjects':
         return await handleExportProjects(body);
 
@@ -337,20 +340,13 @@ async function handleInviteTeamMember(body, adminProfile) {
   if (!inviteUrl) throw new Error('Invite link generation returned no action link');
   if (!newUserId) throw new Error('Invite link generation returned no user ID');
 
-  // Upsert profile row (trigger may or may not have run yet)
-  const patchRes = await sbPatch(
-    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUserId)}`,
-    { full_name, role: safeRole, is_active: true, updated_at: new Date().toISOString() }
-  );
-  if (!patchRes.ok) {
-    // Profile row may not exist yet if trigger hasn't fired — try insert instead
-    await sbPost('/rest/v1/profiles', {
-      id: newUserId, email, full_name, role: safeRole,
-      is_active: true,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    });
-  }
+  // Upsert profile row — creates or updates regardless of whether trigger has fired
+  await sbUpsert('/rest/v1/profiles', {
+    id: newUserId, email, full_name, role: safeRole,
+    is_active: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  });
 
   // Send invite email via Resend REST API (bypasses Supabase SMTP entirely)
   const RESEND_KEY = process.env.RESEND_API_KEY;
@@ -390,6 +386,30 @@ async function handleInviteTeamMember(body, adminProfile) {
     headers,
     body: JSON.stringify({ success: true, userId: newUserId })
   };
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5b. getTeamMembers
+   Returns all admin/super_admin profiles enriched with email_confirmed_at
+   from auth.users so the UI can show Invited vs Active status.
+   ═══════════════════════════════════════════════════════════════════════════ */
+async function handleGetTeamMembers(_adminProfile) {
+  const profilesRes = await sbGet('/rest/v1/profiles?role=in.(admin,super_admin)&select=id,email,full_name,role,is_active,created_at&order=created_at.asc');
+  if (!profilesRes.ok) throw new Error('Failed to fetch team profiles');
+  const profiles = await profilesRes.json();
+
+  const authRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users?per_page=200`, {
+    headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}` }
+  });
+  let authMap = {};
+  if (authRes.ok) {
+    const authData = await authRes.json();
+    const users = authData.users || authData;
+    for (const u of users) authMap[u.id] = u.email_confirmed_at || null;
+  }
+
+  const members = profiles.map(p => ({ ...p, email_confirmed_at: authMap[p.id] || null }));
+  return { statusCode: 200, headers, body: JSON.stringify({ members }) };
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -494,19 +514,13 @@ async function handleInviteClient(body, _adminProfile) {
   if (!inviteUrl) throw new Error('Invite link generation returned no action link');
   if (!newUserId) throw new Error('Invite link generation returned no user ID');
 
-  // Upsert profile
-  const patchRes = await sbPatch(
-    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUserId)}`,
-    { full_name, organization: organization || null, role: 'client', is_active: true, updated_at: new Date().toISOString() }
-  );
-  if (!patchRes.ok) {
-    await sbPost('/rest/v1/profiles', {
-      id: newUserId, email, full_name, organization: organization || null,
-      role: 'client', is_active: true,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    });
-  }
+  // Upsert profile row — creates or updates regardless of whether trigger has fired
+  await sbUpsert('/rest/v1/profiles', {
+    id: newUserId, email, full_name, organization: organization || null,
+    role: 'client', is_active: true,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  });
 
   // Send invite email via Resend REST API
   const RESEND_KEY = process.env.RESEND_API_KEY;
@@ -587,6 +601,15 @@ function sbPatch(path, payload) {
   return fetch(`${SUPABASE_URL}${path}`, {
     method: 'PATCH',
     headers: sbHeaders(),
+    body: JSON.stringify(payload)
+  });
+}
+
+// Upsert: POST with resolution=merge-duplicates — creates or updates on conflict
+function sbUpsert(path, payload) {
+  return fetch(`${SUPABASE_URL}${path}`, {
+    method: 'POST',
+    headers: sbHeaders({ 'Prefer': 'resolution=merge-duplicates,return=representation' }),
     body: JSON.stringify(payload)
   });
 }

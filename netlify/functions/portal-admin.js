@@ -282,8 +282,10 @@ async function handleInviteTeamMember(body, adminProfile) {
     return { statusCode: 403, headers, body: JSON.stringify({ error: 'Only super admins can invite team members' }) };
   }
 
-  // Create auth user
-  const createRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+  // Use Supabase invite endpoint — sends the invite email automatically.
+  // Passing data: { full_name, role } sets user_metadata so the handle_new_user
+  // trigger creates the profile with the correct role.
+  const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/invite`, {
     method: 'POST',
     headers: {
       'apikey':        SERVICE_KEY,
@@ -292,32 +294,31 @@ async function handleInviteTeamMember(body, adminProfile) {
     },
     body: JSON.stringify({
       email,
-      email_confirm: true,
-      user_metadata: { full_name, role: safeRole }
+      data: { full_name, role: safeRole }
     })
   });
 
-  if (!createRes.ok) {
-    const err = await createRes.json().catch(() => ({}));
-    throw new Error(err.message || err.msg || 'Failed to create user');
+  if (!inviteRes.ok) {
+    const err = await inviteRes.json().catch(() => ({}));
+    // If user already exists Supabase returns 422 — surface a friendly message
+    if (inviteRes.status === 422) {
+      throw new Error('A user with that email already exists');
+    }
+    throw new Error(err.message || err.msg || 'Failed to send invite');
   }
 
-  const newUser = await createRes.json();
-  if (!newUser || !newUser.id) throw new Error('User creation returned no ID');
+  const newUser = await inviteRes.json();
+  if (!newUser || !newUser.id) throw new Error('Invite returned no user ID');
 
-  // Insert profile
-  const profRes = await sbPost('/rest/v1/profiles', {
-    id:           newUser.id,
-    email,
-    full_name,
-    role:         safeRole,
-    is_active:    true,
-    created_at:   new Date().toISOString(),
-    updated_at:   new Date().toISOString()
-  });
-
-  if (!profRes.ok) {
-    console.warn('[portal-admin] Profile insert failed for', newUser.id, await profRes.text());
+  // The handle_new_user trigger creates the profile automatically.
+  // PATCH it to make sure role/full_name are correct (handles edge cases where
+  // the trigger ran with stale metadata, e.g. re-invite of an existing user).
+  const patchRes = await sbPatch(
+    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUser.id)}`,
+    { full_name, role: safeRole, is_active: true, updated_at: new Date().toISOString() }
+  );
+  if (!patchRes.ok) {
+    console.warn('[portal-admin] Profile patch failed for', newUser.id, await patchRes.text());
   }
 
   return {
@@ -400,7 +401,8 @@ async function handleInviteClient(body, _adminProfile) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'email and full_name required' }) };
   }
 
-  const createRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/users`, {
+  // Use invite endpoint so the client receives an email to set their password.
+  const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/invite`, {
     method: 'POST',
     headers: {
       'apikey':        SERVICE_KEY,
@@ -409,32 +411,28 @@ async function handleInviteClient(body, _adminProfile) {
     },
     body: JSON.stringify({
       email,
-      email_confirm: false,
-      user_metadata: { full_name, role: 'client', organization: organization || null }
+      data: { full_name, role: 'client', organization: organization || null }
     })
   });
 
-  if (!createRes.ok) {
-    const err = await createRes.json().catch(() => ({}));
-    throw new Error(err.message || err.msg || 'Failed to create client user');
+  if (!inviteRes.ok) {
+    const err = await inviteRes.json().catch(() => ({}));
+    if (inviteRes.status === 422) {
+      throw new Error('A user with that email already exists');
+    }
+    throw new Error(err.message || err.msg || 'Failed to invite client');
   }
 
-  const newUser = await createRes.json();
-  if (!newUser || !newUser.id) throw new Error('User creation returned no ID');
+  const newUser = await inviteRes.json();
+  if (!newUser || !newUser.id) throw new Error('Invite returned no user ID');
 
-  const profRes = await sbPost('/rest/v1/profiles', {
-    id:           newUser.id,
-    email,
-    full_name,
-    organization: organization || null,
-    role:         'client',
-    is_active:    true,
-    created_at:   new Date().toISOString(),
-    updated_at:   new Date().toISOString()
-  });
-
-  if (!profRes.ok) {
-    console.warn('[portal-admin] Client profile insert failed for', newUser.id, await profRes.text());
+  // PATCH profile to ensure organization is set (trigger may not have it)
+  const patchRes = await sbPatch(
+    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUser.id)}`,
+    { full_name, organization: organization || null, role: 'client', is_active: true, updated_at: new Date().toISOString() }
+  );
+  if (!patchRes.ok) {
+    console.warn('[portal-admin] Client profile patch failed for', newUser.id, await patchRes.text());
   }
 
   return {

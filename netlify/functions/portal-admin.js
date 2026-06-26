@@ -343,7 +343,7 @@ async function handleInviteTeamMember(body, adminProfile) {
   // Upsert profile row — creates or updates regardless of whether trigger has fired
   await sbUpsert('/rest/v1/profiles', {
     id: newUserId, email, full_name, role: safeRole,
-    is_active: true,
+    is_active: false,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   });

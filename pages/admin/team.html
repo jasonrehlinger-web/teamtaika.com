@@ -547,9 +547,9 @@
     tbody.innerHTML = members.map(m => {
       const roleClass  = m.role === 'super_admin' ? 'role-super_admin' : 'role-admin';
       const roleLabel  = m.role === 'super_admin' ? 'Super Admin' : 'Admin';
-      const isInvited  = !m.email_confirmed_at;
-      const statusCls  = isInvited ? 'status-invited' : (m.is_active ? 'status-active' : 'status-inactive');
-      const statusLbl  = isInvited ? 'Invited' : (m.is_active ? 'Active' : 'Inactive');
+      const isInvited  = !m.is_active;
+      const statusCls  = isInvited ? 'status-invited' : 'status-active';
+      const statusLbl  = isInvited ? 'Invited' : 'Active';
       const isSelf     = m.id === currentUser.id;
       const isSA       = m.role === 'super_admin';
 

@@ -1251,6 +1251,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.querySelector('.step-indicator').style.display = 'none';
       document.getElementById('success-screen').style.display = 'block';
 
+      // Notify Jason about new project submission (fire-and-forget)
+      try {
+        const { data: { session: _sess } } = await window._supabaseClient.auth.getSession();
+        fetch('/.netlify/functions/notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'new_project',
+            data: {
+              project_id:      project.id,
+              client_name:     _sess?.user?.email || 'Unknown',
+              service_type:    projectData.service_type,
+              target_languages: projectData.target_languages,
+              client_notes:    projectData.client_notes || ''
+            }
+          })
+        }).catch(() => {});
+      } catch (_) {}
+
     } catch (err) {
       console.error('Submit error:', err);
       submitError.textContent = err.message || 'Something went wrong. Please try again.';

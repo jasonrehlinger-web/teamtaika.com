@@ -530,6 +530,24 @@
       document.getElementById('password-form').reset();
       document.getElementById('strength-bar').style.width = '0';
       document.getElementById('strength-label').textContent = '';
+
+      // Notify Jason when an invited client sets their password for the first time
+      if (isRecoverySession && hashType === 'invite') {
+        try {
+          fetch('/.netlify/functions/notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'new_signup',
+              data: {
+                email:        currentUser?.email || '',
+                full_name:    document.getElementById('full-name')?.value?.trim() || currentUser?.email || '',
+                organization: document.getElementById('organization')?.value?.trim() || ''
+              }
+            })
+          }).catch(() => {});
+        } catch (_) {}
+      }
     }
   });
 

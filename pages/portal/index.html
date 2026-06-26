@@ -4,329 +4,522 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Client Portal — Taika</title>
+  <title>Client Portal — Taika Language Services</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/portal.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="../../js/portal.js" defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: #f0f2f5;
-      min-height: 100vh;
-      color: #0B1E35;
+    :root {
+      --navy: #0B1E35; --navy-mid: #132844; --navy-light: #1e3a5f;
+      --gold: #B8913A; --gold-light: #d4a84e; --gold-pale: #fdf6e3;
+      --slate: #4A5E74; --slate-light: #8fa3b8;
+      --white: #F9F8F5; --gray-50: #f8f9fa; --gray-100: #f0f2f5; --gray-200: #e2e6ea; --gray-300: #ced4da;
+      --red: #DC2626;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
     }
-    .back-link {
-      display: block;
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: #fff; color: var(--navy); line-height: 1.6; }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 60px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.25);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand-globe { color: var(--gold); }
+    .nav-brand-name { font-family: var(--font-display); font-size: 1.35rem; color: var(--white); letter-spacing: .02em; }
+    .nav-brand-tag { font-size: .75rem; color: var(--slate-light); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; margin-left: 2px; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-nav-login {
+      background: var(--gold); color: #fff; border: none;
+      padding: 8px 22px; border-radius: 6px;
+      font-family: var(--font-body); font-size: .875rem; font-weight: 600;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-nav-login:hover { background: var(--gold-light); }
+    .btn-nav-site { color: rgba(255,255,255,.7); font-size: .85rem; text-decoration: none; transition: color .15s; }
+    .btn-nav-site:hover { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: #fff;
+      padding: 96px 5% 80px;
       text-align: center;
-      padding: 1.25rem 1rem 0;
-      font-size: 0.8rem;
-      color: #4A5E74;
-      text-decoration: none;
+      position: relative;
+      overflow: hidden;
     }
-    .back-link:hover { color: #0B1E35; }
-    .portal-login-wrap {
-      max-width: 440px;
-      margin: 0 auto;
-      padding: 2.5rem 1rem 4rem;
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,145,58,.18) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .portal-brand {
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(184,145,58,.18); color: var(--gold-light);
+      border: 1px solid rgba(184,145,58,.3);
+      padding: 4px 16px; border-radius: 20px;
+      font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.15;
+      color: #fff;
+      max-width: 820px; margin: 0 auto 20px;
+    }
+    .hero h1 em { color: var(--gold-light); font-style: normal; }
+    .hero-sub {
+      font-size: 1.1rem; color: rgba(255,255,255,.75);
+      max-width: 620px; margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-primary {
+      background: var(--gold); color: #fff; border: none;
+      padding: 14px 34px; border-radius: 8px;
+      font-family: var(--font-body); font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background .15s, transform .1s;
+      box-shadow: 0 4px 16px rgba(184,145,58,.35);
+    }
+    .btn-hero-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-hero-outline {
+      background: transparent; color: rgba(255,255,255,.85);
+      border: 1.5px solid rgba(255,255,255,.35);
+      padding: 13px 32px; border-radius: 8px;
+      font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+      text-decoration: none; transition: all .15s;
+      display: inline-flex; align-items: center;
+    }
+    .btn-hero-outline:hover { border-color: rgba(255,255,255,.7); color: #fff; }
+    .hero-note { margin-top: 20px; font-size: .8rem; color: rgba(255,255,255,.45); }
+
+    /* ── PROBLEM / BRIDGE ── */
+    .bridge {
+      background: var(--gray-50); padding: 60px 5%;
+      text-align: center; border-bottom: 1px solid var(--gray-200);
+    }
+    .bridge p {
+      max-width: 700px; margin: 0 auto;
+      font-size: 1.15rem; color: var(--slate); line-height: 1.8;
+    }
+    .bridge p strong { color: var(--navy); }
+
+    /* ── FEATURES ── */
+    .features { padding: 80px 5%; background: #fff; }
+    .section-label {
       text-align: center;
-      margin-bottom: 2rem;
+      font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
     }
-    .portal-brand-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
-      color: #B8913A;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      color: var(--navy); text-align: center;
+      max-width: 680px; margin: 0 auto 56px; line-height: 1.2;
     }
-    .portal-brand-logo svg {
-      width: 28px;
-      height: 28px;
-      color: #B8913A;
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px; max-width: 1100px; margin: 0 auto;
     }
-    .portal-brand-sub {
-      font-size: 0.85rem;
-      color: #4A5E74;
-      margin-top: 0.35rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-weight: 500;
+    .feature-card {
+      background: var(--gray-50); border: 1px solid var(--gray-200);
+      border-radius: 14px; padding: 28px 24px;
+      transition: box-shadow .2s, transform .2s;
     }
-    .portal-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: 0 4px 24px rgba(11,30,53,0.08), 0 1px 4px rgba(11,30,53,0.05);
+    .feature-card:hover { box-shadow: 0 8px 28px rgba(11,30,53,.1); transform: translateY(-2px); }
+    .feature-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 16px;
     }
-    .tab-row {
-      display: flex;
-      gap: 0;
-      margin-bottom: 1.75rem;
-      border-bottom: 2px solid #e5e7eb;
+    .feature-card h3 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .feature-card p { font-size: .9rem; color: var(--slate); line-height: 1.65; }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works { padding: 80px 5%; background: var(--navy); color: #fff; }
+    .how-it-works .section-label { color: var(--gold-light); }
+    .how-it-works .section-title { color: #fff; margin-bottom: 52px; }
+    .steps { display: flex; gap: 0; max-width: 900px; margin: 0 auto; position: relative; }
+    .steps::before {
+      content: ''; position: absolute;
+      top: 28px; left: calc(16.66% + 28px); right: calc(16.66% + 28px);
+      height: 2px; background: rgba(184,145,58,.3);
     }
+    .step { flex: 1; text-align: center; padding: 0 16px; }
+    .step-number {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--gold); color: #fff;
+      font-family: var(--font-display); font-size: 1.4rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; position: relative; z-index: 1;
+    }
+    .step h4 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .step p { font-size: .85rem; color: rgba(255,255,255,.65); line-height: 1.6; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar { padding: 48px 5%; background: var(--gold-pale); border-top: 1px solid rgba(184,145,58,.2); border-bottom: 1px solid rgba(184,145,58,.2); }
+    .trust-bar-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; align-items: center; }
+    .trust-item { text-align: center; }
+    .trust-item .num { font-family: var(--font-display); font-size: 2.2rem; color: var(--navy); }
+    .trust-item .label { font-size: .8rem; color: var(--slate); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── BOTTOM CTA ── */
+    .bottom-cta { padding: 80px 5%; text-align: center; background: var(--gray-50); }
+    .bottom-cta h2 { font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--navy); margin-bottom: 14px; }
+    .bottom-cta p { font-size: 1rem; color: var(--slate); max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    .portal-footer { background: var(--navy); color: rgba(255,255,255,.5); text-align: center; padding: 24px 5%; font-size: .8rem; }
+    .portal-footer a { color: rgba(255,255,255,.7); text-decoration: none; }
+    .portal-footer a:hover { color: var(--gold-light); }
+
+    /* ── LOGIN MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.55); z-index: 1000;
+      align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background: #fff; border-radius: 16px; width: 100%; max-width: 440px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.25);
+      animation: modal-in .2s ease;
+      overflow: hidden;
+    }
+    @keyframes modal-in { from { opacity: 0; transform: translateY(-20px) scale(.97); } to { opacity: 1; transform: none; } }
+    .modal-header {
+      background: var(--navy); padding: 20px 24px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-header-brand { display: flex; align-items: center; gap: 8px; }
+    .modal-header-brand span { font-family: var(--font-display); font-size: 1.2rem; color: var(--white); }
+    .modal-header-brand .sub { font-family: var(--font-body); font-size: .75rem; color: rgba(255,255,255,.55); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; margin-left: 4px; }
+    .modal-close { background: none; border: none; color: rgba(255,255,255,.6); font-size: 22px; cursor: pointer; line-height: 1; padding: 0; }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 24px; }
+    .tab-row { display: flex; gap: 0; margin-bottom: 22px; border-bottom: 2px solid var(--gray-200); }
     .tab-btn {
-      flex: 1;
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      padding: 0.6rem 1rem 0.75rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #4A5E74;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
+      flex: 1; background: none; border: none;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      padding: .6rem 1rem .75rem;
+      font-family: var(--font-body); font-size: .9rem; font-weight: 500;
+      color: var(--slate); cursor: pointer; transition: color .15s, border-color .15s;
     }
-    .tab-btn.active {
-      color: #0B1E35;
-      border-bottom-color: #B8913A;
-    }
-    .tab-btn:hover:not(.active) { color: #0B1E35; }
-    .form-group {
-      margin-bottom: 1.1rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #0B1E35;
-      margin-bottom: 0.35rem;
-      letter-spacing: 0.01em;
-    }
+    .tab-btn.active { color: var(--navy); border-bottom-color: var(--gold); }
+    .tab-btn:hover:not(.active) { color: var(--navy); }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: .78rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; letter-spacing: .01em; }
     .form-group input {
-      width: 100%;
-      padding: 0.65rem 0.9rem;
-      border: 1.5px solid #d1d5db;
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      color: #0B1E35;
-      background: #fafaf9;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      outline: none;
+      width: 100%; padding: .65rem .9rem;
+      border: 1.5px solid var(--gray-300); border-radius: 8px;
+      font-family: var(--font-body); font-size: .9rem; color: var(--navy);
+      background: #fafaf9; transition: border-color .15s, box-shadow .15s; outline: none;
     }
-    .form-group input:focus {
-      border-color: #B8913A;
-      box-shadow: 0 0 0 3px rgba(184,145,58,0.12);
-      background: #fff;
-    }
-    .form-hint {
-      font-size: 0.78rem;
-      color: #4A5E74;
-      text-decoration: none;
-    }
-    .form-hint:hover { color: #B8913A; }
-    .form-error {
-      background: #fee2e2;
-      color: #991b1b;
-      border-radius: 8px;
-      padding: 0.6rem 0.8rem;
-      font-size: 0.83rem;
-      margin-bottom: 1rem;
-    }
+    .form-group input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,145,58,.12); background: #fff; }
+    .form-hint { font-size: .78rem; color: var(--slate); text-decoration: none; }
+    .form-hint:hover { color: var(--gold); }
+    .form-error { background: #fee2e2; color: #991b1b; border-radius: 8px; padding: .6rem .8rem; font-size: .83rem; margin-bottom: 12px; }
     .btn-primary {
-      display: inline-block;
-      background: #0B1E35;
-      color: #F9F8F5;
-      border: none;
-      border-radius: 8px;
-      padding: 0.7rem 1.25rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
+      display: block; width: 100%;
+      background: var(--navy); color: var(--white); border: none;
+      border-radius: 8px; padding: .75rem 1rem;
+      font-family: var(--font-body); font-size: .9rem; font-weight: 700;
+      cursor: pointer; transition: background .15s;
       text-align: center;
     }
-    .btn-primary:hover { background: #071529; }
-    .btn-primary:active { transform: translateY(1px); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-primary:hover { background: var(--navy-light); }
+    .btn-primary:disabled { opacity: .6; cursor: not-allowed; }
     .btn-secondary {
-      display: inline-block;
-      background: transparent;
-      color: #0B1E35;
-      border: 1.5px solid #0B1E35;
-      border-radius: 8px;
-      padding: 0.65rem 1.25rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.15s;
+      display: inline-block; background: transparent; color: var(--navy);
+      border: 1.5px solid var(--navy); border-radius: 8px;
+      padding: .65rem 1.25rem;
+      font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+      cursor: pointer; transition: background .15s;
     }
-    .btn-secondary:hover { background: #f0f2f5; }
-    a { color: #B8913A; }
-    a:hover { color: #D4A94E; }
+    .btn-secondary:hover { background: var(--gray-100); }
+    .link-muted { font-size: .875rem; color: var(--slate); text-align: center; margin-top: 12px; }
+    .link-muted a { color: var(--gold); text-decoration: none; }
+    .link-muted a:hover { color: var(--gold-light); }
+    /* password strength */
+    .pw-strength-bar { display: flex; gap: 4px; margin-top: 6px; }
+    .pw-seg { height: 4px; flex: 1; border-radius: 2px; background: var(--gray-200); transition: background .3s; }
+
+    @media (max-width: 640px) {
+      .steps { flex-direction: column; gap: 32px; }
+      .steps::before { display: none; }
+      .hero { padding: 60px 5% 52px; }
+    }
   </style>
 </head>
 <body>
 
-<a href="https://teamtaika.com" class="back-link">← Back to teamtaika.com</a>
-
-<div class="portal-login-wrap">
-  <div class="portal-brand">
-    <div class="portal-brand-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="2" y1="12" x2="22" y2="12"/>
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-      Taika
-    </div>
-    <div class="portal-brand-sub">Client Portal</div>
+<!-- NAV -->
+<nav class="site-nav">
+  <a class="nav-brand" href="https://teamtaika.com">
+    <svg class="nav-brand-globe" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
+    <span class="nav-brand-name">Taika</span>
+    <span class="nav-brand-tag">Client Portal</span>
+  </a>
+  <div class="nav-actions">
+    <a class="btn-nav-site" href="https://teamtaika.com">← Main Site</a>
+    <button class="btn-nav-login" id="nav-login-btn">Log In</button>
   </div>
+</nav>
 
-  <div class="portal-card">
-    <div class="tab-row">
-      <button class="tab-btn active" id="tab-signin">Sign In</button>
-      <button class="tab-btn" id="tab-register">Create Account</button>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Taika Client Portal</div>
+  <h1>Your Translations,<br><em>Tracked from Start to Delivery</em></h1>
+  <p class="hero-sub">Stop chasing updates over email. The Taika portal gives you real-time visibility, instant previews, and direct communication — all in one secure place built exclusively for your team.</p>
+  <div class="hero-ctas">
+    <button class="btn-hero-primary" id="hero-login-btn">Log In to Your Portal →</button>
+    <a class="btn-hero-outline" href="https://teamtaika.com/contact">Request Access</a>
+  </div>
+  <p class="hero-note">By invite only — your account is set up by your Taika project manager.</p>
+</section>
+
+<!-- BRIDGE / PROBLEM -->
+<section class="bridge">
+  <p>Translation projects involve deadlines, multiple file versions, specialized terminology, and tight compliance requirements. <strong>Managing all of that over email threads and shared drives shouldn't be your full-time job.</strong> We built the Taika portal so you never have to wonder what's happening with your project — and so your team can focus on the work that matters.</p>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-label">What You Get</div>
+  <h2 class="section-title">Everything your team needs, nothing they don't</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Submit Projects in Minutes</h3>
+      <p>Upload your source documents, set your language pairs and deadline, and submit. Your dedicated Taika team picks it up from there — no emails required.</p>
     </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <h3>Real-Time Status Updates</h3>
+      <p>See exactly where each project stands — submitted, in review, in progress, or delivered. No more "just checking in" emails to get a status update.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant MT Preview</h3>
+      <p>Get a machine translation preview the moment you submit. Use it for internal review, early stakeholder alignment, or just peace of mind while your final translation is completed.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📁</div>
+      <h3>Your Complete Project History</h3>
+      <p>Every project we've completed for you — searchable, downloadable, and organized. Audits, compliance reviews, and reprints are handled in seconds.</p>
+    </div>
+  </div>
+</section>
 
-    <!-- SIGN IN FORM -->
-    <div id="signin-section">
-      <form id="signin-form">
-        <div class="form-group">
-          <label for="signin-email">Email Address</label>
-          <input type="email" id="signin-email" autocomplete="email" required placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label for="signin-password">Password</label>
-          <input type="password" id="signin-password" autocomplete="current-password" required>
-          <a href="#" id="forgot-link" class="form-hint" style="display:block;text-align:right;margin-top:4px;">Forgot password?</a>
-        </div>
-        <div id="signin-error" class="form-error" style="display:none;"></div>
-        <button type="submit" class="btn-primary" style="width:100%;">Sign In</button>
-        <p style="text-align:center;margin-top:1rem;font-size:0.875rem;color:#4A5E74;">Don't have an account? <a href="#" id="go-register">Create one →</a></p>
-      </form>
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="section-label">Getting Started</div>
+  <h2 class="section-title">From invitation to first delivery in three steps</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h4>Accept Your Invitation</h4>
+      <p>Your Taika project manager sends a secure invitation link. Click it, set your password, and you're in.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <h4>Submit Your First Project</h4>
+      <p>Upload your document, select your language pair, and add any special instructions. Get an MT preview instantly.</p>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <h4>Track, Review &amp; Download</h4>
+      <p>Watch your project move through our workflow. Download the finished translation directly from your dashboard.</p>
+    </div>
+  </div>
+</section>
 
-      <!-- FORGOT PASSWORD SECTION -->
-      <div id="forgot-section" style="display:none;">
-        <a href="#" id="back-to-signin" style="font-size:0.875rem;color:#4A5E74;">← Back to sign in</a>
-        <h3 style="margin:1rem 0 0.25rem;color:#0B1E35;font-family:'DM Serif Display',serif;">Reset your password</h3>
-        <p style="color:#4A5E74;font-size:0.875rem;margin-bottom:1.25rem;">Enter your email and we'll send a reset link.</p>
-        <div class="form-group">
-          <label for="reset-email">Email Address</label>
-          <input type="email" id="reset-email" required placeholder="you@example.com">
-        </div>
-        <div id="reset-message" style="display:none;padding:10px;border-radius:8px;font-size:0.875rem;margin-bottom:1rem;"></div>
-        <button id="send-reset-btn" class="btn-primary" style="width:100%;">Send Reset Link</button>
+<!-- TRUST BAR -->
+<section class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item"><div class="num">40+</div><div class="label">Languages Supported</div></div>
+    <div class="trust-item"><div class="num">100%</div><div class="label">Human-Reviewed Translations</div></div>
+    <div class="trust-item"><div class="num">ATA</div><div class="label">Certified Translators</div></div>
+    <div class="trust-item"><div class="num">USCIS</div><div class="label">Accepted Certified Translations</div></div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Your translations deserve better than an email thread.</h2>
+  <p>If you're a current Taika client and don't have portal access yet, contact your project manager to get set up. It takes less than five minutes.</p>
+  <button class="btn-hero-primary" id="footer-login-btn" style="display:inline-block;">Log In to Your Portal →</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="portal-footer">
+  <p>© 2025 Taika Language Services &nbsp;·&nbsp; <a href="https://teamtaika.com">teamtaika.com</a> &nbsp;·&nbsp; <a href="https://teamtaika.com/contact">Contact Us</a></p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-header-brand">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8913A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span>Taika</span><span class="sub">Client Portal</span>
       </div>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
     </div>
+    <div class="modal-body">
+      <div class="tab-row">
+        <button class="tab-btn active" id="tab-signin">Sign In</button>
+        <button class="tab-btn" id="tab-register">Create Account</button>
+      </div>
 
-    <!-- REGISTER SECTION -->
-    <div id="register-section" style="display:none;">
-      <form id="register-form">
-        <div class="form-group">
-          <label for="reg-name">Full Name</label>
-          <input type="text" id="reg-name" required placeholder="Jane Smith">
-        </div>
-        <div class="form-group">
-          <label for="reg-org">Organization <span style="font-weight:400;color:#6b7280;">(optional)</span></label>
-          <input type="text" id="reg-org" placeholder="Company or agency">
-        </div>
-        <div class="form-group">
-          <label for="reg-email">Email Address</label>
-          <input type="email" id="reg-email" required placeholder="you@example.com" autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="reg-password">Password</label>
-          <input type="password" id="reg-password" required minlength="8" placeholder="Min. 8 characters" autocomplete="new-password">
-          <div class="pw-strength-bar" id="pw-strength-bar" style="display:flex;gap:4px;margin-top:6px;">
-            <div class="pw-seg" id="seg1" style="height:4px;flex:1;border-radius:2px;background:#e5e7eb;transition:background 0.3s;"></div>
-            <div class="pw-seg" id="seg2" style="height:4px;flex:1;border-radius:2px;background:#e5e7eb;transition:background 0.3s;"></div>
-            <div class="pw-seg" id="seg3" style="height:4px;flex:1;border-radius:2px;background:#e5e7eb;transition:background 0.3s;"></div>
-            <div class="pw-seg" id="seg4" style="height:4px;flex:1;border-radius:2px;background:#e5e7eb;transition:background 0.3s;"></div>
+      <!-- SIGN IN -->
+      <div id="signin-section">
+        <form id="signin-form">
+          <div class="form-group">
+            <label for="signin-email">Email Address</label>
+            <input type="email" id="signin-email" autocomplete="email" required placeholder="you@example.com">
           </div>
-          <span id="pw-strength-label" class="form-hint"></span>
+          <div class="form-group">
+            <label for="signin-password">Password</label>
+            <input type="password" id="signin-password" autocomplete="current-password" required>
+            <a href="#" id="forgot-link" class="form-hint" style="display:block;text-align:right;margin-top:4px;">Forgot password?</a>
+          </div>
+          <div id="signin-error" class="form-error" style="display:none;"></div>
+          <button type="submit" class="btn-primary">Sign In</button>
+          <p class="link-muted">No account? <a href="#" id="go-register">Request access from your project manager →</a></p>
+        </form>
+        <div id="forgot-section" style="display:none;">
+          <a href="#" id="back-to-signin" class="form-hint">← Back to sign in</a>
+          <h3 style="margin:14px 0 6px;color:var(--navy);font-family:var(--font-display);font-size:1.2rem;">Reset your password</h3>
+          <p style="color:var(--slate);font-size:.875rem;margin-bottom:16px;">Enter your email and we'll send a reset link.</p>
+          <div class="form-group">
+            <label for="reset-email">Email Address</label>
+            <input type="email" id="reset-email" placeholder="you@example.com">
+          </div>
+          <div id="reset-message" style="display:none;padding:10px;border-radius:8px;font-size:.875rem;margin-bottom:12px;"></div>
+          <button id="send-reset-btn" class="btn-primary">Send Reset Link</button>
         </div>
-        <div class="form-group">
-          <label for="reg-confirm">Confirm Password</label>
-          <input type="password" id="reg-confirm" required placeholder="Repeat password" autocomplete="new-password">
-        </div>
-        <div id="register-error" class="form-error" style="display:none;"></div>
-        <button type="submit" class="btn-primary" style="width:100%;">Create Account</button>
-        <p style="text-align:center;margin-top:1rem;font-size:0.875rem;color:#4A5E74;">Already have an account? <a href="#" id="go-signin">Sign in →</a></p>
-      </form>
+      </div>
 
-      <!-- REGISTER SUCCESS -->
-      <div id="register-success" style="display:none;text-align:center;padding:2rem 0;">
-        <div style="width:64px;height:64px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:2rem;line-height:1;">✓</div>
-        <h3 style="color:#0B1E35;margin-bottom:0.5rem;font-family:'DM Serif Display',serif;">Check your email</h3>
-        <p style="color:#4A5E74;font-size:0.9rem;line-height:1.6;">We sent a verification link to <strong id="success-email"></strong>. Click the link to activate your account, then sign in.</p>
-        <button class="btn-secondary" onclick="showTab('signin')" style="margin-top:1.5rem;">Back to Sign In</button>
+      <!-- REGISTER -->
+      <div id="register-section" style="display:none;">
+        <form id="register-form">
+          <div class="form-group">
+            <label for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" required placeholder="Jane Smith">
+          </div>
+          <div class="form-group">
+            <label for="reg-org">Organization <span style="font-weight:400;color:#6b7280;">(optional)</span></label>
+            <input type="text" id="reg-org" placeholder="Company or agency">
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" required placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" required minlength="8" placeholder="Min. 8 characters" autocomplete="new-password">
+            <div class="pw-strength-bar">
+              <div class="pw-seg" id="seg1"></div><div class="pw-seg" id="seg2"></div>
+              <div class="pw-seg" id="seg3"></div><div class="pw-seg" id="seg4"></div>
+            </div>
+            <span id="pw-strength-label" class="form-hint"></span>
+          </div>
+          <div class="form-group">
+            <label for="reg-confirm">Confirm Password</label>
+            <input type="password" id="reg-confirm" required placeholder="Repeat password" autocomplete="new-password">
+          </div>
+          <div id="register-error" class="form-error" style="display:none;"></div>
+          <button type="submit" class="btn-primary">Create Account</button>
+          <p class="link-muted">Already have an account? <a href="#" id="go-signin">Sign in →</a></p>
+        </form>
+        <div id="register-success" style="display:none;text-align:center;padding:2rem 0;">
+          <div style="width:60px;height:60px;background:#dcfce7;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.8rem;">✓</div>
+          <h3 style="color:var(--navy);margin-bottom:8px;font-family:var(--font-display);">Check your email</h3>
+          <p style="color:var(--slate);font-size:.9rem;line-height:1.6;">We sent a verification link to <strong id="success-email"></strong>. Click it to activate your account.</p>
+          <button class="btn-secondary" onclick="showTab('signin')" style="margin-top:20px;">Back to Sign In</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
+(function() {
   const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
+  let sb;
 
-  // Check if already logged in — redirect to dashboard
-  try {
-    if (window.supabase) {
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const { data: { session } } = await sb.auth.getSession();
+  function getSb() {
+    if (!sb) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    return sb;
+  }
+
+  // ── Modal open/close ────────────────────────────────
+  function openModal(tab) {
+    document.getElementById('modal-overlay').classList.add('open');
+    showTab(tab || 'signin');
+    setTimeout(() => document.getElementById('signin-email').focus(), 100);
+  }
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+
+  document.getElementById('nav-login-btn').addEventListener('click', () => openModal('signin'));
+  document.getElementById('hero-login-btn').addEventListener('click', () => openModal('signin'));
+  document.getElementById('footer-login-btn').addEventListener('click', () => openModal('signin'));
+  document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+  document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === document.getElementById('modal-overlay')) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Redirect if already logged in ──────────────────
+  (async () => {
+    try {
+      const { data: { session } } = await getSb().auth.getSession();
       if (session) {
-        const { data: profile } = await sb.from('profiles').select('role').eq('id', session.user.id).single();
-        if (profile?.role === 'admin' || profile?.role === 'super_admin') {
-          window.location.href = '/admin/dashboard';
-        } else {
-          window.location.href = '/portal/dashboard';
-        }
-        return;
+        const { data: profile } = await getSb().from('profiles').select('role').eq('id', session.user.id).single();
+        window.location.href = (profile?.role === 'admin' || profile?.role === 'super_admin') ? '/admin/dashboard' : '/portal/dashboard';
       }
-    }
-  } catch(e) {}
+    } catch(e) {}
+  })();
 
-  // Tab switching
+  // ── Tab switching ───────────────────────────────────
   window.showTab = function(tab) {
     const isSignin = tab === 'signin';
     document.getElementById('signin-section').style.display = isSignin ? '' : 'none';
     document.getElementById('register-section').style.display = isSignin ? 'none' : '';
-    // Reset forgot section when switching tabs
-    if (isSignin) {
-      document.getElementById('signin-form').style.display = '';
-      document.getElementById('forgot-section').style.display = 'none';
-    }
+    if (isSignin) { document.getElementById('signin-form').style.display = ''; document.getElementById('forgot-section').style.display = 'none'; }
     document.getElementById('tab-signin').classList.toggle('active', isSignin);
     document.getElementById('tab-register').classList.toggle('active', !isSignin);
   };
 
   document.getElementById('tab-signin').addEventListener('click', () => showTab('signin'));
   document.getElementById('tab-register').addEventListener('click', () => showTab('register'));
-  document.getElementById('go-register').addEventListener('click', (e) => { e.preventDefault(); showTab('register'); });
-  document.getElementById('go-signin').addEventListener('click', (e) => { e.preventDefault(); showTab('signin'); });
+  document.getElementById('go-register').addEventListener('click', e => { e.preventDefault(); showTab('register'); });
+  document.getElementById('go-signin').addEventListener('click', e => { e.preventDefault(); showTab('signin'); });
 
-  // Password strength
-  document.getElementById('reg-password').addEventListener('input', function() {
-    const val = this.value;
-    let score = 0;
-    if (val.length >= 8) score++;
-    if (/[A-Z]/.test(val)) score++;
-    if (/[0-9]/.test(val)) score++;
-    if (/[^A-Za-z0-9]/.test(val)) score++;
-    const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e'];
-    const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
-    for (let i = 1; i <= 4; i++) {
-      document.getElementById('seg' + i).style.background = i <= score ? colors[score] : '#e5e7eb';
-    }
-    document.getElementById('pw-strength-label').textContent = val.length ? labels[score] : '';
-  });
-
-  // Friendly error messages
-  function friendlyError(msg) {
+  // ── Error messages ──────────────────────────────────
+  function friendly(msg) {
     if (!msg) return 'Something went wrong. Please try again.';
     if (msg.includes('Invalid login')) return 'Incorrect email or password.';
     if (msg.includes('Email not confirmed')) return 'Please verify your email address first.';
@@ -336,41 +529,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     return msg;
   }
 
-  // Sign in handler
-  document.getElementById('signin-form').addEventListener('submit', async (e) => {
+  // ── Sign in ─────────────────────────────────────────
+  document.getElementById('signin-form').addEventListener('submit', async e => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type=submit]');
     const errEl = document.getElementById('signin-error');
     errEl.style.display = 'none';
-    btn.textContent = 'Signing in...';
-    btn.disabled = true;
+    btn.textContent = 'Signing in…'; btn.disabled = true;
     try {
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const { data: signInData, error } = await sb.auth.signInWithPassword({
+      const { data, error } = await getSb().auth.signInWithPassword({
         email: document.getElementById('signin-email').value.trim(),
         password: document.getElementById('signin-password').value
       });
       if (error) throw error;
-      // Redirect admins to admin panel
-      const userId = signInData.session?.user?.id;
+      const userId = data.session?.user?.id;
       if (userId) {
-        const { data: profile } = await sb.from('profiles').select('role').eq('id', userId).single();
-        if (profile?.role === 'admin' || profile?.role === 'super_admin') {
-          window.location.href = '/admin/dashboard';
-          return;
-        }
+        const { data: profile } = await getSb().from('profiles').select('role').eq('id', userId).single();
+        if (profile?.role === 'admin' || profile?.role === 'super_admin') { window.location.href = '/admin/dashboard'; return; }
       }
       window.location.href = '/portal/dashboard';
     } catch (err) {
-      errEl.textContent = friendlyError(err.message);
+      errEl.textContent = friendly(err.message);
       errEl.style.display = 'block';
-      btn.textContent = 'Sign In';
-      btn.disabled = false;
+      btn.textContent = 'Sign In'; btn.disabled = false;
     }
   });
 
-  // Register handler
-  document.getElementById('register-form').addEventListener('submit', async (e) => {
+  // ── Register ────────────────────────────────────────
+  document.getElementById('register-form').addEventListener('submit', async e => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type=submit]');
     const errEl = document.getElementById('register-error');
@@ -380,82 +566,58 @@ document.addEventListener('DOMContentLoaded', async () => {
     const email = document.getElementById('reg-email').value.trim();
     const password = document.getElementById('reg-password').value;
     const confirm = document.getElementById('reg-confirm').value;
-    if (password !== confirm) {
-      errEl.textContent = 'Passwords do not match.';
-      errEl.style.display = 'block';
-      return;
-    }
-    if (password.length < 8) {
-      errEl.textContent = 'Password must be at least 8 characters.';
-      errEl.style.display = 'block';
-      return;
-    }
-    btn.textContent = 'Creating account...';
-    btn.disabled = true;
+    if (password !== confirm) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
+    if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
+    btn.textContent = 'Creating account…'; btn.disabled = true;
     try {
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const { error } = await sb.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: name, organization: org } }
-      });
+      const { error } = await getSb().auth.signUp({ email, password, options: { data: { full_name: name, organization: org } } });
       if (error) throw error;
       document.getElementById('success-email').textContent = email;
       document.getElementById('register-form').style.display = 'none';
       document.getElementById('register-success').style.display = 'block';
     } catch (err) {
-      errEl.textContent = friendlyError(err.message);
+      errEl.textContent = friendly(err.message);
       errEl.style.display = 'block';
-      btn.textContent = 'Create Account';
-      btn.disabled = false;
+      btn.textContent = 'Create Account'; btn.disabled = false;
     }
   });
 
-  // Forgot password
-  document.getElementById('forgot-link').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('signin-form').style.display = 'none';
-    document.getElementById('forgot-section').style.display = 'block';
+  // ── Password strength ───────────────────────────────
+  document.getElementById('reg-password').addEventListener('input', function() {
+    const v = this.value;
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v)) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    const colors = ['','#ef4444','#f97316','#eab308','#22c55e'];
+    const labels = ['','Weak','Fair','Good','Strong'];
+    for (let i = 1; i <= 4; i++) document.getElementById('seg'+i).style.background = i <= score ? colors[score] : '#e5e7eb';
+    document.getElementById('pw-strength-label').textContent = v.length ? labels[score] : '';
   });
-  document.getElementById('back-to-signin').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('forgot-section').style.display = 'none';
-    document.getElementById('signin-form').style.display = '';
-  });
+
+  // ── Forgot password ─────────────────────────────────
+  document.getElementById('forgot-link').addEventListener('click', e => { e.preventDefault(); document.getElementById('signin-form').style.display = 'none'; document.getElementById('forgot-section').style.display = 'block'; });
+  document.getElementById('back-to-signin').addEventListener('click', e => { e.preventDefault(); document.getElementById('forgot-section').style.display = 'none'; document.getElementById('signin-form').style.display = ''; });
   document.getElementById('send-reset-btn').addEventListener('click', async () => {
     const email = document.getElementById('reset-email').value.trim();
     const msgEl = document.getElementById('reset-message');
     const btn = document.getElementById('send-reset-btn');
-    if (!email) {
-      msgEl.textContent = 'Please enter your email.';
-      msgEl.style.background = '#fee2e2';
-      msgEl.style.color = '#991b1b';
-      msgEl.style.display = 'block';
-      return;
-    }
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
+    if (!email) { msgEl.textContent = 'Please enter your email.'; msgEl.style.background = '#fee2e2'; msgEl.style.color = '#991b1b'; msgEl.style.display = 'block'; return; }
+    btn.textContent = 'Sending…'; btn.disabled = true;
     try {
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const { error } = await sb.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/portal/account'
-      });
+      const { error } = await getSb().auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/portal/account' });
       if (error) throw error;
       msgEl.textContent = 'Reset link sent! Check your inbox.';
-      msgEl.style.background = '#dcfce7';
-      msgEl.style.color = '#166534';
-      msgEl.style.display = 'block';
+      msgEl.style.background = '#dcfce7'; msgEl.style.color = '#166534'; msgEl.style.display = 'block';
       btn.textContent = 'Sent ✓';
     } catch (err) {
-      msgEl.textContent = friendlyError(err.message);
-      msgEl.style.background = '#fee2e2';
-      msgEl.style.color = '#991b1b';
-      msgEl.style.display = 'block';
-      btn.textContent = 'Send Reset Link';
-      btn.disabled = false;
+      msgEl.textContent = friendly(err.message);
+      msgEl.style.background = '#fee2e2'; msgEl.style.color = '#991b1b'; msgEl.style.display = 'block';
+      btn.textContent = 'Send Reset Link'; btn.disabled = false;
     }
   });
-});
+})();
 </script>
 </body>
 </html>

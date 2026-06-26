@@ -124,7 +124,7 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
+    X-Frame-Options = "SAMEORIGIN"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
@@ -612,8 +612,8 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    # Prevent clickjacking — page cannot be embedded in iframes on other sites
-    X-Frame-Options = "DENY"
+    # Prevent clickjacking — only allow embedding within the same origin (used by admin Client View)
+    X-Frame-Options = "SAMEORIGIN"
     # Prevent MIME-type sniffing attacks
     X-Content-Type-Options = "nosniff"
     # Control referrer info sent on navigation
@@ -622,7 +622,7 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
     # Content Security Policy — restricts where scripts/styles/fonts/connections can load from
     # unsafe-inline required: site uses inline event handlers (onchange, onclick) and inline styles
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.emailjs.com https://ijwgdzrunkxrpzsrcqir.supabase.co wss://ijwgdzrunkxrpzsrcqir.supabase.co https://cdn.jsdelivr.net https://translation.googleapis.com; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'none';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.emailjs.com https://ijwgdzrunkxrpzsrcqir.supabase.co wss://ijwgdzrunkxrpzsrcqir.supabase.co https://cdn.jsdelivr.net https://translation.googleapis.com; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'self';"
     # HSTS — tells browsers to always use HTTPS; required for HIPAA/federal procurement
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 

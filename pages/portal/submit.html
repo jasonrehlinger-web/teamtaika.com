@@ -653,18 +653,33 @@
           <label for="service">Service <span class="required">*</span></label>
           <select id="service" name="service">
             <option value="">Select a service...</option>
+            <optgroup label="Translation">
             <option value="certified_translation" data-price="$24.99/page" data-base="24.99" data-unit="page">Certified Translation</option>
             <option value="legal_translation" data-price="$29.99/page" data-base="29.99" data-unit="page">Legal Translation</option>
             <option value="medical_translation" data-price="$29.99/page" data-base="29.99" data-unit="page">Medical Translation</option>
             <option value="website_localization" data-price="Custom quote" data-custom="true">Website Localization</option>
-            <option value="interpretation_inperson" data-price="$120/hour" data-base="120" data-unit="hour" data-interp="true">Interpretation In-Person</option>
-            <option value="interpretation_remote" data-price="$95/hour" data-base="95" data-unit="hour" data-interp="true">Interpretation Remote</option>
-            <option value="transcription" data-price="$1.50/min" data-base="1.50" data-unit="min">Transcription</option>
-            <option value="captioning" data-price="$2.00/min" data-base="2.00" data-unit="min">Captioning</option>
-            <option value="desktop_publishing" data-price="Custom quote" data-custom="true">Desktop Publishing</option>
-            <option value="508_compliance" data-price="Custom quote" data-custom="true">508 Compliance</option>
-            <option value="ai_automation" data-price="Custom quote" data-custom="true">AI Automation</option>
             <option value="managed_translation" data-price="Custom quote" data-custom="true">Managed Translation</option>
+            </optgroup>
+            <optgroup label="Interpretation">
+            <option value="interpretation_inperson" data-price="$120/hour" data-base="120" data-unit="hour" data-interp="true">Interpretation — In-Person</option>
+            <option value="interpretation_remote" data-price="$95/hour" data-base="95" data-unit="hour" data-interp="true">Interpretation — Remote</option>
+            </optgroup>
+            <optgroup label="Audio &amp; Video">
+            <option value="transcription" data-price="$1.50/min" data-base="1.50" data-unit="min">Transcription</option>
+            <option value="captioning" data-price="$2.00/min" data-base="2.00" data-unit="min">Captioning / Subtitling</option>
+            <option value="video_editing" data-price="Custom quote" data-custom="true">Video Editing</option>
+            </optgroup>
+            <optgroup label="Accessibility &amp; Compliance">
+            <option value="508_compliance" data-price="Custom quote" data-custom="true">508 Compliance</option>
+            <option value="wcag_ada" data-price="Custom quote" data-custom="true">WCAG / ADA Compliance</option>
+            </optgroup>
+            <optgroup label="Publishing &amp; Editing">
+            <option value="desktop_publishing" data-price="Custom quote" data-custom="true">Desktop Publishing</option>
+            <option value="formatting_editing" data-price="Custom quote" data-custom="true">Formatting &amp; Editing</option>
+            </optgroup>
+            <optgroup label="Other">
+            <option value="ai_automation" data-price="Custom quote" data-custom="true">AI Automation</option>
+            </optgroup>
           </select>
           <div class="price-hint" id="price-hint"></div>
           <div class="field-error" id="service-error">Please select a service.</div>

@@ -330,13 +330,9 @@
   }
 
   if (!currentUser) {
-    try {
-      currentUser = await requireAuth();
-    } catch (_) {
-      const { data: { session } } = await client.auth.getSession();
-      if (!session) { window.location.href = '/portal'; return; }
-      currentUser = session.user;
-    }
+    const { data: { session } } = await client.auth.getSession();
+    if (!session) { window.location.href = '/portal'; return; }
+    currentUser = session.user;
   }
 
   // Check if this is a recovery session via onAuthStateChange

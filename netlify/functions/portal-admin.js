@@ -307,10 +307,9 @@ async function handleInviteTeamMember(body, adminProfile) {
     return { statusCode: 403, headers, body: JSON.stringify({ error: 'Only super admins can invite team members' }) };
   }
 
-  // Use Supabase invite endpoint — sends the invite email automatically.
-  // Passing data: { full_name, role } sets user_metadata so the handle_new_user
-  // trigger creates the profile with the correct role.
-  const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/invite`, {
+  // Use generate_link to create the invite token WITHOUT Supabase sending an email.
+  // Supabase's outbound SMTP is unreliable; we send the email ourselves via Resend REST API.
+  const genRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/generate_link`, {
     method: 'POST',
     headers: {
       'apikey':        SERVICE_KEY,
@@ -318,38 +317,77 @@ async function handleInviteTeamMember(body, adminProfile) {
       'Content-Type':  'application/json'
     },
     body: JSON.stringify({
+      type:        'invite',
       email,
-      data: { full_name, role: safeRole }
+      data:        { full_name, role: safeRole },
+      redirect_to: 'https://teamtaika.com/admin/team'
     })
   });
 
-  if (!inviteRes.ok) {
-    const err = await inviteRes.json().catch(() => ({}));
-    // If user already exists Supabase returns 422 — surface a friendly message
-    if (inviteRes.status === 422) {
-      throw new Error('A user with that email already exists');
-    }
-    throw new Error(err.message || err.msg || 'Failed to send invite');
+  if (!genRes.ok) {
+    const err = await genRes.json().catch(() => ({}));
+    if (genRes.status === 422) throw new Error('A user with that email already exists');
+    throw new Error(err.message || err.msg || 'Failed to create invite');
   }
 
-  const newUser = await inviteRes.json();
-  if (!newUser || !newUser.id) throw new Error('Invite returned no user ID');
+  const linkData = await genRes.json();
+  const inviteUrl = linkData?.properties?.action_link;
+  const newUserId = linkData?.user?.id;
+  if (!inviteUrl) throw new Error('Invite link generation returned no action link');
+  if (!newUserId) throw new Error('Invite link generation returned no user ID');
 
-  // The handle_new_user trigger creates the profile automatically.
-  // PATCH it to make sure role/full_name are correct (handles edge cases where
-  // the trigger ran with stale metadata, e.g. re-invite of an existing user).
+  // Upsert profile row (trigger may or may not have run yet)
   const patchRes = await sbPatch(
-    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUser.id)}`,
+    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUserId)}`,
     { full_name, role: safeRole, is_active: true, updated_at: new Date().toISOString() }
   );
   if (!patchRes.ok) {
-    console.warn('[portal-admin] Profile patch failed for', newUser.id, await patchRes.text());
+    // Profile row may not exist yet if trigger hasn't fired — try insert instead
+    await sbPost('/rest/v1/profiles', {
+      id: newUserId, email, full_name, role: safeRole,
+      is_active: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+  }
+
+  // Send invite email via Resend REST API (bypasses Supabase SMTP entirely)
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  if (RESEND_KEY) {
+    const emailHtml = `
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto;color:#1a1a1a">
+        <h2>You've been invited to Taika Admin</h2>
+        <p>Hi ${full_name},</p>
+        <p>You've been invited to join the Taika Translations admin portal as <strong>${safeRole}</strong>.</p>
+        <p>Click the button below to accept your invitation and set your password:</p>
+        <p style="margin:32px 0">
+          <a href="${inviteUrl}" style="background:#b5963e;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">Accept Invitation</a>
+        </p>
+        <p style="color:#666;font-size:13px">Or copy this link: ${inviteUrl}</p>
+        <p style="color:#666;font-size:13px">This link expires in 24 hours.</p>
+      </div>`;
+    const emailRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from:    'Taika Translations <no-reply@taikatranslations.com>',
+        to:      [email],
+        subject: "You've been invited to Taika Admin",
+        html:    emailHtml
+      })
+    });
+    if (!emailRes.ok) {
+      const eErr = await emailRes.json().catch(() => ({}));
+      console.warn('[portal-admin] Resend email failed:', eErr.message || emailRes.status);
+    }
+  } else {
+    console.warn('[portal-admin] RESEND_API_KEY not set — invite email not sent');
   }
 
   return {
     statusCode: 200,
     headers,
-    body: JSON.stringify({ success: true, userId: newUser.id })
+    body: JSON.stringify({ success: true, userId: newUserId })
   };
 }
 
@@ -426,8 +464,8 @@ async function handleInviteClient(body, _adminProfile) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'email and full_name required' }) };
   }
 
-  // Use invite endpoint so the client receives an email to set their password.
-  const inviteRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/invite`, {
+  // Use generate_link to create invite token without Supabase sending email (SMTP unreliable).
+  const genRes = await fetch(`${SUPABASE_URL}/auth/v1/admin/generate_link`, {
     method: 'POST',
     headers: {
       'apikey':        SERVICE_KEY,
@@ -435,35 +473,76 @@ async function handleInviteClient(body, _adminProfile) {
       'Content-Type':  'application/json'
     },
     body: JSON.stringify({
+      type:        'invite',
       email,
-      data: { full_name, role: 'client', organization: organization || null }
+      data:        { full_name, role: 'client', organization: organization || null },
+      redirect_to: 'https://teamtaika.com/portal'
     })
   });
 
-  if (!inviteRes.ok) {
-    const err = await inviteRes.json().catch(() => ({}));
-    if (inviteRes.status === 422) {
-      throw new Error('A user with that email already exists');
-    }
-    throw new Error(err.message || err.msg || 'Failed to invite client');
+  if (!genRes.ok) {
+    const err = await genRes.json().catch(() => ({}));
+    if (genRes.status === 422) throw new Error('A user with that email already exists');
+    throw new Error(err.message || err.msg || 'Failed to create client invite');
   }
 
-  const newUser = await inviteRes.json();
-  if (!newUser || !newUser.id) throw new Error('Invite returned no user ID');
+  const linkData = await genRes.json();
+  const inviteUrl = linkData?.properties?.action_link;
+  const newUserId = linkData?.user?.id;
+  if (!inviteUrl) throw new Error('Invite link generation returned no action link');
+  if (!newUserId) throw new Error('Invite link generation returned no user ID');
 
-  // PATCH profile to ensure organization is set (trigger may not have it)
+  // Upsert profile
   const patchRes = await sbPatch(
-    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUser.id)}`,
+    `/rest/v1/profiles?id=eq.${encodeURIComponent(newUserId)}`,
     { full_name, organization: organization || null, role: 'client', is_active: true, updated_at: new Date().toISOString() }
   );
   if (!patchRes.ok) {
-    console.warn('[portal-admin] Client profile patch failed for', newUser.id, await patchRes.text());
+    await sbPost('/rest/v1/profiles', {
+      id: newUserId, email, full_name, organization: organization || null,
+      role: 'client', is_active: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    });
+  }
+
+  // Send invite email via Resend REST API
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  if (RESEND_KEY) {
+    const emailHtml = `
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto;color:#1a1a1a">
+        <h2>You've been invited to the Taika Client Portal</h2>
+        <p>Hi ${full_name},</p>
+        <p>You've been invited to access the Taika Translations client portal${organization ? ` for <strong>${organization}</strong>` : ''}.</p>
+        <p>Click the button below to set your password and get started:</p>
+        <p style="margin:32px 0">
+          <a href="${inviteUrl}" style="background:#b5963e;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">Accept Invitation</a>
+        </p>
+        <p style="color:#666;font-size:13px">Or copy this link: ${inviteUrl}</p>
+        <p style="color:#666;font-size:13px">This link expires in 24 hours.</p>
+      </div>`;
+    const emailRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from:    'Taika Translations <no-reply@taikatranslations.com>',
+        to:      [email],
+        subject: "You've been invited to the Taika Client Portal",
+        html:    emailHtml
+      })
+    });
+    if (!emailRes.ok) {
+      const eErr = await emailRes.json().catch(() => ({}));
+      console.warn('[portal-admin] Resend client invite email failed:', eErr.message || emailRes.status);
+    }
+  } else {
+    console.warn('[portal-admin] RESEND_API_KEY not set — client invite email not sent');
   }
 
   return {
     statusCode: 200,
     headers,
-    body: JSON.stringify({ success: true, userId: newUser.id })
+    body: JSON.stringify({ success: true, userId: newUserId })
   };
 }
 

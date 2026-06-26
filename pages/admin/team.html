@@ -215,7 +215,7 @@
     .perm-desc  { font-size: 0.85rem; color: #6b7280; }
 
     /* ── Modal overlay ── */
-    .modal-overlay {
+    .admin-modal-overlay {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.45);
       display: flex; align-items: center; justify-content: center;
@@ -223,8 +223,8 @@
       opacity: 0; pointer-events: none;
       transition: opacity 0.2s;
     }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
+    .admin-modal-overlay.open { opacity: 1; pointer-events: all; }
+    .admin-modal {
       background: #fff;
       border-radius: 14px;
       padding: 2rem;
@@ -234,24 +234,24 @@
       transform: translateY(10px);
       transition: transform 0.2s;
     }
-    .modal-overlay.open .modal { transform: translateY(0); }
-    .modal-header {
+    .admin-modal-overlay.open .admin-modal { transform: translateY(0); }
+    .admin-modal-header {
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 1.4rem;
     }
-    .modal-header h2 {
+    .admin-modal-header h2 {
       font-family: 'DM Serif Display', serif;
       font-size: 1.2rem;
       color: #0a1628;
       margin: 0;
     }
-    .modal-close {
+    .admin-modal-close {
       background: none; border: none; cursor: pointer;
       color: #9ca3af; font-size: 1.3rem; line-height: 1;
       padding: 0.2rem;
       transition: color 0.15s;
     }
-    .modal-close:hover { color: #374151; }
+    .admin-modal-close:hover { color: #374151; }
 
     /* ── Modal form ── */
     .form-group { margin-bottom: 1rem; }
@@ -279,7 +279,7 @@
       border-color: #c9a84c;
       box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
     }
-    .modal-actions {
+    .admin-modal-actions {
       display: flex; gap: 0.7rem; justify-content: flex-end; margin-top: 1.4rem;
     }
     .btn-outline {
@@ -404,11 +404,11 @@
 </div><!-- /page-wrap -->
 
 <!-- ── Invite Modal ── -->
-<div class="modal-overlay" id="invite-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-  <div class="modal">
-    <div class="modal-header">
+<div class="admin-modal-overlay" id="invite-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
       <h2 id="modal-title">Invite Team Member</h2>
-      <button class="modal-close" onclick="closeInviteModal()" aria-label="Close">&times;</button>
+      <button class="admin-modal-close" onclick="closeInviteModal()" aria-label="Close">&times;</button>
     </div>
     <form id="invite-form" onsubmit="submitInvite(event)">
       <div class="form-group">
@@ -425,7 +425,7 @@
           <option value="admin">Admin</option>
         </select>
       </div>
-      <div class="modal-actions">
+      <div class="admin-modal-actions">
         <button type="button" class="btn btn-outline" onclick="closeInviteModal()">Cancel</button>
         <button type="submit" class="btn btn-gold" id="invite-submit-btn">Send Invite</button>
       </div>

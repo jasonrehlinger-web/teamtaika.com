@@ -278,7 +278,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (window.supabase) {
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       const { data: { session } } = await sb.auth.getSession();
-      if (session) { window.location.href = '/portal/dashboard'; return; }
+      if (session) {
+        const { data: profile } = await sb.from('profiles').select('role').eq('id', session.user.id).single();
+        if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+          window.location.href = '/admin/dashboard';
+        } else {
+          window.location.href = '/portal/dashboard';
+        }
+        return;
+      }
     }
   } catch(e) {}
 
@@ -338,11 +346,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     btn.disabled = true;
     try {
       const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      const { error } = await sb.auth.signInWithPassword({
+      const { data: signInData, error } = await sb.auth.signInWithPassword({
         email: document.getElementById('signin-email').value.trim(),
         password: document.getElementById('signin-password').value
       });
       if (error) throw error;
+      // Redirect admins to admin panel
+      const userId = signInData.session?.user?.id;
+      if (userId) {
+        const { data: profile } = await sb.from('profiles').select('role').eq('id', userId).single();
+        if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+          window.location.href = '/admin/dashboard';
+          return;
+        }
+      }
       window.location.href = '/portal/dashboard';
     } catch (err) {
       errEl.textContent = friendlyError(err.message);

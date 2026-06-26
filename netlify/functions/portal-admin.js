@@ -115,6 +115,21 @@ exports.handler = async function(event, context) {
       case 'inviteClient':
         return await handleInviteClient(body, adminProfile);
 
+      case 'blockClient':
+        return await handleBlockClient(body, adminProfile);
+
+      case 'deleteClient':
+        return await handleDeleteClient(body, adminProfile);
+
+      case 'addToBlacklist':
+        return await handleAddToBlacklist(body, adminProfile);
+
+      case 'removeFromBlacklist':
+        return await handleRemoveFromBlacklist(body, adminProfile);
+
+      case 'getBlacklist':
+        return await handleGetBlacklist(adminProfile);
+
       default:
         return { statusCode: 400, headers, body: JSON.stringify({ error: 'Unknown action: ' + action }) };
     }
@@ -566,6 +581,96 @@ async function handleInviteClient(body, _adminProfile) {
    Supabase REST helpers
    All use the service role key for full access.
    ═══════════════════════════════════════════════════════════════════════════ */
+
+// ─── Block / Unblock a client ─────────────────────────────────────────────────
+async function handleBlockClient(body, _adminProfile) {
+  const { clientId, block } = body;
+  if (!clientId) throw new Error('clientId required');
+  const res = await sbPatch(
+    '/rest/v1/profiles?id=eq.' + clientId + '&role=eq.client',
+    { is_active: block === false ? true : false, updated_at: new Date().toISOString() }
+  );
+  if (!res.ok) throw new Error('Failed to update client status');
+  return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+}
+
+// ─── Delete a client account ──────────────────────────────────────────────────
+async function handleDeleteClient(body, _adminProfile) {
+  const { clientId, blacklistEmail } = body;
+  if (!clientId) throw new Error('clientId required');
+
+  // Fetch email first (for optional blacklisting)
+  let email = null;
+  if (blacklistEmail) {
+    const pRes = await sbGet('/rest/v1/profiles?id=eq.' + clientId + '&select=email');
+    if (pRes.ok) {
+      const pData = await pRes.json();
+      email = pData?.[0]?.email || null;
+    }
+  }
+
+  // Delete profile row (cascades via FK or soft-deletes)
+  const delRes = await fetch(`${SUPABASE_URL}/rest/v1/profiles?id=eq.${clientId}&role=eq.client`, {
+    method: 'DELETE',
+    headers: sbHeaders()
+  });
+  if (!delRes.ok) throw new Error('Failed to delete client profile');
+
+  // Delete auth user via service role
+  if (clientId) {
+    await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${clientId}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}` }
+    });
+  }
+
+  // Optionally blacklist the email
+  if (blacklistEmail && email) {
+    await sbUpsert('/rest/v1/blacklisted_emails', {
+      email: email.toLowerCase(),
+      reason: 'Deleted by admin',
+      created_at: new Date().toISOString()
+    });
+  }
+
+  return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+}
+
+// ─── Blacklist management ─────────────────────────────────────────────────────
+async function handleAddToBlacklist(body, adminProfile) {
+  const { email, reason } = body;
+  if (!email) throw new Error('email required');
+  const res = await sbUpsert('/rest/v1/blacklisted_emails', {
+    email: email.toLowerCase().trim(),
+    reason: reason || null,
+    blacklisted_by: adminProfile.id,
+    created_at: new Date().toISOString()
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'Failed to add to blacklist');
+  }
+  return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+}
+
+async function handleRemoveFromBlacklist(body, _adminProfile) {
+  const { id } = body;
+  if (!id) throw new Error('id required');
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/blacklisted_emails?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: sbHeaders()
+  });
+  if (!res.ok) throw new Error('Failed to remove from blacklist');
+  return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };
+}
+
+async function handleGetBlacklist(_adminProfile) {
+  const res = await sbGet('/rest/v1/blacklisted_emails?select=id,email,reason,created_at&order=created_at.desc');
+  if (!res.ok) throw new Error('Failed to fetch blacklist');
+  const data = await res.json();
+  return { statusCode: 200, headers, body: JSON.stringify({ entries: data || [] }) };
+}
+
 function sbHeaders(extra = {}) {
   return {
     'apikey':         SERVICE_KEY,

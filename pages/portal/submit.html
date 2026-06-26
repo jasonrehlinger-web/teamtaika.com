@@ -1184,9 +1184,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         source_language: document.getElementById('source-language').value,
         target_languages: selectedTargetLanguages,
         priority: priority,
-        client_notes: clientNotes + (noFilesDesc ? '\n\n[No files — description]: ' + noFilesDesc : ''),
-        appointment_date: isInterp ? document.getElementById('appt-date').value : null,
-        duration_hours: isInterp ? parseFloat(document.getElementById('appt-duration').value) : null,
+        client_notes: clientNotes
+          + (noFilesDesc ? '\n\n[No files — description]: ' + noFilesDesc : '')
+          + (isInterp && document.getElementById('appt-date')?.value ? '\n\n[Appointment date]: ' + document.getElementById('appt-date').value : '')
+          + (isInterp && document.getElementById('appt-duration')?.value ? '\n[Duration (hours)]: ' + document.getElementById('appt-duration').value : ''),
         status: 'submitted'
       };
 

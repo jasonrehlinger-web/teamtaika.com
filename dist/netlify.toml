@@ -2,6 +2,17 @@
   publish = "."
 
 # Serve Apple Pay domain association file
+
+[[redirects]]
+  from = "/terms"
+  to = "/pages/terms.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/pages/privacy.html"
+  status = 200
+
 [[redirects]]
   from = "/.well-known/apple-developer-merchantid-domain-association"
   to = "/apple-pay-verify"

@@ -406,7 +406,7 @@
           </div>
           <div id="signin-error" class="form-error" style="display:none;"></div>
           <button type="submit" class="btn-primary">Sign In</button>
-          <p class="link-muted">No account? <a href="#" id="go-register">Request access from your project manager →</a></p>
+          <p class="link-muted">No account? Contact your project manager to receive an invite.</p>
         </form>
         <div id="forgot-section" style="display:none;">
           <a href="#" id="back-to-signin" class="form-hint">← Back to sign in</a>
@@ -558,19 +558,31 @@
   // ── Register ────────────────────────────────────────
   document.getElementById('register-form').addEventListener('submit', async e => {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type=submit]');
+    // Portal is invite-only. Check that the email has a pending invite before allowing signup.
     const errEl = document.getElementById('register-error');
+    const btn = e.target.querySelector('button[type=submit]');
     errEl.style.display = 'none';
     const name = document.getElementById('reg-name').value.trim();
     const org = document.getElementById('reg-org').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
+    const email = document.getElementById('reg-email').value.trim().toLowerCase();
     const password = document.getElementById('reg-password').value;
     const confirm = document.getElementById('reg-confirm').value;
     if (password !== confirm) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
     if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
-    btn.textContent = 'Creating account…'; btn.disabled = true;
+    btn.textContent = 'Checking invite…'; btn.disabled = true;
     try {
-      const { error } = await getSb().auth.signUp({ email, password, options: { data: { full_name: name, organization: org } } });
+      // Verify invite exists before proceeding
+      const sb = getSb();
+      const { data: profile } = await sb.from('profiles').select('id, is_active, role').eq('email', email).maybeSingle();
+      if (!profile) {
+        throw new Error('This portal is invite-only. Please contact your project manager to request access.');
+      }
+      if (profile.is_active) {
+        throw new Error('An active account already exists for this email. Please sign in instead.');
+      }
+      // Profile exists and is pending — allow signup
+      btn.textContent = 'Creating account…';
+      const { error } = await sb.auth.signUp({ email, password, options: { data: { full_name: name, organization: org } } });
       if (error) throw error;
       document.getElementById('success-email').textContent = email;
       document.getElementById('register-form').style.display = 'none';

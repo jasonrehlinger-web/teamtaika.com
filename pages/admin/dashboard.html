@@ -661,7 +661,7 @@
   const monthLabel = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   document.getElementById('m-month-label').textContent = monthLabel;
 
-  const ACTIVE_STATUSES = ['reviewing', 'quoted', 'approved', 'in_progress', 'review'];
+  const ACTIVE_STATUSES = ['reviewing', 'quoted', 'approved', 'in_progress', 'review', 'delivered'];
 
   /* ════════════════════
      LOAD ALL DATA
@@ -699,7 +699,7 @@
 
       /* Recent activity */
       db.from('project_status_history')
-        .select('id, created_at, new_status, project_id, changed_by, projects:project_id(title), changer:changed_by(full_name)')
+        .select('id, created_at, to_status, from_status, project_id, changed_by, projects:project_id(title), changer:changed_by(full_name)')
         .order('created_at', { ascending: false })
         .limit(20),
 
@@ -772,15 +772,18 @@
     btn.disabled = true;
     btn.textContent = 'Updating…';
 
-    const { error } = await db
-      .from('projects')
-      .update({ status: 'reviewing' })
-      .eq('id', projectId);
-
-    if (error) {
+    // Use portal-admin function so status history is recorded
+    const { data: { session } } = await db.auth.getSession();
+    const res = await fetch('/.netlify/functions/portal-admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + session.access_token },
+      body: JSON.stringify({ action: 'updateProjectStatus', projectId, newStatus: 'reviewing' })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
       btn.disabled = false;
       btn.textContent = 'Start Review';
-      showToast('Error: ' + error.message);
+      showToast('Error: ' + (err.error || 'Update failed'));
       return;
     }
 
@@ -821,7 +824,7 @@
 
     list.innerHTML = rows.map(r => {
       const title  = r.projects?.title || 'a project';
-      const status = humanStatus(r.new_status);
+      const status = humanStatus(r.to_status);
       const by     = r.changer?.full_name || 'Unknown';
       const time   = relativeTime(r.created_at);
 

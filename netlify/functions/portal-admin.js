@@ -588,7 +588,7 @@ async function handleBlockClient(body, _adminProfile) {
   if (!clientId) throw new Error('clientId required');
   const res = await sbPatch(
     '/rest/v1/profiles?id=eq.' + clientId + '&role=eq.client',
-    { is_active: block === false ? true : false, updated_at: new Date().toISOString() }
+    { is_active: !block, updated_at: new Date().toISOString() } // block=true → is_active=false
   );
   if (!res.ok) throw new Error('Failed to update client status');
   return { statusCode: 200, headers, body: JSON.stringify({ success: true }) };

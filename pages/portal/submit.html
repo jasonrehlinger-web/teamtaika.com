@@ -1327,7 +1327,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const clientNotes = document.getElementById('client-notes').value.trim();
       const projectData = {
         service: serviceSelect.value,
-        service_label: serviceOpt ? serviceOpt.text : serviceSelect.value,
+        service_name: serviceOpt ? serviceOpt.text : serviceSelect.value,
         title: document.getElementById('project-title').value.trim(),
         description: document.getElementById('description').value.trim(),
         source_language: document.getElementById('source-language').value,

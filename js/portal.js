@@ -46,6 +46,7 @@ function getSupabase() {
     throw new Error('Supabase client library not loaded. Ensure the CDN script is included before portal.js.');
   }
   _supabase = window.supabase.createClient(PORTAL_CONFIG.supabaseUrl, PORTAL_CONFIG.supabaseKey);
+  window._supabaseClient = _supabase; // exposed for pages that reference it directly
   return _supabase;
 }
 
@@ -65,7 +66,7 @@ async function requireAuth() {
 async function requireAdmin() {
   const { data: { session }, error } = await getSupabase().auth.getSession();
   if (error || !session) {
-    window.location.href = '/portal';
+    window.location.href = '/admin';
     return null;
   }
   const { data: profile, error: profileError } = await getSupabase()
@@ -74,7 +75,7 @@ async function requireAdmin() {
     .eq('id', session.user.id)
     .single();
   if (profileError || !profile || !['admin', 'super_admin'].includes(profile.role)) {
-    window.location.href = '/portal';
+    window.location.href = '/admin';
     return null;
   }
   return { user: session.user, profile };

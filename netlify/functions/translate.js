@@ -1,30 +1,40 @@
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': 'https://teamtaika.com',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Content-Type': 'application/json'
+};
+
 exports.handler = async function(event, context) {
-  // Only allow POST
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: CORS_HEADERS, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
   const API_KEY = process.env.GOOGLE_TRANSLATE_API_KEY;
   if (!API_KEY) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'API not configured' }) };
+    return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'API not configured' }) };
   }
 
   let body;
   try {
     body = JSON.parse(event.body);
   } catch (e) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON' }) };
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid JSON' }) };
   }
 
   const { text, target } = body;
 
   if (!text || !target) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing text or target language' }) };
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Missing text or target language' }) };
   }
 
-  // Hard limit: 2000 characters per request
   if (text.length > 2000) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Text too long. Maximum 2000 characters per preview.' }) };
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Text too long. Maximum 2000 characters per preview.' }) };
   }
 
   const ALLOWED_TARGETS = [
@@ -34,7 +44,7 @@ exports.handler = async function(event, context) {
   ];
 
   if (!ALLOWED_TARGETS.includes(target)) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Unsupported target language' }) };
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Unsupported target language' }) };
   }
 
   try {
@@ -43,11 +53,7 @@ exports.handler = async function(event, context) {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          q: text,
-          target: target,
-          format: 'text'
-        })
+        body: JSON.stringify({ q: text, target: target, format: 'text' })
       }
     );
 
@@ -55,10 +61,7 @@ exports.handler = async function(event, context) {
 
     if (!response.ok || data.error) {
       console.error('Google Translate error:', data.error);
-      return {
-        statusCode: 502,
-        body: JSON.stringify({ error: 'Translation service error. Please try again.' })
-      };
+      return { statusCode: 502, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Translation service error. Please try again.' }) };
     }
 
     const translated = data.data.translations[0].translatedText;
@@ -66,18 +69,11 @@ exports.handler = async function(event, context) {
 
     return {
       statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-store'
-      },
-      body: JSON.stringify({
-        translated,
-        detectedSource,
-        charCount: text.length
-      })
+      headers: { ...CORS_HEADERS, 'Cache-Control': 'no-store' },
+      body: JSON.stringify({ translated, detectedSource, charCount: text.length })
     };
   } catch (err) {
     console.error('Function error:', err);
-    return { statusCode: 500, body: JSON.stringify({ error: 'Internal error. Please try again.' }) };
+    return { statusCode: 500, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Internal error. Please try again.' }) };
   }
 };

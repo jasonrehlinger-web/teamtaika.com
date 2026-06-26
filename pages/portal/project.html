@@ -587,7 +587,7 @@
       const priorityClass = 'priority-' + (project.priority || 'standard');
 
       const infoRows = [
-        { label: 'Service', value: project.service_label || project.service || '—' },
+        { label: 'Service', value: project.service_name || project.service || '—' },
         { label: 'Source Language', value: project.source_language || '—' },
         { label: 'Target Language(s)', value: targetLangs },
         { label: 'Priority', value: '<span class="priority-badge ' + priorityClass + '">' + priorityLabel + '</span>' },
@@ -689,7 +689,7 @@
           messages = await getMessages(projectId);
         } else {
           const { data, error } = await window._supabaseClient
-            .from('project_messages')
+            .from('messages')
             .select('*')
             .eq('project_id', projectId)
             .order('created_at', { ascending: true });
@@ -740,7 +740,7 @@
             await markMessagesRead(unreadIds);
           } else {
             await window._supabaseClient
-              .from('project_messages')
+              .from('messages')
               .update({ read_at: new Date().toISOString() })
               .in('id', unreadIds);
           }
@@ -772,7 +772,7 @@
             newMsg = await sendMessage(projectId, body);
           } else {
             const { data, error } = await window._supabaseClient
-              .from('project_messages')
+              .from('messages')
               .insert([{ project_id: projectId, body: body, sender_role: 'client' }])
               .select()
               .single();
@@ -809,7 +809,7 @@
             .on('postgres_changes', {
               event: 'INSERT',
               schema: 'public',
-              table: 'project_messages',
+              table: 'messages',
               filter: 'project_id=eq.' + projectId
             }, function(payload) {
               const msg = payload.new;

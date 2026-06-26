@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Details | Taika Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/portal.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --navy: #0B1E35;
+      --gold: #B8913A;
+      --white: #F9F8F5;
+      --gold-light: #f5e9d3;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #F9F8F5;
+      color: var(--navy);
+      margin: 0;
+      min-height: 100vh;
+    }
+    .portal-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .page-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.9rem;
+      margin: 0;
+      color: var(--navy);
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.875rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-submitted { background: #dbeafe; color: #1d4ed8; }
+    .status-reviewing { background: #fef9c3; color: #854d0e; }
+    .status-quoted    { background: #fde68a; color: #92400e; }
+    .status-approved  { background: #d1fae5; color: #065f46; }
+    .status-in_progress { background: #ede9fe; color: #5b21b6; }
+    .status-delivered { background: #dcfce7; color: #166534; }
+    .status-completed { background: #f0fdf4; color: #14532d; }
+    .status-cancelled { background: #fee2e2; color: #991b1b; }
+    .status-timeline {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 12px;
+      padding: 1.25rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      overflow-x: auto;
+      gap: 0;
+    }
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 80px;
+      position: relative;
+    }
+    .timeline-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #cbd5e1;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-dot.done { background: var(--gold); border-color: var(--gold); color: white; }
+    .timeline-dot.current { background: var(--navy); border-color: var(--navy); color: white; }
+    .timeline-label {
+      font-size: 0.68rem;
+      margin-top: 0.4rem;
+      color: #94a3b8;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .timeline-label.done { color: var(--gold); font-weight: 600; }
+    .timeline-label.current { color: var(--navy); font-weight: 700; }
+    .timeline-connector {
+      flex: 1;
+      height: 2px;
+      background: #e2e8f0;
+      margin-top: -28px;
+    }
+    .timeline-connector.done { background: var(--gold); }
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .project-grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin: 0 0 1.25rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title .badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: var(--gold);
+      color: white;
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem 1.5rem;
+    }
+    @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+    .info-row { display: flex; flex-direction: column; gap: 0.2rem; }
+    .info-label { font-size: 0.78rem; color: #64748b; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .info-value { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
+    .priority-badge {
+      display: inline-flex;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .priority-standard { background: #f1f5f9; color: #475569; }
+    .priority-rush      { background: #fef9c3; color: #854d0e; }
+    .priority-urgent    { background: #fee2e2; color: #991b1b; }
+    .files-section { margin-bottom: 1.5rem; }
+    .files-subtitle {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1.5px solid #f1f5f9;
+    }
+    .files-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .files-table th {
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #64748b;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+    .files-table td {
+      padding: 0.625rem 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--navy);
+    }
+    .files-table tr:last-child td { border-bottom: none; }
+    .files-table .file-name-cell { font-weight: 500; word-break: break-all; }
+    .files-empty {
+      text-align: center;
+      padding: 1.5rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--gold-light);
+      color: var(--gold);
+      border: 1.5px solid var(--gold);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-download:hover { background: var(--gold); color: white; }
+    .btn-download:disabled { opacity: 0.5; cursor: not-allowed; }
+    .message-thread {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      max-height: 420px;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+      margin-bottom: 1rem;
+    }
+    .message-bubble {
+      max-width: 75%;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+    .message-bubble.from-client {
+      align-self: flex-end;
+      background: var(--gold-light);
+      border: 1.5px solid #e5c97e;
+      border-bottom-right-radius: 4px;
+    }
+    .message-bubble.from-admin {
+      align-self: flex-start;
+      background: #f0f4f8;
+      border: 1.5px solid #dde6ef;
+      border-bottom-left-radius: 4px;
+    }
+    .message-meta {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-top: 0.3rem;
+    }
+    .message-from-client .message-meta { text-align: right; }
+    .messages-empty {
+      text-align: center;
+      padding: 2rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+    .message-input-area {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+    }
+    .message-input-area textarea {
+      flex: 1;
+      padding: 0.625rem 0.875rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--navy);
+      resize: none;
+      min-height: 72px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .message-input-area textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,145,58,0.12); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary { background: var(--gold); color: white; }
+    .btn-primary:hover { background: #a07d32; }
+    .btn-primary:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+    .btn-secondary { background: #f1f5f9; color: var(--navy); border: 1.5px solid #e2e8f0; }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-danger { background: #fee2e2; color: #991b1b; border: 1.5px solid #fca5a5; }
+    .btn-danger:hover { background: #fca5a5; }
+    .quote-amount {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .quote-note { font-size: 0.875rem; color: #64748b; margin-bottom: 1rem; line-height: 1.5; }
+    .sidebar-detail { display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 1rem; }
+    .sidebar-detail:last-child { margin-bottom: 0; }
+    .sidebar-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: #94a3b8; font-weight: 600; }
+    .sidebar-value { font-size: 0.9rem; color: var(--navy); font-weight: 500; }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .skeleton {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 6px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    .alert {
+      padding: 0.875rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .alert-error { background: #fef2f2; border: 1.5px solid #fca5a5; color: #991b1b; }
+    .alert-success { background: #f0fdf4; border: 1.5px solid #86efac; color: #166534; }
+  </style>
+</head>
+<body>
+  <div id="portal-nav"></div>
+
+  <div class="portal-container" id="main-container">
+    <!-- Loading state -->
+    <div id="loading-state">
+      <div class="skeleton" style="height:24px;width:120px;margin-bottom:1rem;"></div>
+      <div class="skeleton" style="height:40px;width:60%;margin-bottom:2rem;"></div>
+      <div class="card"><div class="skeleton" style="height:80px;"></div></div>
+      <div class="project-grid">
+        <div>
+          <div class="card"><div class="skeleton" style="height:200px;"></div></div>
+          <div class="card"><div class="skeleton" style="height:300px;"></div></div>
+        </div>
+        <div>
+          <div class="card"><div class="skeleton" style="height:200px;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" style="display:none;">
+      <div class="alert alert-error" id="error-msg">Failed to load project.</div>
+      <a href="/portal/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+
+    <!-- Project content -->
+    <div id="project-content" style="display:none;">
+      <a href="/portal/dashboard" class="back-link">← My Projects</a>
+
+      <div class="page-header">
+        <div>
+          <h1 id="project-title-heading">Loading...</h1>
+          <div style="margin-top:0.5rem;">
+            <span class="status-badge" id="status-badge"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status timeline -->
+      <div id="status-timeline-container"></div>
+
+      <!-- Two-column grid -->
+      <div class="project-grid">
+        <!-- Main column -->
+        <div id="main-col">
+          <!-- Info card -->
+          <div class="card" id="info-card">
+            <h2 class="card-title">Project Info</h2>
+            <div class="info-grid" id="info-grid"></div>
+          </div>
+
+          <!-- Files card -->
+          <div class="card" id="files-card">
+            <h2 class="card-title">Files</h2>
+            <div class="files-section">
+              <div class="files-subtitle">Source Files</div>
+              <div id="source-files-container"></div>
+            </div>
+            <div class="files-section">
+              <div class="files-subtitle">Delivery Files</div>
+              <div id="delivery-files-container"></div>
+            </div>
+          </div>
+
+          <!-- Messages card -->
+          <div class="card" id="messages-card">
+            <h2 class="card-title">
+              Messages
+              <span class="badge" id="unread-badge" style="display:none;">0</span>
+            </h2>
+            <div class="message-thread" id="message-thread">
+              <div class="messages-empty" id="messages-empty">No messages yet.</div>
+            </div>
+            <div class="message-input-area">
+              <textarea id="message-input" placeholder="Write a message..." rows="3"></textarea>
+              <button class="btn btn-primary" id="send-message-btn" style="height:fit-content;padding:0.75rem 1.25rem;">
+                <span id="send-label">Send</span>
+                <span class="spinner" id="send-spinner" style="display:none;"></span>
+              </button>
+            </div>
+            <div id="message-error" style="display:none;margin-top:0.5rem;" class="alert alert-error"></div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div id="sidebar-col">
+          <!-- Details card -->
+          <div class="card" id="sidebar-details-card">
+            <h2 class="card-title" style="font-size:1rem;">Project Details</h2>
+            <div id="sidebar-details"></div>
+          </div>
+
+          <!-- Quote card (shown if quote_amount set) -->
+          <div class="card" id="quote-card" style="display:none;">
+            <h2 class="card-title" style="font-size:1rem;">Quote</h2>
+            <div class="quote-amount" id="quote-amount-display"></div>
+            <div class="quote-note" id="quote-note-display"></div>
+            <button class="btn btn-primary" id="approve-quote-btn" style="width:100%;">Approve Quote</button>
+            <div id="approve-error" class="alert alert-error" style="display:none;margin-top:0.75rem;"></div>
+          </div>
+
+          <!-- Cancel button -->
+          <div id="cancel-section" style="display:none;">
+            <button class="btn btn-danger" id="cancel-project-btn" style="width:100%;">Cancel Project</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../../js/portal.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Auth guard
+      if (typeof requireAuth === 'function') await requireAuth();
+      if (typeof renderPortalNav === 'function') renderPortalNav('portal-nav');
+
+      // Get project ID from URL
+      const params = new URLSearchParams(window.location.search);
+      const projectId = params.get('id');
+      if (!projectId) {
+        window.location.href = '/portal/dashboard';
+        return;
+      }
+
+      const STATUS_TIMELINE = [
+        { key: 'submitted',    label: 'Submitted' },
+        { key: 'reviewing',    label: 'Reviewing' },
+        { key: 'quoted',       label: 'Quoted' },
+        { key: 'approved',     label: 'Approved' },
+        { key: 'in_progress',  label: 'In Progress' },
+        { key: 'delivered',    label: 'Delivered' },
+        { key: 'completed',    label: 'Completed' },
+      ];
+
+      function buildStatusTimeline(currentStatus) {
+        if (typeof window.buildStatusTimeline === 'function') {
+          return window.buildStatusTimeline(currentStatus);
+        }
+        const currentIdx = STATUS_TIMELINE.findIndex(s => s.key === currentStatus);
+        const container = document.createElement('div');
+        container.className = 'status-timeline';
+        STATUS_TIMELINE.forEach((s, i) => {
+          const step = document.createElement('div');
+          step.className = 'timeline-step';
+          const isDone = i < currentIdx;
+          const isCurrent = i === currentIdx;
+          step.innerHTML =
+            '<div class="timeline-dot ' + (isDone ? 'done' : isCurrent ? 'current' : '') + '">' + (isDone ? '✓' : i + 1) + '</div>' +
+            '<div class="timeline-label ' + (isDone ? 'done' : isCurrent ? 'current' : '') + '">' + s.label + '</div>';
+          container.appendChild(step);
+          if (i < STATUS_TIMELINE.length - 1) {
+            const conn = document.createElement('div');
+            conn.className = 'timeline-connector' + (isDone ? ' done' : '');
+            container.appendChild(conn);
+          }
+        });
+        return container;
+      }
+
+      function formatDate(iso) {
+        if (!iso) return 'TBD';
+        try {
+          return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        } catch (e) { return iso; }
+      }
+
+      function formatDateTime(iso) {
+        if (!iso) return '';
+        try {
+          return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+        } catch (e) { return iso; }
+      }
+
+      function formatCurrency(amount) {
+        if (!amount) return null;
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+      }
+
+      // === Load project ===
+      let project = null;
+      try {
+        if (typeof getProject === 'function') {
+          project = await getProject(projectId);
+        } else {
+          const { data, error } = await window._supabaseClient
+            .from('projects')
+            .select('*')
+            .eq('id', projectId)
+            .single();
+          if (error) throw error;
+          project = data;
+        }
+      } catch (err) {
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('error-state').style.display = 'block';
+        document.getElementById('error-msg').textContent = err.message || 'Failed to load project.';
+        return;
+      }
+
+      if (!project) {
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('error-state').style.display = 'block';
+        document.getElementById('error-msg').textContent = 'Project not found.';
+        return;
+      }
+
+      // === Render project ===
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('project-content').style.display = 'block';
+      document.title = (project.title || 'Project') + ' | Taika Portal';
+
+      // Title and status
+      document.getElementById('project-title-heading').textContent = project.title || 'Untitled Project';
+      const statusBadge = document.getElementById('status-badge');
+      const statusKey = project.status || 'submitted';
+      statusBadge.textContent = statusKey.replace('_', ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+      statusBadge.className = 'status-badge status-' + statusKey.replace(/[^a-z_]/g, '');
+
+      // Timeline
+      const tlContainer = document.getElementById('status-timeline-container');
+      if (statusKey !== 'cancelled') {
+        tlContainer.appendChild(buildStatusTimeline(statusKey));
+      }
+
+      // Info grid
+      const targetLangs = Array.isArray(project.target_languages)
+        ? project.target_languages.join(', ')
+        : project.target_languages || '—';
+
+      const priorityLabel = { standard: 'Standard', rush: 'Rush', urgent: 'Urgent' }[project.priority] || (project.priority || '—');
+      const priorityClass = 'priority-' + (project.priority || 'standard');
+
+      const infoRows = [
+        { label: 'Service', value: project.service_label || project.service || '—' },
+        { label: 'Source Language', value: project.source_language || '—' },
+        { label: 'Target Language(s)', value: targetLangs },
+        { label: 'Priority', value: '<span class="priority-badge ' + priorityClass + '">' + priorityLabel + '</span>' },
+        { label: 'Submitted', value: formatDate(project.created_at) },
+        { label: 'Due Date', value: project.due_date ? formatDate(project.due_date) : 'TBD' },
+        { label: 'Quote', value: project.quote_amount ? formatCurrency(project.quote_amount) : 'Pending quote' },
+      ];
+      document.getElementById('info-grid').innerHTML = infoRows.map(function(r) {
+        return '<div class="info-row"><span class="info-label">' + r.label + '</span><span class="info-value">' + r.value + '</span></div>';
+      }).join('');
+
+      // === Load files ===
+      let allFiles = [];
+      try {
+        if (typeof getProjectFiles === 'function') {
+          allFiles = await getProjectFiles(projectId);
+        } else {
+          const { data, error } = await window._supabaseClient
+            .from('project_files')
+            .select('*')
+            .eq('project_id', projectId);
+          if (error) throw error;
+          allFiles = data || [];
+        }
+      } catch (err) {
+        console.warn('Files load error:', err);
+      }
+
+      function formatBytes(bytes) {
+        if (!bytes) return '—';
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+        return (bytes/(1024*1024)).toFixed(1) + ' MB';
+      }
+
+      function renderFilesTable(files, containerId) {
+        const container = document.getElementById(containerId);
+        if (!files || files.length === 0) {
+          container.innerHTML = '<div class="files-empty">No files yet.</div>';
+          return;
+        }
+        const table = document.createElement('table');
+        table.className = 'files-table';
+        const rows = files.map(function(f) {
+          return '<tr>' +
+            '<td class="file-name-cell">' + (f.file_name || f.name || '—') + '</td>' +
+            '<td>' + (f.file_size ? formatBytes(f.file_size) : '—') + '</td>' +
+            '<td>' + formatDate(f.created_at) + '</td>' +
+            '<td><button class="btn-download" data-path="' + (f.file_path || '') + '" data-id="' + (f.id || '') + '">↓ Download</button></td>' +
+            '</tr>';
+        }).join('');
+        table.innerHTML =
+          '<thead><tr><th>File Name</th><th>Size</th><th>Uploaded</th><th></th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>';
+        container.innerHTML = '';
+        container.appendChild(table);
+
+        table.querySelectorAll('.btn-download').forEach(function(btn) {
+          btn.addEventListener('click', async function() {
+            const path = btn.getAttribute('data-path');
+            if (!path) { alert('No file path available.'); return; }
+            btn.disabled = true;
+            btn.textContent = '...';
+            try {
+              let url;
+              if (typeof getSignedUrl === 'function') {
+                url = await getSignedUrl(path);
+              } else {
+                const { data, error } = await window._supabaseClient.storage
+                  .from('project-files')
+                  .createSignedUrl(path, 300);
+                if (error) throw error;
+                url = data.signedUrl;
+              }
+              window.open(url, '_blank');
+            } catch (err) {
+              alert('Could not generate download link: ' + (err.message || err));
+            } finally {
+              btn.disabled = false;
+              btn.innerHTML = '↓ Download';
+            }
+          });
+        });
+      }
+
+      const sourceFiles = allFiles.filter(function(f) { return f.file_type !== 'delivery'; });
+      const deliveryFiles = allFiles.filter(function(f) { return f.file_type === 'delivery'; });
+      renderFilesTable(sourceFiles, 'source-files-container');
+      if (deliveryFiles.length === 0) {
+        document.getElementById('delivery-files-container').innerHTML = '<div class="files-empty">No delivery files yet.</div>';
+      } else {
+        renderFilesTable(deliveryFiles, 'delivery-files-container');
+      }
+
+      // === Load messages ===
+      let messages = [];
+      try {
+        if (typeof getMessages === 'function') {
+          messages = await getMessages(projectId);
+        } else {
+          const { data, error } = await window._supabaseClient
+            .from('project_messages')
+            .select('*')
+            .eq('project_id', projectId)
+            .order('created_at', { ascending: true });
+          if (error) throw error;
+          messages = data || [];
+        }
+      } catch (err) {
+        console.warn('Messages load error:', err);
+      }
+
+      function renderMessage(msg) {
+        const isClient = msg.sender_role !== 'admin';
+        const bubble = document.createElement('div');
+        bubble.className = 'message-bubble ' + (isClient ? 'from-client' : 'from-admin');
+        bubble.setAttribute('data-message-id', msg.id);
+        bubble.innerHTML =
+          '<div style="line-height:1.55;">' + (msg.body || msg.message || msg.content || '') + '</div>' +
+          '<div class="message-meta">' + (msg.sender_name || (isClient ? 'You' : 'Taika Team')) + ' · ' + formatDateTime(msg.created_at) + '</div>';
+        return bubble;
+      }
+
+      const thread = document.getElementById('message-thread');
+      const emptyState = document.getElementById('messages-empty');
+
+      function appendMessages(msgs) {
+        msgs.forEach(function(msg) {
+          emptyState.style.display = 'none';
+          thread.appendChild(renderMessage(msg));
+        });
+        thread.scrollTop = thread.scrollHeight;
+      }
+
+      appendMessages(messages);
+
+      // Count unread (from admin, not read)
+      const unread = messages.filter(function(m) { return m.sender_role === 'admin' && !m.read_at; }).length;
+      if (unread > 0) {
+        const badge = document.getElementById('unread-badge');
+        badge.textContent = unread;
+        badge.style.display = 'inline-flex';
+      }
+
+      // Mark messages as read
+      try {
+        const unreadIds = messages.filter(function(m) { return m.sender_role === 'admin' && !m.read_at; }).map(function(m) { return m.id; });
+        if (unreadIds.length > 0) {
+          if (typeof markMessagesRead === 'function') {
+            await markMessagesRead(unreadIds);
+          } else {
+            await window._supabaseClient
+              .from('project_messages')
+              .update({ read_at: new Date().toISOString() })
+              .in('id', unreadIds);
+          }
+          document.getElementById('unread-badge').style.display = 'none';
+        }
+      } catch (err) {
+        console.warn('Mark read error:', err);
+      }
+
+      // Send message
+      document.getElementById('send-message-btn').addEventListener('click', async function() {
+        const input = document.getElementById('message-input');
+        const body = input.value.trim();
+        if (!body) return;
+
+        const sendBtn = document.getElementById('send-message-btn');
+        const sendLabel = document.getElementById('send-label');
+        const sendSpinner = document.getElementById('send-spinner');
+        const msgError = document.getElementById('message-error');
+
+        sendBtn.disabled = true;
+        sendLabel.style.display = 'none';
+        sendSpinner.style.display = 'inline-block';
+        msgError.style.display = 'none';
+
+        try {
+          let newMsg;
+          if (typeof sendMessage === 'function') {
+            newMsg = await sendMessage(projectId, body);
+          } else {
+            const { data, error } = await window._supabaseClient
+              .from('project_messages')
+              .insert([{ project_id: projectId, body: body, sender_role: 'client' }])
+              .select()
+              .single();
+            if (error) throw error;
+            newMsg = data;
+          }
+          emptyState.style.display = 'none';
+          thread.appendChild(renderMessage(newMsg));
+          thread.scrollTop = thread.scrollHeight;
+          input.value = '';
+        } catch (err) {
+          msgError.textContent = err.message || 'Failed to send message.';
+          msgError.style.display = 'block';
+        } finally {
+          sendBtn.disabled = false;
+          sendLabel.style.display = 'inline';
+          sendSpinner.style.display = 'none';
+        }
+      });
+
+      // Realtime message subscription
+      try {
+        if (typeof subscribeToMessages === 'function') {
+          subscribeToMessages(projectId, function(newMsg) {
+            if (newMsg.sender_role !== 'client') {
+              emptyState.style.display = 'none';
+              thread.appendChild(renderMessage(newMsg));
+              thread.scrollTop = thread.scrollHeight;
+            }
+          });
+        } else if (window._supabaseClient && window._supabaseClient.channel) {
+          const channel = window._supabaseClient
+            .channel('messages:' + projectId)
+            .on('postgres_changes', {
+              event: 'INSERT',
+              schema: 'public',
+              table: 'project_messages',
+              filter: 'project_id=eq.' + projectId
+            }, function(payload) {
+              const msg = payload.new;
+              if (msg.sender_role !== 'client') {
+                emptyState.style.display = 'none';
+                thread.appendChild(renderMessage(msg));
+                thread.scrollTop = thread.scrollHeight;
+              }
+            })
+            .subscribe();
+        }
+      } catch (err) {
+        console.warn('Realtime subscription error:', err);
+      }
+
+      // === Sidebar ===
+      const sidebarDetails = document.getElementById('sidebar-details');
+      const sidebarRows = [];
+      if (project.assigned_to_name) sidebarRows.push({ label: 'Assigned To', value: project.assigned_to_name });
+      if (project.admin_notes && !project.admin_notes_internal) {
+        sidebarRows.push({ label: 'Notes from Team', value: project.admin_notes });
+      }
+      if (project.appointment_date) sidebarRows.push({ label: 'Appointment Date', value: formatDate(project.appointment_date) });
+      if (project.duration_hours) sidebarRows.push({ label: 'Duration', value: project.duration_hours + ' hours' });
+      if (project.description) sidebarRows.push({ label: 'Description', value: project.description });
+
+      if (sidebarRows.length === 0) {
+        sidebarDetails.innerHTML = '<p style="color:#94a3b8;font-size:0.875rem;">No additional details.</p>';
+      } else {
+        sidebarDetails.innerHTML = sidebarRows.map(function(r) {
+          return '<div class="sidebar-detail"><span class="sidebar-label">' + r.label + '</span><span class="sidebar-value">' + r.value + '</span></div>';
+        }).join('');
+      }
+
+      // Quote card
+      if (project.quote_amount) {
+        const quoteCard = document.getElementById('quote-card');
+        quoteCard.style.display = 'block';
+        document.getElementById('quote-amount-display').textContent = formatCurrency(project.quote_amount);
+        document.getElementById('quote-note-display').textContent = project.quote_note || 'Quote from Taika Translations.';
+
+        const approveBtn = document.getElementById('approve-quote-btn');
+        if (project.status === 'quoted') {
+          approveBtn.addEventListener('click', async function() {
+            approveBtn.disabled = true;
+            approveBtn.textContent = 'Approving...';
+            const approveError = document.getElementById('approve-error');
+            approveError.style.display = 'none';
+            try {
+              if (typeof updateProject === 'function') {
+                await updateProject(projectId, { status: 'approved' });
+              } else {
+                const { error } = await window._supabaseClient
+                  .from('projects')
+                  .update({ status: 'approved' })
+                  .eq('id', projectId);
+                if (error) throw error;
+              }
+              statusBadge.textContent = 'Approved';
+              statusBadge.className = 'status-badge status-approved';
+              approveBtn.textContent = '✓ Quote Approved';
+              approveBtn.style.background = '#16a34a';
+              document.getElementById('cancel-section').style.display = 'none';
+            } catch (err) {
+              approveError.textContent = err.message || 'Failed to approve quote.';
+              approveError.style.display = 'block';
+              approveBtn.disabled = false;
+              approveBtn.textContent = 'Approve Quote';
+            }
+          });
+        } else {
+          approveBtn.style.display = 'none';
+        }
+      }
+
+      // Cancel button
+      if (statusKey === 'submitted' || statusKey === 'reviewing') {
+        const cancelSection = document.getElementById('cancel-section');
+        cancelSection.style.display = 'block';
+        document.getElementById('cancel-project-btn').addEventListener('click', async function() {
+          const confirmed = window.confirm('Are you sure you want to cancel this project? This cannot be undone.');
+          if (!confirmed) return;
+          const cancelBtn = document.getElementById('cancel-project-btn');
+          cancelBtn.disabled = true;
+          cancelBtn.textContent = 'Cancelling...';
+          try {
+            if (typeof updateProject === 'function') {
+              await updateProject(projectId, { status: 'cancelled' });
+            } else {
+              const { error } = await window._supabaseClient
+                .from('projects')
+                .update({ status: 'cancelled' })
+                .eq('id', projectId);
+              if (error) throw error;
+            }
+            statusBadge.textContent = 'Cancelled';
+            statusBadge.className = 'status-badge status-cancelled';
+            cancelSection.style.display = 'none';
+            document.getElementById('status-timeline-container').innerHTML = '';
+          } catch (err) {
+            alert('Failed to cancel project: ' + (err.message || err));
+            cancelBtn.disabled = false;
+            cancelBtn.textContent = 'Cancel Project';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

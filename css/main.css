@@ -185,6 +185,14 @@ ul, ol { list-style: none; }
   transition: background 0.15s; white-space: nowrap;
 }
 .btn-nav-cta:hover { background: var(--gold-light); }
+.btn-nav-portal {
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.85); background: transparent;
+  padding: 7px 16px; border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: border-color 0.15s, color 0.15s; white-space: nowrap;
+}
+.btn-nav-portal:hover { color: #fff; border-color: rgba(255,255,255,0.6); }
 
 /* ── URGENCY BANNER ───────────────────────────────────────── */
 .urgency-bar {

@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+/* Supabase auth recovery redirect — runs before anything else */
+(function(){
+  var h = window.location.hash;
+  if (h && h.includes('access_token=') && h.includes('type=recovery')) {
+    window.location.replace('/portal/account' + h);
+  }
+  if (h && h.includes('access_token=') && h.includes('type=signup')) {
+    window.location.replace('/portal' + h);
+  }
+})();
+</script>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Language Access Hub | Translation, Interpretation, Section 508 & AI Automation | GSA & NASPO</title>
 <meta name="description" content="The only veteran-owned company with active GSA and NASPO contracts delivering translation, interpretation, ADA/Section 508 compliance, and AI automation as a single integrated service. 300+ languages. All 50 states.">
 <link rel="canonical" href="https://teamtaika.com">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Language Access Hub","alternateName":"Taika Translations","url":"https://teamtaika.com","description":"Veteran-owned language access company providing translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and healthcare organizations.","areaServed":"United States","sameAs":["https://www.taikatranslations.com","https://www.tvpteam.com"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Language Access Hub","alternateName":"Taika Translations","url":"https://teamtaika.com","description":"Veteran-owned language access company providing translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and healthcare organizations.","areaServed":"United States","sameAs":["https://www.taikatranslations.com","https://www.tvpteam.com","https://www.linkedin.com/company/taikatranslations-llc/","https://www.facebook.com/TaikaTranslations","https://www.instagram.com/taikatranslations/","https://www.youtube.com/@taikatranslations"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
@@ -22,6 +34,12 @@
 .product-price{font-family:var(--font-display);font-size:28px;color:var(--gold);margin-bottom:4px;}
 @media(max-width:640px){.hero-section{padding:40px 0 32px;}.hero-lead{font-size:16px;}}
 .product-unit{font-size:13px;color:var(--slate-light);}
+
+.lang-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 12px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-md,12px);text-decoration:none;transition:all 0.18s;text-align:center;}
+.lang-card:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(184,145,58,0.12);transform:translateY(-2px);}
+.lang-flag{font-size:28px;line-height:1;}
+.lang-name{font-size:14px;font-weight:700;color:var(--navy);}
+.lang-native{font-size:12px;color:var(--slate);}
 </style>
 </head>
 <body>
@@ -104,10 +122,10 @@
             <a href="/tarjuma-rasmi-urdu">اردو</a>
             <a href="/praman-anuvad-bangla">বাংলা</a>
           </div>
-        </div></div>
+        </div>
+        <div style="border-top:1px solid var(--border,#e5e7eb);margin:4px 8px 0;padding:8px 12px 6px;font-size:12px;color:var(--slate-light,#94a3b8);text-align:center;">🌐 <a href="/pages/services/translation.html#languages" style="color:var(--gold,#c9a84c);text-decoration:none;font-weight:600;">300+ more languages available</a> — contact us for any language not listed</div></div>
       </li>
       <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
-      <li><a href="/pages/resources/blog.html">Blog</a></li>
       <li><a href="/index.html#products">Store</a></li>
       <li><a href="/index.html#about">About</a></li>
     </ul>
@@ -115,6 +133,7 @@
     <div class="nav-right">
       <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
       <a href="/pages/resources/compliance-faq.html#checklist" class="btn-nav-ghost">Free Checklist</a>
+      <a href="/portal" class="btn-nav-portal" aria-label="Client portal login">Client Login</a>
       <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
       <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
@@ -266,11 +285,11 @@
     <h2 class="section-heading" id="store-h">Start immediately. Fixed pricing. No surprises.</h2>
     <p class="section-lead">Order the most common services directly online. For custom quotes, volume pricing, or government contract ordering, use the form above.</p>
     <div class="grid-4" style="margin-top:40px;">
-      <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">🔤</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Certified Translation</h3><div class="product-price">$24.99 <span class="product-unit">/page</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">ATA-certified. USCIS accepted. 24–72hr delivery. Certification included.</p><a href="pages/services/translation.html#quote" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Order Now →</a></div>
+      <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">🔤</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Certified Translation</h3><div class="product-price">$24.99 <span class="product-unit">/page</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">ATA-certified. USCIS accepted. 24–72hr delivery. Certification included.</p><a href="pages/services/translation.html#order-now" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Order Now →</a></div>
       <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">🎙️</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Interpreter Booking</h3><div class="product-price">$65 <span class="product-unit">/hour (VRI)</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">OPI from $1.25/min. VRI $65/hr. In-person $85+/hr. HIPAA &amp; FERPA compliant.</p><a href="pages/services/interpretation.html#quote" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Book Interpreter →</a></div>
-      <div class="product-card" style="border-color:var(--gold);"><div style="font-size:28px;margin-bottom:12px;">♿</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">PDF Accessibility Audit</h3><div class="product-price">$299 <span class="product-unit">audit · $799 + remediation</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">WCAG 2.1 + Section 508 + PDF/UA. Findings in 48 hours. Full remediation available.</p><a href="pages/services/508-compliance.html#audit" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Start Audit →</a></div>
+      <div class="product-card" style="border-color:var(--gold);"><div style="font-size:28px;margin-bottom:12px;">♿</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">PDF Accessibility Audit</h3><div class="product-price">$299 <span class="product-unit">audit · $799 + remediation</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">WCAG 2.1 + Section 508 + PDF/UA. Findings in 48 hours. Full remediation available.</p><a href="pages/services/508-compliance.html#order-audit" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Order Audit — $299 →</a></div>
       <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">📹</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Video Captioning</h3><div class="product-price">$2.50 <span class="product-unit">/minute</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">ADA-compliant closed captions. SRT/VTT formats. 99%+ accuracy. 48-hour delivery.</p><a href="pages/services/captioning.html#quote" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Order Captions →</a></div>
-      <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">📦</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Compliance Starter Kit</h3><div class="product-price">$149 <span class="product-unit">one-time</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">Language Access Plan template, compliance checklist, and 1-hour consultation. For new programs starting their compliance journey.</p><a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;font-size:13px;padding:11px;">Order Kit →</a></div>
+      <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">📦</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Compliance Starter Kit</h3><div class="product-price">$149 <span class="product-unit">one-time</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">Language Access Plan template, compliance checklist, and 1-hour consultation. For new programs starting their compliance journey.</p><a href="#order-starter" class="btn-ghost-navy" style="display:block;text-align:center;font-size:13px;padding:11px;">Order Kit →</a></div>
       <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">🔄</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Annual Compliance Subscription</h3><div class="product-price">$499 <span class="product-unit">/month</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">Monthly accessibility monitoring, quarterly translation credits, annual LAP review, and priority interpreter access.</p><a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;font-size:13px;padding:11px;">Start Subscription →</a></div>
       <div class="product-card"><div style="font-size:28px;margin-bottom:12px;">🌐</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;">Website Localization Package</h3><div class="product-price">From $1,200 <span class="product-unit">/language</span></div><p style="font-size:13px;color:var(--slate);margin:10px 0 16px;line-height:1.5;">Full website translation, DTP formatting, and WCAG-compliant multilingual HTML. Includes SEO localization.</p><a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;font-size:13px;padding:11px;">Request Quote →</a></div>
       <div class="product-card" style="background:var(--navy);border-color:var(--navy);"><div style="font-size:28px;margin-bottom:12px;">🤖</div><h3 style="font-weight:700;font-size:15px;margin-bottom:4px;color:var(--white);">AI Automation (TVPTeam)</h3><div class="product-price" style="color:var(--gold-light);">From $297 <span style="font-size:13px;font-family:var(--font-body);color:rgba(255,255,255,0.4);">/month</span></div><p style="font-size:13px;color:rgba(255,255,255,0.5);margin:10px 0 16px;line-height:1.5;">Done-for-you AI workflows, outreach engines, and automation systems. VOSB certified.</p><a href="pages/services/ai-automation.html#assess" class="btn-primary" style="display:block;text-align:center;justify-content:center;font-size:13px;padding:11px;">Free AI Assessment →</a></div>
@@ -373,6 +392,91 @@
     </div>
   </div>
 </div>
+
+
+<!-- COMPLIANCE STARTER KIT ORDER FORM -->
+<section class="section-mist section-sm" id="order-starter" aria-label="Order Compliance Starter Kit">
+  <div class="container" style="max-width:680px;">
+    <div class="quote-card" style="border:2px solid var(--border-gold);">
+      <div class="quote-card-header"></div>
+      <div class="quote-card-body">
+        <div class="quote-card-title">Order Compliance Starter Kit — $149</div>
+        <p class="quote-card-sub">Includes: Language Access Plan template, compliance checklist, and a 1-hour consultation. Everything you need to start your compliance journey.</p>
+
+        <form name="store-order-starter" method="POST" action="/"
+              data-netlify="true" netlify-honeypot="bot-field"
+              data-price="149.00" data-product="Compliance Starter Kit (Language Access Plan + Consultation)"
+              id="store-order-starter-form">
+          <input type="hidden" name="form-name" value="store-order-starter">
+          <input type="hidden" name="product" value="Compliance Starter Kit">
+          <input type="hidden" name="price" value="$149.00">
+          <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <div style="background:var(--navy-deep);color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:12px;font-weight:600;opacity:.7;text-transform:uppercase;letter-spacing:.05em;">Order Total</div>
+              <div style="font-size:11px;opacity:.5;margin-top:2px;">One-time payment · Includes LAP template + 1-hr consult</div>
+            </div>
+            <div style="font-family:var(--font-display);font-size:28px;color:var(--gold);">$149.00</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="field">
+              <label class="label" for="starter-name">Full Name *</label>
+              <input class="input" type="text" id="starter-name" name="full-name" required placeholder="Your name">
+            </div>
+            <div class="field">
+              <label class="label" for="starter-email">Work Email *</label>
+              <input class="input" type="email" id="starter-email" name="email" required placeholder="you@agency.gov">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="starter-org">Organization</label>
+            <input class="input" type="text" id="starter-org" name="organization" placeholder="Agency, school, nonprofit…">
+          </div>
+
+          <div class="field">
+            <label class="label" for="starter-notes">What compliance challenge are you trying to solve?</label>
+            <textarea class="textarea" id="starter-notes" name="notes" rows="2"
+                      placeholder="e.g. ADA Title II, Title VI LEP compliance, Section 508, new LAP requirement…"></textarea>
+          </div>
+
+          <button type="button" class="btn-submit">Order Kit &amp; Pay $149 →</button>
+        </form>
+        <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Secure PayPal checkout · VOSB certified · Consultation scheduled within 24 hours
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES SECTION -->
+<section class="section" id="languages" aria-labelledby="lang-h2">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <span class="kicker">300+ Languages Supported</span>
+      <h2 class="section-heading" id="lang-h2" style="margin-top:12px;">Translation services by language</h2>
+      <p class="section-lead">Certified translation with USCIS acceptance for immigration, legal, medical, and government documents.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;max-width:1000px;margin:0 auto 48px;">
+      <a href="/spanish-translation" class="lang-card"><span class="lang-flag">🇪🇸</span><span class="lang-name">Spanish</span><span class="lang-native">Español</span></a>
+      <a href="/french-translation" class="lang-card"><span class="lang-flag">🇫🇷</span><span class="lang-name">French</span><span class="lang-native">Français</span></a>
+      <a href="/portuguese-translation" class="lang-card"><span class="lang-flag">🇧🇷</span><span class="lang-name">Portuguese</span><span class="lang-native">Português</span></a>
+      <a href="/german-translation" class="lang-card"><span class="lang-flag">🇩🇪</span><span class="lang-name">German</span><span class="lang-native">Deutsch</span></a>
+      <a href="/italian-translation" class="lang-card"><span class="lang-flag">🇮🇹</span><span class="lang-name">Italian</span><span class="lang-native">Italiano</span></a>
+      <a href="/chinese-translation" class="lang-card"><span class="lang-flag">🇨🇳</span><span class="lang-name">Chinese</span><span class="lang-native">中文</span></a>
+      <a href="/arabic-translation" class="lang-card"><span class="lang-flag">🇸🇦</span><span class="lang-name">Arabic</span><span class="lang-native">العربية</span></a>
+      <a href="/hindi-translation" class="lang-card"><span class="lang-flag">🇮🇳</span><span class="lang-name">Hindi</span><span class="lang-native">हिन्दी</span></a>
+      <a href="/russian-translation" class="lang-card"><span class="lang-flag">🇷🇺</span><span class="lang-name">Russian</span><span class="lang-native">Русский</span></a>
+      <a href="/polish-translation" class="lang-card"><span class="lang-flag">🇵🇱</span><span class="lang-name">Polish</span><span class="lang-native">Polski</span></a>
+      <a href="/urdu-translation" class="lang-card"><span class="lang-flag">🇵🇰</span><span class="lang-name">Urdu</span><span class="lang-native">اردو</span></a>
+      <a href="/bengali-translation" class="lang-card"><span class="lang-flag">🇧🇩</span><span class="lang-name">Bengali</span><span class="lang-native">বাংলা</span></a>
+    </div>
+    <p style="text-align:center;font-size:14px;color:var(--slate);">Need a different language? We cover 300+ — <a href="/index.html#quote" style="color:var(--navy);font-weight:600;">request a quote</a>.</p>
+  </div>
+</section>
+
 <footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
     <div class="footer-brand">
@@ -387,8 +491,6 @@
         <span class="footer-comp-tag">HIPAA</span>
         <span class="footer-comp-tag">FERPA</span>
         <span class="footer-comp-tag">WCAG 2.2</span>
-        <span class="footer-comp-tag">GDPR</span>
-        <span class="footer-comp-tag">SOC 2</span>
         <span class="footer-comp-tag">VOSB</span>
         <span class="footer-comp-tag">GSA</span>
         <span class="footer-comp-tag">NASPO</span>
@@ -424,20 +526,38 @@
     <div class="footer-col">
       <h4>Resources</h4>
       <ul>
+        <li><a href="/pages/services/translation.html#languages">All Languages</a></li>
         <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
         <li><a href="/pages/resources/compliance-faq.html#checklist">Free Compliance Checklist</a></li>
         <li><a href="/pages/resources/compliance-faq.html#title6">Title VI &amp; EO 13166</a></li>
         <li><a href="/pages/resources/compliance-faq.html#508">Section 508 &amp; WCAG</a></li>
         <li><a href="/index.html#products">Online Store</a></li>
-        <li><a href="/index.html#about">About Taika</a></li>
         <li><a href="/index.html#quote">Contact / Quote</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
+        <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
+        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:6px;">
+          TaikaTranslations LLC<br>
+          2028 E Ben White Blvd. #240-1178<br>
+          Austin, TX 78741
+        </li>
+        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:8px;">
+          Tennessee Office<br>
+          101 Juniperberry Rd<br>
+          Oak Ridge, TN 37830
+        </li>
       </ul>
     </div>
   </div>
 
   <div class="footer-bottom">
     <div class="footer-legal">
-      <p>© 2026 Language Access Hub — Powered by Taika Translations LLC. Austin, TX. All rights reserved.</p>
+      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. Austin, TX. All rights reserved.</p>
       <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
     </div>
     <nav class="footer-social" aria-label="Social media">
@@ -450,5 +570,5 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=26"></script>
 </body></html>

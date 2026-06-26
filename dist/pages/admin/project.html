@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail — Taika Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/portal.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0B1E35; --navy-mid: #132844; --navy-light: #1e3a5f;
+      --gold: #B8913A; --gold-light: #d4a84e;
+      --emerald: #1A6B4A; --red: #DC2626;
+      --slate: #4A5E74; --slate-light: #8fa3b8;
+      --white: #F9F8F5; --gray-50: #f8f9fa; --gray-100: #f0f2f5;
+      --gray-200: #e2e6ea; --gray-300: #ced4da;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08); --shadow-md: 0 4px 12px rgba(0,0,0,.10);
+    }
+    html, body { font-family: var(--font-body); background: var(--gray-100); color: #1a2b3c; font-size: 14px; line-height: 1.5; }
+    /* Nav */
+    .admin-nav { position: sticky; top: 0; z-index: 100; background: var(--navy); height: 56px; display: flex; align-items: center; padding: 0 24px; gap: 32px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+    .admin-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .admin-nav-brand .shield { font-size: 20px; color: var(--gold); }
+    .admin-nav-brand span { font-family: var(--font-display); font-size: 18px; color: var(--white); letter-spacing: .02em; }
+    .admin-nav-links { display: flex; gap: 4px; flex: 1; }
+    .admin-nav-links a { color: rgba(255,255,255,.65); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 6px 14px; border-radius: var(--radius-sm); transition: all .15s; }
+    .admin-nav-links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .admin-nav-links a.active { color: var(--gold); background: rgba(184,145,58,.12); }
+    .admin-nav-right { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+    .admin-nav-user { color: rgba(255,255,255,.7); font-size: 13px; }
+    .btn-signout { background: transparent; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.7); font-family: var(--font-body); font-size: 12.5px; padding: 5px 12px; border-radius: var(--radius-sm); cursor: pointer; transition: all .15s; }
+    .btn-signout:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    /* Layout */
+    .page-wrapper { max-width: 1300px; margin: 0 auto; padding: 28px 24px 60px; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--slate); text-decoration: none; font-size: 13px; margin-bottom: 20px; transition: color .15s; }
+    .back-link:hover { color: var(--navy); }
+    .project-header { margin-bottom: 24px; }
+    .project-title-row { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+    .project-title-row h1 { font-family: var(--font-display); font-size: 28px; color: var(--navy); line-height: 1.2; }
+    .project-subtitle { color: var(--slate); font-size: 13.5px; margin-top: 6px; }
+    .two-col { display: grid; grid-template-columns: 1fr 360px; gap: 20px; align-items: start; }
+    @media(max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+    /* Cards */
+    .card { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin-bottom: 20px; overflow: hidden; }
+    .card-header { padding: 14px 20px; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between; }
+    .card-header h2 { font-size: 14px; font-weight: 600; color: var(--navy); }
+    .card-header .card-badge { font-size: 11px; background: var(--gray-100); color: var(--slate); padding: 2px 8px; border-radius: 20px; }
+    .card-body { padding: 20px; }
+    /* Form fields */
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+    .field input, .field select, .field textarea {
+      width: 100%; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
+      padding: 8px 12px; font-family: var(--font-body); font-size: 13.5px; color: #1a2b3c;
+      outline: none; transition: border-color .15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--navy); }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234A5E74' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-color: #fff; padding-right: 28px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .input-prefix-wrap { position: relative; }
+    .input-prefix-wrap .prefix { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--slate); font-size: 13.5px; pointer-events: none; }
+    .input-prefix-wrap input { padding-left: 24px; }
+    .internal-note { font-size: 11.5px; color: var(--red); font-weight: 500; margin-bottom: 10px; padding: 6px 10px; background: #fff5f5; border-radius: var(--radius-sm); border-left: 3px solid var(--red); }
+    /* Buttons */
+    .btn-gold { background: var(--gold); color: #fff; border: none; width: 100%; padding: 10px 0; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; transition: background .15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-gold:hover:not(:disabled) { background: var(--gold-light); }
+    .btn-gold:disabled { opacity: .6; cursor: not-allowed; }
+    .btn-sm { background: var(--navy); color: #fff; border: none; padding: 5px 12px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 12px; cursor: pointer; transition: background .15s; }
+    .btn-sm:hover { background: var(--navy-light); }
+    .btn-ghost { background: none; border: 1px solid var(--gray-300); color: #1a2b3c; padding: 5px 12px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 12px; cursor: pointer; transition: all .15s; }
+    .btn-ghost:hover { border-color: var(--navy); color: var(--navy); }
+    /* Files table */
+    .files-table { width: 100%; border-collapse: collapse; }
+    .files-table th { padding: 8px 12px; text-align: left; font-size: 11px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--gray-200); }
+    .files-table td { padding: 9px 12px; font-size: 13px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+    .files-table tr:last-child td { border-bottom: none; }
+    /* Upload zone */
+    .upload-zone { border: 2px dashed var(--gray-300); border-radius: var(--radius-md); padding: 32px; text-align: center; cursor: pointer; transition: all .2s; background: var(--gray-50); }
+    .upload-zone:hover, .upload-zone.drag-over { border-color: var(--gold); background: #fffaf2; }
+    .upload-zone p { color: var(--slate); font-size: 13px; margin-top: 8px; }
+    .upload-zone .upload-icon { font-size: 28px; }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-file-list { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+    .upload-file-item { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px; background: var(--gray-50); border-radius: var(--radius-sm); font-size: 12.5px; }
+    .upload-file-item .remove-file { background: none; border: none; color: var(--red); cursor: pointer; font-size: 14px; line-height: 1; }
+    .upload-progress { margin-top: 8px; height: 4px; background: var(--gray-200); border-radius: 2px; overflow: hidden; display: none; }
+    .upload-progress-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width .3s; width: 0%; }
+    /* Messages */
+    .message-thread { display: flex; flex-direction: column; gap: 12px; max-height: 400px; overflow-y: auto; padding-right: 4px; margin-bottom: 16px; }
+    .message-bubble { padding: 10px 14px; border-radius: var(--radius-md); }
+    .message-bubble.client { background: var(--gray-100); border-bottom-left-radius: 4px; }
+    .message-bubble.admin { background: #e8f0fb; border-bottom-right-radius: 4px; }
+    .message-bubble.internal { background: #fffbe6; border: 1px solid #ffe58f; border-bottom-right-radius: 4px; }
+    .msg-meta { font-size: 11.5px; color: var(--slate); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .msg-internal-tag { background: #ffe58f; color: #7a5c00; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; text-transform: uppercase; }
+    .msg-text { font-size: 13.5px; line-height: 1.5; }
+    .msg-compose { border-top: 1px solid var(--gray-200); padding-top: 14px; }
+    .msg-type-toggle { display: flex; gap: 0; margin-bottom: 10px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); overflow: hidden; width: fit-content; }
+    .msg-type-btn { padding: 6px 14px; font-family: var(--font-body); font-size: 12.5px; font-weight: 500; border: none; background: #fff; color: var(--slate); cursor: pointer; transition: all .15s; }
+    .msg-type-btn.active { background: var(--navy); color: #fff; }
+    .msg-type-btn.active.internal { background: #7a5c00; }
+    .msg-textarea { width: 100%; border: 1px solid var(--gray-300); border-radius: var(--radius-sm); padding: 10px 12px; font-family: var(--font-body); font-size: 13.5px; resize: vertical; min-height: 80px; outline: none; transition: border-color .15s; }
+    .msg-textarea:focus { border-color: var(--navy); }
+    .msg-send-row { display: flex; justify-content: flex-end; margin-top: 8px; }
+    .btn-send { background: var(--navy); color: #fff; border: none; padding: 8px 20px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13px; font-weight: 500; cursor: pointer; transition: background .15s; }
+    .btn-send:hover { background: var(--navy-light); }
+    /* Status history */
+    .history-list { display: flex; flex-direction: column; gap: 0; }
+    .history-item { display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+    .history-item:last-child { border-bottom: none; }
+    .history-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); margin-top: 4px; flex-shrink: 0; }
+    .history-body { flex: 1; }
+    .history-change { font-size: 13px; font-weight: 500; color: #1a2b3c; }
+    .history-change .arrow { color: var(--slate); }
+    .history-note { font-size: 12.5px; color: var(--slate); margin-top: 2px; }
+    .history-meta { font-size: 11.5px; color: var(--slate-light); margin-top: 2px; }
+    /* Sidebar cards */
+    .sidebar-field { margin-bottom: 14px; }
+    .sidebar-field .sf-label { font-size: 11px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 3px; }
+    .sidebar-field .sf-value { font-size: 13.5px; color: #1a2b3c; }
+    .sidebar-field a { color: var(--navy); text-decoration: none; }
+    .sidebar-field a:hover { text-decoration: underline; }
+    .badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: .03em; text-transform: capitalize; white-space: nowrap; }
+    .badge-submitted  { background: #e8edf3; color: #445566; }
+    .badge-reviewing  { background: #fff3cd; color: #7a5c00; }
+    .badge-quoted     { background: #e0f0ff; color: #1a5fa0; }
+    .badge-approved   { background: #d0f0e8; color: #0a5535; }
+    .badge-in_progress{ background: #d6e8ff; color: #0d4ea0; }
+    .badge-review     { background: #ffe8cc; color: #8a4000; }
+    .badge-delivered  { background: #d4edda; color: #155724; }
+    .badge-completed  { background: #c8e6c9; color: #1b5e20; }
+    .badge-cancelled  { background: #f8d7da; color: #721c24; }
+    .badge-mt { background: #e8f0fb; color: #1a5fa0; }
+    .view-profile-link { display: block; margin-top: 12px; color: var(--gold); font-size: 13px; font-weight: 500; text-decoration: none; }
+    .view-profile-link:hover { text-decoration: underline; }
+    .empty-msg { color: var(--slate); font-size: 13px; padding: 16px 0; text-align: center; }
+    /* Toast */
+    #toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+    .toast { background: var(--navy); color: #fff; padding: 12px 20px; border-radius: var(--radius-md); font-size: 13.5px; box-shadow: var(--shadow-md); opacity: 0; transform: translateY(8px); transition: all .25s; max-width: 320px; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: var(--emerald); }
+    .toast.error { background: var(--red); }
+    /* Loading spinner */
+    .spin { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+<nav class="admin-nav">
+  <a class="admin-nav-brand" href="/admin/dashboard">
+    <span class="shield">🛡</span>
+    <span>Taika Admin</span>
+  </a>
+  <div class="admin-nav-links">
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/projects" class="active">Projects</a>
+    <a href="/admin/clients">Clients</a>
+    <a href="/admin/team">Team</a>
+  </div>
+  <div class="admin-nav-right">
+    <span class="admin-nav-user" id="nav-username">—</span>
+    <button class="btn-signout" id="btn-signout">Sign Out</button>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <a class="back-link" href="/admin/projects">← All Projects</a>
+
+  <div class="project-header">
+    <div class="project-title-row">
+      <h1 id="project-title">Loading…</h1>
+      <span id="project-status-badge"></span>
+    </div>
+    <p class="project-subtitle" id="project-subtitle"></p>
+  </div>
+
+  <div class="two-col">
+    <!-- Main Column -->
+    <div class="main-col">
+
+      <!-- Admin Controls -->
+      <div class="card">
+        <div class="card-header"><h2>Admin Controls</h2></div>
+        <div class="card-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="ctrl-status">Status</label>
+              <select id="ctrl-status">
+                <option value="submitted">Submitted</option>
+                <option value="reviewing">Reviewing</option>
+                <option value="quoted">Quoted</option>
+                <option value="approved">Approved</option>
+                <option value="in_progress">In Progress</option>
+                <option value="review">Review</option>
+                <option value="delivered">Delivered</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ctrl-priority">Priority</label>
+              <select id="ctrl-priority">
+                <option value="standard">Standard</option>
+                <option value="rush">Rush</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="ctrl-status-note">Status Change Note <span style="color:var(--red)">*</span></label>
+            <textarea id="ctrl-status-note" placeholder="Note for status change (visible in history)"></textarea>
+          </div>
+          <div class="field">
+            <label for="ctrl-assigned">Assigned To</label>
+            <select id="ctrl-assigned">
+              <option value="">— Unassigned —</option>
+            </select>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ctrl-quote">Quote Amount</label>
+              <div class="input-prefix-wrap">
+                <span class="prefix">$</span>
+                <input type="number" id="ctrl-quote" step="0.01" min="0" placeholder="0.00" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="ctrl-due">Due Date</label>
+              <input type="date" id="ctrl-due" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="ctrl-quote-note">Quote Note</label>
+            <textarea id="ctrl-quote-note" placeholder="Brief explanation for client"></textarea>
+          </div>
+          <button class="btn-gold" id="btn-save-controls">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Admin Notes -->
+      <div class="card">
+        <div class="card-header"><h2>Admin Notes</h2></div>
+        <div class="card-body">
+          <div class="internal-note">Internal — not visible to clients</div>
+          <div class="field">
+            <textarea id="admin-notes" rows="5" placeholder="Internal notes about this project…"></textarea>
+          </div>
+          <button class="btn-gold" id="btn-save-notes">Save Notes</button>
+        </div>
+      </div>
+
+      <!-- Source Files -->
+      <div class="card">
+        <div class="card-header"><h2>Source Files</h2><span class="card-badge" id="source-count">0</span></div>
+        <div class="card-body" style="padding:0">
+          <div id="source-files-content">
+            <p class="empty-msg">No source files uploaded</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery Upload -->
+      <div class="card">
+        <div class="card-header"><h2>Upload Delivery Files</h2></div>
+        <div class="card-body">
+          <div class="upload-zone" id="delivery-drop">
+            <input type="file" id="delivery-input" multiple accept=".pdf,.doc,.docx,.zip,.xlsx,.pptx" />
+            <div class="upload-icon">📤</div>
+            <p><strong>Drop files here</strong> or click to browse</p>
+            <p style="font-size:12px;margin-top:4px">PDF, DOC, DOCX, ZIP, XLSX, PPTX</p>
+          </div>
+          <div class="upload-file-list" id="delivery-file-list"></div>
+          <div class="upload-progress" id="upload-progress"><div class="upload-progress-bar" id="upload-bar"></div></div>
+          <button class="btn-gold" id="btn-upload-delivery" style="margin-top:12px" disabled>Upload Files</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="card">
+        <div class="card-header"><h2>Messages</h2></div>
+        <div class="card-body">
+          <div class="message-thread" id="message-thread">
+            <p class="empty-msg">No messages yet</p>
+          </div>
+          <div class="msg-compose">
+            <div class="msg-type-toggle">
+              <button class="msg-type-btn active" id="btn-msg-client" data-type="client">Message to Client</button>
+              <button class="msg-type-btn" id="btn-msg-internal" data-type="internal">Internal Note</button>
+            </div>
+            <textarea class="msg-textarea" id="msg-input" placeholder="Write a message…"></textarea>
+            <div class="msg-send-row">
+              <button class="btn-send" id="btn-send-msg">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status History -->
+      <div class="card">
+        <div class="card-header"><h2>Status History</h2></div>
+        <div class="card-body" style="padding: 0 20px;">
+          <div class="history-list" id="history-list">
+            <p class="empty-msg" style="padding:20px 0">No status changes recorded</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-col -->
+
+    <!-- Sidebar -->
+    <div class="sidebar-col">
+
+      <!-- Client Info -->
+      <div class="card">
+        <div class="card-header"><h2>Client</h2></div>
+        <div class="card-body">
+          <div class="sidebar-field">
+            <div class="sf-label">Name</div>
+            <div class="sf-value" id="client-name">—</div>
+          </div>
+          <div class="sidebar-field">
+            <div class="sf-label">Organization</div>
+            <div class="sf-value" id="client-org">—</div>
+          </div>
+          <div class="sidebar-field">
+            <div class="sf-label">Email</div>
+            <div class="sf-value" id="client-email">—</div>
+          </div>
+          <div class="sidebar-field">
+            <div class="sf-label">Phone</div>
+            <div class="sf-value" id="client-phone">—</div>
+          </div>
+          <a class="view-profile-link" id="client-profile-link" href="#">View Client Profile →</a>
+        </div>
+      </div>
+
+      <!-- Project Info -->
+      <div class="card">
+        <div class="card-header"><h2>Project Info</h2></div>
+        <div class="card-body">
+          <div class="sidebar-field">
+            <div class="sf-label">Service</div>
+            <div class="sf-value" id="info-service">—</div>
+          </div>
+          <div class="sidebar-field">
+            <div class="sf-label">Languages</div>
+            <div class="sf-value" id="info-languages">—</div>
+          </div>
+          <div class="sidebar-field" id="info-wordcount-wrap" style="display:none">
+            <div class="sf-label">Word Count</div>
+            <div class="sf-value" id="info-wordcount">—</div>
+          </div>
+          <div class="sidebar-field" id="info-pagecount-wrap" style="display:none">
+            <div class="sf-label">Page Count</div>
+            <div class="sf-value" id="info-pagecount">—</div>
+          </div>
+          <div class="sidebar-field" id="info-mt-wrap" style="display:none">
+            <div class="sf-label">Machine Translation</div>
+            <div class="sf-value"><span class="badge badge-mt">MT Used</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sidebar-col -->
+  </div><!-- /two-col -->
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
+const { createClient } = supabase;
+const _sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let PROJECT_ID = null;
+let currentProject = null;
+let currentUserId = null;
+let originalStatus = null;
+let deliveryFiles = [];
+let msgIsInternal = false;
+let realtimeSub = null;
+
+async function requireAdmin() {
+  const { data: { session } } = await _sb.auth.getSession();
+  if (!session) { window.location.href = '/portal/login'; return null; }
+  const { data: profile } = await _sb.from('profiles').select('role, full_name, id').eq('id', session.user.id).single();
+  if (!profile || profile.role !== 'admin') { window.location.href = '/portal/dashboard'; return null; }
+  document.getElementById('nav-username').textContent = profile.full_name || session.user.email;
+  currentUserId = session.user.id;
+  return session;
+}
+
+function showToast(msg, type) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  c.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3500);
+}
+
+function statusBadge(s) {
+  return '<span class="badge badge-' + (s || '') + '">' + (s || '').replace('_', ' ') + '</span>';
+}
+
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+function fmtDateTime(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+}
+
+function fmtBytes(b) {
+  if (!b) return '—';
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+
+// ── Load project ──────────────────────────────────────
+async function loadProject() {
+  try {
+    const { data: p, error } = await _sb
+      .from('projects')
+      .select('*, client_profile:profiles!projects_client_id_fkey(*), assigned_to_profile:profiles!projects_assigned_to_fkey(id, full_name)')
+      .eq('id', PROJECT_ID)
+      .single();
+    if (error) throw error;
+    currentProject = p;
+    originalStatus = p.status;
+    populateProjectHeader(p);
+    populateControls(p);
+    populateSidebar(p);
+  } catch (e) {
+    showToast('Failed to load project: ' + e.message, 'error');
+  }
+}
+
+function populateProjectHeader(p) {
+  document.title = (p.title || 'Project') + ' — Taika Admin';
+  document.getElementById('project-title').textContent = p.title || '(untitled)';
+  document.getElementById('project-status-badge').innerHTML = statusBadge(p.status);
+  const client = p.client_profile;
+  document.getElementById('project-subtitle').textContent =
+    'Created by ' + (client ? client.full_name : 'Unknown') + ' on ' + fmtDate(p.created_at);
+}
+
+function populateControls(p) {
+  document.getElementById('ctrl-status').value = p.status || 'submitted';
+  document.getElementById('ctrl-priority').value = p.priority || 'standard';
+  if (p.quote_amount) document.getElementById('ctrl-quote').value = p.quote_amount;
+  if (p.quote_note) document.getElementById('ctrl-quote-note').value = p.quote_note;
+  if (p.due_date) document.getElementById('ctrl-due').value = p.due_date.slice(0,10);
+  if (p.admin_notes) document.getElementById('admin-notes').value = p.admin_notes;
+}
+
+function populateSidebar(p) {
+  const c = p.client_profile;
+  if (c) {
+    document.getElementById('client-name').textContent = c.full_name || '—';
+    document.getElementById('client-org').textContent = c.organization || '—';
+    document.getElementById('client-email').innerHTML = c.email ? '<a href="mailto:' + c.email + '">' + c.email + '</a>' : '—';
+    document.getElementById('client-phone').textContent = c.phone || '—';
+    document.getElementById('client-profile-link').href = '/admin/client?id=' + c.id;
+  }
+  document.getElementById('info-service').textContent = p.service_name || '—';
+  const src = p.source_language || '';
+  const tgt = Array.isArray(p.target_languages) ? p.target_languages.join(', ') : (p.target_language || '');
+  document.getElementById('info-languages').textContent = src && tgt ? src + ' → ' + tgt : (src || tgt || '—');
+  if (p.word_count) { document.getElementById('info-wordcount').textContent = p.word_count.toLocaleString(); document.getElementById('info-wordcount-wrap').style.display = ''; }
+  if (p.page_count) { document.getElementById('info-pagecount').textContent = p.page_count; document.getElementById('info-pagecount-wrap').style.display = ''; }
+  if (p.mt_used) document.getElementById('info-mt-wrap').style.display = '';
+}
+
+// ── Team Members ─────────────────────────────────────
+async function loadTeamMembers() {
+  const { data, error } = await _sb.from('profiles').select('id, full_name').eq('role', 'admin').order('full_name');
+  if (error) return;
+  const sel = document.getElementById('ctrl-assigned');
+  (data || []).forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.id;
+    opt.textContent = m.full_name;
+    sel.appendChild(opt);
+  });
+  if (currentProject && currentProject.assigned_to) sel.value = currentProject.assigned_to;
+}
+
+// ── Save Controls ─────────────────────────────────────
+document.getElementById('btn-save-controls').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-save-controls');
+  const newStatus = document.getElementById('ctrl-status').value;
+  const note = document.getElementById('ctrl-status-note').value.trim();
+  const statusChanged = newStatus !== originalStatus;
+
+  if (statusChanged && !note) {
+    showToast('Please add a note for the status change.', 'error');
+    document.getElementById('ctrl-status-note').focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Saving…';
+
+  try {
+    const updates = {
+      status: newStatus,
+      priority: document.getElementById('ctrl-priority').value,
+      assigned_to: document.getElementById('ctrl-assigned').value || null,
+      quote_amount: parseFloat(document.getElementById('ctrl-quote').value) || null,
+      quote_note: document.getElementById('ctrl-quote-note').value.trim() || null,
+      due_date: document.getElementById('ctrl-due').value || null,
+    };
+
+    const { error } = await _sb.from('projects').update(updates).eq('id', PROJECT_ID);
+    if (error) throw error;
+
+    if (statusChanged) {
+      await _sb.from('project_status_history').insert({
+        project_id: PROJECT_ID,
+        from_status: originalStatus,
+        to_status: newStatus,
+        note: note,
+        changed_by: currentUserId,
+      });
+      originalStatus = newStatus;
+      document.getElementById('project-status-badge').innerHTML = statusBadge(newStatus);
+      document.getElementById('ctrl-status-note').value = '';
+      loadStatusHistory();
+    }
+
+    showToast('Changes saved.', 'success');
+  } catch (e) {
+    showToast('Save failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Changes';
+  }
+});
+
+// ── Save Admin Notes ──────────────────────────────────
+document.getElementById('btn-save-notes').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-save-notes');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Saving…';
+  try {
+    const notes = document.getElementById('admin-notes').value;
+    const { error } = await _sb.from('projects').update({ admin_notes: notes }).eq('id', PROJECT_ID);
+    if (error) throw error;
+    showToast('Notes saved.', 'success');
+  } catch (e) {
+    showToast('Save failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Save Notes';
+  }
+});
+
+// ── Source Files ──────────────────────────────────────
+async function loadSourceFiles() {
+  const { data, error } = await _sb.from('project_files').select('*, uploader:profiles!project_files_uploaded_by_fkey(full_name)').eq('project_id', PROJECT_ID).eq('file_type', 'source').order('created_at');
+  if (error) return;
+  const el = document.getElementById('source-files-content');
+  document.getElementById('source-count').textContent = (data || []).length;
+  if (!data || !data.length) {
+    el.innerHTML = '<p class="empty-msg">No source files uploaded</p>';
+    return;
+  }
+  el.innerHTML = '<table class="files-table"><thead><tr><th>File Name</th><th>Size</th><th>Uploaded By</th><th>Date</th><th></th></tr></thead><tbody>' +
+    data.map(f => '<tr>' +
+      '<td>' + (f.file_name || f.file_path.split('/').pop()) + '</td>' +
+      '<td>' + fmtBytes(f.file_size) + '</td>' +
+      '<td>' + (f.uploader ? f.uploader.full_name : '—') + '</td>' +
+      '<td>' + fmtDate(f.created_at) + '</td>' +
+      '<td><button class="btn-sm" onclick="downloadFile(\'' + f.file_path + '\')">Download</button></td>' +
+    '</tr>').join('') + '</tbody></table>';
+}
+
+async function downloadFile(filePath) {
+  try {
+    const { data, error } = await _sb.storage.from('project-files').createSignedUrl(filePath, 3600);
+    if (error) throw error;
+    window.open(data.signedUrl, '_blank');
+  } catch (e) {
+    showToast('Download failed: ' + e.message, 'error');
+  }
+}
+
+// ── Delivery Upload ───────────────────────────────────
+const dropZone = document.getElementById('delivery-drop');
+const fileInput = document.getElementById('delivery-input');
+const fileList = document.getElementById('delivery-file-list');
+const btnUpload = document.getElementById('btn-upload-delivery');
+
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); addDeliveryFiles(e.dataTransfer.files); });
+fileInput.addEventListener('change', () => addDeliveryFiles(fileInput.files));
+
+function addDeliveryFiles(files) {
+  Array.from(files).forEach(f => { if (!deliveryFiles.find(x => x.name === f.name && x.size === f.size)) deliveryFiles.push(f); });
+  renderDeliveryFileList();
+  fileInput.value = '';
+}
+
+function renderDeliveryFileList() {
+  btnUpload.disabled = deliveryFiles.length === 0;
+  fileList.innerHTML = deliveryFiles.map((f, i) =>
+    '<div class="upload-file-item"><span>' + f.name + ' (' + fmtBytes(f.size) + ')</span><button class="remove-file" data-i="' + i + '">✕</button></div>'
+  ).join('');
+  fileList.querySelectorAll('.remove-file').forEach(btn => {
+    btn.addEventListener('click', () => { deliveryFiles.splice(parseInt(btn.dataset.i), 1); renderDeliveryFileList(); });
+  });
+}
+
+document.getElementById('btn-upload-delivery').addEventListener('click', async () => {
+  if (!deliveryFiles.length) return;
+  const btn = document.getElementById('btn-upload-delivery');
+  const progress = document.getElementById('upload-progress');
+  const bar = document.getElementById('upload-bar');
+  btn.disabled = true;
+  progress.style.display = 'block';
+  let done = 0;
+
+  try {
+    for (const file of deliveryFiles) {
+      const path = PROJECT_ID + '/delivery/' + Date.now() + '_' + file.name;
+      const { error: upErr } = await _sb.storage.from('project-files').upload(path, file);
+      if (upErr) throw upErr;
+      await _sb.from('project_files').insert({
+        project_id: PROJECT_ID, file_path: path, file_name: file.name,
+        file_size: file.size, file_type: 'delivery', uploaded_by: currentUserId,
+      });
+      done++;
+      bar.style.width = (done / deliveryFiles.length * 100) + '%';
+    }
+    showToast(deliveryFiles.length + ' file(s) uploaded.', 'success');
+    deliveryFiles = [];
+    renderDeliveryFileList();
+    setTimeout(() => { progress.style.display = 'none'; bar.style.width = '0%'; }, 1000);
+  } catch (e) {
+    showToast('Upload failed: ' + e.message, 'error');
+    progress.style.display = 'none';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// ── Messages ──────────────────────────────────────────
+async function loadMessages() {
+  const { data, error } = await _sb.from('messages')
+    .select('*, sender:profiles!messages_sender_id_fkey(full_name, role)')
+    .eq('project_id', PROJECT_ID)
+    .order('created_at', { ascending: true });
+  if (error) return;
+  renderMessages(data || []);
+}
+
+function renderMessages(messages) {
+  const thread = document.getElementById('message-thread');
+  if (!messages.length) { thread.innerHTML = '<p class="empty-msg">No messages yet</p>'; return; }
+  thread.innerHTML = messages.map(m => {
+    const isInternal = m.is_internal;
+    const isAdmin = m.sender && m.sender.role === 'admin';
+    const cls = isInternal ? 'internal' : (isAdmin ? 'admin' : 'client');
+    const name = m.sender ? m.sender.full_name : 'Unknown';
+    return '<div class="message-bubble ' + cls + '">' +
+      '<div class="msg-meta">' +
+      '<strong>' + name + '</strong>' +
+      (isInternal ? '<span class="msg-internal-tag">Internal</span>' : '') +
+      '<span>' + fmtDateTime(m.created_at) + '</span>' +
+      '</div>' +
+      '<div class="msg-text">' + (m.body || '').replace(/</g, '&lt;').replace(/\n/g, '<br>') + '</div>' +
+      '</div>';
+  }).join('');
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function subscribeMessages() {
+  realtimeSub = _sb.channel('messages:' + PROJECT_ID)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: 'project_id=eq.' + PROJECT_ID }, () => loadMessages())
+    .subscribe();
+}
+
+// Message type toggle
+document.getElementById('btn-msg-client').addEventListener('click', () => {
+  msgIsInternal = false;
+  document.getElementById('btn-msg-client').classList.add('active');
+  document.getElementById('btn-msg-client').classList.remove('internal');
+  document.getElementById('btn-msg-internal').classList.remove('active');
+  document.getElementById('msg-input').placeholder = 'Write a message to the client…';
+});
+
+document.getElementById('btn-msg-internal').addEventListener('click', () => {
+  msgIsInternal = true;
+  document.getElementById('btn-msg-internal').classList.add('active', 'internal');
+  document.getElementById('btn-msg-client').classList.remove('active');
+  document.getElementById('msg-input').placeholder = 'Write an internal note (not visible to client)…';
+});
+
+document.getElementById('btn-send-msg').addEventListener('click', async () => {
+  const body = document.getElementById('msg-input').value.trim();
+  if (!body) return;
+  const btn = document.getElementById('btn-send-msg');
+  btn.disabled = true;
+  try {
+    const { error } = await _sb.from('messages').insert({
+      project_id: PROJECT_ID, body, is_internal: msgIsInternal, sender_id: currentUserId,
+    });
+    if (error) throw error;
+    document.getElementById('msg-input').value = '';
+    await loadMessages();
+  } catch (e) {
+    showToast('Send failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// ── Status History ────────────────────────────────────
+async function loadStatusHistory() {
+  const { data, error } = await _sb.from('project_status_history')
+    .select('*, changer:profiles!project_status_history_changed_by_fkey(full_name)')
+    .eq('project_id', PROJECT_ID)
+    .order('created_at', { ascending: false });
+  if (error) return;
+  const el = document.getElementById('history-list');
+  if (!data || !data.length) { el.innerHTML = '<p class="empty-msg" style="padding:20px 0">No status changes recorded</p>'; return; }
+  el.innerHTML = data.map(h =>
+    '<div class="history-item">' +
+    '<div class="history-dot"></div>' +
+    '<div class="history-body">' +
+    '<div class="history-change"><span class="badge badge-' + (h.from_status||'') + '">' + (h.from_status||'').replace('_',' ') + '</span> <span class="arrow">→</span> <span class="badge badge-' + (h.to_status||'') + '">' + (h.to_status||'').replace('_',' ') + '</span></div>' +
+    (h.note ? '<div class="history-note">' + h.note.replace(/</g,'&lt;') + '</div>' : '') +
+    '<div class="history-meta">by ' + (h.changer ? h.changer.full_name : 'Unknown') + ' · ' + fmtDateTime(h.created_at) + '</div>' +
+    '</div></div>'
+  ).join('');
+}
+
+// ── Sign Out ──────────────────────────────────────────
+document.getElementById('btn-signout').addEventListener('click', async () => { await _sb.auth.signOut(); window.location.href = '/portal/login'; });
+
+// ── Init ──────────────────────────────────────────────
+(async () => {
+  const session = await requireAdmin();
+  if (!session) return;
+  const params = new URLSearchParams(window.location.search);
+  PROJECT_ID = params.get('id');
+  if (!PROJECT_ID) { showToast('No project ID provided.', 'error'); return; }
+  await Promise.all([loadProject(), loadMessages(), loadSourceFiles(), loadStatusHistory()]);
+  await loadTeamMembers();
+  subscribeMessages();
+})();
+</script>
+</body>
+</html>

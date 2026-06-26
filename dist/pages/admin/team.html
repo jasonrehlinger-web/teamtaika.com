@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Management — Taika Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/portal.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #f5f4f0; font-family: 'DM Sans', sans-serif; color: #1f2937; }
+
+    /* ── Admin Nav ── */
+    .admin-nav {
+      background: #0a1628;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: #fff;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .admin-nav-brand .shield { color: #c9a84c; }
+    .admin-nav-links {
+      display: flex;
+      gap: 0.15rem;
+      margin-left: 2rem;
+      flex: 1;
+    }
+    .admin-nav-links a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.38rem 0.85rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .admin-nav-links a:hover { background: rgba(255,255,255,0.07); color: #fff; }
+    .admin-nav-links a.active { background: rgba(201,168,76,0.18); color: #c9a84c; }
+    .admin-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+    #nav-username { color: rgba(255,255,255,0.75); font-size: 0.85rem; }
+    .btn-signout {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.28);
+      color: rgba(255,255,255,0.65);
+      padding: 0.28rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-signout:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+
+    /* ── Page shell ── */
+    .page-wrap { max-width: 1000px; margin: 0 auto; padding: 2.2rem 1.5rem 4rem; }
+
+    /* ── Page header ── */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.8rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .page-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.9rem;
+      color: #0a1628;
+      margin: 0;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.38rem;
+      padding: 0.58rem 1.2rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+      text-decoration: none;
+    }
+    .btn-gold { background: #c9a84c; color: #fff; }
+    .btn-gold:hover { background: #b8953f; }
+    .btn-red {
+      background: transparent;
+      border: 1px solid #fca5a5;
+      color: #dc2626;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.8rem;
+    }
+    .btn-red:hover { background: #fee2e2; border-color: #dc2626; }
+    .btn-red:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ── Team table ── */
+    .table-card {
+      background: #fff;
+      border: 1px solid #e5e3dc;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.4rem;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: #f9f8f6; }
+    thead th {
+      padding: 0.65rem 1.1rem;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+      border-bottom: 1px solid #e5e3dc;
+    }
+    tbody tr { border-bottom: 1px solid #f0ede6; transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #faf9f7; }
+    tbody td { padding: 0.9rem 1.1rem; font-size: 0.875rem; color: #374151; vertical-align: middle; }
+
+    /* ── Avatar ── */
+    .member-cell { display: flex; align-items: center; gap: 0.75rem; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #0a1628; color: #c9a84c;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .member-name { font-weight: 600; color: #0a1628; }
+    .member-email { font-size: 0.78rem; color: #6b7280; }
+
+    /* ── Role badges ── */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .role-super_admin { background: rgba(201,168,76,0.18); color: #92650a; border: 1px solid rgba(201,168,76,0.4); }
+    .role-admin       { background: rgba(10,22,40,0.1);    color: #0a1628; border: 1px solid rgba(10,22,40,0.2); }
+
+    /* ── Status badge ── */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .status-active   { background: #d1fae5; color: #065f46; }
+    .status-inactive { background: #f3f4f6; color: #6b7280; }
+
+    /* ── Empty / loading ── */
+    .empty-state { padding: 2.5rem; text-align: center; color: #9ca3af; font-size: 0.875rem; }
+
+    /* ── Permissions info card ── */
+    .info-card {
+      background: #fff;
+      border: 1px solid #e5e3dc;
+      border-radius: 12px;
+      padding: 1.3rem 1.5rem;
+    }
+    .info-card-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 0.95rem;
+      color: #0a1628;
+      margin: 0 0 0.9rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid #f0ede6;
+    }
+    .perm-row {
+      display: flex;
+      gap: 0.7rem;
+      margin-bottom: 0.7rem;
+      align-items: flex-start;
+    }
+    .perm-row:last-child { margin-bottom: 0; }
+    .perm-label { font-weight: 700; font-size: 0.85rem; color: #0a1628; white-space: nowrap; }
+    .perm-desc  { font-size: 0.85rem; color: #6b7280; }
+
+    /* ── Modal overlay ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      transform: translateY(10px);
+      transition: transform 0.2s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+    .modal-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: #0a1628;
+      margin: 0;
+    }
+    .modal-close {
+      background: none; border: none; cursor: pointer;
+      color: #9ca3af; font-size: 1.3rem; line-height: 1;
+      padding: 0.2rem;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: #374151; }
+
+    /* ── Modal form ── */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.045em;
+      color: #374151; margin-bottom: 0.35rem;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      border: 1px solid #d1cfc8;
+      border-radius: 8px;
+      padding: 0.58rem 0.72rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      color: #1f2937;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #c9a84c;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
+    }
+    .modal-actions {
+      display: flex; gap: 0.7rem; justify-content: flex-end; margin-top: 1.4rem;
+    }
+    .btn-outline {
+      background: transparent; border: 1px solid #d1cfc8; color: #374151;
+    }
+    .btn-outline:hover { border-color: #9ca3af; background: #f9f8f6; }
+
+    /* ── Confirm dialog ── */
+    .confirm-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 300;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .confirm-overlay.open { opacity: 1; pointer-events: all; }
+    .confirm-box {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.8rem;
+      width: 100%; max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      transform: translateY(8px);
+      transition: transform 0.2s;
+    }
+    .confirm-overlay.open .confirm-box { transform: translateY(0); }
+    .confirm-box h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem; color: #0a1628; margin: 0 0 0.6rem;
+    }
+    .confirm-box p { font-size: 0.875rem; color: #6b7280; margin: 0 0 1.4rem; line-height: 1.6; }
+    .confirm-actions { display: flex; gap: 0.7rem; justify-content: flex-end; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: 1.8rem; right: 1.8rem;
+      background: #0a1628; color: #fff;
+      padding: 0.72rem 1.2rem; border-radius: 10px;
+      font-size: 0.865rem; font-family: 'DM Sans', sans-serif;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      transform: translateY(6px); opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 999; pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { border-left: 4px solid #10b981; }
+    .toast.error   { border-left: 4px solid #ef4444; }
+
+    #loading-state { text-align: center; padding: 4rem 2rem; color: #9ca3af; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+<!-- ── Admin Nav ── -->
+<nav class="admin-nav">
+  <a href="/admin/dashboard" class="admin-nav-brand">
+    <svg class="shield" width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+    </svg>
+    Taika Admin
+  </a>
+  <div class="admin-nav-links">
+    <a href="/admin/dashboard">Dashboard</a>
+    <a href="/admin/projects">Projects</a>
+    <a href="/admin/clients">Clients</a>
+    <a href="/admin/team" class="active">Team</a>
+  </div>
+  <div class="admin-nav-right">
+    <span id="nav-username"></span>
+    <button class="btn-signout" onclick="handleSignOut()">Sign Out</button>
+  </div>
+</nav>
+
+<!-- ── Loading ── -->
+<div id="loading-state">Loading team…</div>
+
+<!-- ── Page Content ── -->
+<div class="page-wrap" id="page-content" style="display:none">
+
+  <div class="page-header">
+    <h1>Team Members</h1>
+    <button class="btn btn-gold" id="invite-btn" onclick="openInviteModal()" style="display:none">
+      + Invite Team Member
+    </button>
+  </div>
+
+  <!-- Team Table -->
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Joined</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="team-tbody">
+        <tr><td colspan="6" class="empty-state">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Permissions Info -->
+  <div class="info-card">
+    <div class="info-card-title">Role Permissions</div>
+    <div class="perm-row">
+      <span class="perm-label">Admin:</span>
+      <span class="perm-desc">Can view and manage all projects, clients, and files.</span>
+    </div>
+    <div class="perm-row">
+      <span class="perm-label">Super Admin:</span>
+      <span class="perm-desc">Full access including team management and system settings.</span>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- ── Invite Modal ── -->
+<div class="modal-overlay" id="invite-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Invite Team Member</h2>
+      <button class="modal-close" onclick="closeInviteModal()" aria-label="Close">&times;</button>
+    </div>
+    <form id="invite-form" onsubmit="submitInvite(event)">
+      <div class="form-group">
+        <label for="i-name">Full Name <span style="color:#ef4444">*</span></label>
+        <input type="text" id="i-name" required placeholder="Jane Smith" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label for="i-email">Email Address <span style="color:#ef4444">*</span></label>
+        <input type="email" id="i-email" required placeholder="jane@example.com" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label for="i-role">Role</label>
+        <select id="i-role">
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" onclick="closeInviteModal()">Cancel</button>
+        <button type="submit" class="btn btn-gold" id="invite-submit-btn">Send Invite</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── Confirm Dialog ── -->
+<div class="confirm-overlay" id="confirm-dialog" role="alertdialog" aria-modal="true">
+  <div class="confirm-box">
+    <h3>Remove Team Member?</h3>
+    <p id="confirm-msg">Are you sure?</p>
+    <div class="confirm-actions">
+      <button class="btn btn-outline" onclick="closeConfirm()">Cancel</button>
+      <button class="btn btn-danger" id="confirm-ok-btn" onclick="confirmRemove()">Remove</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../../js/portal.js"></script>
+<script>
+  /* ── Config ── */
+  const SUPABASE_URL      = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
+  const ADMIN_FN_URL      = '/.netlify/functions/portal-admin';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let currentUser    = null;
+  let currentProfile = null;
+  let pendingRemoveId   = null;
+  let pendingRemoveName = '';
+
+  /* ── Utilities ── */
+  function showToast(msg, type = 'success') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'toast ' + type + ' show';
+    clearTimeout(el._t);
+    el._t = setTimeout(() => { el.className = 'toast'; }, 3400);
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function esc(s) {
+    return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function initials(name) {
+    if (!name) return '?';
+    const parts = name.trim().split(/\s+/);
+    return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  }
+
+  /* ── Auth / Boot ── */
+  async function init() {
+    if (typeof requireAdmin === 'function') await requireAdmin();
+
+    const { data: { user }, error } = await sb.auth.getUser();
+    if (error || !user) { window.location.href = '/portal/login'; return; }
+    currentUser = user;
+
+    const { data: me } = await sb.from('profiles')
+      .select('full_name, role, is_active').eq('id', user.id).single();
+
+    if (!me || !['admin','super_admin'].includes(me.role)) {
+      window.location.href = '/portal/dashboard';
+      return;
+    }
+    currentProfile = me;
+    document.getElementById('nav-username').textContent = me.full_name || user.email;
+
+    // Show invite button only to super_admin
+    if (me.role === 'super_admin') {
+      document.getElementById('invite-btn').style.display = 'inline-flex';
+    }
+
+    await loadTeam();
+
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('page-content').style.display  = 'block';
+  }
+
+  /* ── Load team ── */
+  async function loadTeam() {
+    const { data, error } = await sb.from('profiles')
+      .select('id, full_name, email, role, is_active, created_at')
+      .in('role', ['admin','super_admin'])
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      document.getElementById('team-tbody').innerHTML =
+        '<tr><td colspan="6" class="empty-state">Failed to load team members.</td></tr>';
+      return;
+    }
+
+    renderTeam(data || []);
+  }
+
+  function renderTeam(members) {
+    const tbody = document.getElementById('team-tbody');
+    if (!members.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No team members found.</td></tr>';
+      return;
+    }
+
+    const isSuperAdmin = currentProfile && currentProfile.role === 'super_admin';
+
+    tbody.innerHTML = members.map(m => {
+      const roleClass  = m.role === 'super_admin' ? 'role-super_admin' : 'role-admin';
+      const roleLabel  = m.role === 'super_admin' ? 'Super Admin' : 'Admin';
+      const statusCls  = m.is_active ? 'status-active' : 'status-inactive';
+      const statusLbl  = m.is_active ? 'Active' : 'Inactive';
+      const isSelf     = m.id === currentUser.id;
+      const isSA       = m.role === 'super_admin';
+
+      // Show remove button only: current user is super_admin, target is not super_admin, not self
+      let actionCell = '—';
+      if (isSuperAdmin && !isSA) {
+        const disabled = isSelf ? 'disabled' : '';
+        const title    = isSelf ? 'You cannot remove yourself' : `Remove ${esc(m.full_name || 'this member')}`;
+        actionCell = `<button class="btn btn-red" ${disabled} title="${title}"
+          onclick="openConfirm('${esc(m.id)}', '${esc(m.full_name || 'this member')}')">
+          Remove
+        </button>`;
+      }
+
+      return `
+        <tr>
+          <td>
+            <div class="member-cell">
+              <div class="avatar">${initials(m.full_name)}</div>
+              <div>
+                <div class="member-name">${esc(m.full_name || 'Unnamed')}${isSelf ? ' <span style="font-size:0.72rem;color:#9ca3af;font-weight:400">(you)</span>' : ''}</div>
+              </div>
+            </div>
+          </td>
+          <td>${esc(m.email || '—')}</td>
+          <td><span class="role-badge ${roleClass}">${roleLabel}</span></td>
+          <td><span class="status-badge ${statusCls}">${statusLbl}</span></td>
+          <td>${fmtDate(m.created_at)}</td>
+          <td>${actionCell}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  /* ── Invite Modal ── */
+  function openInviteModal() {
+    document.getElementById('invite-form').reset();
+    document.getElementById('invite-modal').classList.add('open');
+  }
+
+  function closeInviteModal() {
+    document.getElementById('invite-modal').classList.remove('open');
+  }
+
+  async function submitInvite(e) {
+    e.preventDefault();
+    const btn       = document.getElementById('invite-submit-btn');
+    const full_name = document.getElementById('i-name').value.trim();
+    const email     = document.getElementById('i-email').value.trim();
+    const role      = document.getElementById('i-role').value;
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+
+      const res = await fetch(ADMIN_FN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + session.access_token
+        },
+        body: JSON.stringify({ action: 'inviteTeamMember', email, full_name, role })
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Invite failed');
+
+      showToast('Invite sent to ' + email + '!');
+      closeInviteModal();
+      await loadTeam();
+    } catch (err) {
+      showToast(err.message || 'Failed to send invite', 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Send Invite';
+    }
+  }
+
+  /* ── Confirm / Remove ── */
+  function openConfirm(userId, name) {
+    pendingRemoveId   = userId;
+    pendingRemoveName = name;
+    document.getElementById('confirm-msg').textContent =
+      `Remove ${name} from the team? They will lose admin access.`;
+    document.getElementById('confirm-dialog').classList.add('open');
+  }
+
+  function closeConfirm() {
+    pendingRemoveId = null;
+    document.getElementById('confirm-dialog').classList.remove('open');
+  }
+
+  async function confirmRemove() {
+    if (!pendingRemoveId) return;
+    const btn = document.getElementById('confirm-ok-btn');
+    btn.disabled = true; btn.textContent = 'Removing…';
+
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+
+      const res = await fetch(ADMIN_FN_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + session.access_token
+        },
+        body: JSON.stringify({ action: 'removeTeamMember', userId: pendingRemoveId })
+      });
+
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Remove failed');
+
+      showToast(pendingRemoveName + ' has been removed from the team.');
+      closeConfirm();
+      await loadTeam();
+    } catch (err) {
+      showToast(err.message || 'Failed to remove member', 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Remove';
+    }
+  }
+
+  // Close modals on overlay click
+  document.getElementById('invite-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeInviteModal();
+  });
+  document.getElementById('confirm-dialog').addEventListener('click', function(e) {
+    if (e.target === this) closeConfirm();
+  });
+
+  // Escape key closes modals
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeInviteModal(); closeConfirm(); }
+  });
+
+  /* ── Sign out ── */
+  async function handleSignOut() {
+    await sb.auth.signOut();
+    window.location.href = '/portal/login';
+  }
+
+  init();
+</script>
+</body>
+</html>

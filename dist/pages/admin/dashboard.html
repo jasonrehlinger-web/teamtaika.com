@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Taika</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/portal.css" />
+  <style>
+    :root {
+      --navy:  #0B1E35;
+      --gold:  #B8913A;
+      --white: #F9F8F5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background: #f0eeeb;
+      color: var(--navy);
+    }
+
+    /* ════════════════════
+       ADMIN NAV
+    ════════════════════ */
+    #admin-nav {
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .nav-brand-icon {
+      width: 28px;
+      height: 28px;
+      fill: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .nav-brand-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: .45rem .85rem;
+      color: rgba(249,248,245,.65);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--white);
+      background: rgba(249,248,245,.1);
+    }
+
+    .nav-links a.active {
+      color: var(--gold);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #admin-user-name {
+      color: rgba(249,248,245,.75);
+      font-size: .88rem;
+    }
+
+    .btn-signout {
+      background: transparent;
+      border: 1px solid rgba(249,248,245,.3);
+      color: rgba(249,248,245,.75);
+      padding: .35rem .85rem;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+
+    .btn-signout:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ════════════════════
+       PAGE LAYOUT
+    ════════════════════ */
+    .page-body {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--navy);
+      margin: 0 0 1.75rem;
+    }
+
+    /* ════════════════════
+       METRIC CARDS
+    ════════════════════ */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 900px) { .metrics-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .metrics-row { grid-template-columns: 1fr; } }
+
+    .metric-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(11,30,53,.07);
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+
+    .metric-label {
+      font-size: .78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #8a7e72;
+    }
+
+    .metric-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .metric-value.loading::after {
+      content: '…';
+      font-size: 1.5rem;
+      color: #ccc;
+    }
+
+    .metric-sub {
+      font-size: .8rem;
+      color: #8a7e72;
+    }
+
+    /* ════════════════════
+       SECTION WRAPPERS
+    ════════════════════ */
+    .section {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(11,30,53,.07);
+      margin-bottom: 1.75rem;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid #e8e5e0;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin: 0;
+    }
+
+    .badge-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 .4rem;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 700;
+      background: #f39c12;
+      color: #fff;
+    }
+
+    /* ════════════════════
+       NEEDS ATTENTION TABLE
+    ════════════════════ */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+
+    thead th {
+      background: #f5f3f0;
+      padding: .7rem 1rem;
+      text-align: left;
+      font-size: .76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: #6b6358;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-top: 1px solid #ece9e4;
+      transition: background .12s;
+    }
+
+    tbody tr:hover { background: #faf9f6; }
+
+    tbody td {
+      padding: .8rem 1rem;
+      vertical-align: middle;
+    }
+
+    .project-link {
+      color: var(--navy);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .project-link:hover { color: var(--gold); text-decoration: underline; }
+
+    /* Priority badges */
+    .priority-badge {
+      display: inline-block;
+      padding: .18rem .6rem;
+      border-radius: 20px;
+      font-size: .74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .priority-high   { background: #fdecea; color: #c0392b; }
+    .priority-medium { background: #fff3e0; color: #e67e22; }
+    .priority-low    { background: #e8f5e9; color: #27ae60; }
+    .priority-normal { background: #f0eaf8; color: #7b47b5; }
+
+    /* Start Review button */
+    .btn-review {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .38rem .85rem;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, opacity .2s;
+      white-space: nowrap;
+    }
+
+    .btn-review:hover:not(:disabled) { background: #a07d30; }
+    .btn-review:disabled { opacity: .5; cursor: not-allowed; }
+
+    .empty-state {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: #8a7e72;
+      font-size: .93rem;
+    }
+
+    /* ════════════════════
+       RECENT ACTIVITY
+    ════════════════════ */
+    .activity-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: .9rem;
+      padding: .85rem 1.5rem;
+      border-top: 1px solid #ece9e4;
+    }
+
+    .activity-item:first-child { border-top: none; }
+
+    .activity-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: .35rem;
+    }
+
+    .activity-text {
+      flex: 1;
+      font-size: .9rem;
+      line-height: 1.45;
+      color: var(--navy);
+    }
+
+    .activity-text strong { font-weight: 600; }
+    .activity-text .by    { color: #6b6358; font-size: .85rem; }
+
+    .activity-time {
+      font-size: .8rem;
+      color: #8a7e72;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: .15rem;
+    }
+
+    /* ════════════════════
+       STATUS DISTRIBUTION
+    ════════════════════ */
+    .bar-chart-wrap {
+      padding: 1rem 1.5rem 1.25rem;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 130px 1fr 36px;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: .55rem;
+    }
+
+    .bar-row-label {
+      font-size: .82rem;
+      font-weight: 600;
+      text-transform: capitalize;
+      color: #6b6358;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .bar-track {
+      background: #e8e5e0;
+      border-radius: 4px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .5s ease;
+    }
+
+    .bar-row-count {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* ════════════════════
+       TOAST
+    ════════════════════ */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: var(--navy);
+      color: var(--white);
+      padding: .75rem 1.5rem;
+      border-radius: 8px;
+      font-size: .92rem;
+      font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      opacity: 0;
+      transition: opacity .3s, transform .3s;
+      pointer-events: none;
+      z-index: 999;
+      white-space: nowrap;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ════════════════════
+       STATUS COLOR MAP
+    ════════════════════ */
+    /* Used in bar chart and inline */
+    .s-submitted    { background: #f39c12; }
+    .s-reviewing    { background: #2980b9; }
+    .s-quoted       { background: #8e44ad; }
+    .s-approved     { background: #27ae60; }
+    .s-in_progress  { background: #16a085; }
+    .s-review       { background: #d35400; }
+    .s-completed    { background: #1a8a50; }
+    .s-cancelled    { background: #95a5a6; }
+    .s-default      { background: #bdc3c7; }
+  </style>
+</head>
+<body>
+
+<!-- ── ADMIN NAV ── -->
+<nav id="admin-nav">
+  <a href="/admin/dashboard" class="nav-brand">
+    <svg class="nav-brand-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.35C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+    </svg>
+    <span class="nav-brand-text">Taika Admin</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+    <li><a href="/admin/projects">Projects</a></li>
+    <li><a href="/admin/clients">Clients</a></li>
+    <li><a href="/admin/team">Team</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <span id="admin-user-name"></span>
+    <button class="btn-signout" id="signout-btn">Sign out</button>
+  </div>
+</nav>
+
+<!-- ── PAGE BODY ── -->
+<div class="page-body">
+  <h1 class="page-title">Dashboard</h1>
+
+  <!-- Metrics row -->
+  <div class="metrics-row">
+    <div class="metric-card">
+      <span class="metric-label">Total Projects</span>
+      <span class="metric-value loading" id="m-total"></span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-label">Active</span>
+      <span class="metric-value loading" id="m-active"></span>
+      <span class="metric-sub">In progress / review</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-label">Needs Attention</span>
+      <span class="metric-value loading" id="m-needs"></span>
+      <span class="metric-sub">Awaiting review</span>
+    </div>
+    <div class="metric-card">
+      <span class="metric-label">This Month</span>
+      <span class="metric-value loading" id="m-month"></span>
+      <span class="metric-sub" id="m-month-label"></span>
+    </div>
+  </div>
+
+  <!-- Needs Attention table -->
+  <div class="section" id="attention-section">
+    <div class="section-header">
+      <h2 class="section-title">Needs Attention</h2>
+      <span class="badge-count" id="attention-badge">0</span>
+    </div>
+    <div class="table-wrap">
+      <table id="attention-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Client</th>
+            <th>Service</th>
+            <th>Submitted</th>
+            <th>Priority</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="attention-tbody">
+          <tr><td colspan="6" class="empty-state">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="section" id="activity-section">
+    <div class="section-header">
+      <h2 class="section-title">Recent Activity</h2>
+    </div>
+    <ul class="activity-list" id="activity-list">
+      <li class="activity-item">
+        <div class="activity-dot"></div>
+        <div class="activity-text">Loading…</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Status Distribution -->
+  <div class="section" id="distribution-section">
+    <div class="section-header">
+      <h2 class="section-title">Status Distribution</h2>
+    </div>
+    <div class="bar-chart-wrap" id="bar-chart">
+      <p style="color:#8a7e72;font-size:.9rem;">Loading…</p>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../../js/portal.js"></script>
+<script>
+(async function () {
+  'use strict';
+
+  const SUPABASE_URL      = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const ADMIN_ROLES = ['admin', 'super_admin'];
+
+  /* ── Auth guard ── */
+  let currentUser = null;
+  try {
+    currentUser = await requireAdmin();
+  } catch (_) {
+    const { data: { session } } = await db.auth.getSession();
+    if (!session) { window.location.href = '/admin/'; return; }
+
+    const { data: profile } = await db
+      .from('profiles')
+      .select('role, full_name')
+      .eq('id', session.user.id)
+      .single();
+
+    if (!profile || !ADMIN_ROLES.includes(profile.role)) {
+      await db.auth.signOut();
+      window.location.href = '/admin/';
+      return;
+    }
+
+    currentUser = { ...session.user, profile };
+  }
+
+  /* ── Show admin name ── */
+  async function initNav() {
+    const { data: profile } = await db
+      .from('profiles')
+      .select('full_name, role')
+      .eq('id', currentUser.id)
+      .single();
+
+    if (profile) {
+      document.getElementById('admin-user-name').textContent =
+        profile.full_name || currentUser.email;
+    }
+  }
+
+  /* ── Sign out ── */
+  document.getElementById('signout-btn').addEventListener('click', async () => {
+    await db.auth.signOut();
+    window.location.href = '/admin/';
+  });
+
+  /* ── Toast ── */
+  function showToast(msg, duration = 3200) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), duration);
+  }
+
+  /* ── Helpers ── */
+  function fmt(dateStr) {
+    if (!dateStr) return '—';
+    return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function relativeTime(dateStr) {
+    if (!dateStr) return '';
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins  = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days  = Math.floor(diff / 86400000);
+    if (mins < 1)   return 'just now';
+    if (mins < 60)  return `${mins}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+  }
+
+  function priorityBadge(p) {
+    const cls = {
+      high:   'priority-high',
+      medium: 'priority-medium',
+      low:    'priority-low'
+    }[p] || 'priority-normal';
+    return `<span class="priority-badge ${cls}">${p || 'Normal'}</span>`;
+  }
+
+  function statusClass(status) {
+    const map = {
+      submitted:   's-submitted',
+      reviewing:   's-reviewing',
+      quoted:      's-quoted',
+      approved:    's-approved',
+      in_progress: 's-in_progress',
+      review:      's-review',
+      completed:   's-completed',
+      cancelled:   's-cancelled'
+    };
+    return map[status] || 's-default';
+  }
+
+  function humanStatus(s) {
+    return (s || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  /* ── First day of current month ── */
+  const now        = new Date();
+  const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+  const monthLabel = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  document.getElementById('m-month-label').textContent = monthLabel;
+
+  const ACTIVE_STATUSES = ['reviewing', 'quoted', 'approved', 'in_progress', 'review'];
+
+  /* ════════════════════
+     LOAD ALL DATA
+  ════════════════════ */
+  async function loadDashboard() {
+    const [
+      totalRes,
+      activeRes,
+      needsRes,
+      monthRes,
+      attentionRes,
+      activityRes,
+      distRes
+    ] = await Promise.all([
+      /* Total projects */
+      db.from('projects').select('id', { count: 'exact', head: true }),
+
+      /* Active */
+      db.from('projects').select('id', { count: 'exact', head: true })
+        .in('status', ACTIVE_STATUSES),
+
+      /* Needs attention (submitted) */
+      db.from('projects').select('id', { count: 'exact', head: true })
+        .eq('status', 'submitted'),
+
+      /* This month */
+      db.from('projects').select('id', { count: 'exact', head: true })
+        .gte('created_at', firstOfMonth),
+
+      /* Needs attention rows (full data) */
+      db.from('projects')
+        .select('id, title, service, created_at, priority, client_id, profiles:client_id(full_name)')
+        .eq('status', 'submitted')
+        .order('created_at', { ascending: true }),
+
+      /* Recent activity */
+      db.from('project_status_history')
+        .select('id, created_at, new_status, project_id, changed_by, projects:project_id(title), changer:changed_by(full_name)')
+        .order('created_at', { ascending: false })
+        .limit(20),
+
+      /* Status distribution */
+      db.from('projects').select('status')
+    ]);
+
+    /* ── Metrics ── */
+    function setMetric(id, count) {
+      const el = document.getElementById(id);
+      el.textContent = count ?? '—';
+      el.classList.remove('loading');
+    }
+
+    setMetric('m-total',  totalRes.count  ?? 0);
+    setMetric('m-active', activeRes.count ?? 0);
+    setMetric('m-needs',  needsRes.count  ?? 0);
+    setMetric('m-month',  monthRes.count  ?? 0);
+
+    /* ── Attention badge ── */
+    const attentionCount = needsRes.count ?? 0;
+    document.getElementById('attention-badge').textContent = attentionCount;
+
+    /* ── Needs Attention Table ── */
+    renderAttentionTable(attentionRes.data || []);
+
+    /* ── Recent Activity ── */
+    renderActivity(activityRes.data || []);
+
+    /* ── Status Distribution ── */
+    renderDistribution(distRes.data || []);
+  }
+
+  /* ════════════════════
+     NEEDS ATTENTION TABLE
+  ════════════════════ */
+  function renderAttentionTable(rows) {
+    const tbody = document.getElementById('attention-tbody');
+
+    if (!rows.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No projects waiting for review.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = rows.map(p => {
+      const clientName = p.profiles?.full_name || 'Unknown';
+      const service    = p.service || '—';
+      const submitted  = fmt(p.created_at);
+      const priority   = (p.priority || 'normal').toLowerCase();
+
+      return `
+        <tr data-id="${p.id}">
+          <td><a href="/admin/project?id=${p.id}" class="project-link">${escHtml(p.title || 'Untitled')}</a></td>
+          <td>${escHtml(clientName)}</td>
+          <td>${escHtml(service)}</td>
+          <td>${submitted}</td>
+          <td>${priorityBadge(priority)}</td>
+          <td>
+            <button class="btn-review" data-project-id="${p.id}" onclick="startReview(this)">
+              Start Review
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  window.startReview = async function (btn) {
+    const projectId = btn.dataset.projectId;
+    btn.disabled = true;
+    btn.textContent = 'Updating…';
+
+    const { error } = await db
+      .from('projects')
+      .update({ status: 'reviewing' })
+      .eq('id', projectId);
+
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = 'Start Review';
+      showToast('Error: ' + error.message);
+      return;
+    }
+
+    /* Remove the row from the table */
+    const row = btn.closest('tr');
+    row.style.opacity = '.4';
+    setTimeout(() => {
+      row.remove();
+
+      /* Update needs attention count */
+      const badge = document.getElementById('attention-badge');
+      const current = parseInt(badge.textContent, 10) || 0;
+      badge.textContent = Math.max(0, current - 1);
+
+      const metricEl = document.getElementById('m-needs');
+      metricEl.textContent = Math.max(0, (parseInt(metricEl.textContent, 10) || 0) - 1);
+
+      const remaining = document.querySelectorAll('#attention-tbody tr[data-id]').length;
+      if (remaining === 0) {
+        document.getElementById('attention-tbody').innerHTML =
+          `<tr><td colspan="6" class="empty-state">No projects waiting for review.</td></tr>`;
+      }
+    }, 350);
+
+    showToast('Project moved to Reviewing.');
+  };
+
+  /* ════════════════════
+     RECENT ACTIVITY
+  ════════════════════ */
+  function renderActivity(rows) {
+    const list = document.getElementById('activity-list');
+
+    if (!rows.length) {
+      list.innerHTML = `<li class="activity-item"><div class="activity-text" style="color:#8a7e72">No recent activity.</div></li>`;
+      return;
+    }
+
+    list.innerHTML = rows.map(r => {
+      const title  = r.projects?.title || 'a project';
+      const status = humanStatus(r.new_status);
+      const by     = r.changer?.full_name || 'Unknown';
+      const time   = relativeTime(r.created_at);
+
+      return `
+        <li class="activity-item">
+          <div class="activity-dot"></div>
+          <div class="activity-text">
+            Project <strong>'${escHtml(title)}'</strong> moved to <strong>${escHtml(status)}</strong>
+            <span class="by"> — by ${escHtml(by)}</span>
+          </div>
+          <div class="activity-time">${time}</div>
+        </li>
+      `;
+    }).join('');
+  }
+
+  /* ════════════════════
+     STATUS DISTRIBUTION
+  ════════════════════ */
+  function renderDistribution(rows) {
+    const container = document.getElementById('bar-chart');
+
+    if (!rows.length) {
+      container.innerHTML = `<p style="color:#8a7e72;font-size:.9rem;">No project data.</p>`;
+      return;
+    }
+
+    const counts = {};
+    rows.forEach(r => {
+      const s = r.status || 'unknown';
+      counts[s] = (counts[s] || 0) + 1;
+    });
+
+    const total  = rows.length;
+    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    container.innerHTML = sorted.map(([status, count]) => {
+      const pct   = total > 0 ? Math.max(2, Math.round((count / total) * 100)) : 0;
+      const cls   = statusClass(status);
+      const label = humanStatus(status);
+
+      return `
+        <div class="bar-row">
+          <span class="bar-row-label">${escHtml(label)}</span>
+          <div class="bar-track">
+            <div class="bar-fill ${cls}" style="width:${pct}%"></div>
+          </div>
+          <span class="bar-row-count">${count}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  /* ── XSS helper ── */
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ── Boot ── */
+  await Promise.all([initNav(), loadDashboard()]);
+
+})();
+</script>
+</body>
+</html>

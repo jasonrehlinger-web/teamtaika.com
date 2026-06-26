@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+/* Supabase auth recovery redirect — runs before anything else */
+(function(){
+  var h = window.location.hash;
+  if (h && h.includes('access_token=') && h.includes('type=recovery')) {
+    window.location.replace('/portal/account' + h);
+  }
+  if (h && h.includes('access_token=') && h.includes('type=signup')) {
+    window.location.replace('/portal' + h);
+  }
+})();
+</script>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Language Access Hub | Translation, Interpretation, Section 508 & AI Automation | GSA & NASPO</title>
 <meta name="description" content="The only veteran-owned company with active GSA and NASPO contracts delivering translation, interpretation, ADA/Section 508 compliance, and AI automation as a single integrated service. 300+ languages. All 50 states.">

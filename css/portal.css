@@ -110,6 +110,17 @@ ul, ol { list-style: none; }
   gap: 1rem;
 }
 
+.portal-nav-back {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  white-space: nowrap;
+  padding: 4px 0;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+.portal-nav-back:hover { color: rgba(255,255,255,0.9); }
+
 .portal-nav__logo {
   font-family: 'DM Serif Display', Georgia, serif;
   font-size: 20px;

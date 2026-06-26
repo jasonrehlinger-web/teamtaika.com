@@ -390,6 +390,7 @@
     if (error) console.warn('Profile load error:', error.message);
   }
 
+  if (typeof renderPortalNav === 'function') renderPortalNav('portal-nav');
   await loadProfile();
 
   /* Hide current-password field when in recovery mode */

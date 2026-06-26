@@ -671,3 +671,53 @@ function subscribeToProjectUpdates(projectId, onUpdate) {
     .subscribe();
   return subscription;
 }
+
+/* ── Portal Nav renderer ────────────────────────────────────────────────── */
+function renderPortalNav(containerId) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+
+  var path = window.location.pathname;
+  var isSubmit   = path.includes('/submit');
+  var isAccount  = path.includes('/account');
+  var isProject  = path.includes('/project');
+
+  el.innerHTML = [
+    '<nav class="portal-nav" role="navigation" aria-label="Portal navigation">',
+    '  <div class="portal-nav-inner">',
+    '    <a href="/" class="portal-nav-back" aria-label="Back to main site">← teamtaika.com</a>',
+    '    <a href="/portal/dashboard" class="portal-logo">Taika Portal</a>',
+    '    <div class="portal-nav-links">',
+    '      <a href="/portal/dashboard"' + (!isSubmit && !isAccount && !isProject ? ' class="active"' : '') + '>Dashboard</a>',
+    '      <a href="/portal/submit"'   + (isSubmit  ? ' class="active"' : '') + '>New Project</a>',
+    '      <a href="/portal/account"'  + (isAccount ? ' class="active"' : '') + '>Account</a>',
+    '    </div>',
+    '    <div class="portal-nav-user">',
+    '      <span id="user-greeting">Loading...</span>',
+    '      <button id="signout-btn" class="btn-signout">Sign Out</button>',
+    '    </div>',
+    '  </div>',
+    '</nav>'
+  ].join('\n');
+
+  /* Wire sign-out */
+  var signOutBtn = el.querySelector('#signout-btn');
+  if (signOutBtn) {
+    signOutBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (typeof signOut === 'function') signOut();
+    });
+  }
+
+  /* Fill greeting if user already loaded */
+  try {
+    getCurrentUser().then(function(result) {
+      var greet = el.querySelector('#user-greeting');
+      if (greet && result && result.profile) {
+        greet.textContent = result.profile.full_name
+          ? 'Hello, ' + result.profile.full_name.split(' ')[0]
+          : result.user.email;
+      }
+    }).catch(function(){});
+  } catch(e) {}
+}

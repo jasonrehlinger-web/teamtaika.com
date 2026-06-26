@@ -317,7 +317,7 @@
     .btn-danger:hover { background: #b91c1c; }
 
     /* ── Toast ── */
-    .toast {
+    .admin-toast {
       position: fixed; bottom: 1.8rem; right: 1.8rem;
       background: #0a1628; color: #fff;
       padding: 0.72rem 1.2rem; border-radius: 10px;
@@ -327,9 +327,9 @@
       transition: opacity 0.2s, transform 0.2s;
       z-index: 999; pointer-events: none;
     }
-    .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.success { border-left: 4px solid #10b981; }
-    .toast.error   { border-left: 4px solid #ef4444; }
+    .admin-toast.show { opacity: 1; transform: translateY(0); }
+    .admin-toast.success { border-left: 4px solid #10b981; }
+    .admin-toast.error   { border-left: 4px solid #ef4444; }
 
     #loading-state { text-align: center; padding: 4rem 2rem; color: #9ca3af; font-size: 0.9rem; }
   </style>
@@ -445,7 +445,7 @@
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="admin-toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../../js/portal.js"></script>
@@ -465,9 +465,9 @@
   function showToast(msg, type = 'success') {
     const el = document.getElementById('toast');
     el.textContent = msg;
-    el.className = 'toast ' + type + ' show';
+    el.className = 'admin-toast ' + type + ' show';
     clearTimeout(el._t);
-    el._t = setTimeout(() => { el.className = 'toast'; }, 3400);
+    el._t = setTimeout(() => { el.className = 'admin-toast'; }, 3400);
   }
 
   function fmtDate(iso) {

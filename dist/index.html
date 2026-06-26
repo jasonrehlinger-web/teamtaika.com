@@ -11,6 +11,9 @@
   if (h && h.includes('access_token=') && h.includes('type=signup')) {
     window.location.replace('/portal' + h);
   }
+  if (h && h.includes('access_token=') && h.includes('type=invite')) {
+    window.location.replace('/portal/account' + h);
+  }
 })();
 </script>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">

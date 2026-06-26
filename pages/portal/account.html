@@ -316,16 +316,17 @@
   let currentUser = null;
   let isRecoverySession = false;
 
-  // Supabase puts access_token in hash for recovery links — exchange it for a session
+  // Supabase puts access_token in hash for recovery and invite links — exchange for a session
   const hashParams = new URLSearchParams(window.location.hash.slice(1));
-  if (hashParams.get('type') === 'recovery' && hashParams.get('access_token')) {
+  const hashType = hashParams.get('type');
+  if ((hashType === 'recovery' || hashType === 'invite') && hashParams.get('access_token')) {
     const { data, error } = await client.auth.setSession({
       access_token:  hashParams.get('access_token'),
       refresh_token: hashParams.get('refresh_token') || ''
     });
     if (!error && data.session) {
       currentUser = data.session.user;
-      isRecoverySession = true;
+      isRecoverySession = true; // treat invite same as recovery — hide current password field
     }
   }
 
@@ -388,6 +389,17 @@
 
   if (typeof renderPortalNav === 'function') renderPortalNav('portal-nav');
   await loadProfile();
+
+  // Update title/heading for invite flow
+  if (isRecoverySession && hashType === 'invite') {
+    document.title = 'Set Your Password — Taika Portal';
+    const h1 = document.querySelector('.page-title');
+    if (h1) h1.textContent = 'Set Your Password';
+    const pwHeading = document.querySelector('.card-heading');
+    if (pwHeading && pwHeading.textContent.includes('Change Password')) {
+      pwHeading.textContent = 'Choose a Password';
+    }
+  }
 
   /* Hide current-password field when in recovery mode */
   if (isRecoverySession) {

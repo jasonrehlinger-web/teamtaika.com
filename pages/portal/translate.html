@@ -11,91 +11,93 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; background: #f5f4f0; font-family: 'DM Sans', sans-serif; color: #1f2937; }
-
-    .page-wrap { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-    .page-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      color: #0a1628; margin: 0 0 0.35rem;
-    }
+    .page-wrap { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+    .page-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem,4vw,2.2rem); color: #0a1628; margin: 0 0 0.35rem; }
     .page-subtitle { color: #6b7280; font-size: 0.95rem; margin: 0 0 2rem; }
-
-    /* ── Cards ── */
-    .card { background: #fff; border-radius: 14px; padding: 1.75rem 2rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 1.25rem; }
+    .card { background: #fff; border-radius: 14px; padding: 1.75rem 2rem; box-shadow: 0 1px 4px rgba(0,0,0,.06); margin-bottom: 1.25rem; }
     .card-heading { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: #0a1628; margin: 0 0 1.25rem; }
-
-    /* ── Controls row ── */
     .controls-row { display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1rem; }
     .controls-row label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #374151; display: block; margin-bottom: 0.3rem; }
-    .controls-row select {
-      border: 1.5px solid #d1cfc8; border-radius: 8px; padding: 0.55rem 0.8rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.875rem; color: #1f2937;
-      background: #fff; outline: none; transition: border-color 0.15s;
-      min-width: 200px;
-    }
+    .controls-row select { border: 1.5px solid #d1cfc8; border-radius: 8px; padding: .55rem .8rem; font-family: 'DM Sans', sans-serif; font-size: .875rem; color: #1f2937; background: #fff; outline: none; transition: border-color .15s; min-width: 200px; }
     .controls-row select:focus { border-color: #c9a84c; }
-
-    /* ── Textarea ── */
-    .textarea-wrap { position: relative; }
-    textarea {
-      width: 100%; border: 1.5px solid #d1cfc8; border-radius: 8px;
-      padding: 0.75rem 0.9rem; font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem; line-height: 1.6; resize: vertical;
-      min-height: 160px; outline: none; transition: border-color 0.15s; color: #1f2937;
-    }
-    textarea:focus { border-color: #c9a84c; box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
-    .char-count { text-align: right; font-size: 0.75rem; color: #9ca3af; margin-top: 0.3rem; }
+    textarea { width: 100%; border: 1.5px solid #d1cfc8; border-radius: 8px; padding: .75rem .9rem; font-family: 'DM Sans', sans-serif; font-size: .9rem; line-height: 1.6; resize: vertical; min-height: 160px; outline: none; transition: border-color .15s; color: #1f2937; }
+    textarea:focus { border-color: #c9a84c; box-shadow: 0 0 0 3px rgba(201,168,76,.12); }
+    .char-count { text-align: right; font-size: .75rem; color: #9ca3af; margin-top: .3rem; }
     .char-count.over { color: #ef4444; }
-
-    /* ── Translate button ── */
-    .btn-translate {
-      display: flex; align-items: center; gap: 0.5rem;
-      background: #0a1628; color: #fff; border: none; border-radius: 8px;
-      padding: 0.65rem 1.4rem; font-size: 0.9rem; font-weight: 600;
-      cursor: pointer; transition: background 0.15s; margin-top: 0.75rem;
-    }
+    .btn-translate { display: flex; align-items: center; gap: .5rem; background: #0a1628; color: #fff; border: none; border-radius: 8px; padding: .65rem 1.4rem; font-size: .9rem; font-weight: 600; cursor: pointer; transition: background .15s; margin-top: .75rem; }
     .btn-translate:hover { background: #162440; }
-    .btn-translate:disabled { opacity: 0.5; cursor: not-allowed; }
-    .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; display: none; }
+    .btn-translate:disabled { opacity: .5; cursor: not-allowed; }
+    .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── Output panel ── */
-    .output-panel {
-      background: #f9f8f6; border: 1.5px solid #e5e3dc; border-radius: 10px;
-      padding: 1.25rem 1.4rem; min-height: 120px; margin-top: 1rem;
-      font-size: 0.9rem; line-height: 1.7; color: #374151;
-      display: none;
-    }
-    .output-panel.visible { display: block; }
-    .output-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #9ca3af; margin-bottom: 0.5rem; }
-    .output-placeholder { color: #9ca3af; font-style: italic; font-size: 0.875rem; }
-
-    /* ── Order CTA ── */
-    .order-cta {
-      display: none; margin-top: 1.25rem;
-      background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 100%);
-      border-radius: 12px; padding: 1.5rem 1.75rem;
-      align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-    }
-    .order-cta.visible { display: flex; }
-    .order-cta-text h3 { font-family: 'DM Serif Display', serif; color: #fff; font-size: 1.05rem; margin: 0 0 0.3rem; }
-    .order-cta-text p { color: rgba(255,255,255,0.68); font-size: 0.82rem; margin: 0; line-height: 1.5; }
-    .btn-order {
-      background: #c9a84c; color: #0a1628; border: none; border-radius: 8px;
-      padding: 0.75rem 1.6rem; font-size: 0.9rem; font-weight: 700;
-      cursor: pointer; white-space: nowrap; transition: filter 0.15s; text-decoration: none; display: inline-block;
-    }
-    .btn-order:hover { filter: brightness(1.08); }
-
-    /* ── Info note ── */
-    .info-note {
-      background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px;
-      padding: 0.75rem 1rem; font-size: 0.8rem; color: #78350f; margin-top: 0.75rem;
-    }
-
-    /* ── Error ── */
-    .error-msg { color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+    .error-msg { color: #ef4444; font-size: .85rem; margin-top: .5rem; display: none; }
     .error-msg.visible { display: block; }
+
+    /* ── Draft output panel ── */
+    .output-card { display: none; }
+    .output-card.visible { display: block; }
+    .draft-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: .75rem; flex-wrap: wrap; gap: .5rem;
+    }
+    .draft-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #6b7280; }
+    .draft-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;
+      border-radius: 20px; padding: 3px 12px; font-size: .72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .output-panel {
+      background: #fffdf7; border: 1.5px solid #fcd34d; border-radius: 10px;
+      padding: 1.25rem 1.4rem; font-size: .9rem; line-height: 1.75;
+      color: #374151; position: relative;
+    }
+    .draft-watermark {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-20deg);
+      font-size: 4rem; font-weight: 900; color: rgba(251,191,36,.12);
+      pointer-events: none; user-select: none; white-space: nowrap; letter-spacing: .1em;
+    }
+    .output-actions { display: flex; gap: 8px; margin-top: .75rem; flex-wrap: wrap; }
+    .btn-copy { background: none; border: 1px solid #d1d5db; border-radius: 6px; padding: 5px 14px; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: #4b5563; cursor: pointer; transition: all .15s; }
+    .btn-copy:hover { border-color: #9ca3af; color: #1f2937; }
+
+    /* ── What's missing ── */
+    .gaps-panel { margin-top: 1rem; display: none; }
+    .gaps-panel.visible { display: block; }
+    .gaps-heading { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #991b1b; margin-bottom: .6rem; }
+    .gaps-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+    .gaps-list li { display: flex; align-items: flex-start; gap: 8px; font-size: .85rem; color: #374151; line-height: 1.5; }
+    .gaps-list li::before { content: '✗'; color: #ef4444; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Conversion panel ── */
+    .conversion-panel { display: none; margin-top: 1.25rem; }
+    .conversion-panel.visible { display: block; }
+    .conv-card {
+      background: linear-gradient(160deg, #0a1628 0%, #1a3050 100%);
+      border-radius: 14px; overflow: hidden;
+    }
+    .conv-top { padding: 1.75rem 2rem; }
+    .conv-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #c9a84c; margin-bottom: .6rem; }
+    .conv-headline { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: #fff; margin: 0 0 .5rem; line-height: 1.2; }
+    .conv-sub { color: rgba(255,255,255,.68); font-size: .875rem; line-height: 1.6; margin: 0 0 1.5rem; max-width: 560px; }
+    .conv-reasons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 1.75rem; }
+    .conv-reason { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 14px 16px; }
+    .conv-reason-icon { font-size: 1.25rem; margin-bottom: 6px; }
+    .conv-reason h4 { font-size: .85rem; font-weight: 700; color: #fff; margin: 0 0 4px; }
+    .conv-reason p { font-size: .78rem; color: rgba(255,255,255,.6); margin: 0; line-height: 1.5; }
+    .conv-cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .btn-order-pro {
+      background: #c9a84c; color: #0a1628; border: none; border-radius: 9px;
+      padding: .85rem 2rem; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 800;
+      cursor: pointer; white-space: nowrap; transition: filter .15s, transform .1s;
+      text-decoration: none; display: inline-block; letter-spacing: -.01em;
+      box-shadow: 0 4px 16px rgba(201,168,76,.4);
+    }
+    .btn-order-pro:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .conv-proof { color: rgba(255,255,255,.55); font-size: .8rem; line-height: 1.5; }
+    .conv-proof strong { color: rgba(255,255,255,.85); }
+    .conv-bottom { background: rgba(201,168,76,.1); border-top: 1px solid rgba(201,168,76,.2); padding: .9rem 2rem; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .conv-bottom-item { display: flex; align-items: center; gap: 6px; font-size: .78rem; color: rgba(255,255,255,.7); }
+    .conv-bottom-item::before { content: '✓'; color: #c9a84c; font-weight: 700; font-size: .8rem; }
   </style>
 </head>
 <body>
@@ -103,60 +105,35 @@
 
 <main class="page-wrap">
   <h1 class="page-title">Translation Preview</h1>
-  <p class="page-subtitle">See a machine translation instantly, then order a certified professional version from our team.</p>
+  <p class="page-subtitle">See a machine translation instantly — then let our certified translators finish the job right.</p>
 
   <div class="card">
     <h2 class="card-heading">Paste Your Text</h2>
-
     <div class="controls-row">
       <div>
         <label for="target-lang">Translate to</label>
         <select id="target-lang">
-          <option value="es">Spanish</option>
-          <option value="fr">French</option>
-          <option value="pt">Portuguese</option>
-          <option value="de">German</option>
-          <option value="it">Italian</option>
-          <option value="zh">Chinese (Simplified)</option>
-          <option value="ar">Arabic</option>
-          <option value="hi">Hindi</option>
-          <option value="ru">Russian</option>
-          <option value="pl">Polish</option>
-          <option value="ur">Urdu</option>
-          <option value="bn">Bengali</option>
-          <option value="ja">Japanese</option>
-          <option value="ko">Korean</option>
-          <option value="vi">Vietnamese</option>
-          <option value="tl">Tagalog</option>
-          <option value="fa">Persian/Farsi</option>
-          <option value="sw">Swahili</option>
-          <option value="ha">Hausa</option>
-          <option value="am">Amharic</option>
-          <option value="so">Somali</option>
-          <option value="ht">Haitian Creole</option>
-          <option value="my">Burmese</option>
-          <option value="km">Khmer</option>
-          <option value="ne">Nepali</option>
-          <option value="th">Thai</option>
-          <option value="uk">Ukrainian</option>
-          <option value="tr">Turkish</option>
-          <option value="nl">Dutch</option>
-          <option value="ro">Romanian</option>
+          <option value="es">Spanish</option><option value="fr">French</option>
+          <option value="pt">Portuguese</option><option value="de">German</option>
+          <option value="it">Italian</option><option value="zh">Chinese (Simplified)</option>
+          <option value="ar">Arabic</option><option value="hi">Hindi</option>
+          <option value="ru">Russian</option><option value="pl">Polish</option>
+          <option value="ur">Urdu</option><option value="bn">Bengali</option>
+          <option value="ja">Japanese</option><option value="ko">Korean</option>
+          <option value="vi">Vietnamese</option><option value="tl">Tagalog</option>
+          <option value="fa">Persian/Farsi</option><option value="sw">Swahili</option>
+          <option value="ha">Hausa</option><option value="am">Amharic</option>
+          <option value="so">Somali</option><option value="ht">Haitian Creole</option>
+          <option value="my">Burmese</option><option value="km">Khmer</option>
+          <option value="ne">Nepali</option><option value="th">Thai</option>
+          <option value="uk">Ukrainian</option><option value="tr">Turkish</option>
+          <option value="nl">Dutch</option><option value="ro">Romanian</option>
         </select>
       </div>
     </div>
-
-    <div class="textarea-wrap">
-      <textarea id="source-text" placeholder="Paste your content here — up to 2,000 characters. Works for: policy documents, patient letters, legal notices, website copy, contracts, school communications..." maxlength="2000" aria-label="Text to translate"></textarea>
-    </div>
+    <textarea id="source-text" placeholder="Paste your content here — up to 2,000 characters. Works for: policy documents, patient letters, legal notices, website copy, contracts, school communications…" maxlength="2000" aria-label="Text to translate"></textarea>
     <div class="char-count"><span id="char-num">0</span> / 2,000</div>
-
-    <div class="info-note">
-      ⚠️ Machine translation is for <strong>preview only</strong> — it misses context, legal nuance, and cultural accuracy. Order a certified translation below for anything official, medical, or legal.
-    </div>
-
     <div class="error-msg" id="error-msg"></div>
-
     <button class="btn-translate" id="translate-btn" disabled>
       <div class="spinner" id="btn-spinner"></div>
       <span id="btn-text">Preview Translation</span>
@@ -164,20 +141,65 @@
     </button>
   </div>
 
-  <!-- Output -->
-  <div class="card" id="output-card" style="display:none;">
-    <div class="output-label" id="output-label">Machine Translation Preview</div>
-    <div class="output-panel visible" id="output-panel">
-      <div class="output-placeholder" id="output-placeholder">Your translation will appear here.</div>
-      <div id="translated-text" style="display:none;"></div>
+  <!-- Draft output -->
+  <div class="card output-card" id="output-card">
+    <div class="draft-header">
+      <span class="draft-label" id="output-label">Machine Translation Preview</span>
+      <span class="draft-badge">⚠ Machine Draft — Not for Official Use</span>
+    </div>
+    <div class="output-panel" id="output-panel">
+      <div class="draft-watermark" aria-hidden="true">DRAFT</div>
+      <div id="translated-text"></div>
+    </div>
+    <div class="output-actions">
+      <button class="btn-copy" id="btn-copy">Copy text</button>
     </div>
 
-    <div class="order-cta" id="order-cta">
-      <div class="order-cta-text">
-        <h3>Need the certified version?</h3>
-        <p>Our ATA-certified translators will deliver an accurate, compliant translation — accepted by USCIS, courts, hospitals, and government agencies.</p>
+    <!-- What MT gets wrong -->
+    <div class="gaps-panel" id="gaps-panel">
+      <div class="gaps-heading">What this machine draft is missing:</div>
+      <ul class="gaps-list" id="gaps-list"></ul>
+    </div>
+  </div>
+
+  <!-- Conversion panel -->
+  <div class="conversion-panel" id="conversion-panel">
+    <div class="conv-card">
+      <div class="conv-top">
+        <div class="conv-eyebrow">Complete Your Translation</div>
+        <h2 class="conv-headline">Your draft is ready — now make it official.</h2>
+        <p class="conv-sub">Machine translation gives you a rough idea. Our ATA-certified translators deliver the accurate, legally defensible version that agencies, courts, and institutions actually accept.</p>
+        <div class="conv-reasons">
+          <div class="conv-reason">
+            <div class="conv-reason-icon">⚖️</div>
+            <h4>Legal &amp; Official Accuracy</h4>
+            <p>Machine translation misses legal nuance, jurisdiction-specific terminology, and context that can invalidate a document.</p>
+          </div>
+          <div class="conv-reason">
+            <div class="conv-reason-icon">🏛️</div>
+            <h4>Accepted by USCIS &amp; Courts</h4>
+            <p>Certified translations meet the strict requirements of immigration, legal, and government agencies. MT output does not.</p>
+          </div>
+          <div class="conv-reason">
+            <div class="conv-reason-icon">🩺</div>
+            <h4>Safe for Medical &amp; Clinical Use</h4>
+            <p>In healthcare, a single mistranslated term can harm a patient. Human review is the only responsible standard.</p>
+          </div>
+        </div>
+        <div class="conv-cta-row">
+          <a id="btn-order-pro" href="/portal/submit" class="btn-order-pro">Get My Certified Translation →</a>
+          <div class="conv-proof">
+            Starting at <strong>$24.99/page</strong> · ATA-certified translators<br>
+            Turnaround as fast as 24 hours
+          </div>
+        </div>
       </div>
-      <a id="btn-order" href="/portal/submit" class="btn-order">Order Professional Translation →</a>
+      <div class="conv-bottom">
+        <div class="conv-bottom-item">USCIS-accepted certified translation</div>
+        <div class="conv-bottom-item">Human-reviewed, not AI-only</div>
+        <div class="conv-bottom-item">40+ languages supported</div>
+        <div class="conv-bottom-item">Notarization available</div>
+      </div>
     </div>
   </div>
 
@@ -195,7 +217,23 @@
     th:'Thai',uk:'Ukrainian',tr:'Turkish',nl:'Dutch',ro:'Romanian'
   };
 
-  // Auth guard
+  // Context-aware "what's missing" messages
+  const GAPS_BY_LANG = {
+    es: ['Legal/medical terminology translated literally — may not match official Spanish standards used in USCIS filings',
+         'Regional dialect ignored — Spanish for Mexico, Spain, and Colombia differ significantly in formal documents',
+         'Gendered agreement errors are common in long-form MT output'],
+    ar: ['Right-to-left script formatting can break when inserted into legal templates',
+         'Arabic dialects differ dramatically from Modern Standard Arabic required in official documents',
+         'Formal legal register is rarely preserved by MT engines'],
+    zh: ['Simplified vs. Traditional Chinese distinction not automatically handled correctly',
+         'Legal and medical chengyu (idioms) are frequently mistranslated',
+         'Tonal nuance critical for pharmaceutical and clinical content is lost'],
+    default: ['Legal and medical terminology may be translated literally — missing jurisdiction-specific usage',
+              'Tone and register are not preserved — official documents require formal language MT cannot match',
+              'Cultural context and idiomatic expressions are often rendered incorrectly',
+              'No proofreader has reviewed this output for accuracy, fluency, or completeness']
+  };
+
   (async () => {
     const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
@@ -207,17 +245,15 @@
 
   const sourceText = document.getElementById('source-text');
   const charNum    = document.getElementById('char-num');
-  const charWrap   = charNum.parentElement;
-
   sourceText.addEventListener('input', function() {
     const len = this.value.length;
     charNum.textContent = len;
-    charWrap.classList.toggle('over', len >= 1900);
+    charNum.parentElement.classList.toggle('over', len >= 1900);
     document.getElementById('translate-btn').disabled = len === 0;
   });
 
   async function runTranslation() {
-    const text   = sourceText.value.trim();
+    const text = sourceText.value.trim();
     if (!text) return;
     const target   = document.getElementById('target-lang').value;
     const langName = LANG_NAMES[target] || target;
@@ -242,24 +278,33 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Translation failed.');
 
-      // Show output card
-      document.getElementById('output-card').style.display = 'block';
-      document.getElementById('output-label').textContent = 'Machine Translation Preview → ' + langName;
-      document.getElementById('output-placeholder').style.display = 'none';
-      const out = document.getElementById('translated-text');
-      out.textContent = data.translated;
-      out.style.display = 'block';
+      // Show draft output
+      const outputCard = document.getElementById('output-card');
+      outputCard.classList.add('visible');
+      document.getElementById('output-label').textContent = 'English → ' + langName + ' (Machine Draft)';
+      document.getElementById('translated-text').textContent = data.translated;
 
-      // Build order URL with pre-fill params
+      // Show "what's missing" gaps
+      const gaps = GAPS_BY_LANG[target] || GAPS_BY_LANG.default;
+      const gapsList = document.getElementById('gaps-list');
+      gapsList.innerHTML = gaps.map(g => '<li>' + g + '</li>').join('');
+      document.getElementById('gaps-panel').classList.add('visible');
+
+      // Build order URL — pass source text, target language, and service pre-selection
       const params = new URLSearchParams({
         service: 'certified_translation',
         target_lang: langName,
-        mt_preview: text.substring(0, 500) // pass first 500 chars as context
+        mt_preview: text.substring(0, 600),
+        mt_output: data.translated.substring(0, 300),
+        from_mt: '1'
       });
-      document.getElementById('btn-order').href = '/portal/submit?' + params.toString();
+      document.getElementById('btn-order-pro').href = '/portal/submit?' + params.toString();
 
-      document.getElementById('order-cta').classList.add('visible');
-      document.getElementById('output-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Show conversion panel
+      document.getElementById('conversion-panel').classList.add('visible');
+
+      // Scroll so draft output + conversion panel are in view
+      outputCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (err) {
       errorMsg.textContent = err.message || 'Something went wrong. Please try again.';
@@ -273,8 +318,15 @@
   }
 
   document.getElementById('translate-btn').addEventListener('click', runTranslation);
-  sourceText.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.key === 'Enter') runTranslation();
+  sourceText.addEventListener('keydown', function(e) { if (e.ctrlKey && e.key === 'Enter') runTranslation(); });
+
+  // Copy button
+  document.getElementById('btn-copy').addEventListener('click', function() {
+    const text = document.getElementById('translated-text').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      this.textContent = 'Copied ✓';
+      setTimeout(() => { this.textContent = 'Copy text'; }, 2000);
+    });
   });
 </script>
 </body>

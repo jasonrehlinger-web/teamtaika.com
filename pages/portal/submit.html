@@ -556,6 +556,48 @@
       flex-direction: column;
       gap: 1rem;
     }
+
+    /* ── MT preview banner ── */
+    .mt-banner {
+      display: none;
+      background: linear-gradient(135deg, #0a1628 0%, #1a3050 100%);
+      border: 1.5px solid rgba(201,168,76,.4);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .mt-banner::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle at top right, rgba(201,168,76,.12), transparent 70%);
+    }
+    .mt-banner.visible { display: block; }
+    .mt-banner-top { display: flex; align-items: flex-start; gap: 12px; }
+    .mt-banner-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .mt-banner-body { flex: 1; }
+    .mt-banner-eyebrow { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #c9a84c; margin-bottom: 4px; }
+    .mt-banner-title { font-size: 1rem; font-weight: 700; color: #fff; margin: 0 0 4px; }
+    .mt-banner-sub { font-size: .82rem; color: rgba(255,255,255,.65); margin: 0; line-height: 1.5; }
+    .mt-preview-block {
+      margin-top: .85rem; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1); border-radius: 8px;
+      padding: .65rem .9rem;
+    }
+    .mt-preview-label { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.4); margin-bottom: 4px; }
+    .mt-preview-text { font-size: .82rem; color: rgba(255,255,255,.7); font-style: italic; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    /* MT review panel in step 3 */
+    .mt-review-panel {
+      display: none;
+      margin-top: 1rem;
+      background: #fffdf7; border: 1.5px solid #fcd34d; border-radius: 10px;
+      padding: 1rem 1.25rem;
+    }
+    .mt-review-panel.visible { display: block; }
+    .mt-review-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #92400e; margin-bottom: .5rem; }
+    .mt-review-text { font-size: .82rem; color: #374151; font-style: italic; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
 <body>
@@ -590,6 +632,22 @@
     <!-- STEP 1 -->
     <div id="step-1" class="step-content">
       <div class="form-card">
+        <!-- MT Preview Banner (shown when arriving from /portal/translate) -->
+        <div class="mt-banner" id="mt-banner">
+          <div class="mt-banner-top">
+            <div class="mt-banner-icon">⚡</div>
+            <div class="mt-banner-body">
+              <div class="mt-banner-eyebrow">Continuing from MT Preview</div>
+              <p class="mt-banner-title">Your machine draft is ready — now make it official.</p>
+              <p class="mt-banner-sub">We've pre-filled your service and language below. Our ATA-certified translators will deliver the accurate, USCIS-accepted version that the machine draft can't replace.</p>
+            </div>
+          </div>
+          <div class="mt-preview-block" id="mt-preview-block" style="display:none">
+            <div class="mt-preview-label">Your original text (for reference)</div>
+            <div class="mt-preview-text" id="mt-preview-text"></div>
+          </div>
+        </div>
+
         <!-- Service dropdown -->
         <div class="form-group">
           <label for="service">Service <span class="required">*</span></label>
@@ -737,6 +795,13 @@
           <!-- populated by JS -->
         </div>
 
+
+        <!-- MT reference panel (visible when project originated from MT preview) -->
+        <div class="mt-review-panel" id="mt-review-panel">
+          <div class="mt-review-label">⚠ Machine Draft Reference (NOT the certified translation)</div>
+          <div class="mt-review-text" id="mt-review-text"></div>
+        </div>
+
         <div class="terms-check">
           <input type="checkbox" id="terms-agree">
           <label for="terms-agree" style="font-size:0.9rem;line-height:1.5;cursor:pointer;">
@@ -797,8 +862,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderPortalNav('portal-nav');
   }
 
-  // Pre-fill from MT preview tool (/portal/translate?service=...&target_lang=...&mt_preview=...)
+  // Pre-fill from MT preview tool (/portal/translate)
   const _params = new URLSearchParams(window.location.search);
+  const _fromMT = _params.get('from_mt') === '1';
+
   if (_params.get('service')) {
     const svcEl = document.getElementById('service');
     if (svcEl) {
@@ -806,11 +873,43 @@ document.addEventListener('DOMContentLoaded', async () => {
       svcEl.dispatchEvent(new Event('change'));
     }
   }
-  if (_params.get('mt_preview')) {
-    const notesEl = document.getElementById('client-notes');
-    if (notesEl && !notesEl.value) {
-      notesEl.value = '[MT Preview text for reference]:
-' + _params.get('mt_preview');
+
+  const _mtPreviewText = _params.get('mt_preview') || '';
+  const _mtOutputText  = _params.get('mt_output')  || '';
+
+  if (_fromMT) {
+    // Show contextual MT banner
+    const banner = document.getElementById('mt-banner');
+    if (banner) banner.classList.add('visible');
+    // Show source text snippet in banner
+    if (_mtPreviewText) {
+      const previewBlock = document.getElementById('mt-preview-block');
+      const previewTextEl = document.getElementById('mt-preview-text');
+      if (previewBlock && previewTextEl) {
+        previewTextEl.textContent = _mtPreviewText.length > 300
+          ? _mtPreviewText.substring(0, 300) + '\u2026'
+          : _mtPreviewText;
+        previewBlock.style.display = 'block';
+      }
+    }
+    // Pre-fill notes with MT reference
+    if (_mtPreviewText) {
+      const notesEl = document.getElementById('client-notes');
+      if (notesEl && !notesEl.value) {
+        notesEl.value = '[Source text from MT preview]:\n' + _mtPreviewText
+          + (_mtOutputText ? '\n\n[Machine draft output (for reference only \u2014 NOT certified)]:\n' + _mtOutputText : '');
+      }
+    }
+    // Prime the review-step MT panel
+    if (_mtPreviewText) {
+      const reviewText = document.getElementById('mt-review-text');
+      if (reviewText) {
+        reviewText.textContent = _mtPreviewText.length > 500
+          ? _mtPreviewText.substring(0, 500) + '\u2026'
+          : _mtPreviewText;
+      }
+      const reviewPanel = document.getElementById('mt-review-panel');
+      if (reviewPanel) reviewPanel.classList.add('visible');
     }
   }
 

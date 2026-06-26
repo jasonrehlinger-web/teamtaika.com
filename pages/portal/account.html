@@ -264,9 +264,9 @@
   <div class="card">
     <h2 class="card-heading">Change Password</h2>
     <form id="password-form" novalidate>
-      <div class="form-group">
+      <div class="form-group" id="current-password-group">
         <label for="current-password">Current Password <span style="color:#c0392b">*</span></label>
-        <input type="password" id="current-password" name="current_password" required autocomplete="current-password" />
+        <input type="password" id="current-password" name="current_password" autocomplete="current-password" />
       </div>
       <div class="form-group">
         <label for="new-password">New Password <span style="color:#c0392b">*</span></label>
@@ -312,15 +312,37 @@
   const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  /* ── Auth guard ── */
+  /* ── Auth guard — also handles password-recovery hash ── */
   let currentUser = null;
-  try {
-    currentUser = await requireAuth();
-  } catch (_) {
-    const { data: { session } } = await client.auth.getSession();
-    if (!session) { window.location.href = '/portal/login'; return; }
-    currentUser = session.user;
+  let isRecoverySession = false;
+
+  // Supabase puts access_token in hash for recovery links — exchange it for a session
+  const hashParams = new URLSearchParams(window.location.hash.slice(1));
+  if (hashParams.get('type') === 'recovery' && hashParams.get('access_token')) {
+    const { data, error } = await client.auth.setSession({
+      access_token:  hashParams.get('access_token'),
+      refresh_token: hashParams.get('refresh_token') || ''
+    });
+    if (!error && data.session) {
+      currentUser = data.session.user;
+      isRecoverySession = true;
+    }
   }
+
+  if (!currentUser) {
+    try {
+      currentUser = await requireAuth();
+    } catch (_) {
+      const { data: { session } } = await client.auth.getSession();
+      if (!session) { window.location.href = '/portal'; return; }
+      currentUser = session.user;
+    }
+  }
+
+  // Check if this is a recovery session via onAuthStateChange
+  client.auth.onAuthStateChange((event) => {
+    if (event === 'PASSWORD_RECOVERY') isRecoverySession = true;
+  });
 
   /* ── Toast helper ── */
   function showToast(msg, duration = 3000) {
@@ -369,6 +391,19 @@
   }
 
   await loadProfile();
+
+  /* Hide current-password field when in recovery mode */
+  if (isRecoverySession) {
+    const cpGroup = document.getElementById('current-password-group');
+    if (cpGroup) cpGroup.style.display = 'none';
+    // Show a helpful banner
+    const pwCard = document.querySelector('#password-form').closest('.card');
+    const banner = document.createElement('div');
+    banner.className = 'inline-message info';
+    banner.style.cssText = 'margin-bottom:1rem;padding:.75rem 1rem;background:#e8f4fd;border-radius:6px;color:#0B1E35;border-left:4px solid #B8913A;';
+    banner.textContent = 'Set a new password for your account.';
+    pwCard.querySelector('h2').after(banner);
+  }
 
   /* ── Profile save ── */
   document.getElementById('profile-form').addEventListener('submit', async function (e) {
@@ -443,7 +478,7 @@
     const newPw     = document.getElementById('new-password').value;
     const confirmPw = document.getElementById('confirm-password').value;
 
-    if (!currentPw) {
+    if (!isRecoverySession && !currentPw) {
       showMessage('password-message', 'Please enter your current password.', 'error');
       return;
     }
@@ -460,17 +495,18 @@
     btn.disabled = true;
     btn.textContent = 'Updating…';
 
-    /* Re-authenticate with current password first */
-    const { error: signInErr } = await client.auth.signInWithPassword({
-      email: currentUser.email,
-      password: currentPw
-    });
-
-    if (signInErr) {
-      btn.disabled = false;
-      btn.textContent = 'Update Password';
-      showMessage('password-message', 'Current password is incorrect.', 'error');
-      return;
+    /* In recovery mode, skip re-auth — session already proves ownership */
+    if (!isRecoverySession) {
+      const { error: signInErr } = await client.auth.signInWithPassword({
+        email: currentUser.email,
+        password: currentPw
+      });
+      if (signInErr) {
+        btn.disabled = false;
+        btn.textContent = 'Update Password';
+        showMessage('password-message', 'Current password is incorrect.', 'error');
+        return;
+      }
     }
 
     const { error } = await client.auth.updateUser({ password: newPw });

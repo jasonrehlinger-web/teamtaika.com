@@ -1371,9 +1371,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Notify Jason about new project submission (fire-and-forget)
       try {
         const { data: { session: _sess } } = await window._supabaseClient.auth.getSession();
+        const _sess2 = await window._supabaseClient?.auth?.getSession();
+        const _notifyToken = _sess2?.data?.session?.access_token;
         fetch('/.netlify/functions/notify', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (_notifyToken || '') },
           body: JSON.stringify({
             type: 'new_project',
             data: {

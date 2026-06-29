@@ -39,6 +39,23 @@ function isRateLimited(ip) {
   return entry.count > limit;
 }
 
+
+/* ── Input validators ────────────────────────────────────────────────────────
+   isValidUUID: prevents PostgREST query injection via malformed ID params.
+   VALID_STATUSES: allowlist for project status transitions.
+   ─────────────────────────────────────────────────────────────────────────── */
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function isValidUUID(val) {
+  return typeof val === 'string' && UUID_RE.test(val);
+}
+
+const VALID_STATUSES = new Set([
+  'pending_review', 'reviewing', 'quoted', 'in_progress',
+  'qa_review', 'delivered', 'completed', 'cancelled', 'on_hold'
+]);
+
+const VALID_PRIORITIES = new Set(['standard', 'rush', 'urgent']);
+
 /* ── Main handler ── */
 exports.handler = async function(event, context) {
   // Preflight
@@ -131,7 +148,7 @@ exports.handler = async function(event, context) {
         return await handleGetBlacklist(adminProfile);
 
       default:
-        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Unknown action: ' + action }) };
+        return { statusCode: 400, headers, body: JSON.stringify({ error: 'Unknown action' }) };
     }
   } catch (err) {
     console.error('[portal-admin] Unhandled error:', err);
@@ -204,6 +221,12 @@ async function handleUpdateProjectStatus(body, adminProfile) {
   if (!projectId || !newStatus) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'projectId and newStatus required' }) };
   }
+  if (!isValidUUID(projectId)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid projectId' }) };
+  }
+  if (!VALID_STATUSES.has(newStatus)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid status value' }) };
+  }
 
   // Get current status first
   const getRes = await sbGet(`/rest/v1/projects?id=eq.${encodeURIComponent(projectId)}&select=status`);
@@ -250,11 +273,19 @@ async function handleUpdateProjectAdmin(body, _adminProfile) {
   if (!projectId || !updates || typeof updates !== 'object') {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'projectId and updates object required' }) };
   }
+  if (!isValidUUID(projectId)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid projectId' }) };
+  }
 
   const ALLOWED = new Set(['assigned_to','quote_amount','quote_note','due_date','priority','admin_notes','status']);
   const filtered = {};
   for (const [k, v] of Object.entries(updates)) {
-    if (ALLOWED.has(k)) filtered[k] = v;
+    if (!ALLOWED.has(k)) continue;
+    if (k === 'quote_amount' && (v !== null && v !== undefined) && isNaN(Number(v))) continue;
+    if (k === 'priority' && v && !VALID_PRIORITIES.has(v)) continue;
+    if (k === 'status' && v && !VALID_STATUSES.has(v)) continue;
+    if (k === 'assigned_to' && v && !isValidUUID(v)) continue;
+    filtered[k] = v;
   }
   filtered.updated_at = new Date().toISOString();
 
@@ -280,6 +311,9 @@ async function handleGetSignedUrl(body) {
   const { filePath } = body;
   if (!filePath) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'filePath required' }) };
+  }
+  if (typeof filePath !== 'string' || filePath.includes('..') || filePath.startsWith('/') || /[\x00-\x1f]/.test(filePath)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid file path' }) };
   }
 
   const res = await fetch(
@@ -437,6 +471,9 @@ async function handleRemoveTeamMember(body, adminProfile) {
   if (!userId) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'userId required' }) };
   }
+  if (!isValidUUID(userId)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid userId' }) };
+  }
 
   // Only super_admin can remove members
   if (adminProfile.role !== 'super_admin') {
@@ -586,6 +623,7 @@ async function handleInviteClient(body, _adminProfile) {
 async function handleBlockClient(body, _adminProfile) {
   const { clientId, block } = body;
   if (!clientId) throw new Error('clientId required');
+  if (!isValidUUID(clientId)) throw new Error('Invalid clientId');
   const res = await sbPatch(
     '/rest/v1/profiles?id=eq.' + clientId + '&role=eq.client',
     { is_active: !block, updated_at: new Date().toISOString() } // block=true → is_active=false
@@ -598,6 +636,7 @@ async function handleBlockClient(body, _adminProfile) {
 async function handleDeleteClient(body, _adminProfile) {
   const { clientId, blacklistEmail } = body;
   if (!clientId) throw new Error('clientId required');
+  if (!isValidUUID(clientId)) throw new Error('Invalid clientId');
 
   // Fetch email first (for optional blacklisting)
   let email = null;
@@ -656,7 +695,8 @@ async function handleAddToBlacklist(body, adminProfile) {
 async function handleRemoveFromBlacklist(body, _adminProfile) {
   const { id } = body;
   if (!id) throw new Error('id required');
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/blacklisted_emails?id=eq.${id}`, {
+  if (!/^[0-9]+$/.test(String(id)) && !isValidUUID(String(id))) throw new Error('Invalid id');
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/blacklisted_emails?id=eq.${encodeURIComponent(id)}`, {
     method: 'DELETE',
     headers: sbHeaders()
   });

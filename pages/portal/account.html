@@ -534,9 +534,11 @@
       // Notify Jason when an invited client sets their password for the first time
       if (isRecoverySession && hashType === 'invite') {
         try {
+          const _notifySess = await window._supabaseClient?.auth?.getSession();
+          const _notifyTok = _notifySess?.data?.session?.access_token;
           fetch('/.netlify/functions/notify', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (_notifyTok || '') },
             body: JSON.stringify({
               type: 'new_signup',
               data: {

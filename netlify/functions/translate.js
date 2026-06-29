@@ -5,14 +5,35 @@ const CORS_HEADERS = {
   'Content-Type': 'application/json'
 };
 
+/* ── Rate limiter: 20 requests per minute per IP ── */
+const _rateLimitMap = new Map();
+function isRateLimited(ip) {
+  const now = Date.now();
+  const window = 60_000;
+  const limit = 20;
+  const entry = _rateLimitMap.get(ip) || { count: 0, start: now };
+  if (now - entry.start > window) {
+    _rateLimitMap.set(ip, { count: 1, start: now });
+    return false;
+  }
+  entry.count++;
+  _rateLimitMap.set(ip, entry);
+  return entry.count > limit;
+}
+
 exports.handler = async function(event, context) {
-  // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: CORS_HEADERS, body: '' };
   }
 
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+  }
+
+  // Rate limit
+  const clientIp = (event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown').split(',')[0].trim();
+  if (isRateLimited(clientIp)) {
+    return { statusCode: 429, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Too many requests — please wait a moment and try again.' }) };
   }
 
   const API_KEY = process.env.GOOGLE_TRANSLATE_API_KEY;
@@ -31,6 +52,10 @@ exports.handler = async function(event, context) {
 
   if (!text || !target) {
     return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Missing text or target language' }) };
+  }
+
+  if (typeof text !== 'string' || typeof target !== 'string') {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid input types' }) };
   }
 
   if (text.length > 2000) {

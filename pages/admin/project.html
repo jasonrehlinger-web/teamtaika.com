@@ -468,12 +468,17 @@ function populateControls(p) {
   if (p.admin_notes) document.getElementById('admin-notes').value = p.admin_notes;
 }
 
-function populateSidebar(p) {
+  function esc(s) {
+    if (s == null) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+  }
+
+  function populateSidebar(p) {
   const c = p.client_profile;
   if (c) {
     document.getElementById('client-name').textContent = c.full_name || '—';
     document.getElementById('client-org').textContent = c.organization || '—';
-    document.getElementById('client-email').innerHTML = c.email ? '<a href="mailto:' + c.email + '">' + c.email + '</a>' : '—';
+    document.getElementById('client-email').innerHTML = c.email ? '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>' : '—';
     document.getElementById('client-phone').textContent = c.phone || '—';
     document.getElementById('client-profile-link').href = '/admin/client?id=' + c.id;
   }
@@ -580,14 +585,25 @@ async function loadSourceFiles() {
     el.innerHTML = '<p class="empty-msg">No source files uploaded</p>';
     return;
   }
-  el.innerHTML = '<table class="files-table"><thead><tr><th>File Name</th><th>Size</th><th>Uploaded By</th><th>Date</th><th></th></tr></thead><tbody>' +
-    data.map(f => '<tr>' +
-      '<td>' + (f.file_name || f.file_path.split('/').pop()) + '</td>' +
+  const fileTable = document.createElement('table');
+  fileTable.className = 'files-table';
+  fileTable.innerHTML = '<thead><tr><th>File Name</th><th>Size</th><th>Uploaded By</th><th>Date</th><th></th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  data.forEach(f => {
+    const tr = document.createElement('tr');
+    const safeName = esc(f.file_name || (f.file_path || '').split('/').pop() || '—');
+    const safeUploader = esc(f.uploader ? f.uploader.full_name : '—');
+    tr.innerHTML = '<td>' + safeName + '</td>' +
       '<td>' + fmtBytes(f.file_size) + '</td>' +
-      '<td>' + (f.uploader ? f.uploader.full_name : '—') + '</td>' +
+      '<td>' + safeUploader + '</td>' +
       '<td>' + fmtDate(f.created_at) + '</td>' +
-      '<td><button class="btn-sm" onclick="downloadFile(\'' + f.file_path + '\')">Download</button></td>' +
-    '</tr>').join('') + '</tbody></table>';
+      '<td><button class="btn-sm btn-download-file">Download</button></td>';
+    tr.querySelector('.btn-download-file').addEventListener('click', () => downloadFile(f.file_path));
+    tbody.appendChild(tr);
+  });
+  fileTable.appendChild(tbody);
+  el.innerHTML = '';
+  el.appendChild(fileTable);
 }
 
 async function downloadFile(filePath) {
@@ -621,7 +637,7 @@ function addDeliveryFiles(files) {
 function renderDeliveryFileList() {
   btnUpload.disabled = deliveryFiles.length === 0;
   fileList.innerHTML = deliveryFiles.map((f, i) =>
-    '<div class="upload-file-item"><span>' + f.name + ' (' + fmtBytes(f.size) + ')</span><button class="remove-file" data-i="' + i + '">✕</button></div>'
+    '<div class="upload-file-item"><span>' + esc(f.name) + ' (' + fmtBytes(f.size) + ')</span><button class="remove-file" data-i="' + i + '">✕</button></div>'
   ).join('');
   fileList.querySelectorAll('.remove-file').forEach(btn => {
     btn.addEventListener('click', () => { deliveryFiles.splice(parseInt(btn.dataset.i), 1); renderDeliveryFileList(); });
@@ -639,7 +655,8 @@ document.getElementById('btn-upload-delivery').addEventListener('click', async (
 
   try {
     for (const file of deliveryFiles) {
-      const path = PROJECT_ID + '/delivery/' + Date.now() + '_' + file.name;
+      const safeFn = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const path = PROJECT_ID + '/delivery/' + Date.now() + '_' + safeFn;
       const { error: upErr } = await _sb.storage.from('project-files').upload(path, file);
       if (upErr) throw upErr;
       await _sb.from('project_files').insert({
@@ -679,13 +696,15 @@ function renderMessages(messages) {
     const isAdmin = m.sender && m.sender.role === 'admin';
     const cls = isInternal ? 'internal' : (isAdmin ? 'admin' : 'client');
     const name = m.sender ? m.sender.full_name : 'Unknown';
+    const safeBody = esc(m.body || '').replace(/\n/g, '<br>');
+    const safeName = esc(name);
     return '<div class="message-bubble ' + cls + '">' +
       '<div class="msg-meta">' +
-      '<strong>' + name + '</strong>' +
+      '<strong>' + safeName + '</strong>' +
       (isInternal ? '<span class="msg-internal-tag">Internal</span>' : '') +
       '<span>' + fmtDateTime(m.created_at) + '</span>' +
       '</div>' +
-      '<div class="msg-text">' + (m.body || '').replace(/</g, '&lt;').replace(/\n/g, '<br>') + '</div>' +
+      '<div class="msg-text">' + safeBody + '</div>' +
       '</div>';
   }).join('');
   thread.scrollTop = thread.scrollHeight;
@@ -746,7 +765,7 @@ async function loadStatusHistory() {
     '<div class="history-dot"></div>' +
     '<div class="history-body">' +
     '<div class="history-change"><span class="badge badge-' + (h.from_status||'') + '">' + (h.from_status||'').replace('_',' ') + '</span> <span class="arrow">→</span> <span class="badge badge-' + (h.to_status||'') + '">' + (h.to_status||'').replace('_',' ') + '</span></div>' +
-    (h.note ? '<div class="history-note">' + h.note.replace(/</g,'&lt;') + '</div>' : '') +
+    (h.note ? '<div class="history-note">' + esc(h.note).replace(/\n/g,'<br>') + '</div>' : '') +
     '<div class="history-meta">by ' + (h.changer ? h.changer.full_name : 'Unknown') + ' · ' + fmtDateTime(h.created_at) + '</div>' +
     '</div></div>'
   ).join('');

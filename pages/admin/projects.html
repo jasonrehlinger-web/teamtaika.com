@@ -244,7 +244,7 @@ let selectedStatuses = [];
 
 async function requireAdmin() {
   const { data: { session } } = await _sb.auth.getSession();
-  if (!session) { window.location.href = '/portal/login'; return null; }
+  if (!session) { window.location.href = '/admin'; return null; }
   const { data: profile } = await _sb.from('profiles').select('role, full_name').eq('id', session.user.id).single();
   if (!profile || !['admin','super_admin'].includes(profile.role)) { window.location.href = '/portal/dashboard'; return null; }
   document.getElementById('nav-username').textContent = profile.full_name || session.user.email;
@@ -366,33 +366,43 @@ function fmtDate(iso) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+}
+
+const KNOWN_STATUSES = new Set(['pending_review','reviewing','quoted','in_progress','qa_review','delivered','completed','cancelled','on_hold']);
+const KNOWN_PRIORITIES = new Set(['standard','rush','urgent','normal','high','low']);
+
 function statusBadge(s) {
-  return '<span class="badge badge-' + (s || '') + '">' + (s || '').replace('_', ' ') + '</span>';
+  const safe = KNOWN_STATUSES.has(s) ? s : 'pending_review';
+  return '<span class="badge badge-' + safe + '">' + safe.replace(/_/g,' ') + '</span>';
 }
 
 function priorityBadge(p) {
   const lp = (p || 'standard').toLowerCase();
-  return '<span class="badge badge-' + lp + '">' + lp + '</span>';
+  const safe = KNOWN_PRIORITIES.has(lp) ? lp : 'standard';
+  return '<span class="badge badge-' + safe + '">' + safe + '</span>';
 }
 
 function renderRows(rows) {
   const tbody = document.getElementById('projects-tbody');
   if (!rows.length) { tbody.innerHTML = ''; return; }
   tbody.innerHTML = rows.map(p =>
-    '<tr data-id="' + p.id + '">' +
-    '<td class="col-id">' + shortId(p.id) + '</td>' +
-    '<td>' + p.client + '</td>' +
-    '<td>' + (p.service_name || '—') + '</td>' +
-    '<td class="col-title"><a href="/admin/project?id=' + p.id + '" onclick="event.stopPropagation()">' + (p.title || '(untitled)') + '</a></td>' +
+    '<tr data-id="' + esc(p.id) + '">' +
+    '<td class="col-id">' + esc(shortId(p.id)) + '</td>' +
+    '<td>' + esc(p.client) + '</td>' +
+    '<td>' + esc(p.service_name || '—') + '</td>' +
+    '<td class="col-title"><a href="/admin/project?id=' + esc(p.id) + '" onclick="event.stopPropagation()">' + esc(p.title || '(untitled)') + '</a></td>' +
     '<td>' + statusBadge(p.status) + '</td>' +
     '<td>' + priorityBadge(p.priority) + '</td>' +
     '<td>' + fmtDate(p.created_at) + '</td>' +
-    '<td>' + p.assigned_to + '</td>' +
-    '<td><a class="btn-open" href="/admin/project?id=' + p.id + '" onclick="event.stopPropagation()">Open →</a></td>' +
+    '<td>' + esc(p.assigned_to) + '</td>' +
+    '<td><a class="btn-open" href="/admin/project?id=' + esc(p.id) + '" onclick="event.stopPropagation()">Open &rarr;</a></td>' +
     '</tr>'
   ).join('');
   tbody.querySelectorAll('tr[data-id]').forEach(row => {
-    row.addEventListener('click', () => { window.location.href = '/admin/project?id=' + row.dataset.id; });
+    row.addEventListener('click', () => { window.location.href = '/admin/project?id=' + encodeURIComponent(row.dataset.id); });
   });
 }
 

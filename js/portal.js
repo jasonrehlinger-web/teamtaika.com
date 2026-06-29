@@ -337,6 +337,20 @@ async function getTeamMembers() {
   return data || [];
 }
 
+
+// ---------------------------------------------------------------------------
+// HTML escape utility — prevents XSS when inserting user content into innerHTML
+// ---------------------------------------------------------------------------
+function esc(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
 // ---------------------------------------------------------------------------
 // UI utility functions
 // ---------------------------------------------------------------------------
@@ -364,7 +378,14 @@ function showToast(message, type, duration) {
 
   var toast = document.createElement('div');
   toast.style.cssText = 'background:' + c.bg + ';border:1px solid ' + c.border + ';border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;min-width:260px;max-width:380px;box-shadow:0 4px 16px rgba(0,0,0,0.4);pointer-events:auto;opacity:0;transform:translateX(40px);transition:opacity 0.25s ease,transform 0.25s ease;';
-  toast.innerHTML = '<span style="color:' + c.icon + ';font-weight:bold;font-size:16px;flex-shrink:0;">' + icon + '</span><span style="color:' + c.text + ';font-size:14px;line-height:1.4;">' + message + '</span>';
+  var iconSpan = document.createElement('span');
+  iconSpan.style.cssText = 'color:' + c.icon + ';font-weight:bold;font-size:16px;flex-shrink:0;';
+  iconSpan.textContent = icon;
+  var msgSpan = document.createElement('span');
+  msgSpan.style.cssText = 'color:' + c.text + ';font-size:14px;line-height:1.4;';
+  msgSpan.textContent = message;
+  toast.appendChild(iconSpan);
+  toast.appendChild(msgSpan);
 
   container.appendChild(toast);
 
@@ -519,7 +540,7 @@ function closeModal() {
 
 function confirmDialog(message, onConfirm, onCancel) {
   var html = '<div style="text-align:center;">' +
-    '<p style="color:#e8eaf0;font-size:16px;line-height:1.6;margin:0 0 24px;">' + message + '</p>' +
+    '<p style="color:#e8eaf0;font-size:16px;line-height:1.6;margin:0 0 24px;">' + esc(message) + '</p>' +
     '<div style="display:flex;gap:12px;justify-content:center;">' +
     '<button id="confirm-cancel-btn" style="padding:10px 24px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#a0a8b8;font-size:14px;cursor:pointer;">Cancel</button>' +
     '<button id="confirm-ok-btn" style="padding:10px 24px;border-radius:8px;border:none;background:#c9a84c;color:#0d0f1a;font-size:14px;font-weight:600;cursor:pointer;">Confirm</button>' +
@@ -574,15 +595,21 @@ function buildProjectCard(project) {
   var dateStr = formatDate(project.created_at);
   var priorityLabel = priority.charAt(0).toUpperCase() + priority.slice(1);
 
+  var safeId = esc(project.id);
+  var safeTitle = esc(project.title || 'Untitled Project');
+  var safeService = esc(serviceName);
+  var safePriority = esc(priorityLabel);
+  var safeStatusLabel = esc(statusLabel);
+  var safeStatusClass = esc(statusClass);
   return '<div class="project-card" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;transition:border-color 0.2s ease,transform 0.2s ease;">' +
     '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;">' +
-    '<span class="' + statusClass + '" style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.08);color:#a0a8b8;">' + statusLabel + '</span>' +
-    '<span style="font-size:11px;font-weight:600;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:' + priorityColor + '22;color:' + priorityColor + ';flex-shrink:0;">' + priorityLabel + '</span>' +
+    '<span class="' + safeStatusClass + '" style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.08);color:#a0a8b8;">' + safeStatusLabel + '</span>' +
+    '<span style="font-size:11px;font-weight:600;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:' + priorityColor + '22;color:' + priorityColor + ';flex-shrink:0;">' + safePriority + '</span>' +
     '</div>' +
-    '<div style="color:#c9a84c;font-size:12px;font-weight:500;margin-bottom:4px;">' + serviceName + '</div>' +
-    '<h3 style="color:#e8eaf0;font-size:16px;font-weight:600;margin:0 0 8px;line-height:1.3;">' + (project.title || 'Untitled Project') + '</h3>' +
+    '<div style="color:#c9a84c;font-size:12px;font-weight:500;margin-bottom:4px;">' + safeService + '</div>' +
+    '<h3 style="color:#e8eaf0;font-size:16px;font-weight:600;margin:0 0 8px;line-height:1.3;">' + safeTitle + '</h3>' +
     '<div style="color:#6b7280;font-size:12px;margin-bottom:16px;">Submitted ' + dateStr + '</div>' +
-    '<a href="/portal/project?id=' + project.id + '" style="display:inline-flex;align-items:center;gap:6px;color:#c9a84c;font-size:14px;font-weight:500;text-decoration:none;padding:8px 16px;border:1px solid #c9a84c44;border-radius:8px;transition:background 0.2s ease;">View &rarr;</a>' +
+    '<a href="/portal/project?id=' + safeId + '" style="display:inline-flex;align-items:center;gap:6px;color:#c9a84c;font-size:14px;font-weight:500;text-decoration:none;padding:8px 16px;border:1px solid #c9a84c44;border-radius:8px;transition:background 0.2s ease;">View &rarr;</a>' +
     '</div>';
 }
 

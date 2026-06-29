@@ -629,12 +629,11 @@
   }
 
   function priorityBadge(p) {
-    const cls = {
-      high:   'priority-high',
-      medium: 'priority-medium',
-      low:    'priority-low'
-    }[p] || 'priority-normal';
-    return `<span class="priority-badge ${cls}">${p || 'Normal'}</span>`;
+    const KNOWN = { high: 'priority-high', medium: 'priority-medium', low: 'priority-low', standard: 'priority-normal', rush: 'priority-medium', urgent: 'priority-high', normal: 'priority-normal' };
+    const lp = (p || '').toLowerCase();
+    const cls = KNOWN[lp] || 'priority-normal';
+    const label = KNOWN[lp] ? (lp.charAt(0).toUpperCase() + lp.slice(1)) : 'Normal';
+    return `<span class="priority-badge ${cls}">${label}</span>`;
   }
 
   function statusClass(status) {
@@ -880,11 +879,13 @@
 
   /* ── XSS helper ── */
   function escHtml(str) {
+    if (str == null) return '';
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;');
   }
 
   /* ── Boot ── */

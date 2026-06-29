@@ -532,6 +532,11 @@
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
       }
 
+      function esc(s) {
+        if (s == null) return '';
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+      }
+
       // === Load project ===
       let project = null;
       try {
@@ -557,6 +562,16 @@
         document.getElementById('loading-state').style.display = 'none';
         document.getElementById('error-state').style.display = 'block';
         document.getElementById('error-msg').textContent = 'Project not found.';
+        return;
+      }
+
+      // C-2: Ownership check — verify this project belongs to the current user
+      const _sess = await window._supabaseClient?.auth?.getSession();
+      const _uid = _sess?.data?.session?.user?.id;
+      if (_uid && project.client_id && project.client_id !== _uid) {
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('error-state').style.display = 'block';
+        document.getElementById('error-msg').textContent = 'Access denied.';
         return;
       }
 
@@ -587,16 +602,16 @@
       const priorityClass = 'priority-' + (project.priority || 'standard');
 
       const infoRows = [
-        { label: 'Service', value: project.service_name || project.service || '—' },
-        { label: 'Source Language', value: project.source_language || '—' },
+        { label: 'Service', value: esc(project.service_name || project.service || '—'), trusted: true },
+        { label: 'Source Language', value: esc(project.source_language || '—'), trusted: true },
         { label: 'Target Language(s)', value: targetLangs },
-        { label: 'Priority', value: '<span class="priority-badge ' + priorityClass + '">' + priorityLabel + '</span>' },
-        { label: 'Submitted', value: formatDate(project.created_at) },
-        { label: 'Due Date', value: project.due_date ? formatDate(project.due_date) : 'TBD' },
-        { label: 'Quote', value: project.quote_amount ? formatCurrency(project.quote_amount) : 'Pending quote' },
+        { label: 'Priority', value: '<span class="priority-badge ' + esc(priorityClass) + '">' + esc(priorityLabel) + '</span>', trusted: true },
+        { label: 'Submitted', value: formatDate(project.created_at), trusted: true },
+        { label: 'Due Date', value: project.due_date ? formatDate(project.due_date) : 'TBD', trusted: true },
+        { label: 'Quote', value: project.quote_amount ? formatCurrency(project.quote_amount) : 'Pending quote', trusted: true },
       ];
       document.getElementById('info-grid').innerHTML = infoRows.map(function(r) {
-        return '<div class="info-row"><span class="info-label">' + r.label + '</span><span class="info-value">' + r.value + '</span></div>';
+        return '<div class="info-row"><span class="info-label">' + esc(r.label) + '</span><span class="info-value">' + (r.trusted ? r.value : esc(r.value)) + '</span></div>';
       }).join('');
 
       // === Load files ===
@@ -633,10 +648,10 @@
         table.className = 'files-table';
         const rows = files.map(function(f) {
           return '<tr>' +
-            '<td class="file-name-cell">' + (f.file_name || f.name || '—') + '</td>' +
+            '<td class="file-name-cell">' + esc(f.file_name || f.name || '—') + '</td>' +
             '<td>' + (f.file_size ? formatBytes(f.file_size) : '—') + '</td>' +
             '<td>' + formatDate(f.created_at) + '</td>' +
-            '<td><button class="btn-download" data-path="' + (f.file_path || '') + '" data-id="' + (f.id || '') + '">↓ Download</button></td>' +
+            '<td><button class="btn-download" data-path="' + esc(f.file_path || '') + '" data-id="' + esc(f.id || '') + '">↓ Download</button></td>' +
             '</tr>';
         }).join('');
         table.innerHTML =
@@ -704,10 +719,20 @@
         const isClient = msg.sender_role !== 'admin';
         const bubble = document.createElement('div');
         bubble.className = 'message-bubble ' + (isClient ? 'from-client' : 'from-admin');
-        bubble.setAttribute('data-message-id', msg.id);
-        bubble.innerHTML =
-          '<div style="line-height:1.55;">' + (msg.body || msg.message || msg.content || '') + '</div>' +
-          '<div class="message-meta">' + (msg.sender_name || (isClient ? 'You' : 'Taika Team')) + ' · ' + formatDateTime(msg.created_at) + '</div>';
+        bubble.setAttribute('data-message-id', msg.id || '');
+        // Build message body safely using textContent to prevent XSS (C-1)
+        const bodyDiv = document.createElement('div');
+        bodyDiv.style.lineHeight = '1.55';
+        const rawBody = msg.body || msg.message || msg.content || '';
+        rawBody.split('\n').forEach(function(line, i) {
+          if (i > 0) bodyDiv.appendChild(document.createElement('br'));
+          bodyDiv.appendChild(document.createTextNode(line));
+        });
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'message-meta';
+        metaDiv.textContent = (msg.sender_name || (isClient ? 'You' : 'Taika Team')) + ' · ' + formatDateTime(msg.created_at);
+        bubble.appendChild(bodyDiv);
+        bubble.appendChild(metaDiv);
         return bubble;
       }
 
@@ -840,7 +865,7 @@
         sidebarDetails.innerHTML = '<p style="color:#94a3b8;font-size:0.875rem;">No additional details.</p>';
       } else {
         sidebarDetails.innerHTML = sidebarRows.map(function(r) {
-          return '<div class="sidebar-detail"><span class="sidebar-label">' + r.label + '</span><span class="sidebar-value">' + r.value + '</span></div>';
+          return '<div class="sidebar-detail"><span class="sidebar-label">' + esc(r.label) + '</span><span class="sidebar-value">' + esc(r.value) + '</span></div>';
         }).join('');
       }
 

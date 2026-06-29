@@ -1,24 +1,39 @@
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': 'https://teamtaika.com',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   'Content-Type': 'application/json'
 };
 
-/* ── Rate limiter: 20 requests per minute per IP ── */
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+/* ── Rate limiter: 20 req/min authenticated, 10 req/min unauthenticated ── */
 const _rateLimitMap = new Map();
-function isRateLimited(ip) {
+function isRateLimited(ip, authenticated) {
   const now = Date.now();
-  const window = 60_000;
-  const limit = 20;
-  const entry = _rateLimitMap.get(ip) || { count: 0, start: now };
-  if (now - entry.start > window) {
-    _rateLimitMap.set(ip, { count: 1, start: now });
+  const windowMs = 60_000;
+  const limit = authenticated ? 20 : 10;
+  const key = ip + (authenticated ? ':auth' : ':anon');
+  const entry = _rateLimitMap.get(key) || { count: 0, start: now };
+  if (now - entry.start > windowMs) {
+    _rateLimitMap.set(key, { count: 1, start: now });
     return false;
   }
   entry.count++;
-  _rateLimitMap.set(ip, entry);
+  _rateLimitMap.set(key, entry);
   return entry.count > limit;
+}
+
+async function verifyToken(authHeader) {
+  if (!authHeader || !authHeader.startsWith('Bearer ') || !SUPABASE_KEY) return false;
+  try {
+    const token = authHeader.slice(7);
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'Authorization': `Bearer ${token}`, 'apikey': SUPABASE_KEY }
+    });
+    return res.ok;
+  } catch { return false; }
 }
 
 exports.handler = async function(event, context) {
@@ -30,9 +45,13 @@ exports.handler = async function(event, context) {
     return { statusCode: 405, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Method Not Allowed' }) };
   }
 
+  // Auth check (optional — stricter rate limit for unauthenticated callers)
+  const authHeader = event.headers['authorization'] || event.headers['Authorization'] || '';
+  const authenticated = await verifyToken(authHeader);
+
   // Rate limit
   const clientIp = (event.headers['x-forwarded-for'] || event.headers['client-ip'] || 'unknown').split(',')[0].trim();
-  if (isRateLimited(clientIp)) {
+  if (isRateLimited(clientIp, authenticated)) {
     return { statusCode: 429, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Too many requests — please wait a moment and try again.' }) };
   }
 

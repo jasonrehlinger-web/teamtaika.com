@@ -240,6 +240,8 @@
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/portal'; return; }
+    // Store token for authenticated API calls (M-7)
+    window._translateToken = session.access_token;
     if (typeof renderPortalNav === 'function') renderPortalNav('portal-nav');
   })();
 
@@ -272,7 +274,10 @@
     try {
       const res  = await fetch('/.netlify/functions/translate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + (window._translateToken || '')
+        },
         body: JSON.stringify({ text, target })
       });
       const data = await res.json();

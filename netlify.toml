@@ -595,6 +595,11 @@
   status = 301
 
 [[redirects]]
+  from = "/blog/google-translate-official-documents"
+  to = "/pages/resources/blog/google-translate-official-documents.html"
+  status = 301
+
+[[redirects]]
   from = "/blog/certified-vs-notarized-translation"
   to = "/pages/resources/blog/certified-vs-notarized-translation.html"
   status = 301

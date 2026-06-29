@@ -409,50 +409,28 @@
     });
   }
 
-  // ── EmailJS configuration ──────────────────────────────────────────────
-  // Replace these three values after creating your EmailJS account.
-  // See setup instructions at the bottom of this file.
-  var EMAILJS_PUBLIC_KEY  = 'eMvjaN3wAkKGNHzFw';
-  var EMAILJS_SERVICE_ID  = 'service_3ehbwfs';
-  var EMAILJS_TEMPLATE_ID = 'template_wlqinrc';
-
-  var emailjsReady = false;
-
-  function loadEmailJS(callback) {
-    if (emailjsReady) { callback(); return; }
-    var s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    s.onload = function() {
-      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-      emailjsReady = true;
-      callback();
-    };
-    s.onerror = function() { console.warn('[EmailJS] SDK failed to load'); callback(); };
-    document.head.appendChild(s);
-  }
-
+  // ── Order confirmation email (server-side via /.netlify/functions/send-email) ──
   function sendConfirmationEmail(details, description) {
-    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') return; // not configured yet
-    var payer      = details.payer || {};
-    var name       = (payer.name ? payer.name.given_name + ' ' + payer.name.surname : 'Customer').trim();
-    var email      = payer.email_address || '';
-    var amount     = details.purchase_units && details.purchase_units[0]
-                     ? '$' + details.purchase_units[0].amount.value
-                     : '';
-    var txn        = details.id || '';
+    var payer  = details.payer || {};
+    var name   = (payer.name ? payer.name.given_name + ' ' + payer.name.surname : 'Customer').trim();
+    var email  = payer.email_address || '';
+    var amount = details.purchase_units && details.purchase_units[0]
+                 ? '$' + details.purchase_units[0].amount.value
+                 : '';
+    var txn    = details.id || '';
     if (!email) return;
-    loadEmailJS(function() {
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name:        name,
+    fetch('/.netlify/functions/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         to_email:       email,
-        email:          email,
+        to_name:        name,
         product:        description,
         amount:         amount,
-        transaction_id: txn,
-        reply_to:       'sales@taikatranslations.com'
-      }).catch(function(err) {
-        console.warn('[EmailJS] send failed', err);
-      });
+        transaction_id: txn
+      })
+    }).catch(function(err) {
+      console.warn('[send-email] request failed', err);
     });
   }
 

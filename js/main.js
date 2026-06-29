@@ -634,6 +634,7 @@
             var base      = window.location.origin || 'https://teamtaika.com';
             var returnUrl = base + window.location.pathname + '?payment=success';
             var cancelUrl = base + window.location.pathname;
+            var notifyUrl = 'https://teamtaika.com/.netlify/functions/paypal-ipn';
             var qs = [
               'cmd=_xclick',
               'business='      + encodeURIComponent(PAYPAL_BUSINESS),
@@ -642,6 +643,7 @@
               'item_name='     + encodeURIComponent(desc.substring(0, 127)),
               'return='        + encodeURIComponent(returnUrl),
               'cancel_return=' + encodeURIComponent(cancelUrl),
+              'notify_url='    + encodeURIComponent(notifyUrl),
               'no_shipping=1', 'rm=0'
             ].join('&');
             window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + qs;
@@ -706,20 +708,9 @@
       '</div>'
     ].join('');
 
-    // Send confirmation email via EmailJS
-    if (email && pending) {
-      var nameParts = (pending.name || '').split(' ');
-      var mockDetails = {
-        payer: {
-          name: { given_name: nameParts[0] || 'Customer', surname: nameParts.slice(1).join(' ') },
-          email_address: email
-        },
-        purchase_units: [{ amount: { value: pending.amount || '0' } }],
-        id: ''
-      };
-      sendConfirmationEmail(mockDetails, desc);
-      try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
-    }
+    // Confirmation email is sent server-side via paypal-ipn.js after PayPal verifies payment.
+    // Do not send email here — this code runs on any ?payment=success visit, verified or not.
+    try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
 
     // Clean the ?payment=success param from the URL bar
     history.replaceState(null, '', window.location.pathname);

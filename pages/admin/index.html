@@ -308,7 +308,8 @@
       window.location.href = '/admin/dashboard';
       return;
     } else {
-      await client.auth.signOut();
+      // Do NOT sign out — the user may be a valid portal client, just not an admin.
+      // Signing out here would destroy their portal session.
       showAccessDenied();
     }
   }

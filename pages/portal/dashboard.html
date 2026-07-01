@@ -407,13 +407,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   const user = session.user;
 
   // Load profile
-  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  const { data: profile, error: profileErr } = await sb.from('profiles').select('*').eq('id', user.id).single();
+
+  // No profile row at all — admin users who were created before a profile row was inserted.
+  // Fall back to app_metadata.role (set by Supabase admin API), then redirect if admin.
+  const appRole = user.app_metadata?.role;
+  if (!profile && profileErr?.code === 'PGRST116') {
+    if (appRole === 'admin' || appRole === 'super_admin') {
+      window.location.href = '/admin/dashboard'; return;
+    }
+    // No profile and no app_metadata role — send to admin login to sort out
+    window.location.href = '/admin'; return;
+  }
+
+  const effectiveRole = profile?.role || appRole;
   const displayName = profile?.full_name || user.email.split('@')[0];
   document.getElementById('user-greeting').textContent = 'Hi, ' + displayName;
   document.getElementById('dashboard-heading').textContent = 'Welcome back, ' + displayName.split(' ')[0];
 
   // Show admin mode controls for admin/super_admin
-  if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+  if (effectiveRole === 'admin' || effectiveRole === 'super_admin') {
     const adminNavLink = document.getElementById('nav-admin-link');
     const adminCard = document.getElementById('admin-mode-card');
     if (adminNavLink) adminNavLink.style.display = '';

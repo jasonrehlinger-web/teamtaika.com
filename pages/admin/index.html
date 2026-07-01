@@ -290,26 +290,24 @@
     document.getElementById('access-denied').classList.add('visible');
   }
 
-  async function getProfile(userId) {
-    const { data, error } = await client
-      .from('profiles')
-      .select('role')
-      .eq('id', userId)
-      .single();
-    return data;
+  async function getProfile(accessToken) {
+    // Use server function to bypass broken RLS recursive policy
+    const res = await fetch('/.netlify/functions/get-profile', {
+      headers: { 'Authorization': 'Bearer ' + accessToken }
+    });
+    if (!res.ok) return null;
+    return await res.json();
   }
 
   /* ── Check existing session on load ── */
   const { data: { session: existingSession } } = await client.auth.getSession();
 
   if (existingSession) {
-    const profile = await getProfile(existingSession.user.id);
+    const profile = await getProfile(existingSession.access_token);
     if (profile && ADMIN_ROLES.includes(profile.role)) {
       window.location.href = '/admin/dashboard';
       return;
     } else {
-      // Do NOT sign out — the user may be a valid portal client, just not an admin.
-      // Signing out here would destroy their portal session.
       showAccessDenied();
     }
   }
@@ -340,7 +338,7 @@
       return;
     }
 
-    const profile = await getProfile(data.user.id);
+    const profile = await getProfile(data.session.access_token);
 
     if (!profile || !ADMIN_ROLES.includes(profile.role)) {
       await client.auth.signOut();

@@ -11,17 +11,32 @@ const ALLOWED_ORIGINS = [
   'https://www.teamtaika.com'
 ];
 
-// In-memory rate limiter (5 emails/min per IP)
+// In-memory rate limiter (3 emails/min per IP — tightened from 5)
 const ipHits = new Map();
 function rateLimit(ip) {
   const now = Date.now();
   const window = 60_000;
-  const max = 5;
+  const max = 3;
   const hits = (ipHits.get(ip) || []).filter(t => now - t < window);
   if (hits.length >= max) return false;
   hits.push(now);
   ipHits.set(ip, hits);
   return true;
+}
+
+// In-memory txn_id deduplication — prevents same transaction triggering
+// multiple emails within this Lambda instance's lifetime.
+const _seenTxns = new Set();
+
+// HTML-escape helper
+function esc(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
 }
 
 exports.handler = async (event) => {
@@ -48,6 +63,7 @@ exports.handler = async (event) => {
 
   const { to_email, to_name, product, amount, transaction_id } = body;
 
+  // Validate email
   if (!to_email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to_email)) {
     return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Invalid email' }) };
   }
@@ -55,11 +71,28 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Missing required fields' }) };
   }
 
-  // Sanitize to prevent injection
+  // Require transaction_id — must match PayPal txn_id format (alphanumeric, 8-20 chars)
+  const safeTxn = String(transaction_id || '').replace(/[^A-Za-z0-9_-]/g, '').substring(0, 100);
+  if (!safeTxn || safeTxn.length < 8) {
+    return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ error: 'Missing or invalid transaction_id' }) };
+  }
+
+  // Dedup: reject if we've already sent an email for this txn_id in this instance
+  if (_seenTxns.has(safeTxn)) {
+    console.warn('[send-email] Duplicate txn_id rejected:', safeTxn);
+    return { statusCode: 200, headers: corsHeaders, body: JSON.stringify({ ok: true, deduped: true }) };
+  }
+  _seenTxns.add(safeTxn);
+  // Bound set size to avoid unbounded memory growth
+  if (_seenTxns.size > 500) {
+    const first = _seenTxns.values().next().value;
+    _seenTxns.delete(first);
+  }
+
+  // Sanitize all fields
   const safeName    = String(to_name).replace(/[<>"]/g, '').substring(0, 100);
   const safeProduct = String(product).replace(/[<>"]/g, '').substring(0, 200);
   const safeAmount  = String(amount || '').replace(/[^0-9.$]/g, '').substring(0, 20);
-  const safeTxn     = String(transaction_id || '').replace(/[^A-Za-z0-9_-]/g, '').substring(0, 100);
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -73,7 +106,7 @@ exports.handler = async (event) => {
     <p style="margin:8px 0 0;color:#94a3b8;font-size:14px;">Order Confirmation</p>
   </td></tr>
   <tr><td style="padding:40px;">
-    <p style="margin:0 0 16px;font-size:16px;color:#1e293b;">Hi ${safeName},</p>
+    <p style="margin:0 0 16px;font-size:16px;color:#1e293b;">Hi ${esc(safeName)},</p>
     <p style="margin:0 0 24px;font-size:15px;color:#475569;line-height:1.6;">
       Thank you for your order! We've received your payment and will begin processing right away.
       A team member will be in touch within <strong>1 business hour</strong> with next steps.
@@ -84,16 +117,16 @@ exports.handler = async (event) => {
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td style="padding:6px 0;font-size:14px;color:#475569;">Service</td>
-            <td style="padding:6px 0;font-size:14px;color:#1e293b;text-align:right;font-weight:600;">${safeProduct}</td>
+            <td style="padding:6px 0;font-size:14px;color:#1e293b;text-align:right;font-weight:600;">${esc(safeProduct)}</td>
           </tr>
           ${safeAmount ? `<tr>
             <td style="padding:6px 0;font-size:14px;color:#475569;">Amount</td>
-            <td style="padding:6px 0;font-size:14px;color:#1e293b;text-align:right;font-weight:600;">${safeAmount}</td>
+            <td style="padding:6px 0;font-size:14px;color:#1e293b;text-align:right;font-weight:600;">${esc(safeAmount)}</td>
           </tr>` : ''}
-          ${safeTxn ? `<tr>
+          <tr>
             <td style="padding:6px 0;font-size:13px;color:#94a3b8;">Transaction ID</td>
-            <td style="padding:6px 0;font-size:13px;color:#94a3b8;text-align:right;">${safeTxn}</td>
-          </tr>` : ''}
+            <td style="padding:6px 0;font-size:13px;color:#94a3b8;text-align:right;">${esc(safeTxn)}</td>
+          </tr>
         </table>
       </td></tr>
     </table>
@@ -103,7 +136,7 @@ exports.handler = async (event) => {
     </p>
   </td></tr>
   <tr><td style="background:#f8fafc;padding:20px 40px;text-align:center;border-top:1px solid #e2e8f0;">
-    <p style="margin:0;font-size:12px;color:#94a3b8;">© ${new Date().getFullYear()} Taika Translations · Language Access Hub</p>
+    <p style="margin:0;font-size:12px;color:#94a3b8;">&copy; ${new Date().getFullYear()} Taika Translations &middot; Language Access Hub</p>
   </td></tr>
 </table>
 </td></tr>

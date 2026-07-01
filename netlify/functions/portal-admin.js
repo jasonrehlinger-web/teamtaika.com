@@ -56,6 +56,22 @@ const VALID_STATUSES = new Set([
 
 const VALID_PRIORITIES = new Set(['standard', 'rush', 'urgent']);
 
+/* ── HTML escape for email templates — prevents injection ── */
+function escHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
+/* ── Date format validator (ISO 8601 date: YYYY-MM-DD) ── */
+function isValidDate(val) {
+  return typeof val === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val);
+}
+
 /* ── Main handler ── */
 exports.handler = async function(event, context) {
   // Preflight
@@ -316,8 +332,10 @@ async function handleGetSignedUrl(body) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid file path' }) };
   }
 
+  // Encode each path segment individually so forward slashes are preserved
+  const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
   const res = await fetch(
-    `${SUPABASE_URL}/storage/v1/object/sign/project-files/${encodeURIComponent(filePath)}`,
+    `${SUPABASE_URL}/storage/v1/object/sign/project-files/${encodedPath}`,
     {
       method: 'POST',
       headers: {
@@ -400,16 +418,19 @@ async function handleInviteTeamMember(body, adminProfile) {
   // Send invite email via Resend REST API (bypasses Supabase SMTP entirely)
   const RESEND_KEY = process.env.RESEND_API_KEY;
   if (RESEND_KEY) {
+    const safeName    = escHtml(full_name);
+    const safeRoleLabel = escHtml(safeRole);
+    const safeInviteUrl = encodeURI(inviteUrl).replace(/'/g, '%27');
     const emailHtml = `
       <div style="font-family:sans-serif;max-width:520px;margin:0 auto;color:#1a1a1a">
         <h2>You've been invited to Taika Admin</h2>
-        <p>Hi ${full_name},</p>
-        <p>You've been invited to join the Taika Translations admin portal as <strong>${safeRole}</strong>.</p>
+        <p>Hi ${safeName},</p>
+        <p>You've been invited to join the Taika Translations admin portal as <strong>${safeRoleLabel}</strong>.</p>
         <p>Click the button below to accept your invitation and set your password:</p>
         <p style="margin:32px 0">
-          <a href="${inviteUrl}" style="background:#b5963e;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">Accept Invitation</a>
+          <a href="${safeInviteUrl}" style="background:#b5963e;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">Accept Invitation</a>
         </p>
-        <p style="color:#666;font-size:13px">Or copy this link: ${inviteUrl}</p>
+        <p style="color:#666;font-size:13px">Or copy this link: ${safeInviteUrl}</p>
         <p style="color:#666;font-size:13px">This link expires in 24 hours.</p>
       </div>`;
     const emailRes = await fetch('https://api.resend.com/emails', {
@@ -512,6 +533,23 @@ async function handleRemoveTeamMember(body, adminProfile) {
 async function handleExportProjects(body) {
   const { filters = {} } = body;
 
+  // Validate all filter inputs before building query string
+  if (filters.status && !VALID_STATUSES.has(filters.status)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid status filter' }) };
+  }
+  if (filters.client_id && !isValidUUID(filters.client_id)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid client_id filter' }) };
+  }
+  if (filters.assigned_to && !isValidUUID(filters.assigned_to)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid assigned_to filter' }) };
+  }
+  if (filters.from_date && !isValidDate(filters.from_date)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid from_date — use YYYY-MM-DD' }) };
+  }
+  if (filters.to_date && !isValidDate(filters.to_date)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid to_date — use YYYY-MM-DD' }) };
+  }
+
   let qs = 'select=*,client:profiles!client_id(full_name,email,organization)';
 
   if (filters.status)      qs += `&status=eq.${encodeURIComponent(filters.status)}`;
@@ -577,16 +615,19 @@ async function handleInviteClient(body, _adminProfile) {
   // Send invite email via Resend REST API
   const RESEND_KEY = process.env.RESEND_API_KEY;
   if (RESEND_KEY) {
+    const safeClientName  = escHtml(full_name);
+    const safeOrg         = organization ? escHtml(organization) : null;
+    const safeClientUrl   = encodeURI(inviteUrl).replace(/'/g, '%27');
     const emailHtml = `
       <div style="font-family:sans-serif;max-width:520px;margin:0 auto;color:#1a1a1a">
         <h2>You've been invited to the Taika Client Portal</h2>
-        <p>Hi ${full_name},</p>
-        <p>You've been invited to access the Taika Translations client portal${organization ? ` for <strong>${organization}</strong>` : ''}.</p>
+        <p>Hi ${safeClientName},</p>
+        <p>You've been invited to access the Taika Translations client portal${safeOrg ? ` for <strong>${safeOrg}</strong>` : ''}.</p>
         <p>Click the button below to set your password and get started:</p>
         <p style="margin:32px 0">
-          <a href="${inviteUrl}" style="background:#b5963e;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">Accept Invitation</a>
+          <a href="${safeClientUrl}" style="background:#b5963e;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;display:inline-block">Accept Invitation</a>
         </p>
-        <p style="color:#666;font-size:13px">Or copy this link: ${inviteUrl}</p>
+        <p style="color:#666;font-size:13px">Or copy this link: ${safeClientUrl}</p>
         <p style="color:#666;font-size:13px">This link expires in 24 hours.</p>
       </div>`;
     const emailRes = await fetch('https://api.resend.com/emails', {
@@ -625,7 +666,7 @@ async function handleBlockClient(body, _adminProfile) {
   if (!clientId) throw new Error('clientId required');
   if (!isValidUUID(clientId)) throw new Error('Invalid clientId');
   const res = await sbPatch(
-    '/rest/v1/profiles?id=eq.' + clientId + '&role=eq.client',
+    `/rest/v1/profiles?id=eq.${encodeURIComponent(clientId)}&role=eq.client`,
     { is_active: !block, updated_at: new Date().toISOString() } // block=true → is_active=false
   );
   if (!res.ok) throw new Error('Failed to update client status');

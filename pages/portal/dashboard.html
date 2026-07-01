@@ -406,21 +406,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const user = session.user;
 
-  // Load profile
-  const { data: profile, error: profileErr } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  // Load profile via server function (bypasses broken RLS recursive policy)
+  const profRes = await fetch('/.netlify/functions/get-profile', {
+    headers: { 'Authorization': 'Bearer ' + session.access_token }
+  });
+  const profile = profRes.ok ? await profRes.json() : null;
+  const missing = profRes.status === 404;
 
-  // No profile row at all — admin users who were created before a profile row was inserted.
-  // Fall back to app_metadata.role (set by Supabase admin API), then redirect if admin.
-  const appRole = user.app_metadata?.role;
-  if (!profile && profileErr?.code === 'PGRST116') {
-    if (appRole === 'admin' || appRole === 'super_admin') {
-      window.location.href = '/admin/dashboard'; return;
-    }
-    // No profile and no app_metadata role — send to admin login to sort out
-    window.location.href = '/admin'; return;
+  if (!profile) {
+    if (missing) { window.location.href = '/admin'; return; }
+    // If fetch failed for another reason, continue without admin controls
   }
 
-  const effectiveRole = profile?.role || appRole;
+  const effectiveRole = profile?.role;
   const displayName = profile?.full_name || user.email.split('@')[0];
   document.getElementById('user-greeting').textContent = 'Hi, ' + displayName;
   document.getElementById('dashboard-heading').textContent = 'Welcome back, ' + displayName.split(' ')[0];

@@ -497,10 +497,18 @@
     try {
       const { data: { session } } = await getSb().auth.getSession();
       if (session) {
-        const { data: profile, error: pErr } = await getSb().from('profiles').select('role').eq('id', session.user.id).single();
+        async function fetchMyProfile(accessToken) {
+    const res = await fetch('/.netlify/functions/get-profile', {
+      headers: { 'Authorization': 'Bearer ' + accessToken }
+    });
+    if (res.status === 404) return { profile: null, missing: true };
+    if (!res.ok) return { profile: null, missing: false };
+    return { profile: await res.json(), missing: false };
+  }
+        const { profile, missing } = await fetchMyProfile(session.access_token);
         const role = profile?.role;
         if (role === 'admin' || role === 'super_admin') { window.location.href = '/admin/dashboard'; }
-        else if (!role && pErr?.code === 'PGRST116') { window.location.href = '/admin'; }
+        else if (missing) { window.location.href = '/admin'; }
         else { window.location.href = '/portal/dashboard'; }
       }
     } catch(e) {}
@@ -546,9 +554,9 @@
       if (error) throw error;
       const userId = data.session?.user?.id;
       if (userId) {
-        const { data: profile, error: pErr } = await getSb().from('profiles').select('role').eq('id', userId).single();
+        const { profile, missing } = await fetchMyProfile(data.session.access_token);
         if (profile?.role === 'admin' || profile?.role === 'super_admin') { window.location.href = '/admin/dashboard'; return; }
-        if (!profile && pErr?.code === 'PGRST116') { window.location.href = '/admin'; return; }
+        if (missing) { window.location.href = '/admin'; return; }
       }
       window.location.href = '/portal/dashboard';
     } catch (err) {

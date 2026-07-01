@@ -1,24 +1,6 @@
 [build]
   publish = "."
 
-# Serve Apple Pay domain association file
-
-[[redirects]]
-  from = "/terms"
-  to = "/pages/terms.html"
-  status = 200
-
-[[redirects]]
-  from = "/privacy"
-  to = "/pages/privacy.html"
-  status = 200
-
-[[redirects]]
-  from = "/.well-known/apple-developer-merchantid-domain-association"
-  to = "/apple-pay-verify"
-  status = 200
-  force = true
-
 [[redirects]]
   from = "/services"
   to = "/pages/services/translation.html"
@@ -95,611 +77,135 @@
   to = "/pages/services/pdf-accessibility-checker.html"
   status = 301
 
-# Medical translation pages
-[[redirects]]
-  from = "/medical-translation"
-  to = "/pages/industries/medical-translation.html"
-  status = 301
-
-[[redirects]]
-  from = "/medical-device-translation"
-  to = "/pages/industries/medical-device-translation.html"
-  status = 301
-
-[[redirects]]
-  from = "/medical-document-translation"
-  to = "/pages/industries/medical-document-translation.html"
-  status = 301
-
-[[redirects]]
-  from = "/life-sciences-translation"
-  to = "/pages/industries/life-sciences-translation.html"
-  status = 301
-
-[[redirects]]
-  from = "/clinical-trial-translation"
-  to = "/pages/industries/clinical-trial-translation.html"
-  status = 301
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=3600"
 
 [[headers]]
   for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[redirects]]
-  from = "/blog"
-  to = "/pages/resources/blog.html"
+  from = "/terms"
+  to = "/pages/legal/terms.html"
   status = 301
 
 [[redirects]]
-  from = "/blog/opi-vri-guide"
-  to = "/pages/resources/blog/opi-vri-guide.html"
+  from = "/refund-policy"
+  to = "/pages/legal/terms.html#refunds"
   status = 301
 
-[[redirects]]
-  from = "/blog/translation-for-government"
-  to = "/pages/resources/blog/translation-for-government.html"
-  status = 301
-
-[[redirects]]
-  from = "/blog/wcag-ada-compliance-tips"
-  to = "/pages/resources/blog/wcag-ada-compliance-tips.html"
-  status = 301
-
-[[redirects]]
-  from = "/blog/pdf-remediation-guide"
-  to = "/pages/resources/blog/pdf-remediation-guide.html"
-  status = 301
-
-[[redirects]]
-  from = "/blog/most-spoken-languages"
-  to = "/pages/resources/blog/most-spoken-languages.html"
-  status = 301
-
-[[redirects]]
-  from = "/spanish-translation"
-  to = "/pages/languages/spanish.html"
-  status = 301
-
-[[redirects]]
-  from = "/italian-translation"
-  to = "/pages/languages/italian.html"
-  status = 301
-
-[[redirects]]
-  from = "/chinese-translation"
-  to = "/pages/languages/chinese.html"
-  status = 301
-
-[[redirects]]
-  from = "/french-translation"
-  to = "/pages/languages/french.html"
-  status = 301
-
-[[redirects]]
-  from = "/german-translation"
-  to = "/pages/languages/german.html"
-  status = 301
-
-[[redirects]]
-  from = "/polish-translation"
-  to = "/pages/languages/polish.html"
-  status = 301
-
-[[redirects]]
-  from = "/russian-translation"
-  to = "/pages/languages/russian.html"
-  status = 301
-
-[[redirects]]
-  from = "/portuguese-translation"
-  to = "/pages/languages/portuguese.html"
-  status = 301
-
-[[redirects]]
-  from = "/hindi-translation"
-  to = "/pages/languages/hindi.html"
-  status = 301
-
-[[redirects]]
-  from = "/arabic-translation"
-  to = "/pages/languages/arabic.html"
-  status = 301
-
-[[redirects]]
-  from = "/urdu-translation"
-  to = "/pages/languages/urdu.html"
-  status = 301
-
-[[redirects]]
-  from = "/bengali-translation"
-  to = "/pages/languages/bengali.html"
-  status = 301
-
-# Native-language pages
-[[redirects]]
-  from = "/traduccion-certificada-espanol"
-  to = "/pages/languages/es.html"
-  status = 301
-
-[[redirects]]
-  from = "/traduzione-certificata-italiano"
-  to = "/pages/languages/it.html"
-  status = 301
-
-[[redirects]]
-  from = "/fanyi-zhongwen"
-  to = "/pages/languages/zh.html"
-  status = 301
-
-[[redirects]]
-  from = "/traduction-certifiee-francais"
-  to = "/pages/languages/fr.html"
-  status = 301
-
-[[redirects]]
-  from = "/beglaubigte-uebersetzung-deutsch"
-  to = "/pages/languages/de.html"
-  status = 301
-
-[[redirects]]
-  from = "/tlumaczenia-uwierzytelnione-polskie"
-  to = "/pages/languages/pl.html"
-  status = 301
-
-[[redirects]]
-  from = "/zaverenniy-perevod-russkiy"
-  to = "/pages/languages/ru.html"
-  status = 301
-
-[[redirects]]
-  from = "/traducao-certificada-portugues"
-  to = "/pages/languages/pt.html"
-  status = 301
-
-[[redirects]]
-  from = "/praman-patra-anuvad-hindi"
-  to = "/pages/languages/hi.html"
-  status = 301
-
-[[redirects]]
-  from = "/tarjama-arabiya-rasmiya"
-  to = "/pages/languages/ar.html"
-  status = 301
-
-[[redirects]]
-  from = "/tarjuma-rasmi-urdu"
-  to = "/pages/languages/ur.html"
-  status = 301
-
-[[redirects]]
-  from = "/praman-anuvad-bangla"
-  to = "/pages/languages/bn.html"
-  status = 301
-
-# State pages
-
-[[redirects]]
-  from = "/alabama"
-  to = "/pages/states/alabama.html"
-  status = 301
-
-[[redirects]]
-  from = "/alaska"
-  to = "/pages/states/alaska.html"
-  status = 301
-
-[[redirects]]
-  from = "/arizona"
-  to = "/pages/states/arizona.html"
-  status = 301
-
-[[redirects]]
-  from = "/arkansas"
-  to = "/pages/states/arkansas.html"
-  status = 301
-
-[[redirects]]
-  from = "/california"
-  to = "/pages/states/california.html"
-  status = 301
-
-[[redirects]]
-  from = "/colorado"
-  to = "/pages/states/colorado.html"
-  status = 301
-
-[[redirects]]
-  from = "/connecticut"
-  to = "/pages/states/connecticut.html"
-  status = 301
-
-[[redirects]]
-  from = "/delaware"
-  to = "/pages/states/delaware.html"
-  status = 301
-
-[[redirects]]
-  from = "/florida"
-  to = "/pages/states/florida.html"
-  status = 301
-
-[[redirects]]
-  from = "/georgia"
-  to = "/pages/states/georgia.html"
-  status = 301
-
-[[redirects]]
-  from = "/hawaii"
-  to = "/pages/states/hawaii.html"
-  status = 301
-
-[[redirects]]
-  from = "/idaho"
-  to = "/pages/states/idaho.html"
-  status = 301
-
-[[redirects]]
-  from = "/illinois"
-  to = "/pages/states/illinois.html"
-  status = 301
-
-[[redirects]]
-  from = "/indiana"
-  to = "/pages/states/indiana.html"
-  status = 301
-
-[[redirects]]
-  from = "/iowa"
-  to = "/pages/states/iowa.html"
-  status = 301
-
-[[redirects]]
-  from = "/kansas"
-  to = "/pages/states/kansas.html"
-  status = 301
-
-[[redirects]]
-  from = "/kentucky"
-  to = "/pages/states/kentucky.html"
-  status = 301
-
-[[redirects]]
-  from = "/louisiana"
-  to = "/pages/states/louisiana.html"
-  status = 301
-
-[[redirects]]
-  from = "/maine"
-  to = "/pages/states/maine.html"
-  status = 301
-
-[[redirects]]
-  from = "/maryland"
-  to = "/pages/states/maryland.html"
-  status = 301
-
-[[redirects]]
-  from = "/massachusetts"
-  to = "/pages/states/massachusetts.html"
-  status = 301
-
-[[redirects]]
-  from = "/michigan"
-  to = "/pages/states/michigan.html"
-  status = 301
-
-[[redirects]]
-  from = "/minnesota"
-  to = "/pages/states/minnesota.html"
-  status = 301
-
-[[redirects]]
-  from = "/mississippi"
-  to = "/pages/states/mississippi.html"
-  status = 301
-
-[[redirects]]
-  from = "/missouri"
-  to = "/pages/states/missouri.html"
-  status = 301
-
-[[redirects]]
-  from = "/montana"
-  to = "/pages/states/montana.html"
-  status = 301
-
-[[redirects]]
-  from = "/nebraska"
-  to = "/pages/states/nebraska.html"
-  status = 301
-
-[[redirects]]
-  from = "/nevada"
-  to = "/pages/states/nevada.html"
-  status = 301
-
-[[redirects]]
-  from = "/new-hampshire"
-  to = "/pages/states/new-hampshire.html"
-  status = 301
-
-[[redirects]]
-  from = "/new-jersey"
-  to = "/pages/states/new-jersey.html"
-  status = 301
-
-[[redirects]]
-  from = "/new-mexico"
-  to = "/pages/states/new-mexico.html"
-  status = 301
-
-[[redirects]]
-  from = "/new-york"
-  to = "/pages/states/new-york.html"
-  status = 301
-
-[[redirects]]
-  from = "/north-carolina"
-  to = "/pages/states/north-carolina.html"
-  status = 301
-
-[[redirects]]
-  from = "/north-dakota"
-  to = "/pages/states/north-dakota.html"
-  status = 301
-
-[[redirects]]
-  from = "/ohio"
-  to = "/pages/states/ohio.html"
-  status = 301
-
-[[redirects]]
-  from = "/oklahoma"
-  to = "/pages/states/oklahoma.html"
-  status = 301
-
-[[redirects]]
-  from = "/oregon"
-  to = "/pages/states/oregon.html"
-  status = 301
-
-[[redirects]]
-  from = "/pennsylvania"
-  to = "/pages/states/pennsylvania.html"
-  status = 301
-
-[[redirects]]
-  from = "/rhode-island"
-  to = "/pages/states/rhode-island.html"
-  status = 301
-
-[[redirects]]
-  from = "/south-carolina"
-  to = "/pages/states/south-carolina.html"
-  status = 301
-
-[[redirects]]
-  from = "/south-dakota"
-  to = "/pages/states/south-dakota.html"
-  status = 301
-
-[[redirects]]
-  from = "/tennessee"
-  to = "/pages/states/tennessee.html"
-  status = 301
-
-[[redirects]]
-  from = "/texas"
-  to = "/pages/states/texas.html"
-  status = 301
-
-[[redirects]]
-  from = "/utah"
-  to = "/pages/states/utah.html"
-  status = 301
-
-[[redirects]]
-  from = "/vermont"
-  to = "/pages/states/vermont.html"
-  status = 301
-
-[[redirects]]
-  from = "/virginia"
-  to = "/pages/states/virginia.html"
-  status = 301
-
-[[redirects]]
-  from = "/washington"
-  to = "/pages/states/washington.html"
-  status = 301
-
-[[redirects]]
-  from = "/west-virginia"
-  to = "/pages/states/west-virginia.html"
-  status = 301
-
-[[redirects]]
-  from = "/wisconsin"
-  to = "/pages/states/wisconsin.html"
-  status = 301
-
-[[redirects]]
-  from = "/wyoming"
-  to = "/pages/states/wyoming.html"
-  status = 301
-
-[[redirects]]
-  from = "/certified-translation"
-  to = "/pages/certified/certified-translation.html"
-  status = 301
-
-[[redirects]]
-  from = "/uscis-translation-services"
-  to = "/pages/certified/uscis-translation-services.html"
-  status = 301
-
-[[redirects]]
-  from = "/immigration-document-translation"
-  to = "/pages/certified/immigration-document-translation.html"
-  status = 301
-
+# ── Document-type landing pages ──────────────────────────────────────────────
 [[redirects]]
   from = "/birth-certificate-translation"
-  to = "/pages/certified/birth-certificate-translation.html"
-  status = 301
+  to = "/pages/services/documents/birth-certificate-translation.html"
+  status = 200
 
 [[redirects]]
   from = "/marriage-certificate-translation"
-  to = "/pages/certified/marriage-certificate-translation.html"
-  status = 301
+  to = "/pages/services/documents/marriage-certificate-translation.html"
+  status = 200
 
 [[redirects]]
-  from = "/legal-translation"
-  to = "/pages/industries/legal-translation.html"
-  status = 301
+  from = "/divorce-decree-translation"
+  to = "/pages/services/documents/divorce-decree-translation.html"
+  status = 200
 
 [[redirects]]
-  from = "/legal-document-translation"
-  to = "/pages/industries/legal-document-translation.html"
-  status = 301
+  from = "/diploma-transcript-translation"
+  to = "/pages/services/documents/diploma-transcript-translation.html"
+  status = 200
 
 [[redirects]]
-  from = "/spanish-translation-services"
-  to = "/pages/services/spanish-translation-services.html"
-  status = 301
+  from = "/medical-records-translation"
+  to = "/pages/services/documents/medical-records-translation.html"
+  status = 200
 
 [[redirects]]
-  from = "/website-translation"
-  to = "/pages/services/website-translation.html"
-  status = 301
+  from = "/court-document-translation"
+  to = "/pages/services/documents/court-document-translation.html"
+  status = 200
 
+[[redirects]]
+  from = "/passport-translation"
+  to = "/pages/services/documents/passport-translation.html"
+  status = 200
+
+[[redirects]]
+  from = "/driver-license-translation"
+  to = "/pages/services/documents/driver-license-translation.html"
+  status = 200
+
+# ── New service pages ─────────────────────────────────────────────────────────
 [[redirects]]
   from = "/website-localization"
   to = "/pages/services/website-localization.html"
-  status = 301
-
-[[redirects]]
-  from = "/managed-translation-services"
-  to = "/pages/services/managed-translation-services.html"
-  status = 301
-
-[[redirects]]
-  from = "/enterprise-localization-services"
-  to = "/pages/services/enterprise-localization-services.html"
-  status = 301
-
-[[redirects]]
-  from = "/blog/google-translate-official-documents"
-  to = "/pages/resources/blog/google-translate-official-documents.html"
-  status = 301
-
-[[redirects]]
-  from = "/blog/certified-vs-notarized-translation"
-  to = "/pages/resources/blog/certified-vs-notarized-translation.html"
-  status = 301
-
-# ── Security Headers ────────────────────────────────────────────────────────
-[[headers]]
-  for = "/*"
-  [headers.values]
-    # Prevent clickjacking — only allow embedding within the same origin (used by admin Client View)
-    X-Frame-Options = "SAMEORIGIN"
-    # Prevent MIME-type sniffing attacks
-    X-Content-Type-Options = "nosniff"
-    # Control referrer info sent on navigation
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    # Disable browser features the site doesn't use
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(self \"https://www.paypal.com\")"
-    # Content Security Policy — restricts where scripts/styles/fonts/connections can load from
-    # unsafe-inline required: site uses inline event handlers (onchange, onclick) and inline styles
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.emailjs.com https://ijwgdzrunkxrpzsrcqir.supabase.co wss://ijwgdzrunkxrpzsrcqir.supabase.co https://cdn.jsdelivr.net https://translation.googleapis.com; img-src 'self' data: https:; form-action 'self'; frame-ancestors 'self';"
-    # HSTS — tells browsers to always use HTTPS; required for HIPAA/federal procurement
-    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
-
-[[redirects]]
-  from = "/blog/certified-translation-cost"
-  to = "/pages/resources/blog/certified-translation-cost.html"
-  status = 301
-
-[[redirects]]
-  from = "/translate"
-  to = "/pages/tools/translate.html"
-  status = 301
-
-# ── Client Portal ────────────────────────────────────────────────────────────
-[[redirects]]
-  from = "/portal"
-  to = "/pages/portal/index.html"
   status = 200
 
 [[redirects]]
-  from = "/portal/dashboard"
-  to = "/pages/portal/dashboard.html"
+  from = "/elearning-localization"
+  to = "/pages/services/elearning-localization.html"
   status = 200
 
 [[redirects]]
-  from = "/portal/submit"
-  to = "/pages/portal/submit.html"
+  from = "/machine-translation-post-editing"
+  to = "/pages/services/machine-translation-post-editing.html"
   status = 200
 
 [[redirects]]
-  from = "/portal/project"
-  to = "/pages/portal/project.html"
+  from = "/conference-interpretation"
+  to = "/pages/services/conference-interpretation.html"
+  status = 200
+
+# ── Blog posts ────────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/blog"
+  to = "/pages/resources/blog/index.html"
   status = 200
 
 [[redirects]]
-  from = "/portal/account"
-  to = "/pages/portal/account.html"
+  from = "/blog/birth-certificate-translation-uscis"
+  to = "/pages/resources/blog/birth-certificate-translation-uscis.html"
   status = 200
 
 [[redirects]]
-  from = "/portal/translate"
-  to = "/pages/portal/translate.html"
-  status = 200
-
-# ── Admin Panel ───────────────────────────────────────────────────────────────
-[[redirects]]
-  from = "/admin"
-  to = "/pages/admin/index.html"
+  from = "/blog/joint-commission-2026-language-access"
+  to = "/pages/resources/blog/joint-commission-2026-language-access.html"
   status = 200
 
 [[redirects]]
-  from = "/admin/dashboard"
-  to = "/pages/admin/dashboard.html"
+  from = "/blog/title-vi-language-access-plan"
+  to = "/pages/resources/blog/title-vi-language-access-plan.html"
   status = 200
 
 [[redirects]]
-  from = "/admin/projects"
-  to = "/pages/admin/projects.html"
+  from = "/blog/what-is-certified-translation"
+  to = "/pages/resources/blog/what-is-certified-translation.html"
   status = 200
 
 [[redirects]]
-  from = "/admin/project"
-  to = "/pages/admin/project.html"
+  from = "/blog/translation-for-legal-documents-law-firms"
+  to = "/pages/resources/blog/translation-for-legal-documents-law-firms.html"
+  status = 200
+
+# ── Resource pages ────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/why-taika"
+  to = "/pages/resources/why-taika.html"
   status = 200
 
 [[redirects]]
-  from = "/admin/clients"
-  to = "/pages/admin/clients.html"
-  status = 200
-
-[[redirects]]
-  from = "/admin/client"
-  to = "/pages/admin/client.html"
-  status = 200
-
-[[redirects]]
-  from = "/admin/team"
-  to = "/pages/admin/team.html"
-  status = 200
-
-[[redirects]]
-  from = "/admin/portal-view"
-  to = "/pages/admin/portal-view.html"
+  from = "/case-studies"
+  to = "/pages/resources/case-studies.html"
   status = 200

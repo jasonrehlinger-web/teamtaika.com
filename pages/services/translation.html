@@ -52,6 +52,7 @@
           <span class="comp-badge">HIPAA Compliant</span>
           <span class="comp-badge">FERPA Compliant</span>
           <span class="comp-badge">Title VI Support</span>
+          <span class="comp-badge">ISO 17100 Workflow</span>
         </div>
         <div class="page-hero-ctas" style="margin-top:32px;">
           <a href="#order" class="btn-primary btn-primary-lg">Order Translation Now <span class="arrow">→</span></a>
@@ -183,6 +184,7 @@
         <div class="step-num step-num-light">2</div>
         <h3 class="white">We assign a subject-matter specialist</h3>
         <p class="white">A project manager reviews your document and assigns an ATA-certified translator with expertise in your specific field — legal, medical, technical, or academic.</p>
+        <p class="white" style="margin-top:10px;">Our translation workflows are designed in alignment with <strong>ISO 17100:2015</strong> requirements — including qualified translator assignment, independent revision by a second linguist, and documented quality verification before delivery.</p>
         <div class="step-note">Assignment confirmed within 2 hours</div>
       </div>
       <div class="step" role="listitem">
@@ -283,7 +285,7 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>24–72 hour delivery</li>
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>PDF + editable format</li>
         </ul>
-        <a href="#order-now" class="btn-ghost-navy" style="display:block;text-align:center;" onclick="var s=document.getElementById('tr-service');if(s){s.value='standard';s.dispatchEvent(new Event('change'));}">Order Now →</a>
+        <a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;">Order Now</a>
       </div>
       <div class="card" style="border-top:3px solid var(--gold);">
         <div style="font-family:var(--font-display);font-size:32px;color:var(--navy);margin-bottom:4px;">$31.24 <span style="font-size:16px;font-family:var(--font-body);color:var(--slate-light);">/ page</span></div>
@@ -294,7 +296,7 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Priority queue assignment</li>
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Project manager check-ins</li>
         </ul>
-        <a href="#order-now" class="btn-primary" style="display:block;text-align:center;justify-content:center;" onclick="var s=document.getElementById('tr-service');if(s){s.value='rush';s.dispatchEvent(new Event('change'));}">Order Rush →</a>
+        <a href="#quote" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Order Rush Translation</a>
       </div>
       <div class="card" style="border-top:3px solid var(--navy);">
         <div style="font-family:var(--font-display);font-size:32px;color:var(--navy);margin-bottom:4px;">Custom <span style="font-size:16px;font-family:var(--font-body);color:var(--slate-light);">GSA / NASPO</span></div>
@@ -307,100 +309,6 @@
           <li style="font-size:13.5px;color:var(--slate);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--emerald);font-weight:700;">✓</span>Dedicated account manager</li>
         </ul>
         <a href="#quote" class="btn-ghost-navy" style="display:block;text-align:center;">Request Volume Pricing</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ORDER FORM -->
-<section class="section-mist section-sm" id="order-now" aria-label="Order certified translation">
-  <div class="container" style="max-width:680px;">
-    <div class="quote-card" style="border:2px solid var(--border-gold);">
-      <div class="quote-card-header"></div>
-      <div class="quote-card-body">
-        <div class="quote-card-title">Order Certified Translation</div>
-        <p class="quote-card-sub">Select your service level, enter your details, and pay securely via PayPal. We'll confirm your order within 1 hour.</p>
-
-        <form name="lang-order-translation" method="POST" action="/"
-              data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data"
-              id="lang-order-translation-form">
-          <input type="hidden" name="form-name" value="lang-order-translation">
-          <input type="hidden" name="language" value="(specified in notes)">
-          <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
-
-          <div class="field">
-            <label class="label" for="tr-service">Service Type</label>
-            <select class="select" id="tr-service" name="service-type" onchange="calcPriceTR()">
-              <option value="standard">Standard Certified Translation — $24.99/page</option>
-              <option value="rush">Rush Translation (+25%) — $31.24/page</option>
-              <option value="sameday">Same-Day Translation (+50%) — $37.49/page</option>
-              <option value="interpretation">Interpretation (OPI/VRI) — Request a Quote</option>
-              <option value="both">Translation + Interpretation — Request a Quote</option>
-            </select>
-          </div>
-
-          <div class="field" id="tr-page-group">
-            <label class="label" for="tr-pages">Number of Pages</label>
-            <input class="input" type="number" id="tr-pages" name="page-count" min="1" max="500" value="1"
-                   oninput="calcPriceTR()">
-          </div>
-
-          <div class="price-calc" id="tr-price-calc" style="display:flex;justify-content:space-between;align-items:center;background:var(--navy-deep);color:#fff;border-radius:10px;padding:14px 20px;margin-bottom:16px;">
-            <div>
-              <div style="font-size:12px;font-weight:600;opacity:.7;text-transform:uppercase;letter-spacing:.05em;">Estimated Total</div>
-              <div style="font-size:11px;opacity:.5;margin-top:2px;">Final price confirmed after document review</div>
-            </div>
-            <div id="tr-price-total" style="font-family:var(--font-display);font-size:28px;color:var(--gold);">$24.99</div>
-          </div>
-
-          <div style="margin:4px 0 16px;padding:14px 16px;background:rgba(201,168,76,.08);border:2px solid rgba(201,168,76,.35);border-radius:10px;">
-            <label style="display:flex;align-items:flex-start;gap:14px;cursor:pointer;">
-              <input type="checkbox" name="notarization" id="tr-notarization" value="yes"
-                     onchange="calcPriceTR()" style="margin-top:3px;width:22px;height:22px;accent-color:var(--gold);flex-shrink:0;">
-              <span style="font-size:15px;line-height:1.5;">Add Notarization <strong style="color:var(--gold);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
-            </label>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div class="field">
-              <label class="label" for="tr-name">Full Name *</label>
-              <input class="input" type="text" id="tr-name" name="full-name" required placeholder="Your name">
-            </div>
-            <div class="field">
-              <label class="label" for="tr-email">Email Address *</label>
-              <input class="input" type="email" id="tr-email" name="email" required placeholder="you@email.com">
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label" for="tr-lang">Language Pair (e.g. Spanish → English)</label>
-            <input class="input" type="text" id="tr-lang" name="language-pair" placeholder="e.g. Spanish → English">
-          </div>
-
-          <div class="field">
-            <label class="label" for="tr-notes">Notes / Special Instructions</label>
-            <textarea class="textarea" id="tr-notes" name="notes" rows="2"
-                      placeholder="Rush deadline, document type, notarization needed, etc."></textarea>
-          </div>
-
-          <div class="field">
-            <label class="label" for="tr-file">Upload Your Document <span style="color:var(--slate-light);font-weight:400;">(optional — you can also email it after checkout)</span></label>
-            <div class="upload-drop">
-              <input class="upload-input" type="file" id="tr-file" name="document"
-                     accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.tiff,.tif">
-              <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span class="upload-label">Drop your document here or click to browse</span>
-              <span class="upload-hint">PDF, Word, JPG, PNG, TIFF — max 10 MB</span>
-              <span class="upload-filename"></span>
-            </div>
-          </div>
-
-
-          <button type="button" class="btn-submit">Complete Order &amp; Pay →</button>
-        </form>
-        <div class="form-trust-line"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Secure PayPal checkout · HIPAA &amp; FERPA compliant · ATA-certified translators
-        </div>
       </div>
     </div>
   </div>
@@ -530,115 +438,7 @@
   </div>
 </div>
 
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="footer-brand-name">Language Access Hub</div>
-      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
-      <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
-      <div class="footer-family-links">
-        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">→ taikatranslations.com</a>
-        <a href="https://www.tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">→ tvpteam.com</a>
-      </div>
-      <div class="footer-comp-tags">
-        <span class="footer-comp-tag">HIPAA</span>
-        <span class="footer-comp-tag">FERPA</span>
-        <span class="footer-comp-tag">WCAG 2.2</span>
-        <span class="footer-comp-tag">VOSB</span>
-        <span class="footer-comp-tag">GSA</span>
-        <span class="footer-comp-tag">NASPO</span>
-      </div>
-    </div>
-
-    <div class="footer-col">
-      <h4>Services</h4>
-      <ul>
-        <li><a href="/pages/services/translation.html">Certified Translation</a></li>
-        <li><a href="/pages/services/interpretation.html">Interpretation (OPI/VRI)</a></li>
-        <li><a href="/pages/services/508-compliance.html">ADA / Section 508</a></li>
-        <li><a href="/pages/services/captioning.html">Video Captioning</a></li>
-        <li><a href="/pages/services/transcription.html">Transcription</a></li>
-        <li><a href="/pages/services/desktop-publishing.html">Desktop Publishing</a></li>
-        <li><a href="/pages/services/ai-automation.html">AI Automation</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Who We Serve</h4>
-      <ul>
-        <li><a href="/pages/industries/government.html">Government Agencies</a></li>
-        <li><a href="/pages/industries/schools.html">School Districts</a></li>
-        <li><a href="/pages/industries/healthcare.html">Healthcare</a></li>
-        <li><a href="/pages/industries/legal.html">Legal &amp; Courts</a></li>
-        <li><a href="/pages/industries/nonprofits.html">Nonprofits</a></li>
-        <li><a href="/index.html#gsa">GSA Buyers</a></li>
-        <li><a href="/index.html#naspo">NASPO States</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Resources</h4>
-      <ul>
-        <li><a href="/pages/services/translation.html#languages">All Languages</a></li>
-        <li><a href="/pages/resources/compliance-faq.html">Compliance FAQ</a></li>
-        <li><a href="/pages/resources/compliance-faq.html#checklist">Free Compliance Checklist</a></li>
-        <li><a href="/pages/resources/compliance-faq.html#title6">Title VI &amp; EO 13166</a></li>
-        <li><a href="/pages/resources/compliance-faq.html#508">Section 508 &amp; WCAG</a></li>
-        <li><a href="/index.html#products">Online Store</a></li>
-        <li><a href="/index.html#quote">Contact / Quote</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul>
-        <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
-        <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
-        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:6px;">
-          TaikaTranslations LLC<br>
-          2028 E Ben White Blvd. #240-1178<br>
-          Austin, TX 78741
-        </li>
-        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:8px;">
-          Tennessee Office<br>
-          101 Juniperberry Rd<br>
-          Oak Ridge, TN 37830
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <div class="footer-legal">
-      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. Austin, TX. All rights reserved.</p>
-      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
-    </div>
-    <nav class="footer-social" aria-label="Social media">
-      <a href="https://www.youtube.com/@taikatranslations" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
-      <a href="https://www.linkedin.com/company/taikatranslations-llc/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-      <a href="https://www.facebook.com/TaikaTranslations" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
-      <a href="https://www.instagram.com/taikatranslations/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
-      <a href="https://www.tiktok.com/@taika.translations" target="_blank" rel="noopener" aria-label="TikTok">TikTok</a>
-    </nav>
-  </div>
-</footer>
-<script>
-function calcPriceTR() {
-  var PRICES = {standard:24.99, rush:31.24, sameday:37.49};
-  var s = document.getElementById('tr-service').value;
-  var pg = document.getElementById('tr-page-group');
-  var pc = document.getElementById('tr-price-calc');
-  var isQuote = (s === 'interpretation' || s === 'both');
-  if (pg) pg.style.display = isQuote ? 'none' : 'block';
-  if (pc) pc.style.display = isQuote ? 'none' : 'flex';
-  if (!isQuote) {
-    var pages = Math.max(1, parseInt(document.getElementById('tr-pages').value || '1', 10));
-    var notarize = document.getElementById('tr-notarization') && document.getElementById('tr-notarization').checked ? 40 : 0;
-    var price = (PRICES[s] || 24.99) * pages + notarize;
-    document.getElementById('tr-price-total').textContent = '$' + price.toFixed(2);
-  }
-}
-</script>
-<script src="../../js/main.js?v=26"></script>
+<!-- @footer -->
+<script src="../../js/main.js"></script>
 </body>
 </html>

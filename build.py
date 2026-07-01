@@ -36,14 +36,14 @@ def build_tree(src_dir, dst_dir):
                 shutil.copy2(src_file, dst_file)
 
 # Clean and rebuild
-if os.path.exists(DIST): shutil.rmtree(DIST)
-os.makedirs(DIST)
+if os.path.exists(DIST): shutil.rmtree(DIST, ignore_errors=True)
+os.makedirs(DIST, exist_ok=True)
 
 # Copy static assets
 for folder in ('css', 'js', 'assets'):
     src = os.path.join(ROOT, folder)
     if os.path.exists(src):
-        shutil.copytree(src, os.path.join(DIST, folder))
+        shutil.copytree(src, os.path.join(DIST, folder), dirs_exist_ok=True)
 
 # Build pages and root HTML
 for item in os.listdir(ROOT):

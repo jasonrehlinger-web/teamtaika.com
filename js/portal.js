@@ -63,18 +63,25 @@ async function requireAuth() {
   return session;
 }
 
+// Fetch profile via server function (bypasses broken RLS recursive policy)
+async function fetchProfileViaFunction(accessToken) {
+  try {
+    const res = await fetch('/.netlify/functions/get-profile', {
+      headers: { 'Authorization': 'Bearer ' + accessToken }
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) { return null; }
+}
+
 async function requireAdmin() {
   const { data: { session }, error } = await getSupabase().auth.getSession();
   if (error || !session) {
     window.location.href = '/admin';
     return null;
   }
-  const { data: profile, error: profileError } = await getSupabase()
-    .from('profiles')
-    .select('*')
-    .eq('id', session.user.id)
-    .single();
-  if (profileError || !profile || !['admin', 'super_admin'].includes(profile.role)) {
+  const profile = await fetchProfileViaFunction(session.access_token);
+  if (!profile || !['admin', 'super_admin'].includes(profile.role)) {
     window.location.href = '/admin';
     return null;
   }
@@ -84,12 +91,8 @@ async function requireAdmin() {
 async function getCurrentUser() {
   const { data: { session }, error } = await getSupabase().auth.getSession();
   if (error || !session) return null;
-  const { data: profile, error: profileError } = await getSupabase()
-    .from('profiles')
-    .select('*')
-    .eq('id', session.user.id)
-    .single();
-  if (profileError) return null;
+  const profile = await fetchProfileViaFunction(session.access_token);
+  if (!profile) return null;
   return { user: session.user, profile };
 }
 

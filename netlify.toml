@@ -212,3 +212,75 @@
   from = "/case-studies"
   to = "/pages/resources/case-studies.html"
   status = 200
+
+# ── Portal pages ──────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/portal"
+  to = "/pages/portal/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/dashboard"
+  to = "/pages/portal/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/account"
+  to = "/pages/portal/account.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/project"
+  to = "/pages/portal/project.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/submit"
+  to = "/pages/portal/submit.html"
+  status = 200
+
+[[redirects]]
+  from = "/portal/translate"
+  to = "/pages/portal/translate.html"
+  status = 200
+
+# ── Admin pages ───────────────────────────────────────────────────────────────
+[[redirects]]
+  from = "/admin"
+  to = "/pages/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/dashboard"
+  to = "/pages/admin/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/projects"
+  to = "/pages/admin/projects.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/project"
+  to = "/pages/admin/project.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/clients"
+  to = "/pages/admin/clients.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/client"
+  to = "/pages/admin/client.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/team"
+  to = "/pages/admin/team.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/portal-view"
+  to = "/pages/admin/portal-view.html"
+  status = 200

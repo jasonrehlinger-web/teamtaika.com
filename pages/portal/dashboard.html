@@ -320,6 +320,7 @@
       <a href="/portal/translate">MT Preview</a>
       <a href="/portal/submit">New Project</a>
       <a href="/portal/account">Account</a>
+      <a href="/admin/dashboard" id="nav-admin-link" style="display:none;color:#c9a84c;font-weight:700;">Admin Panel ⚙</a>
     </div>
     <div class="portal-nav-user">
       <span id="user-greeting">Loading...</span>
@@ -368,6 +369,12 @@
       <a href="/portal/submit" style="margin-top:0.5rem;display:inline-block;background:#c9a84c;color:#0a1628;padding:0.5rem 1rem;border-radius:7px;font-size:0.82rem;font-weight:600;text-decoration:none;">Start New Project →</a>
     </div>
   </div>
+  <div id="admin-mode-card" style="display:none;background:#0a1628;border-radius:12px;padding:1.25rem 1.5rem;box-shadow:0 1px 4px rgba(0,0,0,0.12);flex-direction:column;gap:0.5rem;margin-bottom:1.75rem;">
+    <div style="font-size:1.4rem;">⚙️</div>
+    <div style="font-weight:700;color:#c9a84c;font-size:0.95rem;">Switch to Admin Mode</div>
+    <div style="font-size:0.8rem;color:#a0aec0;line-height:1.45;">Manage projects, clients, and team members from the admin panel.</div>
+    <a href="/admin/dashboard" style="margin-top:0.5rem;display:inline-block;background:#c9a84c;color:#0a1628;padding:0.5rem 1rem;border-radius:7px;font-size:0.82rem;font-weight:600;text-decoration:none;">Go to Admin Panel →</a>
+  </div>
 
   <!-- PROJECTS SECTION -->
   <div class="section-header">
@@ -404,6 +411,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const displayName = profile?.full_name || user.email.split('@')[0];
   document.getElementById('user-greeting').textContent = 'Hi, ' + displayName;
   document.getElementById('dashboard-heading').textContent = 'Welcome back, ' + displayName.split(' ')[0];
+
+  // Show admin mode controls for admin/super_admin
+  if (profile?.role === 'admin' || profile?.role === 'super_admin') {
+    const adminNavLink = document.getElementById('nav-admin-link');
+    const adminCard = document.getElementById('admin-mode-card');
+    if (adminNavLink) adminNavLink.style.display = '';
+    if (adminCard) adminCard.style.display = 'flex';
+  }
 
   // Sign out
   document.getElementById('signout-btn').addEventListener('click', async () => {

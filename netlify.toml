@@ -285,3 +285,13 @@
   from = "/admin/portal-view"
   to = "/pages/admin/portal-view.html"
   status = 200
+
+[[redirects]]
+  from = "/blog/translation-vs-interpretation"
+  to = "/pages/resources/blog/translation-vs-interpretation.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/google-translate-official-documents"
+  to = "/pages/resources/blog/google-translate-official-documents.html"
+  status = 200

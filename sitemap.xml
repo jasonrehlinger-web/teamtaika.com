@@ -568,6 +568,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://teamtaika.com/blog/translation-vs-interpretation</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- Resource pages -->
   <url>
     <loc>https://teamtaika.com/why-taika</loc>

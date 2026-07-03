@@ -295,3 +295,975 @@
   from = "/blog/google-translate-official-documents"
   to = "/pages/resources/blog/google-translate-official-documents.html"
   status = 200
+
+# ── Legacy URL 301 fixes (P0 — prevent 404 losses) ──────────────────────────
+[[redirects]]
+  from = "/fanyi-zhongwen"
+  to = "/pages/languages/chinese.html"
+  status = 301
+[[redirects]]
+  from = "/tlumaczenia-uwierzytelnione-polskie"
+  to = "/pages/languages/pl.html"
+  status = 301
+[[redirects]]
+  from = "/beglaubigte-uebersetzung-deutsch"
+  to = "/pages/languages/de.html"
+  status = 301
+[[redirects]]
+  from = "/traduction-certifiee-francais"
+  to = "/pages/languages/fr.html"
+  status = 301
+# ── Government Bilingual Pay page ──────────────────────────────────────────
+[[redirects]]
+  from = "/government-bilingual-pay"
+  to = "/pages/services/government-bilingual-pay.html"
+  status = 200
+# ── Language page clean URL rewrites (canonical → file) ─────────────────────
+[[redirects]]
+  from = "/languages/spanish"
+  to = "/pages/languages/spanish.html"
+  status = 200
+[[redirects]]
+  from = "/languages/french"
+  to = "/pages/languages/french.html"
+  status = 200
+[[redirects]]
+  from = "/languages/german"
+  to = "/pages/languages/german.html"
+  status = 200
+[[redirects]]
+  from = "/languages/arabic"
+  to = "/pages/languages/arabic.html"
+  status = 200
+[[redirects]]
+  from = "/languages/chinese"
+  to = "/pages/languages/chinese.html"
+  status = 200
+[[redirects]]
+  from = "/languages/mandarin"
+  to = "/pages/languages/mandarin.html"
+  status = 200
+[[redirects]]
+  from = "/languages/hindi"
+  to = "/pages/languages/hindi.html"
+  status = 200
+[[redirects]]
+  from = "/languages/russian"
+  to = "/pages/languages/russian.html"
+  status = 200
+[[redirects]]
+  from = "/languages/polish"
+  to = "/pages/languages/polish.html"
+  status = 200
+[[redirects]]
+  from = "/languages/urdu"
+  to = "/pages/languages/urdu.html"
+  status = 200
+[[redirects]]
+  from = "/languages/portuguese"
+  to = "/pages/languages/portuguese.html"
+  status = 200
+[[redirects]]
+  from = "/languages/korean"
+  to = "/pages/languages/korean.html"
+  status = 200
+[[redirects]]
+  from = "/languages/italian"
+  to = "/pages/languages/italian.html"
+  status = 200
+[[redirects]]
+  from = "/languages/tagalog"
+  to = "/pages/languages/tagalog.html"
+  status = 200
+[[redirects]]
+  from = "/languages/bengali"
+  to = "/pages/languages/bengali.html"
+  status = 200
+[[redirects]]
+  from = "/languages/somali"
+  to = "/pages/languages/somali.html"
+  status = 200
+[[redirects]]
+  from = "/languages/amharic"
+  to = "/pages/languages/amharic.html"
+  status = 200
+[[redirects]]
+  from = "/languages/vietnamese"
+  to = "/pages/languages/vietnamese.html"
+  status = 200
+[[redirects]]
+  from = "/languages/haitian-creole"
+  to = "/pages/languages/haitian-creole.html"
+  status = 200
+[[redirects]]
+  from = "/languages/es"
+  to = "/pages/languages/es.html"
+  status = 200
+[[redirects]]
+  from = "/languages/fr"
+  to = "/pages/languages/fr.html"
+  status = 200
+[[redirects]]
+  from = "/languages/de"
+  to = "/pages/languages/de.html"
+  status = 200
+[[redirects]]
+  from = "/languages/ar"
+  to = "/pages/languages/ar.html"
+  status = 200
+[[redirects]]
+  from = "/languages/zh"
+  to = "/pages/languages/zh.html"
+  status = 200
+[[redirects]]
+  from = "/languages/hi"
+  to = "/pages/languages/hi.html"
+  status = 200
+[[redirects]]
+  from = "/languages/ru"
+  to = "/pages/languages/ru.html"
+  status = 200
+[[redirects]]
+  from = "/languages/pl"
+  to = "/pages/languages/pl.html"
+  status = 200
+[[redirects]]
+  from = "/languages/ur"
+  to = "/pages/languages/ur.html"
+  status = 200
+[[redirects]]
+  from = "/languages/pt"
+  to = "/pages/languages/pt.html"
+  status = 200
+[[redirects]]
+  from = "/languages/bn"
+  to = "/pages/languages/bn.html"
+  status = 200
+[[redirects]]
+  from = "/languages/it"
+  to = "/pages/languages/it.html"
+  status = 200
+# ── Nav language link 301 redirects → canonical /languages/ URLs ─────────────
+[[redirects]]
+  from = "/spanish-translation"
+  to = "/languages/spanish"
+  status = 301
+[[redirects]]
+  from = "/french-translation"
+  to = "/languages/french"
+  status = 301
+[[redirects]]
+  from = "/german-translation"
+  to = "/languages/german"
+  status = 301
+[[redirects]]
+  from = "/chinese-translation"
+  to = "/languages/chinese"
+  status = 301
+[[redirects]]
+  from = "/arabic-translation"
+  to = "/languages/arabic"
+  status = 301
+[[redirects]]
+  from = "/hindi-translation"
+  to = "/languages/hindi"
+  status = 301
+[[redirects]]
+  from = "/russian-translation"
+  to = "/languages/russian"
+  status = 301
+[[redirects]]
+  from = "/polish-translation"
+  to = "/languages/polish"
+  status = 301
+[[redirects]]
+  from = "/urdu-translation"
+  to = "/languages/urdu"
+  status = 301
+[[redirects]]
+  from = "/portuguese-translation"
+  to = "/languages/portuguese"
+  status = 301
+[[redirects]]
+  from = "/bengali-translation"
+  to = "/languages/bengali"
+  status = 301
+[[redirects]]
+  from = "/italian-translation"
+  to = "/languages/italian"
+  status = 301
+# ── State page clean URL rewrites (50 states) ────────────────────────────────
+[[redirects]]
+  from = "/alabama"
+  to = "/pages/states/alabama.html"
+  status = 200
+[[redirects]]
+  from = "/alaska"
+  to = "/pages/states/alaska.html"
+  status = 200
+[[redirects]]
+  from = "/arizona"
+  to = "/pages/states/arizona.html"
+  status = 200
+[[redirects]]
+  from = "/arkansas"
+  to = "/pages/states/arkansas.html"
+  status = 200
+[[redirects]]
+  from = "/california"
+  to = "/pages/states/california.html"
+  status = 200
+[[redirects]]
+  from = "/colorado"
+  to = "/pages/states/colorado.html"
+  status = 200
+[[redirects]]
+  from = "/connecticut"
+  to = "/pages/states/connecticut.html"
+  status = 200
+[[redirects]]
+  from = "/delaware"
+  to = "/pages/states/delaware.html"
+  status = 200
+[[redirects]]
+  from = "/florida"
+  to = "/pages/states/florida.html"
+  status = 200
+[[redirects]]
+  from = "/georgia"
+  to = "/pages/states/georgia.html"
+  status = 200
+[[redirects]]
+  from = "/hawaii"
+  to = "/pages/states/hawaii.html"
+  status = 200
+[[redirects]]
+  from = "/idaho"
+  to = "/pages/states/idaho.html"
+  status = 200
+[[redirects]]
+  from = "/illinois"
+  to = "/pages/states/illinois.html"
+  status = 200
+[[redirects]]
+  from = "/indiana"
+  to = "/pages/states/indiana.html"
+  status = 200
+[[redirects]]
+  from = "/iowa"
+  to = "/pages/states/iowa.html"
+  status = 200
+[[redirects]]
+  from = "/kansas"
+  to = "/pages/states/kansas.html"
+  status = 200
+[[redirects]]
+  from = "/kentucky"
+  to = "/pages/states/kentucky.html"
+  status = 200
+[[redirects]]
+  from = "/louisiana"
+  to = "/pages/states/louisiana.html"
+  status = 200
+[[redirects]]
+  from = "/maine"
+  to = "/pages/states/maine.html"
+  status = 200
+[[redirects]]
+  from = "/maryland"
+  to = "/pages/states/maryland.html"
+  status = 200
+[[redirects]]
+  from = "/massachusetts"
+  to = "/pages/states/massachusetts.html"
+  status = 200
+[[redirects]]
+  from = "/michigan"
+  to = "/pages/states/michigan.html"
+  status = 200
+[[redirects]]
+  from = "/minnesota"
+  to = "/pages/states/minnesota.html"
+  status = 200
+[[redirects]]
+  from = "/mississippi"
+  to = "/pages/states/mississippi.html"
+  status = 200
+[[redirects]]
+  from = "/missouri"
+  to = "/pages/states/missouri.html"
+  status = 200
+[[redirects]]
+  from = "/montana"
+  to = "/pages/states/montana.html"
+  status = 200
+[[redirects]]
+  from = "/nebraska"
+  to = "/pages/states/nebraska.html"
+  status = 200
+[[redirects]]
+  from = "/nevada"
+  to = "/pages/states/nevada.html"
+  status = 200
+[[redirects]]
+  from = "/new-hampshire"
+  to = "/pages/states/new-hampshire.html"
+  status = 200
+[[redirects]]
+  from = "/new-jersey"
+  to = "/pages/states/new-jersey.html"
+  status = 200
+[[redirects]]
+  from = "/new-mexico"
+  to = "/pages/states/new-mexico.html"
+  status = 200
+[[redirects]]
+  from = "/new-york"
+  to = "/pages/states/new-york.html"
+  status = 200
+[[redirects]]
+  from = "/north-carolina"
+  to = "/pages/states/north-carolina.html"
+  status = 200
+[[redirects]]
+  from = "/north-dakota"
+  to = "/pages/states/north-dakota.html"
+  status = 200
+[[redirects]]
+  from = "/ohio"
+  to = "/pages/states/ohio.html"
+  status = 200
+[[redirects]]
+  from = "/oklahoma"
+  to = "/pages/states/oklahoma.html"
+  status = 200
+[[redirects]]
+  from = "/oregon"
+  to = "/pages/states/oregon.html"
+  status = 200
+[[redirects]]
+  from = "/pennsylvania"
+  to = "/pages/states/pennsylvania.html"
+  status = 200
+[[redirects]]
+  from = "/rhode-island"
+  to = "/pages/states/rhode-island.html"
+  status = 200
+[[redirects]]
+  from = "/south-carolina"
+  to = "/pages/states/south-carolina.html"
+  status = 200
+[[redirects]]
+  from = "/south-dakota"
+  to = "/pages/states/south-dakota.html"
+  status = 200
+[[redirects]]
+  from = "/tennessee"
+  to = "/pages/states/tennessee.html"
+  status = 200
+[[redirects]]
+  from = "/texas"
+  to = "/pages/states/texas.html"
+  status = 200
+[[redirects]]
+  from = "/utah"
+  to = "/pages/states/utah.html"
+  status = 200
+[[redirects]]
+  from = "/vermont"
+  to = "/pages/states/vermont.html"
+  status = 200
+[[redirects]]
+  from = "/virginia"
+  to = "/pages/states/virginia.html"
+  status = 200
+[[redirects]]
+  from = "/washington"
+  to = "/pages/states/washington.html"
+  status = 200
+[[redirects]]
+  from = "/west-virginia"
+  to = "/pages/states/west-virginia.html"
+  status = 200
+[[redirects]]
+  from = "/wisconsin"
+  to = "/pages/states/wisconsin.html"
+  status = 200
+[[redirects]]
+  from = "/wyoming"
+  to = "/pages/states/wyoming.html"
+  status = 200
+# ── Force redirects: /pages/states/*.html → clean canonical ──────────────────
+[[redirects]]
+  from = "/pages/states/alabama.html"
+  to = "/alabama"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/alaska.html"
+  to = "/alaska"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/arizona.html"
+  to = "/arizona"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/arkansas.html"
+  to = "/arkansas"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/california.html"
+  to = "/california"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/colorado.html"
+  to = "/colorado"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/connecticut.html"
+  to = "/connecticut"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/delaware.html"
+  to = "/delaware"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/florida.html"
+  to = "/florida"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/georgia.html"
+  to = "/georgia"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/hawaii.html"
+  to = "/hawaii"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/idaho.html"
+  to = "/idaho"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/illinois.html"
+  to = "/illinois"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/indiana.html"
+  to = "/indiana"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/iowa.html"
+  to = "/iowa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/kansas.html"
+  to = "/kansas"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/kentucky.html"
+  to = "/kentucky"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/louisiana.html"
+  to = "/louisiana"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/maine.html"
+  to = "/maine"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/maryland.html"
+  to = "/maryland"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/massachusetts.html"
+  to = "/massachusetts"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/michigan.html"
+  to = "/michigan"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/minnesota.html"
+  to = "/minnesota"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/mississippi.html"
+  to = "/mississippi"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/missouri.html"
+  to = "/missouri"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/montana.html"
+  to = "/montana"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/nebraska.html"
+  to = "/nebraska"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/nevada.html"
+  to = "/nevada"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/new-hampshire.html"
+  to = "/new-hampshire"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/new-jersey.html"
+  to = "/new-jersey"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/new-mexico.html"
+  to = "/new-mexico"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/new-york.html"
+  to = "/new-york"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/north-carolina.html"
+  to = "/north-carolina"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/north-dakota.html"
+  to = "/north-dakota"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/ohio.html"
+  to = "/ohio"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/oklahoma.html"
+  to = "/oklahoma"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/oregon.html"
+  to = "/oregon"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/pennsylvania.html"
+  to = "/pennsylvania"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/rhode-island.html"
+  to = "/rhode-island"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/south-carolina.html"
+  to = "/south-carolina"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/south-dakota.html"
+  to = "/south-dakota"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/tennessee.html"
+  to = "/tennessee"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/texas.html"
+  to = "/texas"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/utah.html"
+  to = "/utah"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/vermont.html"
+  to = "/vermont"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/virginia.html"
+  to = "/virginia"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/washington.html"
+  to = "/washington"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/west-virginia.html"
+  to = "/west-virginia"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/wisconsin.html"
+  to = "/wisconsin"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/states/wyoming.html"
+  to = "/wyoming"
+  status = 301
+  force = true
+# ── Force redirects: /pages/languages/*.html → canonical URLs ────────────────
+[[redirects]]
+  from = "/pages/languages/spanish.html"
+  to = "/languages/spanish"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/french.html"
+  to = "/languages/french"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/german.html"
+  to = "/languages/german"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/arabic.html"
+  to = "/languages/arabic"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/chinese.html"
+  to = "/languages/chinese"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/mandarin.html"
+  to = "/languages/mandarin"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/hindi.html"
+  to = "/languages/hindi"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/russian.html"
+  to = "/languages/russian"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/polish.html"
+  to = "/languages/polish"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/urdu.html"
+  to = "/languages/urdu"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/portuguese.html"
+  to = "/languages/portuguese"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/korean.html"
+  to = "/languages/korean"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/italian.html"
+  to = "/languages/italian"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/tagalog.html"
+  to = "/languages/tagalog"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/bengali.html"
+  to = "/languages/bengali"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/somali.html"
+  to = "/languages/somali"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/amharic.html"
+  to = "/languages/amharic"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/vietnamese.html"
+  to = "/languages/vietnamese"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/haitian-creole.html"
+  to = "/languages/haitian-creole"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/es.html"
+  to = "/languages/es"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/fr.html"
+  to = "/languages/fr"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/de.html"
+  to = "/languages/de"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/ar.html"
+  to = "/languages/ar"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/zh.html"
+  to = "/languages/zh"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/hi.html"
+  to = "/languages/hi"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/ru.html"
+  to = "/languages/ru"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/pl.html"
+  to = "/languages/pl"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/ur.html"
+  to = "/languages/ur"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/pt.html"
+  to = "/languages/pt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/bn.html"
+  to = "/languages/bn"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/languages/it.html"
+  to = "/languages/it"
+  status = 301
+  force = true
+# ── Force redirects: other /pages/ direct-access URLs ───────────────────────
+[[redirects]]
+  from = "/pages/tools/translate.html"
+  to = "/translate"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/index.html"
+  to = "/blog"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog.html"
+  to = "/blog"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/medical-device-translation.html"
+  to = "/healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/schools.html"
+  to = "/schools"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/pdf-accessibility-checker.html"
+  to = "/pdf-accessibility-checker"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/medical-translation.html"
+  to = "/healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/medical-document-translation.html"
+  to = "/healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/clinical-trial-translation.html"
+  to = "/healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/life-sciences-translation.html"
+  to = "/healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/legal-document-translation.html"
+  to = "/legal"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/government.html"
+  to = "/government"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/captioning.html"
+  to = "/captioning"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/managed-translation-services.html"
+  to = "/translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/enterprise-localization-services.html"
+  to = "/website-localization"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/website-localization.html"
+  to = "/website-localization"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/certified/birth-certificate-translation.html"
+  to = "/birth-certificate-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/certified/immigration-document-translation.html"
+  to = "/certified-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/certified/marriage-certificate-translation.html"
+  to = "/marriage-certificate-translation"
+  status = 301
+  force = true
+# ── Force redirects: /pages/resources/blog/*.html → clean /blog/ URLs ────────
+[[redirects]]
+  from = "/pages/resources/blog/translation-for-government.html"
+  to = "/blog/translation-for-government"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/certified-translation-cost.html"
+  to = "/blog/certified-translation-cost"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/certified-vs-notarized-translation.html"
+  to = "/blog/certified-vs-notarized-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/joint-commission-2026-language-access.html"
+  to = "/blog/joint-commission-2026-language-access"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/title-vi-language-access-plan.html"
+  to = "/blog/title-vi-language-access-plan"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/what-is-certified-translation.html"
+  to = "/blog/what-is-certified-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/birth-certificate-translation-uscis.html"
+  to = "/blog/birth-certificate-translation-uscis"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/translation-for-legal-documents-law-firms.html"
+  to = "/blog/translation-for-legal-documents-law-firms"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/google-translate-official-documents.html"
+  to = "/blog/google-translate-official-documents"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/translation-vs-interpretation.html"
+  to = "/blog/translation-vs-interpretation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/opi-vri-guide.html"
+  to = "/blog/opi-vri-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/most-spoken-languages.html"
+  to = "/blog/most-spoken-languages"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/wcag-ada-compliance-tips.html"
+  to = "/blog/wcag-ada-compliance-tips"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/pdf-remediation-guide.html"
+  to = "/blog/pdf-remediation-guide"
+  status = 301
+  force = true

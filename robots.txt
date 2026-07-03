@@ -1,100 +1,35 @@
-# Language Access Hub — robots.txt
-# teamtaika.com
+# teamtaika.com — robots.txt
 
-# Allow all crawlers by default
 User-agent: *
 Allow: /
-Disallow: /dist/
+Disallow: /.netlify/functions/
+Disallow: /pages/portal/
+Disallow: /pages/admin/
 
-# ── Search Engines ──────────────────────────────────────────────────────
+# Search Engines
 User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Slurp
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-User-agent: Sogou
-Allow: /
-
-User-agent: Exabot
-Allow: /
-
-# ── AI / LLM Crawlers ───────────────────────────────────────────────────
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
+# AI Search Bots — allow for search visibility
 User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: ClaudeBot
+User-agent: GPTBot
 Allow: /
 
-User-agent: anthropic-ai
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Anthropic-ai
 Allow: /
 
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: GoogleOther
-Allow: /
-
-User-agent: Gemini
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
 User-agent: YouBot
 Allow: /
 
-User-agent: CCBot
-Allow: /
-
-User-agent: Meta-ExternalAgent
-Allow: /
-
-User-agent: FacebookBot
-Allow: /
-
-User-agent: Bytespider
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-# ── SEO / Analytics Crawlers ────────────────────────────────────────────
-User-agent: AhrefsBot
-Allow: /
-
-User-agent: SemrushBot
-Allow: /
-
-User-agent: MJ12bot
-Allow: /
-
-User-agent: DotBot
-Allow: /
-
-# ── Sitemap ─────────────────────────────────────────────────────────────
 Sitemap: https://teamtaika.com/sitemap.xml

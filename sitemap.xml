@@ -574,7 +574,13 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- Resource pages -->
+  <url>
+    <loc>https://teamtaika.com/government-bilingual-pay</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Language pages -->
   <url>
     <loc>https://teamtaika.com/why-taika</loc>
     <lastmod>2026-07-01</lastmod>

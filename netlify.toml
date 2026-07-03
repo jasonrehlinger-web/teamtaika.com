@@ -56,6 +56,20 @@
   from = "/healthcare"
   to = "/pages/industries/healthcare.html"
   status = 301
+[[redirects]]
+  from = "/life-sciences-translation"
+  to = "/pages/industries/life-sciences-translation.html"
+  status = 200
+
+[[redirects]]
+  from = "/medical-device-translation"
+  to = "/pages/industries/medical-device-translation.html"
+  status = 200
+
+[[redirects]]
+  from = "/clinical-trial-translation"
+  to = "/pages/industries/clinical-trial-translation.html"
+  status = 200
 
 [[redirects]]
   from = "/legal"
@@ -257,6 +271,11 @@
 [[redirects]]
   from = "/portal/translate"
   to = "/pages/portal/translate.html"
+  status = 200
+
+[[redirects]]
+  from = "/translate"
+  to = "/pages/tools/translate.html"
   status = 200
 
 # ── Admin pages ───────────────────────────────────────────────────────────────

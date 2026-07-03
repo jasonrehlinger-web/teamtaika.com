@@ -131,7 +131,7 @@ exports.handler = async function(event, context) {
         return await handleUpdateProjectAdmin(body, adminProfile);
 
       case 'getSignedUrl':
-        return await handleGetSignedUrl(body);
+        return await handleGetSignedUrl(body, adminProfile);
 
       case 'inviteTeamMember':
         return await handleInviteTeamMember(body, adminProfile);
@@ -323,13 +323,23 @@ async function handleUpdateProjectAdmin(body, _adminProfile) {
    Generate a time-limited signed URL for a file in project-files bucket.
    Body: { filePath }
    ═══════════════════════════════════════════════════════════════════════════ */
-async function handleGetSignedUrl(body) {
+async function handleGetSignedUrl(body, _adminProfile) {
   const { filePath } = body;
   if (!filePath) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'filePath required' }) };
   }
   if (typeof filePath !== 'string' || filePath.includes('..') || filePath.startsWith('/') || /[\x00-\x1f]/.test(filePath)) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid file path' }) };
+  }
+  // Security: verify the project folder prefix exists in the projects table
+  // filePath format is expected to be: {projectId}/{filename}
+  const projectId = filePath.split('/')[0];
+  if (!projectId || !/^[0-9a-f-]{36}$/i.test(projectId)) {
+    return { statusCode: 403, headers, body: JSON.stringify({ error: 'Invalid file path structure' }) };
+  }
+  const projectCheck = await sbGetJson(`/rest/v1/projects?id=eq.${encodeURIComponent(projectId)}&select=id`);
+  if (!projectCheck || projectCheck.length === 0) {
+    return { statusCode: 403, headers, body: JSON.stringify({ error: 'Project not found' }) };
   }
 
   // Encode each path segment individually so forward slashes are preserved
@@ -682,7 +692,7 @@ async function handleDeleteClient(body, _adminProfile) {
   // Fetch email first (for optional blacklisting)
   let email = null;
   if (blacklistEmail) {
-    const pRes = await sbGet('/rest/v1/profiles?id=eq.' + clientId + '&select=email');
+    const pRes = await sbGet(`/rest/v1/profiles?id=eq.${encodeURIComponent(clientId)}&select=email`);
     if (pRes.ok) {
       const pData = await pRes.json();
       email = pData?.[0]?.email || null;

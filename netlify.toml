@@ -202,6 +202,20 @@
   from = "/blog/translation-for-legal-documents-law-firms"
   to = "/pages/resources/blog/translation-for-legal-documents-law-firms.html"
   status = 200
+[[redirects]]
+  from = "/blog/certified-vs-notarized-translation"
+  to = "/pages/resources/blog/certified-vs-notarized-translation.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/certified-translation-cost"
+  to = "/pages/resources/blog/certified-translation-cost.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/translation-for-government"
+  to = "/pages/resources/blog/translation-for-government.html"
+  status = 200
 
 # ── Resource pages ────────────────────────────────────────────────────────────
 [[redirects]]

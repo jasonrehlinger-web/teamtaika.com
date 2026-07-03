@@ -9,6 +9,9 @@ const RESEND_API_KEY    = process.env.RESEND_API_KEY;
 const FROM_ADDRESS      = 'Taika Translations <noreply@taikatranslations.com>';
 const REPLY_TO          = 'sales@taikatranslations.com';
 
+// In-memory txn dedup — prevents duplicate confirmation emails on PayPal IPN retries
+const _seenTxns = new Set();
+
 exports.handler = async (event) => {
   // Must be POST from PayPal
   if (event.httpMethod !== 'POST') {
@@ -65,6 +68,18 @@ exports.handler = async (event) => {
   if (mcGross <= 0 || currency !== 'USD') {
     console.warn('[paypal-ipn] invalid amount/currency:', mcGross, currency, '— ignoring');
     return { statusCode: 200, body: 'OK' };
+  }
+
+  // Dedup: PayPal retries IPN delivery — skip if already processed this transaction
+  if (_seenTxns.has(txnId)) {
+    console.log('[paypal-ipn] Duplicate IPN — txn already processed:', txnId);
+    return { statusCode: 200, body: 'OK' };
+  }
+  _seenTxns.add(txnId);
+  if (_seenTxns.size > 500) {
+    // Prevent unbounded memory growth on long-running instances
+    const oldest = _seenTxns.values().next().value;
+    _seenTxns.delete(oldest);
   }
 
   console.log('[paypal-ipn] VERIFIED payment — txn:', txnId, 'amount: $' + mcGross, 'to:', payerEmail);

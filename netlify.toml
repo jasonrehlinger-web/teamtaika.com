@@ -122,6 +122,11 @@
   to = "/pages/services/pdf-accessibility-checker.html"
   status = 200
 
+[[redirects]]
+  from  = "/privacy"
+  to    = "/pages/privacy.html"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]

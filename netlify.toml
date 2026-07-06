@@ -1343,3 +1343,9 @@
   from = "/certified-translation"
   to = "/pages/certified/certified-translation.html"
   status = 200
+
+
+[[redirects]]
+  from = "/admin/analytics"
+  to = "/pages/admin/analytics.html"
+  status = 200

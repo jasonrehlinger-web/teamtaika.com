@@ -554,9 +554,7 @@
 (async function () {
   'use strict';
 
-  const SUPABASE_URL      = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const db = getSupabase();
 
   const ADMIN_ROLES = ['admin', 'super_admin'];
 

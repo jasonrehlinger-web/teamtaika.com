@@ -201,7 +201,7 @@
 </head>
 <body>
 
-<div class="login-card">
+<div class="login-card" id="login-card" style="visibility:hidden">
 
   <!-- Logo -->
   <div class="admin-logo">
@@ -311,6 +311,8 @@
       showAccessDenied();
     }
   }
+  // No valid admin session — reveal the login form
+  document.getElementById('login-card').style.visibility = 'visible';
 
   /* ── Login form submit ── */
   document.getElementById('admin-login-form').addEventListener('submit', async function (e) {

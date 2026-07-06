@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics | teamtaika.com Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2b4a;--navy2:#243a63;--gold:#c5962d;--gold2:#e8b84b;
+  --bg:#f0f4f9;--white:#fff;--text:#1a2b4a;--muted:#6b7a99;
+  --border:#dce3ef;--r:12px;--sh:0 2px 12px rgba(26,43,74,.08);
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── Auth ── */
+#auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;background:linear-gradient(135deg,var(--navy),var(--navy2))}
+.auth-card{background:var(--white);border-radius:20px;padding:3rem;text-align:center;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.auth-logo{font-size:1.8rem;font-weight:800;color:var(--navy);margin-bottom:.25rem}.auth-logo span{color:var(--gold)}
+.auth-sub{color:var(--muted);font-size:.9rem;margin-bottom:2rem}
+.auth-card h2{font-size:1.3rem;font-weight:700;margin-bottom:.5rem}
+.auth-card p{color:var(--muted);font-size:.875rem}
+.google-btn{display:inline-flex;align-items:center;gap:.75rem;padding:.875rem 1.75rem;border:2px solid var(--border);border-radius:50px;background:white;cursor:pointer;font-size:1rem;font-weight:600;color:var(--text);transition:all .2s;margin-top:1.5rem;box-shadow:var(--sh)}
+.google-btn:hover{border-color:var(--navy);background:var(--bg);transform:translateY(-1px)}
+.google-btn svg{width:20px;height:20px;flex-shrink:0}
+.setup-warn{margin-top:1.25rem;padding:.875rem 1rem;border-radius:8px;background:#fff8e6;border:1px solid #f0d080;font-size:.82rem;color:#7a5c00;text-align:left;display:none}
+.setup-warn a{color:#7a5c00;font-weight:600}
+
+/* ── Dashboard ── */
+#dashboard{display:none}
+.dash-nav{background:var(--navy);padding:.875rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.dash-brand{font-size:1.1rem;font-weight:700;color:white;white-space:nowrap}.dash-brand span{color:var(--gold)}
+.nav-links{display:flex;gap:.5rem}
+.nav-link{padding:.35rem .875rem;border-radius:20px;color:rgba(255,255,255,.7);text-decoration:none;font-size:.83rem;transition:all .2s}
+.nav-link:hover,.nav-link.active{background:rgba(255,255,255,.12);color:white}
+.dash-user{display:flex;align-items:center;gap:.75rem}
+.user-email{color:rgba(255,255,255,.7);font-size:.8rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.signout-btn{padding:.35rem .875rem;background:transparent;border:1px solid rgba(255,255,255,.3);border-radius:20px;color:white;cursor:pointer;font-size:.8rem;transition:all .2s}
+.signout-btn:hover{background:rgba(255,255,255,.1)}
+
+.dash-body{padding:1.75rem 2rem;max-width:1440px;margin:0 auto}
+
+/* Setup panel */
+.setup-panel{background:#fff8e6;border:1px solid #f0d080;border-radius:var(--r);padding:1.5rem;margin-bottom:1.75rem;display:none}
+.setup-panel h3{color:#7a5c00;font-size:1rem;margin-bottom:.75rem}
+.setup-panel ol{padding-left:1.25rem;color:#7a5c00;font-size:.875rem;line-height:2}
+.setup-panel code{background:#fef3cd;padding:.1rem .4rem;border-radius:4px;font-family:monospace;font-size:.82rem}
+.setup-panel a{color:#7a5c00;font-weight:600}
+
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.dash-title{font-size:1.4rem;font-weight:700}
+.date-pills{display:flex;gap:.4rem}
+.pill{padding:.35rem .875rem;border-radius:20px;cursor:pointer;font-size:.83rem;border:1px solid var(--border);background:white;color:var(--muted);transition:all .2s}
+.pill.active,.pill:hover{background:var(--navy);color:white;border-color:var(--navy)}
+
+/* KPI grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.1rem;margin-bottom:1.5rem}
+.kpi{background:white;border-radius:var(--r);padding:1.4rem;box-shadow:var(--sh);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--gold)}
+.kpi:nth-child(2)::before{background:#3b82f6}
+.kpi:nth-child(3)::before{background:#22c55e}
+.kpi:nth-child(4)::before{background:#a855f7}
+.kpi:nth-child(5)::before{background:#ef4444}
+.kpi-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.4rem}
+.kpi-val{font-size:1.9rem;font-weight:800;line-height:1}
+.kpi-note{font-size:.75rem;color:var(--muted);margin-top:.4rem}
+
+/* Charts */
+.chart-row{display:grid;grid-template-columns:2fr 1fr;gap:1.1rem;margin-bottom:1.5rem}
+@media(max-width:860px){.chart-row{grid-template-columns:1fr}}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem}
+@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+.card{background:white;border-radius:var(--r);padding:1.4rem;box-shadow:var(--sh)}
+.card-title{font-size:.95rem;font-weight:700;margin-bottom:1.1rem;color:var(--navy)}
+.chart-wrap{position:relative;height:240px}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th{padding:.55rem .7rem;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:2px solid var(--border)}
+td{padding:.55rem .7rem;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg)}
+.pg{color:var(--navy);font-weight:500;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.bar-row{display:flex;align-items:center;gap:.5rem}
+.mbar{height:5px;border-radius:3px;background:var(--gold);min-width:3px;flex-shrink:0}
+.badge{display:inline-block;padding:.15rem .5rem;border-radius:10px;font-size:.72rem;font-weight:600}
+.badge-up{background:#dcfce7;color:#15803d}
+.badge-dn{background:#fee2e2;color:#b91c1c}
+
+/* No-data / loading */
+.empty{padding:2.5rem;text-align:center;color:var(--muted)}
+.empty .ico{font-size:2.5rem;margin-bottom:.75rem}
+.empty h3{font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:.35rem}
+.empty p{font-size:.83rem;max-width:280px;margin:0 auto}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.skel{height:1.8rem;background:var(--border);border-radius:4px;animation:pulse 1.5s infinite}
+
+/* Progress bar util */
+.pbar{height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;min-width:60px}
+.pbar-fill{height:100%;background:var(--navy);border-radius:3px}
+
+/* Scrollable table container */
+.tscroll{overflow-x:auto}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ AUTH SCREEN ════════════════ -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">team<span>taika</span>.com</div>
+    <div class="auth-sub">Admin Dashboard</div>
+    <h2>Analytics &amp; Traffic</h2>
+    <p>Sign in with the Google account that has access to your GA4 property.</p>
+    <button class="google-btn" onclick="signIn()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Sign in with Google
+    </button>
+    <div class="setup-warn" id="auth-warn">
+      <strong>⚠️ OAuth Client ID not configured yet.</strong><br>
+      One free setup step is needed before this dashboard can authenticate.
+      After completing that step, refresh this page.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ DASHBOARD ════════════════ -->
+<div id="dashboard">
+
+  <!-- Nav -->
+  <nav class="dash-nav">
+    <div class="dash-brand">team<span>taika</span>.com</div>
+    <div class="nav-links">
+      <a href="/portal/dashboard.html" class="nav-link">Portal</a>
+      <a href="/admin" class="nav-link">Admin</a>
+      <a href="/admin/analytics" class="nav-link active">Analytics</a>
+    </div>
+    <div class="dash-user">
+      <span class="user-email" id="user-email"></span>
+      <button class="signout-btn" onclick="signOut()">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="dash-body">
+
+    <!-- Setup instructions (shown when CLIENT_ID placeholder) -->
+    <div class="setup-panel" id="setup-panel">
+      <h3>🔧 One-time setup: Add your OAuth Client ID</h3>
+      <ol>
+        <li>Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank">console.cloud.google.com/apis/credentials</a></li>
+        <li>Click <strong>+ Create Credentials → OAuth client ID</strong></li>
+        <li>Application type: <strong>Web application</strong> · Name: <strong>teamtaika Analytics</strong></li>
+        <li>Authorized JavaScript origins: add <code>https://teamtaika.com</code> and <code>http://localhost</code></li>
+        <li>Copy the Client ID (ends in <code>.apps.googleusercontent.com</code>)</li>
+        <li>In this file (<code>pages/admin/analytics.html</code>), replace <code>YOUR_OAUTH_CLIENT_ID</code> with it</li>
+        <li>Also enable: <strong>Google Analytics Data API</strong> and <strong>Search Console API</strong> under APIs &amp; Services → Library</li>
+      </ol>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="dash-title">Site Analytics</div>
+      <div class="date-pills">
+        <button class="pill active" onclick="setRange(7,this)">7 days</button>
+        <button class="pill" onclick="setRange(28,this)">28 days</button>
+        <button class="pill" onclick="setRange(90,this)">90 days</button>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-label">Sessions</div>
+        <div class="kpi-val" id="kv-sessions">–</div>
+        <div class="kpi-note" id="kn-sessions"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Active Users</div>
+        <div class="kpi-val" id="kv-users">–</div>
+        <div class="kpi-note" id="kn-users"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Page Views</div>
+        <div class="kpi-val" id="kv-views">–</div>
+        <div class="kpi-note" id="kn-views"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Avg. Session</div>
+        <div class="kpi-val" id="kv-dur">–</div>
+        <div class="kpi-note" id="kn-dur"></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Bounce Rate</div>
+        <div class="kpi-val" id="kv-bounce">–</div>
+        <div class="kpi-note" id="kn-bounce"></div>
+      </div>
+    </div>
+
+    <!-- Traffic chart + Sources -->
+    <div class="chart-row">
+      <div class="card">
+        <div class="card-title">Traffic Over Time</div>
+        <div class="chart-wrap"><canvas id="chart-traffic"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Traffic Sources</div>
+        <div class="chart-wrap"><canvas id="chart-sources"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Top Pages + Top Keywords -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Top Pages</div>
+        <div class="tscroll" id="tbl-pages">
+          <div class="empty"><div class="ico">📄</div><h3>Loading…</h3></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Top Search Keywords</div>
+        <div class="tscroll" id="tbl-keywords">
+          <div class="empty"><div class="ico">🔍</div><h3>Loading…</h3></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countries + Devices -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Top Countries</div>
+        <div class="tscroll" id="tbl-countries">
+          <div class="empty"><div class="ico">🌍</div><h3>Loading…</h3></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Device Breakdown</div>
+        <div class="chart-wrap"><canvas id="chart-devices"></canvas></div>
+      </div>
+    </div>
+
+  </div><!-- /dash-body -->
+</div><!-- /dashboard -->
+
+<script>
+/* ════ CONFIG — replace CLIENT_ID after Google Cloud setup ════ */
+const CLIENT_ID   = 'YOUR_OAUTH_CLIENT_ID';
+const GA4_PROP    = '544420852';
+const SC_SITE     = 'sc-domain:teamtaika.com';
+
+/* ════ State ════ */
+let token = null;
+let days  = 7;
+let charts = {};
+
+/* ════ Auth ════ */
+function signIn() {
+  if (CLIENT_ID === 'YOUR_OAUTH_CLIENT_ID') {
+    document.getElementById('auth-warn').style.display = 'block';
+    return;
+  }
+  tokenClient.requestAccessToken({ prompt: 'consent' });
+}
+
+function signOut() {
+  google.accounts.oauth2.revoke(token, () => {
+    token = null;
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('auth-screen').style.display = 'flex';
+  });
+}
+
+let tokenClient;
+function initGIS() {
+  if (CLIENT_ID === 'YOUR_OAUTH_CLIENT_ID') {
+    document.getElementById('setup-panel').style.display = 'block';
+    return;
+  }
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: [
+      'https://www.googleapis.com/auth/analytics.readonly',
+      'https://www.googleapis.com/auth/webmasters.readonly',
+      'openid email profile'
+    ].join(' '),
+    callback: async (resp) => {
+      if (resp.error) { console.error(resp); return; }
+      token = resp.access_token;
+      try {
+        const me = await apiFetch('https://www.googleapis.com/oauth2/v3/userinfo');
+        document.getElementById('user-email').textContent = me.email || '';
+      } catch(e){}
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display  = 'block';
+      loadAll();
+    }
+  });
+}
+
+/* ════ API helpers ════ */
+async function apiFetch(url, opts = {}) {
+  const res = await fetch(url, {
+    ...opts,
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', ...(opts.headers || {}) }
+  });
+  if (!res.ok) throw Object.assign(new Error(`HTTP ${res.status}`), { status: res.status });
+  return res.json();
+}
+
+async function ga4(body) {
+  return apiFetch(`https://analyticsdata.googleapis.com/v1beta/properties/${GA4_PROP}:runReport`, {
+    method: 'POST', body: JSON.stringify(body)
+  });
+}
+
+async function gsc(body) {
+  return apiFetch(
+    `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SC_SITE)}/searchAnalytics/query`,
+    { method: 'POST', body: JSON.stringify(body) }
+  );
+}
+
+function dr() { return [{ startDate: `${days}daysAgo`, endDate: 'today' }]; }
+
+/* ════ Formatters ════ */
+function fmt(n) {
+  n = +n || 0;
+  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
+  if (n >= 1e4) return (n/1e3).toFixed(0)+'K';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
+  return n.toLocaleString();
+}
+function fmtDur(s) {
+  s = +s || 0;
+  if (!s) return '–';
+  return `${Math.floor(s/60)}m ${Math.round(s%60)}s`;
+}
+function fmtPct(n) { return ((+n||0)*100).toFixed(1)+'%'; }
+
+/* ════ Loader orchestrator ════ */
+async function loadAll() {
+  destroyCharts();
+  await Promise.allSettled([
+    loadKPIs(), loadTraffic(), loadSources(),
+    loadPages(), loadKeywords(), loadCountries(), loadDevices()
+  ]);
+}
+
+function setRange(d, btn) {
+  days = d;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  ['kv-sessions','kv-users','kv-views','kv-dur','kv-bounce'].forEach(id => {
+    document.getElementById(id).textContent = '–';
+  });
+  loadAll();
+}
+
+function destroyCharts() {
+  Object.values(charts).forEach(c => { try{ c.destroy(); }catch(e){} });
+  charts = {};
+}
+
+/* ════ KPIs ════ */
+async function loadKPIs() {
+  try {
+    const d = await ga4({
+      dateRanges: dr(),
+      metrics: [
+        { name: 'sessions' }, { name: 'activeUsers' },
+        { name: 'screenPageViews' }, { name: 'averageSessionDuration' },
+        { name: 'bounceRate' }
+      ]
+    });
+    const v = d.rows?.[0]?.metricValues || [];
+    const sessions = +v[0]?.value || 0;
+    const users    = +v[1]?.value || 0;
+    const views    = +v[2]?.value || 0;
+    const dur      = +v[3]?.value || 0;
+    const bounce   = +v[4]?.value || 0;
+
+    document.getElementById('kv-sessions').textContent = sessions ? fmt(sessions) : '–';
+    document.getElementById('kv-users').textContent    = users    ? fmt(users)    : '–';
+    document.getElementById('kv-views').textContent    = views    ? fmt(views)    : '–';
+    document.getElementById('kv-dur').textContent      = dur      ? fmtDur(dur)   : '–';
+    document.getElementById('kv-bounce').textContent   = bounce   ? fmtPct(bounce): '–';
+
+    if (!sessions) {
+      document.getElementById('kn-sessions').textContent = 'No data yet — check back in 24h';
+    }
+  } catch(e) { console.error('KPI:', e); }
+}
+
+/* ════ Traffic trend ════ */
+async function loadTraffic() {
+  try {
+    const d = await ga4({
+      dateRanges: dr(),
+      dimensions: [{ name: 'date' }],
+      metrics: [{ name: 'sessions' }, { name: 'activeUsers' }],
+      orderBys: [{ dimension: { dimensionName: 'date' } }]
+    });
+    const rows = d.rows || [];
+    if (!rows.length) { noChart('chart-traffic', 'Traffic data will appear once visitors arrive'); return; }
+
+    const labels   = rows.map(r => { const s=r.dimensionValues[0].value; return `${s.slice(4,6)}/${s.slice(6,8)}`; });
+    const sessions = rows.map(r => +r.metricValues[0].value);
+    const users    = rows.map(r => +r.metricValues[1].value);
+
+    charts.traffic = new Chart(document.getElementById('chart-traffic').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label:'Sessions', data:sessions, borderColor:'#1a2b4a', backgroundColor:'rgba(26,43,74,.07)', fill:true, tension:.4, pointRadius:3 },
+          { label:'Users',    data:users,    borderColor:'#c5962d', backgroundColor:'transparent',       fill:false, tension:.4, pointRadius:3 }
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'top', labels:{ boxWidth:10, font:{ size:11 } } } },
+        scales:{ y:{ beginAtZero:true, ticks:{ precision:0 } } }
+      }
+    });
+  } catch(e) { console.error('Traffic:', e); }
+}
+
+/* ════ Sources ════ */
+async function loadSources() {
+  try {
+    const d = await ga4({
+      dateRanges: dr(),
+      dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric:{ metricName:'sessions' }, desc:true }],
+      limit: 7
+    });
+    const rows = d.rows || [];
+    if (!rows.length) { noChart('chart-sources', 'Source data coming soon'); return; }
+
+    const COLORS = ['#1a2b4a','#c5962d','#3b82f6','#22c55e','#a855f7','#f97316','#06b6d4'];
+    charts.sources = new Chart(document.getElementById('chart-sources').getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: rows.map(r => r.dimensionValues[0].value),
+        datasets: [{ data: rows.map(r => +r.metricValues[0].value), backgroundColor: COLORS.slice(0,rows.length), borderWidth:2 }]
+      },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'right', labels:{ boxWidth:10, font:{ size:10 } } } }
+      }
+    });
+  } catch(e) { console.error('Sources:', e); }
+}
+
+/* ════ Top Pages ════ */
+async function loadPages() {
+  const el = document.getElementById('tbl-pages');
+  try {
+    const d = await ga4({
+      dateRanges: dr(),
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }],
+      orderBys: [{ metric:{ metricName:'screenPageViews' }, desc:true }],
+      limit: 10
+    });
+    const rows = d.rows || [];
+    if (!rows.length) {
+      el.innerHTML = `<div class="empty"><div class="ico">📄</div><h3>No page data yet</h3><p>Appears after visitors browse the site</p></div>`;
+      return;
+    }
+    const max = +rows[0].metricValues[0].value || 1;
+    el.innerHTML = `<table>
+      <thead><tr><th>Page</th><th>Views</th><th>Users</th></tr></thead>
+      <tbody>${rows.map(r => {
+        const path = r.dimensionValues[0].value;
+        const views = +r.metricValues[0].value;
+        const users = +r.metricValues[1].value;
+        const pct = Math.round(views/max*100);
+        return `<tr>
+          <td><div class="bar-row"><div class="mbar" style="width:${Math.max(pct,3)}px"></div><span class="pg" title="${path}">${path}</span></div></td>
+          <td>${fmt(views)}</td>
+          <td>${fmt(users)}</td>
+        </tr>`;
+      }).join('')}</tbody></table>`;
+  } catch(e) {
+    el.innerHTML = `<div class="empty"><div class="ico">⚠️</div><h3>Error loading pages</h3></div>`;
+  }
+}
+
+/* ════ Keywords ════ */
+async function loadKeywords() {
+  const el = document.getElementById('tbl-keywords');
+  try {
+    const end   = new Date().toISOString().slice(0,10);
+    const start = new Date(Date.now() - days*86400000).toISOString().slice(0,10);
+    const d = await gsc({ startDate:start, endDate:end, dimensions:['query'], rowLimit:10 });
+    const rows = d.rows || [];
+    if (!rows.length) {
+      el.innerHTML = `<div class="empty"><div class="ico">🔍</div><h3>No keyword data yet</h3><p>Search Console data takes 2-3 days after linking</p></div>`;
+      return;
+    }
+    const maxC = Math.max(...rows.map(r => r.clicks)) || 1;
+    el.innerHTML = `<table>
+      <thead><tr><th>Query</th><th>Clicks</th><th>Impr.</th><th>CTR</th></tr></thead>
+      <tbody>${rows.map(r => {
+        const pct = Math.round(r.clicks/maxC*100);
+        return `<tr>
+          <td><div class="bar-row"><div class="mbar" style="width:${Math.max(pct,3)}px;background:#3b82f6"></div><span class="pg" title="${r.keys[0]}">${r.keys[0]}</span></div></td>
+          <td>${r.clicks}</td>
+          <td>${fmt(r.impressions)}</td>
+          <td>${(r.ctr*100).toFixed(1)}%</td>
+        </tr>`;
+      }).join('')}</tbody></table>`;
+  } catch(e) {
+    el.innerHTML = `<div class="empty"><div class="ico">🔍</div><h3>Keyword data unavailable</h3><p>Verify Search Console is linked to this GA4 property</p></div>`;
+  }
+}
+
+/* ════ Countries ════ */
+async function loadCountries() {
+  const el = document.getElementById('tbl-countries');
+  try {
+    const d = await ga4({
+      dateRanges: dr(),
+      dimensions: [{ name: 'country' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric:{ metricName:'sessions' }, desc:true }],
+      limit: 8
+    });
+    const rows = d.rows || [];
+    if (!rows.length) {
+      el.innerHTML = `<div class="empty"><div class="ico">🌍</div><h3>No geo data yet</h3></div>`;
+      return;
+    }
+    const max = +rows[0].metricValues[0].value || 1;
+    el.innerHTML = `<table>
+      <thead><tr><th>Country</th><th>Sessions</th><th style="width:100px"></th></tr></thead>
+      <tbody>${rows.map(r => {
+        const country = r.dimensionValues[0].value;
+        const s = +r.metricValues[0].value;
+        const pct = Math.round(s/max*100);
+        return `<tr>
+          <td>${country}</td>
+          <td>${fmt(s)}</td>
+          <td><div class="pbar"><div class="pbar-fill" style="width:${pct}%"></div></div></td>
+        </tr>`;
+      }).join('')}</tbody></table>`;
+  } catch(e) {
+    el.innerHTML = `<div class="empty"><div class="ico">🌍</div><h3>Error loading countries</h3></div>`;
+  }
+}
+
+/* ════ Devices ════ */
+async function loadDevices() {
+  try {
+    const d = await ga4({
+      dateRanges: dr(),
+      dimensions: [{ name: 'deviceCategory' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric:{ metricName:'sessions' }, desc:true }]
+    });
+    const rows = d.rows || [];
+    if (!rows.length) { noChart('chart-devices', 'Device data coming soon'); return; }
+
+    charts.devices = new Chart(document.getElementById('chart-devices').getContext('2d'), {
+      type: 'pie',
+      data: {
+        labels: rows.map(r => { const v=r.dimensionValues[0].value; return v.charAt(0).toUpperCase()+v.slice(1); }),
+        datasets: [{ data:rows.map(r => +r.metricValues[0].value), backgroundColor:['#1a2b4a','#c5962d','#3b82f6'], borderWidth:2 }]
+      },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'right', labels:{ boxWidth:10, font:{ size:11 } } } }
+      }
+    });
+  } catch(e) { console.error('Devices:', e); }
+}
+
+/* ════ Utils ════ */
+function noChart(id, msg) {
+  const c = document.getElementById(id);
+  if (!c) return;
+  c.parentElement.innerHTML = `<div class="empty" style="padding:1.5rem"><div class="ico" style="font-size:2rem">📊</div><h3>No data yet</h3><p>${msg}</p></div>`;
+}
+
+/* ════ Init ════ */
+window.initGIS = initGIS;
+</script>
+<script src="https://accounts.google.com/gsi/client" async onload="initGIS()"></script>
+
+</body>
+</html>

@@ -2,6 +2,21 @@
    Language Access Hub -- Main JS
    ============================================================ */
 
+/* ── Google Analytics 4 (G-GZBSYL1ZWT) ──────────────────────────────────── */
+(function() {
+  var GA_ID = 'G-GZBSYL1ZWT';
+  var s1 = document.createElement('script');
+  s1.async = true;
+  s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.appendChild(s1);
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', GA_ID, { send_page_view: true });
+}());
+
+
 (function () {
   'use strict';
 

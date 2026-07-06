@@ -723,11 +723,13 @@
 
 }());
 
-// ── Site Directory footer link injection ─────────────────────────────────────
+// ── Site Directory footer link + email injection ─────────────────────────────
 (function() {
+  var EMAIL = 'projects@taikatranslations.com';
+
   document.addEventListener('DOMContentLoaded', function() {
 
-    // Case 1: New Taika template — footer-links nav
+    // Case 1: New Taika template — footer-links nav + footer-copy
     var footerNav = document.querySelector('footer .footer-links');
     if (footerNav) {
       if (!footerNav.querySelector('a[href="/site-directory"]')) {
@@ -736,14 +738,26 @@
         link.textContent = 'Site Directory';
         footerNav.appendChild(link);
       }
+      // Add email to footer-copy if not already there
+      var footerCopy = document.querySelector('footer .footer-copy');
+      if (footerCopy && !footerCopy.querySelector('a[href^="mailto:"]')) {
+        var emailLink = document.createElement('a');
+        emailLink.href = 'mailto:' + EMAIL;
+        emailLink.textContent = EMAIL;
+        footerCopy.appendChild(document.createTextNode(' · '));
+        footerCopy.appendChild(emailLink);
+      }
       return;
     }
 
-    // Case 2: Old Language Access Hub template — footer-grid Resources column
+    // Case 2: Old Language Access Hub template — footer-grid
     var footerCols = document.querySelectorAll('footer .footer-col');
+    var foundResources = false;
     for (var i = 0; i < footerCols.length; i++) {
       var h4 = footerCols[i].querySelector('h4');
-      if (h4 && h4.textContent.trim() === 'Resources') {
+      if (!h4) continue;
+      // Add Site Directory to Resources column
+      if (h4.textContent.trim() === 'Resources') {
         var ul = footerCols[i].querySelector('ul');
         if (ul && !ul.querySelector('a[href="/site-directory"]')) {
           var li = document.createElement('li');
@@ -753,9 +767,32 @@
           li.appendChild(a);
           ul.appendChild(li);
         }
-        return;
+        foundResources = true;
+      }
+      // Add email to Contact column
+      if (h4.textContent.trim() === 'Contact') {
+        var cul = footerCols[i].querySelector('ul');
+        if (cul && !cul.querySelector('a[href^="mailto:"]')) {
+          var cli = document.createElement('li');
+          var ca = document.createElement('a');
+          ca.href = 'mailto:' + EMAIL;
+          ca.textContent = EMAIL;
+          cli.appendChild(ca);
+          // Insert after the phone numbers (before address items)
+          var firstAddr = null;
+          var items = cul.querySelectorAll('li');
+          for (var j = 0; j < items.length; j++) {
+            if (!items[j].querySelector('a[href^="tel:"]')) { firstAddr = items[j]; break; }
+          }
+          if (firstAddr) {
+            cul.insertBefore(cli, firstAddr);
+          } else {
+            cul.appendChild(cli);
+          }
+        }
       }
     }
+    if (foundResources) return;
 
     // Case 3: No footer element at all — inject a compact footer
     if (!document.querySelector('footer')) {
@@ -776,6 +813,7 @@
         '<p style="font-size:12px;color:rgba(255,255,255,.28);margin:0;">' +
         '© 2026 TaikaTranslations LLC · Austin, TX · ' +
         '<a href="tel:+18303552205" style="color:rgba(255,255,255,.35);">830-355-2205</a>' +
+        ' · <a href="mailto:' + EMAIL + '" style="color:rgba(255,255,255,.35);">' + EMAIL + '</a>' +
         ' · <a href="/terms" style="color:rgba(255,255,255,.35);">Terms</a>' +
         ' · GSA · NASPO ValuePoint · VOSB · ATA Member' +
         '</p>' +

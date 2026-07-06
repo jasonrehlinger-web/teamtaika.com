@@ -137,11 +137,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="../../js/portal.js"></script>
 <script>
 (async () => {
-  const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const sb = getSupabase();
 
   // Auth guard
   const { data: { session } } = await sb.auth.getSession();

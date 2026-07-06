@@ -1314,3 +1314,7 @@
   from = "/blog/divorce-decree-translation-uscis"
   to = "/pages/resources/blog/divorce-decree-translation-uscis.html"
   status = 200
+[[redirects]]
+  from = "/certified-translation"
+  to = "/pages/certified/certified-translation.html"
+  status = 200

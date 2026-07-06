@@ -453,10 +453,8 @@
 <script src="../../js/portal.js"></script>
 <script>
   /* ── Config ── */
-  const SUPABASE_URL      = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-  const ADMIN_FN_URL      = '/.netlify/functions/portal-admin';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const ADMIN_FN_URL = '/.netlify/functions/portal-admin';
+  const sb = getSupabase();
 
   let currentUser    = null;
   let currentProfile = null;

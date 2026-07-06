@@ -3,24 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Language Access &amp; Compliance Blog | Language Access Hub</title>
-<meta name="description" content="Practical insights on Title VI, Section 508, WCAG 2.1, OPI/VRI interpretation, and PDF remediation for government agencies, school districts, and healthcare organizations.">
+<title>Translation &amp; Language Access Blog | Taika Translations</title>
+<meta name="description" content="Practical insights on certified translation, USCIS immigration, ADA/Section 508 compliance, interpretation, and language access for government agencies, school districts, and healthcare organizations.">
 <link rel="canonical" href="https://teamtaika.com/blog">
+<meta property="og:title" content="Translation &amp; Language Access Blog | Taika Translations">
+<meta property="og:description" content="Expert guidance on certified translation, USCIS requirements, ADA compliance, and language access — from a certified LSP.">
+<meta property="og:url" content="https://teamtaika.com/blog">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../../css/main.css">
 <style>
 .blog-hero{background:var(--navy-deep);padding:64px 0 48px;}
-.blog-hero-inner{max-width:1100px;margin:0 auto;padding:0 24px;}
-.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;max-width:1100px;margin:48px auto 0;padding:0 24px;}
+.blog-hero-inner{max-width:1160px;margin:0 auto;padding:0 24px;}
+.blog-layout{display:flex;gap:40px;max-width:1160px;margin:48px auto 0;padding:0 24px 80px;align-items:flex-start;}
+.blog-sidebar{width:220px;flex-shrink:0;position:sticky;top:88px;align-self:flex-start;}
+.blog-filter-box{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-md);overflow:hidden;}
+.blog-filter-box-header{background:var(--navy-deep);padding:16px 18px;}
+.blog-filter-box-label{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:2px;}
+.blog-filter-box-sub{font-size:12px;color:rgba(255,255,255,.5);}
+.blog-filter-list{padding:12px 12px 16px;}
+.blog-filter-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:9px 12px;border:1.5px solid transparent;border-radius:8px;background:transparent;font-family:var(--font-sans);font-size:13px;color:var(--slate);cursor:pointer;text-align:left;transition:.15s;margin-bottom:3px;line-height:1.3;}
+.blog-filter-btn:hover{background:#f4f6f9;color:var(--navy);}
+.blog-filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.blog-filter-btn.active:hover{background:var(--navy-deep);}
+.filter-badge{font-family:var(--font-mono);font-size:10px;padding:2px 7px;border-radius:20px;background:rgba(0,0,0,.07);flex-shrink:0;margin-left:6px;}
+.blog-filter-btn.active .filter-badge{background:rgba(255,255,255,.18);color:rgba(255,255,255,.85);}
+.filter-divider{border:none;border-top:1.5px solid var(--border);margin:10px 0 8px;}
+.blog-filter-count{font-size:12px;color:var(--slate-light,#8898aa);padding:12px 18px;border-top:1.5px solid var(--border);font-family:var(--font-mono);letter-spacing:.3px;}
+.blog-main{flex:1;min-width:0;}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px;}
 .blog-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-md);overflow:hidden;text-decoration:none;transition:.2s;display:flex;flex-direction:column;}
 .blog-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.08);}
 .blog-card-cat{font-family:var(--font-mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);padding:18px 20px 0;}
-.blog-card-title{font-family:var(--font-display);font-size:18px;color:var(--navy);padding:8px 20px 0;line-height:1.3;font-weight:700;}
+.blog-card-title{font-family:var(--font-display);font-size:17px;color:var(--navy);padding:8px 20px 0;line-height:1.3;font-weight:700;}
 .blog-card-excerpt{font-size:13.5px;color:var(--slate);padding:8px 20px 0;line-height:1.6;flex:1;}
-.blog-card-meta{font-size:12px;color:var(--slate-light,#8898aa);padding:14px 20px 18px;display:flex;align-items:center;gap:10px;}
-.blog-card-meta span{font-weight:600;color:var(--navy);}
+.blog-card-meta{font-size:12px;color:var(--slate-light,#8898aa);padding:14px 20px 18px;}
+.blog-no-results{display:none;padding:60px 20px;text-align:center;color:var(--slate);font-size:15px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-md);}
+.blog-no-results strong{display:block;font-family:var(--font-display);font-size:1.1rem;color:var(--navy);margin-bottom:8px;}
 .post-hero{background:var(--navy-deep);padding:64px 0 48px;}
 .post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
 .post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
@@ -41,20 +62,27 @@
 .post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
 .post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
 .post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
-@media(max-width:640px){.blog-grid{grid-template-columns:1fr;padding:0 16px;}}
+@media(max-width:900px){
+  .blog-layout{flex-direction:column;gap:0;padding:0 0 64px;}
+  .blog-sidebar{width:100%;position:static;padding:0 16px;margin-bottom:28px;}
+  .blog-filter-list{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:12px;scrollbar-width:none;-ms-overflow-style:none;}
+  .blog-filter-btn{flex-shrink:0;width:auto;white-space:nowrap;margin-bottom:0;padding:8px 14px;}
+  .filter-divider{display:none;}
+  .blog-filter-count{padding:10px 16px;}
+  .blog-main{padding:0 16px;}
+  .blog-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));}
+}
+@media(max-width:640px){.blog-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-<!-- URGENCY BANNER -->
 <div class="urgency-bar" role="alert">
   <div class="urgency-bar-inner">
-    <span class="urgency-tag">⚠ Compliance Deadline</span>
-    <p class="urgency-copy"><strong>State &amp; local government WCAG 2.1 AA compliance required as of April 2026.</strong> Healthcare Section 504 deadline: May 11, 2026.</p>
-    <a href="/pages/resources/compliance-faq.html" class="urgency-link">Am I compliant? →</a>
+    <span class="urgency-tag">&#9888; Compliance Deadline</span>
+    <p class="urgency-copy"><strong>ADA Title II WCAG 2.1 AA deadlines:</strong> April 26, 2027 (agencies &#8805;50,000 pop.) &middot; April 26, 2028 (agencies &lt;50,000 pop.)</p>
+    <a href="/pages/resources/compliance-faq.html" class="urgency-link">Am I compliant? &rarr;</a>
   </div>
 </div>
-
-<!-- MAIN NAV -->
 <nav class="site-nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label="Language Access Hub home">
@@ -66,7 +94,6 @@
         <span class="nav-logo-sub">Powered by Taika Translations + TVPTeam</span>
       </div>
     </a>
-
     <ul class="nav-links" role="list">
       <li class="nav-dropdown">
         <a href="/pages/services/translation.html">Services</a>
@@ -91,7 +118,7 @@
           <a href="/pages/industries/nonprofits.html">Nonprofits</a>
         </div>
       </li>
-            <li class="nav-dropdown">
+      <li class="nav-dropdown">
         <a href="/pages/services/translation.html#languages">Languages</a>
         <div class="nav-dropdown-menu" style="min-width:520px;padding:8px;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
           <div>
@@ -111,18 +138,18 @@
           </div>
           <div>
             <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">Native Language Pages</div>
-            <a href="/traduccion-certificada-espanol">Español</a>
-            <a href="/traduction-certifiee-francais">Français</a>
-            <a href="/traducao-certificada-portugues">Português</a>
+            <a href="/traduccion-certificada-espanol">Espa&#241;ol</a>
+            <a href="/traduction-certifiee-francais">Fran&#231;ais</a>
+            <a href="/traducao-certificada-portugues">Portugu&#234;s</a>
             <a href="/beglaubigte-uebersetzung-deutsch">Deutsch</a>
             <a href="/traduzione-certificata-italiano">Italiano</a>
-            <a href="/fanyi-zhongwen">中文</a>
-            <a href="/tarjama-arabiya-rasmiya">العربية</a>
-            <a href="/praman-patra-anuvad-hindi">हिन्दी</a>
-            <a href="/zaverenniy-perevod-russkiy">Русский</a>
+            <a href="/fanyi-zhongwen">&#20013;&#25991;</a>
+            <a href="/tarjama-arabiya-rasmiya">&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</a>
+            <a href="/praman-patra-anuvad-hindi">&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</a>
+            <a href="/zaverenniy-perevod-russkiy">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</a>
             <a href="/tlumaczenia-uwierzytelnione-polskie">Polski</a>
-            <a href="/tarjuma-rasmi-urdu">اردو</a>
-            <a href="/praman-anuvad-bangla">বাংলা</a>
+            <a href="/tarjuma-rasmi-urdu">&#1575;&#1585;&#1583;&#1608;</a>
+            <a href="/praman-anuvad-bangla">&#2476;&#2494;&#2434;&#2482;&#2494;</a>
           </div>
         </div></div>
       </li>
@@ -131,7 +158,6 @@
       <li><a href="/index.html#products">Store</a></li>
       <li><a href="/index.html#about">About</a></li>
     </ul>
-
     <div class="nav-right">
       <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
       <a href="/pages/resources/compliance-faq.html#checklist" class="btn-nav-ghost">Free Checklist</a>
@@ -142,45 +168,17 @@
     </div>
   </div>
 </nav>
-
-<!-- TRUST WALL -->
 <div style="background:#0a1729;border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 24px;">
   <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" class="trust-wall-scroll">
-
-    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
-      <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">GSA Schedule</span>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
-      <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">NASPO ValuePoint</span>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
-      <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="18" r="7" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M14 22l-2.6-1.5.7 2.8-2.1-2 2.8-.3L14 18.5l1.2 2.5 2.8.3-2.1 2 .7-2.8z" fill="#c9a84c"/><path d="M11 11.5L8.5 5h5z" fill="#c9a84c"/><path d="M17 11.5L19.5 5h-5z" fill="#c9a84c"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SBA VOSB</span>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
-      <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><ellipse cx="14" cy="14" rx="4.5" ry="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#c9a84c" stroke-width="1.5"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">ATA Certified Vendors</span>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
-      <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="5" y="3" width="14" height="19" rx="2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="8" y1="9" x2="15" y2="9" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="21" r="5" fill="#0a1729" stroke="#c9a84c" stroke-width="1.5"/><path d="M18.5 21l1.5 1.5 3-3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SAM Registered</span>
-    </div>
-
-    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;flex-shrink:0;">
-      <svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="5" r="2.5" fill="#c9a84c"/><path d="M14 8.5v8" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/><path d="M9 12h10" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/><path d="M11 16.5l-2.5 6" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><path d="M17 16.5l2.5 6" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">WCAG 2.2</span>
-    </div>
-
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">GSA Schedule</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">NASPO ValuePoint</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="18" r="7" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M14 22l-2.6-1.5.7 2.8-2.1-2 2.8-.3L14 18.5l1.2 2.5 2.8.3-2.1 2 .7-2.8z" fill="#c9a84c"/><path d="M11 11.5L8.5 5h5z" fill="#c9a84c"/><path d="M17 11.5L19.5 5h-5z" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SBA VOSB</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="14" r="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><ellipse cx="14" cy="14" rx="4.5" ry="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">ATA Certified Vendors</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="5" y="3" width="14" height="19" rx="2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="8" y1="9" x2="15" y2="9" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="21" r="5" fill="#0a1729" stroke="#c9a84c" stroke-width="1.5"/><path d="M18.5 21l1.5 1.5 3-3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SAM Registered</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="14" cy="5" r="2.5" fill="#c9a84c"/><path d="M14 8.5v8" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/><path d="M9 12h10" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/><path d="M11 16.5l-2.5 6" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><path d="M17 16.5l2.5 6" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">WCAG 2.2</span></div>
   </div>
 </div>
-
-<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Blog</span></nav></div>
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">&#8250;</span><span class="breadcrumb-current">Blog</span></nav></div>
 <section class="blog-hero">
   <div class="blog-hero-inner">
     <div class="page-hero-eyebrow"><span class="dot"></span>Language Access &amp; Compliance</div>
@@ -188,58 +186,126 @@
     <p style="font-size:17px;color:rgba(255,255,255,.72);max-width:640px;">Practical guidance for compliance officers, IT directors, and program managers at government agencies, school districts, and healthcare organizations.</p>
   </div>
 </section>
-<section class="section" style="padding-top:0;">
-  <div class="blog-grid">
-      <a href="/pages/resources/blog/certified-translation-cost.html" class="blog-card">
-    <div class="blog-card-cat">Translation</div>
-    <div class="blog-card-title">How Much Does Certified Translation Cost? (2026 Pricing Guide)</div>
-    <div class="blog-card-excerpt">Real 2026 prices by document type and language pair, what drives cost up or down, how to spot a bad provider, and why cheap translation can be the most expensive mistake in an immigration case.</div>
-    <div class="blog-card-meta">Jason R. Ehlinger &middot; June 22, 2026</div>
-  </a>
-  <a href="/pages/resources/blog/google-translate-official-documents.html" class="blog-card">
-    <div class="blog-card-cat">Translation</div>
-    <div class="blog-card-title">Can You Use Google Translate for Official Documents? What USCIS, Courts, and Employers Actually Accept</div>
-    <div class="blog-card-excerpt">Google Translate is free — but USCIS, courts, and employers won't accept it. Here's exactly what they require and why machine translation fails for official submissions.</div>
-    <div class="blog-card-meta">Jason R. Ehlinger &middot; June 29, 2026 &middot; 9 min read</div>
-  </a>
-  <a href="/pages/resources/blog/certified-vs-notarized-translation.html" class="blog-card">
-    <div class="blog-card-cat">Translation</div>
-    <div class="blog-card-title">Certified vs. Notarized Translation: What&#39;s the Difference and Which One Do You Need?</div>
-    <div class="blog-card-excerpt">USCIS requires certified translation — not notarized. Courts and consulates are different. This guide explains the distinction, when you need each, and how to avoid costly rejections.</div>
-    <div class="blog-card-meta">Jason R. Ehlinger &middot; June 17, 2026</div>
-  </a>
-  <a href="/pages/resources/blog/opi-vri-guide.html" class="blog-card">
-    <div class="blog-card-cat">Interpretation</div>
-    <div class="blog-card-title">OPI vs. VRI: Choosing the Right Remote Interpretation for Your Agency</div>
-    <div class="blog-card-excerpt">Over-the-phone and video remote interpretation each serve different purposes. Here's how to choose the right format for every situation your agency faces.</div>
-    <div class="blog-card-meta"><span>Jason R. Ehlinger</span> &middot; June 10, 2026 &middot; 7 min read</div>
-  </a>
-  <a href="/pages/resources/blog/translation-for-government.html" class="blog-card">
-    <div class="blog-card-cat">Translation</div>
-    <div class="blog-card-title">How Government Agencies Meet Title VI Translation Requirements in 2026</div>
-    <div class="blog-card-excerpt">The 5% threshold, vital documents, certified vs. machine translation — a practical breakdown of what the law actually requires and how to comply.</div>
-    <div class="blog-card-meta"><span>Jason R. Ehlinger</span> &middot; June 5, 2026 &middot; 8 min read</div>
-  </a>
-  <a href="/pages/resources/blog/wcag-ada-compliance-tips.html" class="blog-card">
-    <div class="blog-card-cat">Digital Accessibility</div>
-    <div class="blog-card-title">5 WCAG 2.1 Fixes Every Government Website Needs Right Now</div>
-    <div class="blog-card-excerpt">The April 2026 ADA Title II deadline has passed. These five remediation priorities make the biggest impact for most government sites.</div>
-    <div class="blog-card-meta"><span>Jason R. Ehlinger</span> &middot; May 28, 2026 &middot; 6 min read</div>
-  </a>
-  <a href="/pages/resources/blog/pdf-remediation-guide.html" class="blog-card">
-    <div class="blog-card-cat">PDF Remediation</div>
-    <div class="blog-card-title">How to Make Your PDFs Section 508 Compliant: A Step-by-Step Guide</div>
-    <div class="blog-card-excerpt">Most government PDFs fail Section 508 on the same six criteria. This guide walks through each failure, what it means, and how to fix it.</div>
-    <div class="blog-card-meta"><span>Jason R. Ehlinger</span> &middot; May 20, 2026 &middot; 9 min read</div>
-  </a>
-  <a href="/pages/resources/blog/most-spoken-languages.html" class="blog-card">
-    <div class="blog-card-cat">Language &amp; Culture</div>
-    <div class="blog-card-title">The 10 Most Spoken Languages in the World</div>
-    <div class="blog-card-excerpt">From Mandarin to Bengali, a look at the world's most widely spoken languages, how many people speak them, and what it means for organizations serving diverse communities.</div>
-    <div class="blog-card-meta"><span>Jason R. Ehlinger</span> &middot; June 13, 2026 &middot; 5 min read</div>
-  </a>
-  </div>
-</section>
+<div class="blog-layout">
+  <aside class="blog-sidebar" aria-label="Filter posts by topic">
+    <div class="blog-filter-box">
+      <div class="blog-filter-box-header">
+        <span class="blog-filter-box-label">Browse by Topic</span>
+        <span class="blog-filter-box-sub">Filter 15 articles</span>
+      </div>
+      <nav class="blog-filter-list" aria-label="Topic filters">
+        <button class="blog-filter-btn active" data-filter="all" aria-pressed="true">All Topics <span class="filter-badge">15</span></button>
+        <hr class="filter-divider">
+        <button class="blog-filter-btn" data-filter="translation" aria-pressed="false">Certified Translation <span class="filter-badge">4</span></button>
+        <button class="blog-filter-btn" data-filter="immigration" aria-pressed="false">USCIS &amp; Immigration <span class="filter-badge">2</span></button>
+        <button class="blog-filter-btn" data-filter="compliance" aria-pressed="false">Government Compliance <span class="filter-badge">2</span></button>
+        <button class="blog-filter-btn" data-filter="accessibility" aria-pressed="false">Digital Accessibility <span class="filter-badge">2</span></button>
+        <button class="blog-filter-btn" data-filter="interpretation" aria-pressed="false">Interpretation <span class="filter-badge">3</span></button>
+        <button class="blog-filter-btn" data-filter="healthcare" aria-pressed="false">Healthcare <span class="filter-badge">1</span></button>
+        <button class="blog-filter-btn" data-filter="legal" aria-pressed="false">Legal <span class="filter-badge">1</span></button>
+      </nav>
+      <div class="blog-filter-count" id="filter-count" aria-live="polite">Showing all 15 posts</div>
+    </div>
+  </aside>
+  <main class="blog-main">
+    <div class="blog-grid" id="blog-grid">
+      <a href="/blog/divorce-decree-translation-uscis" class="blog-card" data-category="immigration">
+        <div class="blog-card-cat">USCIS &amp; Immigration</div>
+        <div class="blog-card-title">Divorce Decree Translation for USCIS: Requirements, Cost &amp; Turnaround</div>
+        <div class="blog-card-excerpt">Submitting a divorce decree to USCIS? You need a certified translation &#8212; not just a copy. Learn exactly what 8 CFR 103.2(b)(3) requires, what it costs, and how to avoid rejections.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; July 6, 2026 &middot; 8 min read</div>
+      </a>
+      <a href="/blog/birth-certificate-translation-uscis" class="blog-card" data-category="immigration">
+        <div class="blog-card-cat">USCIS &amp; Immigration</div>
+        <div class="blog-card-title">Birth Certificate Translation for USCIS: What&#39;s Required, What It Costs, and How Long It Takes</div>
+        <div class="blog-card-excerpt">Everything you need to know about certified birth certificate translation for USCIS. Requirements under 8 CFR 103.2(b)(3), what the certification statement must say, and how to order.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; July 1, 2026 &middot; 7 min read</div>
+      </a>
+      <a href="/blog/joint-commission-2026-language-access" class="blog-card" data-category="healthcare">
+        <div class="blog-card-cat">Healthcare</div>
+        <div class="blog-card-title">Joint Commission 2026 Language Access Requirements: What Every Hospital Compliance Officer Needs to Know</div>
+        <div class="blog-card-excerpt">The Joint Commission&#39;s 2026 National Patient Safety Goals make language access a core accreditation requirement. What Goals RC.02.01.01 and NPSG 13.01.01 require &#8212; and how to document compliance.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; July 1, 2026 &middot; 9 min read</div>
+      </a>
+      <a href="/blog/title-vi-language-access-plan" class="blog-card" data-category="compliance">
+        <div class="blog-card-cat">Government Compliance</div>
+        <div class="blog-card-title">What Is a Language Access Plan? Title VI Requirements and How to Build One That Passes an OCR Review</div>
+        <div class="blog-card-excerpt">A Language Access Plan is required for all federally-funded programs under Title VI. What it must include, the four-factor DOJ analysis, and how to write one that holds up under audit.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; July 1, 2026 &middot; 10 min read</div>
+      </a>
+      <a href="/blog/translation-for-legal-documents-law-firms" class="blog-card" data-category="legal">
+        <div class="blog-card-cat">Legal</div>
+        <div class="blog-card-title">Legal Document Translation for Law Firms: What Attorneys Need to Know</div>
+        <div class="blog-card-excerpt">Legal translation requires specialized expertise that general translation services can&#39;t provide. What law firms need to know about certified translation for contracts, evidence, and court filings.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; July 1, 2026 &middot; 8 min read</div>
+      </a>
+      <a href="/blog/what-is-certified-translation" class="blog-card" data-category="translation">
+        <div class="blog-card-cat">Certified Translation</div>
+        <div class="blog-card-title">What Is a Certified Translation? Everything You Need to Know Before You Submit to USCIS or Court</div>
+        <div class="blog-card-excerpt">Certified translation explained: what it is, what the certification statement must include, how it differs from notarized translation, and who is legally authorized to provide it.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; July 1, 2026 &middot; 6 min read</div>
+      </a>
+      <a href="/blog/google-translate-official-documents" class="blog-card" data-category="translation">
+        <div class="blog-card-cat">Certified Translation</div>
+        <div class="blog-card-title">Can You Use Google Translate for Official Documents? What USCIS, Courts, and Employers Actually Accept</div>
+        <div class="blog-card-excerpt">Google Translate is free &#8212; but USCIS, courts, and employers won&#39;t accept it. Here&#39;s exactly what they require and why machine translation fails for official submissions.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 29, 2026 &middot; 9 min read</div>
+      </a>
+      <a href="/blog/certified-translation-cost" class="blog-card" data-category="translation">
+        <div class="blog-card-cat">Certified Translation</div>
+        <div class="blog-card-title">How Much Does Certified Translation Cost? (2026 Pricing Guide)</div>
+        <div class="blog-card-excerpt">Real 2026 prices by document type and language pair, what drives cost up or down, how to spot a bad provider, and why cheap translation can be the most expensive mistake in an immigration case.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 22, 2026 &middot; 7 min read</div>
+      </a>
+      <a href="/blog/certified-vs-notarized-translation" class="blog-card" data-category="translation">
+        <div class="blog-card-cat">Certified Translation</div>
+        <div class="blog-card-title">Certified vs. Notarized Translation: What&#39;s the Difference and Which One Do You Need?</div>
+        <div class="blog-card-excerpt">USCIS requires certified translation &#8212; not notarized. Courts and consulates have different requirements. This guide explains the distinction and how to avoid costly rejections.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 17, 2026 &middot; 6 min read</div>
+      </a>
+      <a href="/blog/most-spoken-languages" class="blog-card" data-category="interpretation">
+        <div class="blog-card-cat">Interpretation</div>
+        <div class="blog-card-title">The 10 Most Spoken Languages in the World</div>
+        <div class="blog-card-excerpt">From Mandarin to Bengali, a look at the world&#39;s most widely spoken languages, how many people speak them, and what it means for organizations serving diverse communities.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 13, 2026 &middot; 5 min read</div>
+      </a>
+      <a href="/blog/opi-vri-guide" class="blog-card" data-category="interpretation">
+        <div class="blog-card-cat">Interpretation</div>
+        <div class="blog-card-title">OPI vs. VRI: Choosing the Right Remote Interpretation for Your Agency</div>
+        <div class="blog-card-excerpt">Over-the-phone and video remote interpretation each serve different purposes. Here&#39;s how to choose the right format for every situation your agency faces.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 10, 2026 &middot; 7 min read</div>
+      </a>
+      <a href="/blog/translation-for-government" class="blog-card" data-category="compliance">
+        <div class="blog-card-cat">Government Compliance</div>
+        <div class="blog-card-title">How Government Agencies Meet Title VI Translation Requirements in 2026</div>
+        <div class="blog-card-excerpt">The 5% threshold, vital documents, certified vs. machine translation &#8212; a practical breakdown of what the law actually requires and how to comply without overspending.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 5, 2026 &middot; 8 min read</div>
+      </a>
+      <a href="/blog/wcag-ada-compliance-tips" class="blog-card" data-category="accessibility">
+        <div class="blog-card-cat">Digital Accessibility</div>
+        <div class="blog-card-title">5 WCAG 2.1 Fixes Every Government Website Needs Right Now</div>
+        <div class="blog-card-excerpt">The ADA Title II WCAG deadline is April 26, 2027. These five remediation priorities make the biggest impact for most government sites and are achievable before the deadline.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; May 28, 2026 &middot; 6 min read</div>
+      </a>
+      <a href="/blog/pdf-remediation-guide" class="blog-card" data-category="accessibility">
+        <div class="blog-card-cat">Digital Accessibility</div>
+        <div class="blog-card-title">How to Make Your PDFs Section 508 Compliant: A Step-by-Step Guide</div>
+        <div class="blog-card-excerpt">Most government PDFs fail Section 508 on the same six criteria. This guide walks through each failure type, what it means for screen reader users, and how to fix it.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; May 20, 2026 &middot; 9 min read</div>
+      </a>
+      <a href="/blog/translation-vs-interpretation" class="blog-card" data-category="interpretation">
+        <div class="blog-card-cat">Interpretation</div>
+        <div class="blog-card-title">Translation vs. Interpretation: What&#39;s the Difference and When Do You Need Each?</div>
+        <div class="blog-card-excerpt">Translation and interpretation are not the same thing &#8212; and ordering the wrong one can cost you time, money, and credibility. Here&#39;s the complete breakdown with real-world examples.</div>
+        <div class="blog-card-meta">Jason R. Ehlinger &middot; June 1, 2025 &middot; 5 min read</div>
+      </a>
+    </div>
+    <div class="blog-no-results" id="no-results" role="status">
+      <strong>No posts in this category yet.</strong>
+      Check back soon &#8212; we publish weekly.
+    </div>
+  </main>
+</div>
 <section class="section-navy section-sm">
   <div class="container" style="text-align:center;max-width:640px;">
     <h2 class="section-heading section-heading-white" style="font-size:1.6rem;">Have a compliance question?</h2>
@@ -251,11 +317,11 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="footer-brand-name">Language Access Hub</div>
-      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
+      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits &#8212; all 50 states, 300+ languages.</p>
       <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
       <div class="footer-family-links">
-        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">→ taikatranslations.com</a>
-        <a href="https://www.tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">→ tvpteam.com</a>
+        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">&#8594; taikatranslations.com</a>
+        <a href="https://www.tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">&#8594; tvpteam.com</a>
       </div>
       <div class="footer-comp-tags">
         <span class="footer-comp-tag">HIPAA</span>
@@ -266,7 +332,6 @@
         <span class="footer-comp-tag">NASPO</span>
       </div>
     </div>
-
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
@@ -279,7 +344,6 @@
         <li><a href="/pages/services/ai-automation.html">AI Automation</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>Who We Serve</h4>
       <ul>
@@ -292,7 +356,6 @@
         <li><a href="/index.html#naspo">NASPO States</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>Resources</h4>
       <ul>
@@ -306,30 +369,20 @@
         <li><a href="/site-directory">Site Directory</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>Contact</h4>
       <ul>
         <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
         <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
-        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:6px;">
-          TaikaTranslations LLC<br>
-          2028 E Ben White Blvd. #240-1178<br>
-          Austin, TX 78741
-        </li>
-        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:8px;">
-          Tennessee Office<br>
-          101 Juniperberry Rd<br>
-          Oak Ridge, TN 37830
-        </li>
+        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:6px;">TaikaTranslations LLC<br>2028 E Ben White Blvd. #240-1178<br>Austin, TX 78741</li>
+        <li style="color:rgba(255,255,255,0.42);font-size:12.5px;line-height:1.65;margin-top:8px;">Tennessee Office<br>101 Juniperberry Rd<br>Oak Ridge, TN 37830</li>
       </ul>
     </div>
   </div>
-
   <div class="footer-bottom">
     <div class="footer-legal">
-      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. Austin, TX. All rights reserved.</p>
-      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
+      <p>&#169; 2026 Language Access Hub &#8212; Powered by TaikaTranslations LLC. Austin, TX. All rights reserved.</p>
+      <p>Veteran-Owned &middot; GSA Contract Holder &middot; NASPO ValuePoint &middot; SAM UEI Registered &middot; ATA Member &middot; BBB Accredited A+</p>
     </div>
     <nav class="footer-social" aria-label="Social media">
       <a href="https://www.youtube.com/@taikatranslations" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
@@ -341,5 +394,29 @@
   </div>
 </footer>
 <script src="/js/main.js?v=26"></script>
+<script>
+(function(){
+  var btns=document.querySelectorAll('.blog-filter-btn');
+  var cards=document.querySelectorAll('#blog-grid .blog-card');
+  var countEl=document.getElementById('filter-count');
+  var noResults=document.getElementById('no-results');
+  btns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var filter=this.dataset.filter;
+      btns.forEach(function(b){b.classList.remove('active');b.setAttribute('aria-pressed','false');});
+      this.classList.add('active');
+      this.setAttribute('aria-pressed','true');
+      var visible=0;
+      cards.forEach(function(card){
+        var match=filter==='all'||card.dataset.category===filter;
+        card.style.display=match?'':'none';
+        if(match)visible++;
+      });
+      countEl.textContent=filter==='all'?'Showing all '+visible+' posts':'Showing '+visible+' post'+(visible===1?'':'s');
+      noResults.style.display=visible===0?'':'none';
+    });
+  });
+})();
+</script>
 </body>
 </html>

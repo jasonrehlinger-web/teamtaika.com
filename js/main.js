@@ -726,13 +726,62 @@
 // ── Site Directory footer link injection ─────────────────────────────────────
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
+
+    // Case 1: New Taika template — footer-links nav
     var footerNav = document.querySelector('footer .footer-links');
-    if (!footerNav) return;
-    // Only add if not already present
-    if (footerNav.querySelector('a[href="/site-directory"]')) return;
-    var link = document.createElement('a');
-    link.href = '/site-directory';
-    link.textContent = 'Site Directory';
-    footerNav.appendChild(link);
+    if (footerNav) {
+      if (!footerNav.querySelector('a[href="/site-directory"]')) {
+        var link = document.createElement('a');
+        link.href = '/site-directory';
+        link.textContent = 'Site Directory';
+        footerNav.appendChild(link);
+      }
+      return;
+    }
+
+    // Case 2: Old Language Access Hub template — footer-grid Resources column
+    var footerCols = document.querySelectorAll('footer .footer-col');
+    for (var i = 0; i < footerCols.length; i++) {
+      var h4 = footerCols[i].querySelector('h4');
+      if (h4 && h4.textContent.trim() === 'Resources') {
+        var ul = footerCols[i].querySelector('ul');
+        if (ul && !ul.querySelector('a[href="/site-directory"]')) {
+          var li = document.createElement('li');
+          var a = document.createElement('a');
+          a.href = '/site-directory';
+          a.textContent = 'Site Directory';
+          li.appendChild(a);
+          ul.appendChild(li);
+        }
+        return;
+      }
+    }
+
+    // Case 3: No footer element at all — inject a compact footer
+    if (!document.querySelector('footer')) {
+      var footer = document.createElement('footer');
+      footer.setAttribute('role', 'contentinfo');
+      footer.style.cssText = 'background:#0a1729;padding:32px 24px;margin-top:0;border-top:1px solid rgba(255,255,255,0.07);';
+      footer.innerHTML =
+        '<div style="max-width:1100px;margin:0 auto;">' +
+        '<nav style="display:flex;flex-wrap:wrap;gap:8px 24px;margin-bottom:18px;" aria-label="Footer navigation">' +
+        ['/translation','Translation','/interpretation','Interpretation',
+         '/government','Government','/healthcare','Healthcare',
+         '/legal','Legal','/blog','Blog',
+         '/credentials','Credentials','/site-directory','Site Directory'].reduce(function(acc,v,i,arr){
+           if(i%2===0){acc+='<a href="'+v+'" style="color:rgba(255,255,255,.5);font-size:13.5px;text-decoration:none;transition:color .15s;">'+arr[i+1]+'</a>';}
+           return acc;
+        },'') +
+        '</nav>' +
+        '<p style="font-size:12px;color:rgba(255,255,255,.28);margin:0;">' +
+        '© 2026 TaikaTranslations LLC · Austin, TX · ' +
+        '<a href="tel:+18303552205" style="color:rgba(255,255,255,.35);">830-355-2205</a>' +
+        ' · <a href="/terms" style="color:rgba(255,255,255,.35);">Terms</a>' +
+        ' · GSA · NASPO ValuePoint · VOSB · ATA Member' +
+        '</p>' +
+        '</div>';
+      document.body.appendChild(footer);
+    }
+
   });
 }());

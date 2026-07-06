@@ -1305,3 +1305,8 @@
   to = "/blog/pdf-remediation-guide"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/credentials"
+  to = "/pages/credentials.html"
+  status = 200

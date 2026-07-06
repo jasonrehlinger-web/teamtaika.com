@@ -1,3 +1,8 @@
+[[redirects]]
+  from = "/site-directory"
+  to = "/pages/site-directory.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"

@@ -121,12 +121,12 @@
 
 [[redirects]]
   from = "/terms"
-  to = "/pages/legal/terms.html"
+  to = "/pages/terms.html"
   status = 200
 
 [[redirects]]
   from = "/refund-policy"
-  to = "/pages/legal/terms.html#refunds"
+  to = "/pages/terms.html#refunds"
   status = 301
 
 # ── Document-type landing pages ──────────────────────────────────────────────

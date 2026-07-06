@@ -229,10 +229,7 @@
 <div id="toast-container"></div>
 
 <script>
-const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-const { createClient } = supabase;
-const _sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const _sb = getSupabase();
 
 const PAGE_SIZE = 20;
 let allProjects = [];

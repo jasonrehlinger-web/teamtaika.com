@@ -560,26 +560,8 @@
 
   /* ── Auth guard ── */
   let currentUser = null;
-  try {
-    currentUser = await requireAdmin();
-  } catch (_) {
-    const { data: { session } } = await db.auth.getSession();
-    if (!session) { window.location.href = '/admin/'; return; }
-
-    const { data: profile } = await db
-      .from('profiles')
-      .select('role, full_name')
-      .eq('id', session.user.id)
-      .single();
-
-    if (!profile || !ADMIN_ROLES.includes(profile.role)) {
-      await db.auth.signOut();
-      window.location.href = '/admin/';
-      return;
-    }
-
-    currentUser = { ...session.user, profile };
-  }
+  currentUser = await requireAdmin();
+  if (!currentUser) return; // requireAdmin() already redirected to /admin
 
   /* ── Show admin name ── */
   async function initNav() {

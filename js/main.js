@@ -722,3 +722,17 @@
   });
 
 }());
+
+// ── Site Directory footer link injection ─────────────────────────────────────
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var footerNav = document.querySelector('footer .footer-links');
+    if (!footerNav) return;
+    // Only add if not already present
+    if (footerNav.querySelector('a[href="/site-directory"]')) return;
+    var link = document.createElement('a');
+    link.href = '/site-directory';
+    link.textContent = 'Site Directory';
+    footerNav.appendChild(link);
+  });
+}());

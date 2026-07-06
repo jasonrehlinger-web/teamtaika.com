@@ -214,7 +214,7 @@
 # ── Blog posts ────────────────────────────────────────────────────────────────
 [[redirects]]
   from = "/blog"
-  to = "/pages/resources/blog/index.html"
+  to = "/pages/resources/blog.html"
   status = 200
 
 [[redirects]]

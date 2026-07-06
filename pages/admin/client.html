@@ -511,9 +511,7 @@
 <script src="../../js/portal.js"></script>
 <script>
   /* ── Config ── */
-  const SUPABASE_URL     = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const sb = getSupabase();
 
   let clientId      = null;
   let clientProfile = null;

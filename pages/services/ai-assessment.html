@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free AI Opportunity Assessment | TVPTeam × Taika</title>
+<meta name="description" content="Get your personalized AI automation assessment. We'll identify your top 3 highest-value automation opportunities and give you a realistic ROI estimate — free, no obligation.">
+<link rel="canonical" href="https://teamtaika.com/ai-assessment">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap">
+<style>
+:root{--navy:#0a1729;--navy-mid:#0f2040;--navy-card:#142238;--gold:#c9a227;--gold-light:#e8c04a;--white:#ffffff;--slate:#8494a7;--slate-light:#b0bec8;--mist:#f4f6f8;--emerald:#2ecc71;--radius:12px;--font-display:'DM Serif Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--navy);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.08);background:var(--navy);position:sticky;top:0;z-index:100}
+.top-bar-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--white);font-family:var(--font-display);font-size:17px}
+.top-bar-badge{font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--gold);background:rgba(201,162,39,.12);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,162,39,.25)}
+.top-bar-back{font-size:13px;color:var(--slate);text-decoration:none;display:flex;align-items:center;gap:5px;transition:color .15s}
+.top-bar-back:hover{color:var(--white)}
+.progress-wrap{padding:20px 24px 0;max-width:680px;margin:0 auto}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.progress-label{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--slate);text-transform:uppercase}
+.progress-step{font-size:12px;color:var(--slate)}
+.progress-bar{height:4px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:4px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.wizard{max-width:680px;margin:0 auto;padding:32px 24px 80px}
+.step{display:none;animation:fadeIn .3s ease}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.step-title{font-family:var(--font-display);font-size:clamp(26px,5vw,38px);line-height:1.18;margin-bottom:10px}
+.step-sub{font-size:16px;color:var(--slate-light);line-height:1.65;margin-bottom:32px}
+.option-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-bottom:32px}
+.option-grid.cols-2{grid-template-columns:1fr 1fr}
+.option-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.opt{background:var(--navy-card);border:2px solid rgba(255,255,255,.1);border-radius:var(--radius);padding:18px 16px;cursor:pointer;transition:border-color .15s,background .15s;display:flex;align-items:flex-start;gap:12px;user-select:none;-webkit-tap-highlight-color:transparent}
+.opt:hover{border-color:rgba(201,162,39,.4);background:rgba(201,162,39,.05)}
+.opt.selected{border-color:var(--gold);background:rgba(201,162,39,.1)}
+.opt.selected .opt-check{background:var(--gold);border-color:var(--gold)}
+.opt.selected .opt-check::after{opacity:1}
+.opt-check{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.25);flex-shrink:0;margin-top:1px;position:relative;transition:background .15s,border-color .15s}
+.opt-check::after{content:'';position:absolute;top:3px;left:3px;width:10px;height:10px;border-radius:50%;background:var(--navy);opacity:0;transition:opacity .15s}
+.opt-check.square{border-radius:5px}
+.opt-check.square::after{border-radius:2px}
+.opt-body{flex:1}
+.opt-icon{font-size:22px;margin-bottom:6px;line-height:1}
+.opt-label{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:3px}
+.opt-desc{font-size:12.5px;color:var(--slate);line-height:1.45}
+.slider-wrap{margin-bottom:36px}
+.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--slate);margin-bottom:8px}
+.slider-val{text-align:center;font-family:var(--font-display);font-size:36px;color:var(--gold);margin-bottom:16px}
+input[type=range]{width:100%;height:6px;border-radius:6px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.15);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(201,162,39,.2)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--gold);border:none}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--slate-light)}
+.field input,.field select,.field textarea{width:100%;padding:13px 16px;background:var(--navy-card);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;color:var(--white);font-family:var(--font-body);font-size:15px;transition:border-color .15s;outline:none}
+.field input::placeholder{color:var(--slate)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
+.field select option{background:var(--navy-card)}
+.field textarea{resize:vertical;min-height:90px}
+.btn-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.btn-next,.btn-submit-final{padding:14px 32px;border-radius:8px;font-family:var(--font-body);font-size:15px;font-weight:700;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-next{background:var(--gold);color:var(--navy)}
+.btn-next:hover{background:var(--gold-light);transform:translateY(-1px)}
+.btn-back{background:none;border:1.5px solid rgba(255,255,255,.2);color:var(--slate-light);padding:13px 22px;border-radius:8px;font-family:var(--font-body);font-size:15px;cursor:pointer;transition:all .15s}
+.btn-back:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+.btn-submit-final{background:var(--gold);color:var(--navy);width:100%;justify-content:center;font-size:16px;padding:16px}
+.btn-submit-final:hover{background:var(--gold-light)}
+.skip-link{font-size:13px;color:var(--slate);text-decoration:underline;cursor:pointer;margin-left:auto}
+.skip-link:hover{color:var(--white)}
+.result-hero{text-align:center;margin-bottom:40px}
+.result-hero-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--emerald);background:rgba(46,204,113,.1);border:1px solid rgba(46,204,113,.3);padding:4px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:16px}
+.result-hero h2{font-family:var(--font-display);font-size:clamp(24px,5vw,38px);margin-bottom:12px}
+.result-hero p{font-size:16px;color:var(--slate-light)}
+.roi-band{background:linear-gradient(135deg,rgba(201,162,39,.12) 0%,rgba(201,162,39,.05) 100%);border:1px solid rgba(201,162,39,.25);border-radius:16px;padding:28px 24px;margin-bottom:36px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center}
+.roi-stat-num{font-family:var(--font-display);font-size:34px;color:var(--gold);line-height:1;margin-bottom:6px}
+.roi-stat-label{font-size:12px;color:var(--slate);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.opps-section{margin-bottom:36px}
+.opps-section h3{font-family:var(--font-display);font-size:22px;margin-bottom:18px}
+.opp-card{background:var(--navy-card);border:1px solid rgba(255,255,255,.1);border-left:4px solid var(--gold);border-radius:var(--radius);padding:20px 20px 20px 22px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start}
+.opp-icon{font-size:26px;flex-shrink:0;margin-top:2px}
+.opp-title{font-size:16px;font-weight:700;margin-bottom:5px}
+.opp-desc{font-size:13.5px;color:var(--slate-light);line-height:1.55}
+.opp-badge{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 9px;border-radius:12px;margin-top:8px}
+.opp-badge.high{background:rgba(46,204,113,.12);color:#2ecc71;border:1px solid rgba(46,204,113,.3)}
+.opp-badge.medium{background:rgba(201,162,39,.12);color:var(--gold);border:1px solid rgba(201,162,39,.3)}
+.pkg-rec{background:var(--navy-mid);border:2px solid var(--gold);border-radius:16px;padding:24px;margin-bottom:36px}
+.pkg-rec-label{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.pkg-rec-name{font-family:var(--font-display);font-size:26px;margin-bottom:8px}
+.pkg-rec-why{font-size:14px;color:var(--slate-light);line-height:1.6}
+.pkg-rec-price{font-size:13px;color:var(--gold);font-weight:600;margin-top:12px}
+.contact-section{background:var(--navy-card);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px 24px;margin-bottom:28px}
+.contact-section h3{font-family:var(--font-display);font-size:24px;margin-bottom:6px}
+.contact-section p{font-size:14px;color:var(--slate-light);margin-bottom:22px}
+.trust-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.trust-item{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--slate)}
+.trust-item svg{color:var(--emerald);flex-shrink:0}
+.success-screen{display:none;text-align:center;padding:60px 24px;animation:fadeIn .5s ease}
+.success-screen.active{display:block}
+.success-icon{font-size:64px;margin-bottom:24px}
+.success-screen h2{font-family:var(--font-display);font-size:36px;margin-bottom:16px}
+.success-screen p{font-size:16px;color:var(--slate-light);max-width:500px;margin:0 auto 32px}
+.success-next-steps{background:var(--navy-card);border-radius:16px;padding:28px;max-width:480px;margin:0 auto 32px;text-align:left}
+.success-next-steps h3{font-size:16px;font-weight:700;margin-bottom:16px}
+.next-step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;font-size:14px}
+.next-step-num{width:26px;height:26px;border-radius:50%;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.3);color:var(--gold);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.next-step-text{color:var(--slate-light);line-height:1.5}
+.btn-return{background:var(--gold);color:var(--navy);padding:14px 32px;border-radius:8px;font-family:var(--font-body);font-size:15px;font-weight:700;text-decoration:none;display:inline-block;transition:background .15s}
+.btn-return:hover{background:var(--gold-light)}
+.divider{height:1px;background:rgba(255,255,255,.08);margin:32px 0}
+.error-msg{font-size:13px;color:#ff6b6b;margin-top:8px;display:none}
+.error-msg.show{display:block}
+@media(max-width:600px){.option-grid,.option-grid.cols-2,.option-grid.cols-3{grid-template-columns:1fr}.roi-band{grid-template-columns:1fr}.btn-row{flex-direction:column-reverse;align-items:stretch}.btn-back,.btn-next,.skip-link{width:100%;text-align:center;justify-content:center;margin:0}}
+</style>
+</head>
+<body>
+<header class="top-bar" role="banner">
+  <a href="/ai-automation" class="top-bar-back">&#8592; Back to AI Automation</a>
+  <a href="/" class="top-bar-logo">Language Access Hub</a>
+  <span class="top-bar-badge">Free &#183; No Obligation</span>
+</header>
+<div class="progress-wrap" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progressbar">
+  <div class="progress-meta">
+    <span class="progress-label" id="progress-label">Your organization</span>
+    <span class="progress-step" id="progress-step">Step 1 of 5</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:20%"></div></div>
+</div>
+<main class="wizard">
+
+<!-- STEP 1 -->
+<div class="step active" id="step-1">
+  <div class="step-eyebrow">Step 1 of 5 &middot; About you</div>
+  <h1 class="step-title">What type of organization are you?</h1>
+  <p class="step-sub">We tailor your assessment based on your sector &mdash; government, education, healthcare, and business each have different high-value automation patterns.</p>
+  <div class="option-grid" id="org-grid">
+    <div class="opt" data-val="government" onclick="selectSingle(this,'org-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-icon">&#127963;&#65039;</div><div class="opt-label">Government / Public sector</div><div class="opt-desc">Federal, state, or local agency</div></div></div>
+    <div class="opt" data-val="school" onclick="selectSingle(this,'org-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-icon">&#127891;</div><div class="opt-label">School district / Education</div><div class="opt-desc">K-12, higher ed, charter</div></div></div>
+    <div class="opt" data-val="healthcare" onclick="selectSingle(this,'org-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-icon">&#127973;&#65039;</div><div class="opt-label">Healthcare / Clinical</div><div class="opt-desc">Hospital, clinic, FQHC, practice</div></div></div>
+    <div class="opt" data-val="nonprofit" onclick="selectSingle(this,'org-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-icon">&#129309;</div><div class="opt-label">Nonprofit</div><div class="opt-desc">501(c)(3), advocacy, social services</div></div></div>
+    <div class="opt" data-val="business" onclick="selectSingle(this,'org-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-icon">&#127970;</div><div class="opt-label">Private business</div><div class="opt-desc">SMB, startup, professional services</div></div></div>
+    <div class="opt" data-val="other" onclick="selectSingle(this,'org-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-icon">&#128161;</div><div class="opt-label">Other</div><div class="opt-desc">Association, foundation, etc.</div></div></div>
+  </div>
+  <p class="error-msg" id="err-1">Please select your organization type to continue.</p>
+  <div class="btn-row"><button class="btn-next" onclick="next(1)">Continue &#8594;</button></div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step" id="step-2">
+  <div class="step-eyebrow">Step 2 of 5 &middot; Where time goes</div>
+  <h2 class="step-title">Where does your team lose the most time?</h2>
+  <p class="step-sub">Select everything that applies. These are the areas we'll focus your assessment on &mdash; pick as many as are real problems for you.</p>
+  <div class="option-grid cols-2" id="pain-grid">
+    <div class="opt" data-val="email" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128231;</div><div class="opt-label">Email &amp; inbox management</div><div class="opt-desc">Sorting, routing, responding to repetitive messages</div></div></div>
+    <div class="opt" data-val="data-entry" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128203;</div><div class="opt-label">Data entry &amp; form processing</div><div class="opt-desc">Copying info from forms into systems</div></div></div>
+    <div class="opt" data-val="scheduling" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128197;</div><div class="opt-label">Scheduling &amp; coordination</div><div class="opt-desc">Back-and-forth to find meeting times</div></div></div>
+    <div class="opt" data-val="reporting" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128202;</div><div class="opt-label">Reporting &amp; data pulls</div><div class="opt-desc">Compiling reports from multiple sources</div></div></div>
+    <div class="opt" data-val="documents" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128196;</div><div class="opt-label">Document review &amp; routing</div><div class="opt-desc">Approvals, signatures, filing</div></div></div>
+    <div class="opt" data-val="outreach" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128227;</div><div class="opt-label">Outreach &amp; follow-up</div><div class="opt-desc">Client/constituent communication sequences</div></div></div>
+    <div class="opt" data-val="invoicing" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128176;</div><div class="opt-label">Invoicing &amp; billing</div><div class="opt-desc">Creating, sending, tracking invoices</div></div></div>
+    <div class="opt" data-val="compliance" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#9989;</div><div class="opt-label">Compliance &amp; documentation</div><div class="opt-desc">Tracking deadlines, filing requirements</div></div></div>
+  </div>
+  <p class="error-msg" id="err-2">Please select at least one area to continue.</p>
+  <div class="btn-row"><button class="btn-back" onclick="back(2)">&#8592; Back</button><button class="btn-next" onclick="next(2)">Continue &#8594;</button></div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step" id="step-3">
+  <div class="step-eyebrow">Step 3 of 5 &middot; The numbers</div>
+  <h2 class="step-title">Let's put a number on it.</h2>
+  <p class="step-sub">Your answers let us calculate a realistic ROI estimate &mdash; so you can see what automation is actually worth before spending a dollar.</p>
+  <div class="slider-wrap">
+    <div class="field"><label>How many people on your team spend significant time on manual tasks?</label></div>
+    <div class="slider-val" id="team-count-val">5 people</div>
+    <input type="range" id="team-count" min="1" max="50" value="5" oninput="document.getElementById('team-count-val').textContent=this.value+(this.value=='1'?' person':' people')">
+    <div class="slider-labels"><span>1</span><span>25</span><span>50+</span></div>
+  </div>
+  <div class="slider-wrap">
+    <div class="field"><label>Average hours per week each person spends on repetitive manual tasks?</label></div>
+    <div class="slider-val" id="hours-val">10 hrs/week</div>
+    <input type="range" id="hours-input" min="2" max="40" value="10" oninput="document.getElementById('hours-val').textContent=this.value+' hrs/week'">
+    <div class="slider-labels"><span>2 hrs</span><span>20 hrs</span><span>40 hrs</span></div>
+  </div>
+  <div class="field"><label>Average fully-loaded hourly cost per employee (salary + benefits)</label></div>
+  <div class="option-grid cols-2" id="rate-grid">
+    <div class="opt" data-val="25" onclick="selectSingle(this,'rate-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-label">Under $25/hr</div><div class="opt-desc">Frontline staff</div></div></div>
+    <div class="opt" data-val="40" onclick="selectSingle(this,'rate-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-label">$25&ndash;$50/hr</div><div class="opt-desc">Admin / coordinator</div></div></div>
+    <div class="opt" data-val="65" onclick="selectSingle(this,'rate-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-label">$50&ndash;$80/hr</div><div class="opt-desc">Manager / specialist</div></div></div>
+    <div class="opt" data-val="100" onclick="selectSingle(this,'rate-grid')"><div class="opt-check"></div><div class="opt-body"><div class="opt-label">$80+/hr</div><div class="opt-desc">Director / exec</div></div></div>
+  </div>
+  <p class="error-msg" id="err-3">Please select an hourly cost range to continue.</p>
+  <div class="btn-row" style="margin-top:28px;"><button class="btn-back" onclick="back(3)">&#8592; Back</button><button class="btn-next" onclick="next(3)">Calculate My ROI &#8594;</button></div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step" id="step-4">
+  <div class="step-eyebrow">Step 4 of 5 &middot; Your tech stack</div>
+  <h2 class="step-title">What tools does your team use today?</h2>
+  <p class="step-sub">We build on top of what you already have &mdash; no ripping out existing systems. Select everything you use.</p>
+  <div class="option-grid cols-3" id="tools-grid">
+    <div class="opt" data-val="google" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128309;</div><div class="opt-label">Google Workspace</div><div class="opt-desc">Gmail, Drive, Sheets</div></div></div>
+    <div class="opt" data-val="microsoft" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128262;</div><div class="opt-label">Microsoft 365</div><div class="opt-desc">Outlook, Teams, SharePoint</div></div></div>
+    <div class="opt" data-val="salesforce" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#9729;&#65039;</div><div class="opt-label">Salesforce / CRM</div><div class="opt-desc">Or HubSpot, Zoho</div></div></div>
+    <div class="opt" data-val="quickbooks" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128154;</div><div class="opt-label">QuickBooks / Accounting</div><div class="opt-desc">Or Xero, Sage</div></div></div>
+    <div class="opt" data-val="slack" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128172;</div><div class="opt-label">Slack / Teams chat</div><div class="opt-desc">Internal messaging</div></div></div>
+    <div class="opt" data-val="monday" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128204;</div><div class="opt-label">Project management</div><div class="opt-desc">Monday, Asana, Trello</div></div></div>
+    <div class="opt" data-val="custom" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128295;</div><div class="opt-label">Custom / legacy system</div><div class="opt-desc">In-house or government system</div></div></div>
+    <div class="opt" data-val="paper" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#128221;</div><div class="opt-label">Mostly paper / manual</div><div class="opt-desc">No central digital system</div></div></div>
+    <div class="opt" data-val="notsure" onclick="selectMulti(this)"><div class="opt-check square"></div><div class="opt-body"><div class="opt-icon">&#129335;</div><div class="opt-label">Not sure / other</div><div class="opt-desc">Mix of things</div></div></div>
+  </div>
+  <div class="btn-row" style="margin-top:28px;"><button class="btn-back" onclick="back(4)">&#8592; Back</button><button class="btn-next" onclick="next(4)">See My Results &#8594;</button><span class="skip-link" onclick="next(4)">Skip this step</span></div>
+</div>
+
+<!-- STEP 5: RESULTS -->
+<div class="step" id="step-5">
+  <div class="result-hero">
+    <div class="result-hero-badge">&#10003; Assessment complete</div>
+    <h2 id="result-headline">Your AI Automation Report</h2>
+    <p id="result-sub">Based on your organization and workflows, here's what we found.</p>
+  </div>
+  <div class="roi-band">
+    <div><div class="roi-stat-num" id="roi-hours">&#8212;</div><div class="roi-stat-label">Hours saved / week</div></div>
+    <div><div class="roi-stat-num" id="roi-annual">&#8212;</div><div class="roi-stat-label">Potential annual savings</div></div>
+    <div><div class="roi-stat-num" id="roi-payback">&#8212;</div><div class="roi-stat-label">Est. payback period</div></div>
+  </div>
+  <div class="opps-section">
+    <h3>Your top automation opportunities</h3>
+    <div id="opps-list"></div>
+  </div>
+  <div class="pkg-rec">
+    <div class="pkg-rec-label">Recommended for you</div>
+    <div class="pkg-rec-name" id="pkg-name">AI Quick Start</div>
+    <div class="pkg-rec-why" id="pkg-why"></div>
+    <div class="pkg-rec-price" id="pkg-price">Starting at $297/month</div>
+  </div>
+  <div class="divider"></div>
+  <div class="contact-section">
+    <h3>Get your full written assessment</h3>
+    <p>Enter your info below and we'll send a detailed report within 48 hours &mdash; specific automation blueprints for your workflows and a custom implementation timeline.</p>
+    <form name="ai-assessment" data-netlify="true" netlify-honeypot="bot-field" id="assessment-form" onsubmit="return false;">
+      <input type="hidden" name="form-name" value="ai-assessment">
+      <input type="hidden" name="bot-field" style="display:none">
+      <input type="hidden" name="org_type" id="hidden-org">
+      <input type="hidden" name="pain_points" id="hidden-pain">
+      <input type="hidden" name="team_size" id="hidden-team">
+      <input type="hidden" name="hours_week" id="hidden-hours">
+      <input type="hidden" name="hourly_rate" id="hidden-rate">
+      <input type="hidden" name="tools" id="hidden-tools">
+      <input type="hidden" name="roi_annual" id="hidden-roi">
+      <input type="hidden" name="recommended_package" id="hidden-pkg">
+      <div class="field"><label for="contact-name">Your name</label><input type="text" id="contact-name" name="name" placeholder="Alex Johnson" required></div>
+      <div class="field"><label for="contact-email">Work email</label><input type="email" id="contact-email" name="email" placeholder="alex@yourorganization.org" required></div>
+      <div class="field"><label for="contact-org">Organization name</label><input type="text" id="contact-org" name="organization" placeholder="City of Austin" required></div>
+      <div class="field"><label for="contact-phone">Phone (optional &mdash; for faster follow-up)</label><input type="tel" id="contact-phone" name="phone" placeholder="(555) 000-0000"></div>
+      <div class="field"><label for="contact-note">Anything else we should know? (optional)</label><textarea id="contact-note" name="notes" placeholder="E.g. 'We process about 200 intake forms per week' or 'We have a grant deadline in 60 days'"></textarea></div>
+      <p class="error-msg" id="err-5">Please fill in your name, email, and organization.</p>
+      <button type="button" class="btn-submit-final" onclick="submitAssessment()">Send My Free Assessment Report &#8594;</button>
+    </form>
+    <div class="trust-row">
+      <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>No commitment required</div>
+      <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Response within 48 hours</div>
+      <div class="trust-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>VOSB &middot; GSA &middot; NASPO</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">&#127919;</div>
+  <h2>Assessment request received.</h2>
+  <p>Expect a detailed report with your personalized automation blueprint in your inbox within 48 hours.</p>
+  <div class="success-next-steps">
+    <h3>What happens next</h3>
+    <div class="next-step"><div class="next-step-num">1</div><div class="next-step-text"><strong>Check your inbox</strong> &mdash; your assessment report arrives within 48 business hours with specific automation blueprints for your workflows.</div></div>
+    <div class="next-step"><div class="next-step-num">2</div><div class="next-step-text"><strong>30-minute discovery call</strong> &mdash; we walk through the report together and answer every question. No sales pressure, just clarity.</div></div>
+    <div class="next-step"><div class="next-step-num">3</div><div class="next-step-text"><strong>Custom implementation plan</strong> &mdash; if it's a fit, we scope your first automation and have it live within 30 days.</div></div>
+  </div>
+  <a href="/ai-automation" class="btn-return">&#8592; Back to AI Automation</a>
+</div>
+
+</main>
+<script>
+var state={org:null,pains:[],teamCount:5,hoursWeek:10,hourlyRate:null,tools:[]};
+var stepLabels=['Your organization','Where time goes','The numbers','Your tools','Your results'];
+function selectSingle(el,gridId){document.querySelectorAll('#'+gridId+' .opt').forEach(function(o){o.classList.remove('selected')});el.classList.add('selected')}
+function selectMulti(el){el.classList.toggle('selected')}
+function next(from){
+  if(from===1){var s=document.querySelector('#org-grid .opt.selected');if(!s){document.getElementById('err-1').classList.add('show');return}document.getElementById('err-1').classList.remove('show');state.org=s.dataset.val}
+  if(from===2){var ss=document.querySelectorAll('#pain-grid .opt.selected');if(!ss.length){document.getElementById('err-2').classList.add('show');return}document.getElementById('err-2').classList.remove('show');state.pains=Array.from(ss).map(function(x){return x.dataset.val})}
+  if(from===3){var rs=document.querySelector('#rate-grid .opt.selected');if(!rs){document.getElementById('err-3').classList.add('show');return}document.getElementById('err-3').classList.remove('show');state.teamCount=parseInt(document.getElementById('team-count').value);state.hoursWeek=parseInt(document.getElementById('hours-input').value);state.hourlyRate=parseInt(rs.dataset.val)}
+  if(from===4){state.tools=Array.from(document.querySelectorAll('#tools-grid .opt.selected')).map(function(x){return x.dataset.val})}
+  var to=from+1;showStep(to);if(to===5)buildResults()
+}
+function back(from){showStep(from-1)}
+function showStep(n){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
+  var el=document.getElementById('step-'+n);if(el)el.classList.add('active');
+  document.getElementById('progress-fill').style.width=(n/5*100)+'%';
+  document.getElementById('progress-step').textContent='Step '+n+' of 5';
+  document.getElementById('progress-label').textContent=stepLabels[n-1];
+  document.getElementById('progressbar').setAttribute('aria-valuenow',n);
+  window.scrollTo({top:0,behavior:'smooth'})
+}
+function buildResults(){
+  var pct=0.65;
+  var hrsWeek=state.teamCount*state.hoursWeek*pct;
+  var annualSavings=Math.round(hrsWeek*state.hourlyRate*52/100)*100;
+  var monthlyPkg=state.teamCount<=3?297:state.teamCount<=15?697:1497;
+  var paybackMonths=Math.max(1,Math.min(Math.round(monthlyPkg*3/(annualSavings/12)),6));
+  document.getElementById('roi-hours').textContent=Math.round(hrsWeek)+' hrs';
+  document.getElementById('roi-annual').textContent='$'+annualSavings.toLocaleString();
+  document.getElementById('roi-payback').textContent=paybackMonths+(paybackMonths===1?' month':' months');
+  var oppMap={
+    'email':{icon:'📧',title:'AI Email Triage & Smart Routing',desc:'Automatically classify, prioritize, and draft responses to incoming emails. Route complex inquiries to the right team member — without anyone reading every message first.',impact:'high'},
+    'data-entry':{icon:'📋',title:'Intelligent Document Processing',desc:'Extract data from forms, PDFs, and scanned documents automatically. Push it directly into your database or spreadsheet — with validation built in.',impact:'high'},
+    'scheduling':{icon:'📅',title:'AI Scheduling & Calendar Automation',desc:'Eliminate back-and-forth scheduling emails. An AI assistant handles intake, checks availability, sends reminders, and reschedules when conflicts arise.',impact:'high'},
+    'reporting':{icon:'📊',title:'Automated Reporting & Distribution',desc:'Connect your data sources, define your report template once, and receive polished reports delivered to the right people every week — automatically.',impact:'high'},
+    'documents':{icon:'📄',title:'AI Document Review & Approval Workflow',desc:'Route documents to the right reviewer, track signature status, send automatic reminders, and archive completed docs — with a full audit trail.',impact:'medium'},
+    'outreach':{icon:'📣',title:'AI-Powered Outreach Engine',desc:'Build a contact sequence that identifies the right people, sends personalized outreach, follows up automatically, and routes warm leads to your team.',impact:'high'},
+    'invoicing':{icon:'💰',title:'Automated Invoice Processing',desc:'Generate invoices from your project data, send them on schedule, track payment status, and trigger follow-up reminders — all without manual intervention.',impact:'medium'},
+    'compliance':{icon:'✅',title:'Compliance Monitoring & Deadline Tracking',desc:'Automatically track filing deadlines, compliance requirements, and documentation needs. Receive early warnings and auto-generate compliance checklists.',impact:'medium'}
+  };
+  var selectedPains=state.pains.length?state.pains:['email','data-entry','reporting'];
+  var oppsHtml='';
+  selectedPains.slice(0,3).forEach(function(p){
+    var o=oppMap[p];if(!o)return;
+    oppsHtml+='<div class="opp-card"><div class="opp-icon">'+o.icon+'</div><div><div class="opp-title">'+o.title+'</div><div class="opp-desc">'+o.desc+'</div><span class="opp-badge '+o.impact+'">'+(o.impact==='high'?'High impact':'Medium impact')+'</span></div></div>'
+  });
+  document.getElementById('opps-list').innerHTML=oppsHtml;
+  var pkgName,pkgWhy,pkgPrice;
+  if(annualSavings<20000||state.teamCount<=3){pkgName='AI Quick Start';pkgWhy='Based on your team size and workflows, the AI Quick Start gets one high-impact automation live in 30 days — the fastest, lowest-risk way to prove ROI before expanding.';pkgPrice='Starting at $297/month'}
+  else if(annualSavings<80000||state.teamCount<=20){pkgName='AI Growth Engine';pkgWhy='With '+state.teamCount+' team members and multiple manual bottlenecks, the AI Growth Engine builds your full automation infrastructure — outreach, intake, reporting, and communication systems — in a coordinated 60-day deployment.';pkgPrice='Starting at $697/month'}
+  else{pkgName='Enterprise AI System';pkgWhy='Your scale and complexity point to our Enterprise tier — a custom-scoped AI infrastructure build with dedicated implementation support, integration with your existing systems, and ongoing optimization.';pkgPrice='Custom pricing · typically $1,500–$5,000/month'}
+  document.getElementById('pkg-name').textContent=pkgName;
+  document.getElementById('pkg-why').textContent=pkgWhy;
+  document.getElementById('pkg-price').textContent=pkgPrice;
+  var orgLabels={government:'government agency',school:'school district',healthcare:'healthcare organization',nonprofit:'nonprofit',business:'business',other:'organization'};
+  document.getElementById('result-headline').textContent='Your AI Automation Report — '+(orgLabels[state.org]||'your organization');
+  document.getElementById('result-sub').textContent='We found '+Math.round(hrsWeek)+' hours per week of automatable work. Here are the three highest-value systems to build first.';
+  document.getElementById('hidden-org').value=state.org||'';
+  document.getElementById('hidden-pain').value=state.pains.join(', ');
+  document.getElementById('hidden-team').value=state.teamCount;
+  document.getElementById('hidden-hours').value=state.hoursWeek;
+  document.getElementById('hidden-rate').value=state.hourlyRate;
+  document.getElementById('hidden-tools').value=state.tools.join(', ');
+  document.getElementById('hidden-roi').value='$'+annualSavings.toLocaleString();
+  document.getElementById('hidden-pkg').value=pkgName;
+}
+function submitAssessment(){
+  var name=document.getElementById('contact-name').value.trim();
+  var email=document.getElementById('contact-email').value.trim();
+  var org=document.getElementById('contact-org').value.trim();
+  var err=document.getElementById('err-5');
+  if(!name||!email||!org){err.classList.add('show');return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Please enter a valid email address.';err.classList.add('show');return}
+  err.classList.remove('show');
+  var form=document.getElementById('assessment-form');
+  var data=new FormData(form);
+  fetch('/',{method:'POST',body:data}).then(function(){showSuccess()}).catch(function(){showSuccess()})
+}
+function showSuccess(){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('progressbar').style.display='none';
+  document.getElementById('success-screen').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'})
+}
+</script>
+</body>
+</html>

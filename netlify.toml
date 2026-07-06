@@ -3,6 +3,26 @@
   to = "/pages/site-directory.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/opi-vri-guide"
+  to = "/pages/resources/blog/opi-vri-guide.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/wcag-ada-compliance-tips"
+  to = "/pages/resources/blog/wcag-ada-compliance-tips.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/pdf-remediation-guide"
+  to = "/pages/resources/blog/pdf-remediation-guide.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/most-spoken-languages"
+  to = "/pages/resources/blog/most-spoken-languages.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"

@@ -68,6 +68,11 @@
   status = 200
 
 [[redirects]]
+  from = "/ai-assessment"
+  to = "/pages/services/ai-assessment.html"
+  status = 200
+
+[[redirects]]
   from = "/government"
   to = "/pages/industries/government.html"
   status = 200

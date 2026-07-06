@@ -1349,3 +1349,8 @@
   from = "/admin/analytics"
   to = "/pages/admin/analytics.html"
   status = 200
+
+[[headers]]
+  for = "/admin/analytics"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.paypalobjects.com https://www.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com https://analyticsdata.googleapis.com https://searchconsole.googleapis.com https://*.supabase.co https://api.resend.com https://translation.googleapis.com https://www.paypal.com; frame-src https://accounts.google.com https://www.paypal.com; object-src 'none'; base-uri 'self';"

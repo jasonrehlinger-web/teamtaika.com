@@ -1310,3 +1310,7 @@
   from = "/credentials"
   to = "/pages/credentials.html"
   status = 200
+[[redirects]]
+  from = "/blog/divorce-decree-translation-uscis"
+  to = "/pages/resources/blog/divorce-decree-translation-uscis.html"
+  status = 200

@@ -18,6 +18,16 @@
   to = "/pages/industries/individuals.html"
   status = 200
 
+[[redirects]]
+  from = "/hipaa-compliant-translation"
+  to = "/pages/services/hipaa-compliant-translation.html"
+  status = 200
+
+[[redirects]]
+  from = "/gsa-translation-services"
+  to = "/pages/services/gsa-translation-services.html"
+  status = 200
+
 # ── Native-language clean URLs (were 404 — nav "Native Language Pages" links) ──
 [[redirects]]
   from = "/traduccion-certificada-espanol"

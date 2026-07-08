@@ -244,7 +244,9 @@
 [[headers]]
   for = "/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    # Revalidate each load (cheap 304 when unchanged) so JS edits reach
+    # returning visitors even if the ?v= query isn't bumped.
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[redirects]]
   from = "/terms"

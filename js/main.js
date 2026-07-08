@@ -28,7 +28,7 @@
 
 // ── Cookie Consent Banner ──────────────────────────────────────────────────────
 (function() {
-  if (localStorage.getItem('cookie_consent')) return; // already decided
+  try { if (localStorage.getItem('cookie_consent')) return; } catch (e) {} // already decided
 
   document.addEventListener('DOMContentLoaded', function() {
     var banner = document.createElement('div');
@@ -60,14 +60,18 @@
     ].join('');
     document.body.appendChild(banner);
 
+    // Remove the banner FIRST so it always dismisses — on iOS Safari (Private
+    // mode / restricted storage) localStorage.setItem throws, which previously
+    // aborted the handler before the banner was removed (worked on desktop,
+    // not on iPhone). Storage + gtag are best-effort.
     document.getElementById('cookie-accept').addEventListener('click', function() {
-      localStorage.setItem('cookie_consent', 'accepted');
-      if (window.gtag) window.gtag('consent', 'update', { analytics_storage: 'granted' });
       banner.remove();
+      try { localStorage.setItem('cookie_consent', 'accepted'); } catch (e) {}
+      try { if (window.gtag) window.gtag('consent', 'update', { analytics_storage: 'granted' }); } catch (e) {}
     });
     document.getElementById('cookie-decline').addEventListener('click', function() {
-      localStorage.setItem('cookie_consent', 'declined');
       banner.remove();
+      try { localStorage.setItem('cookie_consent', 'declined'); } catch (e) {}
     });
   });
 }());

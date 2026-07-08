@@ -8,6 +8,96 @@
   to = "/pages/order.html"
   status = 200
 
+# ── Native-language clean URLs (were 404 — nav "Native Language Pages" links) ──
+[[redirects]]
+  from = "/traduccion-certificada-espanol"
+  to = "/pages/languages/es.html"
+  status = 200
+[[redirects]]
+  from = "/traducao-certificada-portugues"
+  to = "/pages/languages/pt.html"
+  status = 200
+[[redirects]]
+  from = "/traduzione-certificata-italiano"
+  to = "/pages/languages/it.html"
+  status = 200
+[[redirects]]
+  from = "/tarjama-arabiya-rasmiya"
+  to = "/pages/languages/ar.html"
+  status = 200
+[[redirects]]
+  from = "/praman-patra-anuvad-hindi"
+  to = "/pages/languages/hi.html"
+  status = 200
+[[redirects]]
+  from = "/zaverenniy-perevod-russkiy"
+  to = "/pages/languages/ru.html"
+  status = 200
+[[redirects]]
+  from = "/tarjuma-rasmi-urdu"
+  to = "/pages/languages/ur.html"
+  status = 200
+[[redirects]]
+  from = "/praman-anuvad-bangla"
+  to = "/pages/languages/bn.html"
+  status = 200
+
+# ── Content clean URLs that 404'd (files existed, redirect was missing) ──
+[[redirects]]
+  from = "/legal-translation"
+  to = "/pages/industries/legal-translation.html"
+  status = 200
+[[redirects]]
+  from = "/legal-document-translation"
+  to = "/pages/industries/legal-document-translation.html"
+  status = 200
+[[redirects]]
+  from = "/medical-translation"
+  to = "/pages/industries/medical-translation.html"
+  status = 200
+[[redirects]]
+  from = "/medical-document-translation"
+  to = "/pages/industries/medical-document-translation.html"
+  status = 200
+[[redirects]]
+  from = "/immigration-document-translation"
+  to = "/pages/certified/immigration-document-translation.html"
+  status = 200
+[[redirects]]
+  from = "/uscis-translation-services"
+  to = "/pages/certified/uscis-translation-services.html"
+  status = 200
+[[redirects]]
+  from = "/uscis-translation"
+  to = "/pages/certified/uscis-translation-services.html"
+  status = 200
+[[redirects]]
+  from = "/website-translation"
+  to = "/pages/services/website-translation.html"
+  status = 200
+[[redirects]]
+  from = "/enterprise-localization-services"
+  to = "/pages/services/enterprise-localization-services.html"
+  status = 200
+[[redirects]]
+  from = "/managed-translation-services"
+  to = "/pages/services/managed-translation-services.html"
+  status = 200
+[[redirects]]
+  from = "/spanish-translation-services"
+  to = "/pages/services/spanish-translation-services.html"
+  status = 200
+
+# ── Misc clean-URL fixes ──
+[[redirects]]
+  from = "/portal/login"
+  to = "/pages/portal/index.html"
+  status = 200
+[[redirects]]
+  from = "/contact"
+  to = "/index.html#quote"
+  status = 301
+
 [[redirects]]
   from = "/blog/opi-vri-guide"
   to = "/pages/resources/blog/opi-vri-guide.html"

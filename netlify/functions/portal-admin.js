@@ -224,6 +224,13 @@ async function verifyAdmin(authHeader) {
     throw new Error('Access denied');
   }
 
+  // Deactivated admins must lose access immediately (e.g. after removal from
+  // the team), not linger until their JWT expires. Only block on an explicit
+  // false so records with an unset flag are not accidentally locked out.
+  if (profile.is_active === false) {
+    throw new Error('Access denied');
+  }
+
   return profile;
 }
 

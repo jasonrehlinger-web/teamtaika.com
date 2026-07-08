@@ -839,7 +839,9 @@ ul, ol { list-style: none; }
   .nav-hamburger { display: flex; }
   .nav-trust { display: none; }
   .btn-nav-ghost { display: none; }
-  .nav-logo-sub { display: none; }
+  /* Icon-only logo on mobile so the nav-right buttons (Client Login + Get a
+     Quote + hamburger) fit without clipping off the right edge */
+  .nav-logo-sub, .nav-logo-name { display: none; }
   .nav-links {
     display: none;
     position: absolute; top: 64px; left: 0; right: 0;
@@ -895,9 +897,9 @@ ul, ol { list-style: none; }
 
   /* Nav: keep logo + CTA + hamburger inside the viewport (was clipping on the right) */
   .nav-inner { gap: 8px; }
-  .nav-logo-name { font-size: 14px; }
   .nav-right { gap: 8px; }
   .btn-nav-cta { padding: 8px 12px; font-size: 12px; }
+  .btn-nav-portal { padding: 7px 12px; font-size: 12px; }
 
   /* Inline multi-column grids that don't collapse on their own. Many pages
      (esp. the language pages) set grid-template-columns via an inline style

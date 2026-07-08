@@ -124,6 +124,20 @@ exports.handler = async (event) => {
   }
   const mismatch = [];
   for (const it of lineItems) {
+    // Certified-translation orders (from /order and the language pages) bake the
+    // page count into the item name (e.g. "… | 3 pages") with quantity 1, so
+    // validate the full per-page total, not just one unit. Notarization (+$40)
+    // and rush/same-day tiers only make the expected amount higher.
+    const pageMatch = it.name.match(/(\d+)\s*page/i);
+    if (pageMatch) {
+      const pages = Math.max(1, parseInt(pageMatch[1], 10) || 1);
+      const tier  = /same[ -]?day/i.test(it.name) ? 37.49 : (/rush/i.test(it.name) ? 31.24 : 24.99);
+      const expectedTotal = tier * pages * (it.qty || 1);
+      if (it.gross < expectedTotal - 0.01) {
+        mismatch.push(`${it.name} — paid $${it.gross.toFixed(2)}, expected >= $${expectedTotal.toFixed(2)} (${pages} pg × $${tier.toFixed(2)})`);
+      }
+      continue;
+    }
     const exp = expectedUnit(it.name);
     if (exp == null) continue;
     const unitPaid = it.qty > 0 ? it.gross / it.qty : it.gross;

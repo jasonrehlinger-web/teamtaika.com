@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clients — Taika Admin</title>
+  <title>Clients â Taika Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -149,7 +149,7 @@
 <body>
 <nav class="admin-nav">
   <a class="admin-nav-brand" href="/admin/dashboard">
-    <span class="shield">🛡</span>
+    <span class="shield">ð¡</span>
     <span>Taika Admin</span>
   </a>
   <div class="admin-nav-links">
@@ -158,9 +158,10 @@
     <a href="/admin/clients" class="active">Clients</a>
     <a href="/admin/team">Team</a>
     <a href="/admin/portal-view">Client View</a>
+    <a href="/admin/analytics" target="_blank">Analytics ↗</a>
   </div>
   <div class="admin-nav-right">
-    <span class="admin-nav-user" id="nav-username">—</span>
+    <span class="admin-nav-user" id="nav-username">â</span>
     <button class="btn-signout" id="btn-signout">Sign Out</button>
   </div>
 </nav>
@@ -180,7 +181,7 @@
   <!-- Clients view -->
   <div id="view-clients">
     <div class="filter-bar">
-      <input type="text" class="filter-search" id="filter-search" placeholder="Search name, organization, or email…" />
+      <input type="text" class="filter-search" id="filter-search" placeholder="Search name, organization, or emailâ¦" />
       <div class="status-toggle">
         <button class="active" id="toggle-all" data-status="all">All</button>
         <button id="toggle-active" data-status="active">Active</button>
@@ -217,7 +218,7 @@
       </div>
       <div class="field" style="flex:2;">
         <label>Reason (optional)</label>
-        <input type="text" id="bl-reason" placeholder="e.g. Fraud, chargeback, abuse…" />
+        <input type="text" id="bl-reason" placeholder="e.g. Fraud, chargeback, abuseâ¦" />
       </div>
       <button class="btn-danger" id="btn-add-blacklist">+ Add to Blacklist</button>
     </div>
@@ -245,7 +246,7 @@
   <div class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="admin-modal-header">
       <h2 id="modal-title">Add Client</h2>
-      <button class="admin-modal-close" id="modal-close" aria-label="Close">✕</button>
+      <button class="admin-modal-close" id="modal-close" aria-label="Close">â</button>
     </div>
     <div class="modal-body">
       <div class="modal-error" id="modal-error"></div>
@@ -264,7 +265,7 @@
         </div>
       </div>
       <div class="modal-success" id="modal-success" style="display:none;">
-        <div class="success-icon">✅</div>
+        <div class="success-icon">â</div>
         <p id="modal-success-msg">Invite sent!</p>
       </div>
     </div>
@@ -280,7 +281,7 @@
   <div class="admin-modal" role="dialog" aria-modal="true">
     <div class="admin-modal-header">
       <h2 class="danger">Delete Client</h2>
-      <button class="admin-modal-close" id="delete-modal-close">✕</button>
+      <button class="admin-modal-close" id="delete-modal-close">â</button>
     </div>
     <div class="modal-body">
       <div class="modal-error" id="delete-modal-error"></div>
@@ -328,7 +329,7 @@ function showToast(msg, type) {
 }
 
 function fmtDate(iso) {
-  if (!iso) return '—';
+  if (!iso) return 'â';
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
@@ -345,7 +346,7 @@ async function adminFetch(payload) {
   return data;
 }
 
-// ── View tabs ─────────────────────────────────────────
+// ââ View tabs âââââââââââââââââââââââââââââââââââââââââ
 document.querySelectorAll('.view-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
@@ -359,7 +360,7 @@ document.querySelectorAll('.view-tab').forEach(tab => {
   });
 });
 
-// ── Load Clients ──────────────────────────────────────
+// ââ Load Clients ââââââââââââââââââââââââââââââââââââââ
 async function loadClients() {
   showSkeleton();
   try {
@@ -396,7 +397,7 @@ async function loadClients() {
   }
 }
 
-// ── Filter + Render ───────────────────────────────────
+// ââ Filter + Render âââââââââââââââââââââââââââââââââââ
 function applyFilterAndRender() {
   const q = document.getElementById('filter-search').value.trim().toLowerCase();
   filteredClients = allClients.filter(c => {
@@ -422,14 +423,14 @@ function renderRows(clients) {
     const blockLabel = c.is_active ? 'Block' : 'Unblock';
     const blockCls = c.is_active ? 'btn-block' : 'btn-block unblock';
     return '<tr data-id="' + c.id + '">' +
-      '<td class="client-name-cell"><div class="name">' + esc(c.full_name || '—') + '</div>' + (c.organization ? '<div class="org">' + esc(c.organization) + '</div>' : '') + '</td>' +
-      '<td>' + esc(c.email || '—') + '</td>' +
+      '<td class="client-name-cell"><div class="name">' + esc(c.full_name || 'â') + '</div>' + (c.organization ? '<div class="org">' + esc(c.organization) + '</div>' : '') + '</td>' +
+      '<td>' + esc(c.email || 'â') + '</td>' +
       '<td><span class="count-badge' + (hasProjects ? ' has-projects' : '') + '">' + c.project_count + '</span></td>' +
       '<td>' + fmtDate(c.last_project) + '</td>' +
       '<td><span class="status-badge ' + statusCls + '">' + statusLabel + '</span></td>' +
       '<td onclick="event.stopPropagation()">' +
         '<div class="row-actions">' +
-          '<a class="btn-view" href="/admin/client?id=' + c.id + '">View →</a>' +
+          '<a class="btn-view" href="/admin/client?id=' + c.id + '">View â</a>' +
           '<button class="' + blockCls + '" data-id="' + c.id + '" data-active="' + c.is_active + '">' + blockLabel + '</button>' +
           '<button class="btn-delete" data-id="' + c.id + '" data-name="' + esc(c.full_name || 'this client') + '">' + 'Delete' + '</button>' +
         '</div>' +
@@ -447,7 +448,7 @@ function renderRows(clients) {
       const id = btn.dataset.id;
       const currentlyActive = btn.dataset.active === 'true';
       btn.disabled = true;
-      btn.textContent = '…';
+      btn.textContent = 'â¦';
       try {
         await adminFetch({ action: 'blockClient', clientId: id, block: currentlyActive });
         showToast(currentlyActive ? 'Client blocked.' : 'Client unblocked.', 'success');
@@ -482,7 +483,7 @@ function showSkeleton() {
   document.getElementById('empty-state').style.display = 'none';
 }
 
-// ── Search + Status Filter ────────────────────────────
+// ââ Search + Status Filter ââââââââââââââââââââââââââââ
 document.getElementById('filter-search').addEventListener('input', applyFilterAndRender);
 document.getElementById('filter-search').addEventListener('keydown', e => { if (e.key === 'Escape') { document.getElementById('filter-search').value = ''; applyFilterAndRender(); } });
 document.querySelectorAll('.status-toggle button').forEach(btn => {
@@ -494,7 +495,7 @@ document.querySelectorAll('.status-toggle button').forEach(btn => {
   });
 });
 
-// ── Delete Modal ──────────────────────────────────────
+// ââ Delete Modal ââââââââââââââââââââââââââââââââââââââ
 function closeDeleteModal() { document.getElementById('delete-modal-overlay').classList.remove('open'); deleteTargetId = null; }
 document.getElementById('delete-modal-close').addEventListener('click', closeDeleteModal);
 document.getElementById('btn-delete-cancel').addEventListener('click', closeDeleteModal);
@@ -505,7 +506,7 @@ document.getElementById('btn-confirm-delete').addEventListener('click', async ()
   const blacklistEmail = document.getElementById('chk-blacklist').checked;
   const btn = document.getElementById('btn-confirm-delete');
   btn.disabled = true;
-  btn.textContent = 'Deleting…';
+  btn.textContent = 'Deletingâ¦';
   const errEl = document.getElementById('delete-modal-error');
   errEl.style.display = 'none';
   try {
@@ -521,7 +522,7 @@ document.getElementById('btn-confirm-delete').addEventListener('click', async ()
   }
 });
 
-// ── Add Client Modal ──────────────────────────────────
+// ââ Add Client Modal ââââââââââââââââââââââââââââââââââ
 function openModal() {
   document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('modal-form-wrap').style.display = '';
@@ -553,7 +554,7 @@ document.getElementById('btn-send-invite').addEventListener('click', async () =>
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEl.textContent = 'A valid email address is required.'; errEl.style.display = 'block'; document.getElementById('inv-email').focus(); return; }
   const btn = document.getElementById('btn-send-invite');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Sending…';
+  btn.innerHTML = '<span class="spin"></span> Sendingâ¦';
   try {
     await adminFetch({ action: 'inviteClient', email, full_name: name, organization: org });
     document.getElementById('modal-form-wrap').style.display = 'none';
@@ -570,7 +571,7 @@ document.getElementById('btn-send-invite').addEventListener('click', async () =>
   }
 });
 
-// ── Blacklist ─────────────────────────────────────────
+// ââ Blacklist âââââââââââââââââââââââââââââââââââââââââ
 async function loadBlacklist() {
   const tbody = document.getElementById('blacklist-tbody');
   tbody.innerHTML = '<tr><td colspan="4"><span class="skeleton" style="width:60%;display:block;margin:.5rem 0"></span></td></tr>';
@@ -582,7 +583,7 @@ async function loadBlacklist() {
     tbody.innerHTML = entries.map(e =>
       '<tr>' +
         '<td>' + esc(e.email) + '</td>' +
-        '<td><span class="bl-reason">' + esc(e.reason || '—') + '</span></td>' +
+        '<td><span class="bl-reason">' + esc(e.reason || 'â') + '</span></td>' +
         '<td>' + fmtDate(e.created_at) + '</td>' +
         '<td><button class="btn-remove-bl" data-id="' + e.id + '">Remove</button></td>' +
       '</tr>'
@@ -590,7 +591,7 @@ async function loadBlacklist() {
 
     tbody.querySelectorAll('.btn-remove-bl').forEach(btn => {
       btn.addEventListener('click', async () => {
-        btn.disabled = true; btn.textContent = '…';
+        btn.disabled = true; btn.textContent = 'â¦';
         try {
           await adminFetch({ action: 'removeFromBlacklist', id: btn.dataset.id });
           showToast('Removed from blacklist.', 'success');
@@ -612,7 +613,7 @@ document.getElementById('btn-add-blacklist').addEventListener('click', async () 
   const reason = document.getElementById('bl-reason').value.trim();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Enter a valid email address.', 'error'); return; }
   const btn = document.getElementById('btn-add-blacklist');
-  btn.disabled = true; btn.textContent = 'Adding…';
+  btn.disabled = true; btn.textContent = 'Addingâ¦';
   try {
     await adminFetch({ action: 'addToBlacklist', email, reason });
     showToast(email + ' added to blacklist.', 'success');
@@ -626,10 +627,10 @@ document.getElementById('btn-add-blacklist').addEventListener('click', async () 
   }
 });
 
-// ── Sign Out ──────────────────────────────────────────
+// ââ Sign Out ââââââââââââââââââââââââââââââââââââââââââ
 document.getElementById('btn-signout').addEventListener('click', async () => { await _sb.auth.signOut(); window.location.href = '/portal/login'; });
 
-// ── Init ──────────────────────────────────────────────
+// ââ Init ââââââââââââââââââââââââââââââââââââââââââââââ
 (async () => {
   currentSession = await requireAdmin();
   if (!currentSession) return;

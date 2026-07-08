@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All Projects — Taika Admin</title>
+  <title>All Projects â Taika Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -120,7 +120,7 @@
 <body>
 <nav class="admin-nav">
   <a class="admin-nav-brand" href="/admin/dashboard">
-    <span class="shield">🛡</span>
+    <span class="shield">ð¡</span>
     <span>Taika Admin</span>
   </a>
   <div class="admin-nav-links">
@@ -129,9 +129,10 @@
     <a href="/admin/clients">Clients</a>
     <a href="/admin/team">Team</a>
     <a href="/admin/portal-view">Client View</a>
+    <a href="/admin/analytics" target="_blank">Analytics ↗</a>
   </div>
   <div class="admin-nav-right">
-    <span class="admin-nav-user" id="nav-username">—</span>
+    <span class="admin-nav-user" id="nav-username">â</span>
     <button class="btn-signout" id="btn-signout">Sign Out</button>
   </div>
 </nav>
@@ -142,7 +143,7 @@
     <div class="multi-select-wrap" id="status-wrap">
       <button class="multi-select-trigger" id="status-trigger" type="button">
         <span id="status-label">All Statuses</span>
-        <span class="arrow">▼</span>
+        <span class="arrow">â¼</span>
       </button>
       <div class="multi-select-dropdown" id="status-dropdown">
         <div class="multi-select-option"><input type="checkbox" id="s-submitted" value="submitted" /><label for="s-submitted">Submitted</label></div>
@@ -163,8 +164,8 @@
       <option value="medical_translation">Medical Translation</option>
       <option value="website_localization">Website Localization</option>
       <option value="managed_translation">Managed Translation</option>
-      <option value="interpretation_inperson">Interpretation — In-Person</option>
-      <option value="interpretation_remote">Interpretation — Remote</option>
+      <option value="interpretation_inperson">Interpretation â In-Person</option>
+      <option value="interpretation_remote">Interpretation â Remote</option>
       <option value="transcription">Transcription</option>
       <option value="captioning">Captioning / Subtitling</option>
       <option value="video_editing">Video Editing</option>
@@ -180,7 +181,7 @@
       <option value="rush">Rush</option>
       <option value="urgent">Urgent</option>
     </select>
-    <input type="text" class="filter-search" id="filter-search" placeholder="Search title or client…" />
+    <input type="text" class="filter-search" id="filter-search" placeholder="Search title or clientâ¦" />
     <button class="btn-apply" id="btn-apply">Apply Filters</button>
     <button class="btn-clear" id="btn-clear">Clear Filters</button>
   </div>
@@ -189,7 +190,7 @@
 <div class="page-wrapper">
   <div class="page-header">
     <h1>All Projects</h1>
-    <span class="page-meta" id="results-count">Loading…</span>
+    <span class="page-meta" id="results-count">Loadingâ¦</span>
   </div>
   <div class="table-card">
     <table>
@@ -219,8 +220,8 @@
           <input type="number" id="page-jump-input" min="1" value="1" />
           <button class="btn-go" id="btn-go">Go</button>
         </div>
-        <button class="btn-page" id="btn-prev" disabled>← Prev</button>
-        <button class="btn-page" id="btn-next" disabled>Next →</button>
+        <button class="btn-page" id="btn-prev" disabled>â Prev</button>
+        <button class="btn-page" id="btn-next" disabled>Next â</button>
       </div>
     </div>
   </div>
@@ -299,9 +300,9 @@ async function fetchProjects() {
     if (error) throw error;
     allProjects = (data || []).map(p => ({
       ...p,
-      client: p.client_profile ? p.client_profile.full_name : '—',
+      client: p.client_profile ? p.client_profile.full_name : 'â',
       client_id: p.client_profile ? p.client_profile.id : null,
-      assigned_to: p.assigned_to_profile ? p.assigned_to_profile.full_name : '—',
+      assigned_to: p.assigned_to_profile ? p.assigned_to_profile.full_name : 'â',
     }));
     applyFiltersAndRender();
   } catch (e) {
@@ -359,7 +360,7 @@ function applyFiltersAndRender() {
 function shortId(uuid) { return (uuid || '').slice(-6).toUpperCase(); }
 
 function fmtDate(iso) {
-  if (!iso) return '—';
+  if (!iso) return 'â';
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
@@ -389,7 +390,7 @@ function renderRows(rows) {
     '<tr data-id="' + esc(p.id) + '">' +
     '<td class="col-id">' + esc(shortId(p.id)) + '</td>' +
     '<td>' + esc(p.client) + '</td>' +
-    '<td>' + esc(p.service_name || '—') + '</td>' +
+    '<td>' + esc(p.service_name || 'â') + '</td>' +
     '<td class="col-title"><a href="/admin/project?id=' + esc(p.id) + '" onclick="event.stopPropagation()">' + esc(p.title || '(untitled)') + '</a></td>' +
     '<td>' + statusBadge(p.status) + '</td>' +
     '<td>' + priorityBadge(p.priority) + '</td>' +
@@ -417,7 +418,7 @@ function updateSortArrows() {
     const arrow = th.querySelector('.sort-arrow');
     if (!arrow) return;
     th.classList.toggle('sorted', col === sortCol);
-    arrow.textContent = col === sortCol ? (sortDir === 'asc' ? '▲' : '▼') : '';
+    arrow.textContent = col === sortCol ? (sortDir === 'asc' ? 'â²' : 'â¼') : '';
   });
 }
 

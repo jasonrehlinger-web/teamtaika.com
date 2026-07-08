@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Client View — Taika Admin</title>
+  <title>Client View â Taika Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -13,7 +13,7 @@
     :root { --gold: #c9a84c; --navy: #0a1628; --radius-sm: 6px; }
     body { margin: 0; background: #f5f4f0; font-family: 'DM Sans', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-    /* ── Admin nav (matches other admin pages) ── */
+    /* ââ Admin nav (matches other admin pages) ââ */
     .admin-nav {
       display: flex; align-items: center; gap: 1rem;
       background: var(--navy); padding: 0 1.5rem; height: 54px; flex-shrink: 0;
@@ -30,7 +30,7 @@
     .btn-signout { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 6px; color: rgba(255,255,255,.7); font-size: .8rem; padding: 5px 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
     .btn-signout:hover { background: rgba(255,255,255,.15); color: #fff; }
 
-    /* ── Portal tab bar ── */
+    /* ââ Portal tab bar ââ */
     .portal-tabs {
       display: flex; align-items: center; gap: 4px;
       background: #fff; border-bottom: 1px solid #e5e3dc;
@@ -59,7 +59,7 @@
     }
     .open-tab-btn:hover { border-color: #c9a84c; color: #92630a; }
 
-    /* ── iframe ── */
+    /* ââ iframe ââ */
     .iframe-wrap { flex: 1; position: relative; overflow: hidden; }
     #portal-frame {
       width: 100%; height: 100%; border: none;
@@ -84,7 +84,7 @@
 
 <nav class="admin-nav">
   <a class="admin-nav-brand" href="/admin/dashboard">
-    <span class="shield">🛡</span>
+    <span class="shield">ð¡</span>
     <span>Taika Admin</span>
   </a>
   <div class="admin-nav-links">
@@ -93,9 +93,10 @@
     <a href="/admin/clients">Clients</a>
     <a href="/admin/team">Team</a>
     <a href="/admin/portal-view" class="active">Client View</a>
+    <a href="/admin/analytics" target="_blank">Analytics ↗</a>
   </div>
   <div class="admin-nav-right">
-    <span class="admin-nav-user" id="nav-username">—</span>
+    <span class="admin-nav-user" id="nav-username">â</span>
     <button class="btn-signout" id="btn-signout">Sign Out</button>
   </div>
 </nav>
@@ -104,26 +105,26 @@
 <div class="portal-tabs" id="portal-tabs">
   <span class="portal-label">Portal pages:</span>
   <button class="portal-tab active" data-path="/portal/dashboard" onclick="loadPage(this)">
-    <span class="portal-tab-icon">🏠</span> Dashboard
+    <span class="portal-tab-icon">ð </span> Dashboard
   </button>
   <button class="portal-tab" data-path="/portal/projects" onclick="loadPage(this)">
-    <span class="portal-tab-icon">📋</span> My Projects
+    <span class="portal-tab-icon">ð</span> My Projects
   </button>
   <button class="portal-tab" data-path="/portal/submit" onclick="loadPage(this)">
-    <span class="portal-tab-icon">➕</span> Submit Project
+    <span class="portal-tab-icon">â</span> Submit Project
   </button>
   <button class="portal-tab" data-path="/portal/translate" onclick="loadPage(this)">
-    <span class="portal-tab-icon">⚡</span> MT Preview
+    <span class="portal-tab-icon">â¡</span> MT Preview
   </button>
   <button class="portal-tab" data-path="/portal/account" onclick="loadPage(this)">
-    <span class="portal-tab-icon">👤</span> Account
+    <span class="portal-tab-icon">ð¤</span> Account
   </button>
   <div class="tab-sep"></div>
   <button class="portal-tab" data-path="/portal" onclick="loadPage(this)">
-    <span class="portal-tab-icon">🔑</span> Landing / Login
+    <span class="portal-tab-icon">ð</span> Landing / Login
   </button>
   <a class="open-tab-btn" id="open-new-tab" href="/portal/dashboard" target="_blank">
-    ↗ Open in new tab
+    â Open in new tab
   </a>
 </div>
 
@@ -131,7 +132,7 @@
 <div class="iframe-wrap">
   <div class="iframe-loading" id="iframe-loading">
     <div class="loading-spinner"></div>
-    <span class="loading-label">Loading portal…</span>
+    <span class="loading-label">Loading portalâ¦</span>
   </div>
   <iframe id="portal-frame" src="/portal/dashboard" title="Client Portal Preview"></iframe>
 </div>
@@ -146,7 +147,7 @@
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { window.location.href = '/portal'; return; }
 
-  // Role guard — admin/super_admin only
+  // Role guard â admin/super_admin only
   const { data: profile } = await sb.from('profiles').select('full_name, role').eq('id', session.user.id).single();
   if (!profile || !['admin','super_admin'].includes(profile.role)) {
     window.location.href = '/portal/dashboard';

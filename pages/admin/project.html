@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Detail — Taika Admin</title>
+  <title>Project Detail â Taika Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -156,7 +156,7 @@
 <body>
 <nav class="admin-nav">
   <a class="admin-nav-brand" href="/admin/dashboard">
-    <span class="shield">🛡</span>
+    <span class="shield">ð¡</span>
     <span>Taika Admin</span>
   </a>
   <div class="admin-nav-links">
@@ -165,19 +165,20 @@
     <a href="/admin/clients">Clients</a>
     <a href="/admin/team">Team</a>
     <a href="/admin/portal-view">Client View</a>
+    <a href="/admin/analytics" target="_blank">Analytics ↗</a>
   </div>
   <div class="admin-nav-right">
-    <span class="admin-nav-user" id="nav-username">—</span>
+    <span class="admin-nav-user" id="nav-username">â</span>
     <button class="btn-signout" id="btn-signout">Sign Out</button>
   </div>
 </nav>
 
 <div class="page-wrapper">
-  <a class="back-link" href="/admin/projects">← All Projects</a>
+  <a class="back-link" href="/admin/projects">â All Projects</a>
 
   <div class="project-header">
     <div class="project-title-row">
-      <h1 id="project-title">Loading…</h1>
+      <h1 id="project-title">Loadingâ¦</h1>
       <span id="project-status-badge"></span>
     </div>
     <p class="project-subtitle" id="project-subtitle"></p>
@@ -222,7 +223,7 @@
           <div class="field">
             <label for="ctrl-assigned">Assigned To</label>
             <select id="ctrl-assigned">
-              <option value="">— Unassigned —</option>
+              <option value="">â Unassigned â</option>
             </select>
           </div>
           <div class="field-row">
@@ -250,9 +251,9 @@
       <div class="card">
         <div class="card-header"><h2>Admin Notes</h2></div>
         <div class="card-body">
-          <div class="internal-note">Internal — not visible to clients</div>
+          <div class="internal-note">Internal â not visible to clients</div>
           <div class="field">
-            <textarea id="admin-notes" rows="5" placeholder="Internal notes about this project…"></textarea>
+            <textarea id="admin-notes" rows="5" placeholder="Internal notes about this projectâ¦"></textarea>
           </div>
           <button class="btn-gold" id="btn-save-notes">Save Notes</button>
         </div>
@@ -274,7 +275,7 @@
         <div class="card-body">
           <div class="upload-zone" id="delivery-drop">
             <input type="file" id="delivery-input" multiple accept=".pdf,.doc,.docx,.zip,.xlsx,.pptx" />
-            <div class="upload-icon">📤</div>
+            <div class="upload-icon">ð¤</div>
             <p><strong>Drop files here</strong> or click to browse</p>
             <p style="font-size:12px;margin-top:4px">PDF, DOC, DOCX, ZIP, XLSX, PPTX</p>
           </div>
@@ -296,7 +297,7 @@
               <button class="msg-type-btn active" id="btn-msg-client" data-type="client">Message to Client</button>
               <button class="msg-type-btn" id="btn-msg-internal" data-type="internal">Internal Note</button>
             </div>
-            <textarea class="msg-textarea" id="msg-input" placeholder="Write a message…"></textarea>
+            <textarea class="msg-textarea" id="msg-input" placeholder="Write a messageâ¦"></textarea>
             <div class="msg-send-row">
               <button class="btn-send" id="btn-send-msg">Send</button>
             </div>
@@ -325,21 +326,21 @@
         <div class="card-body">
           <div class="sidebar-field">
             <div class="sf-label">Name</div>
-            <div class="sf-value" id="client-name">—</div>
+            <div class="sf-value" id="client-name">â</div>
           </div>
           <div class="sidebar-field">
             <div class="sf-label">Organization</div>
-            <div class="sf-value" id="client-org">—</div>
+            <div class="sf-value" id="client-org">â</div>
           </div>
           <div class="sidebar-field">
             <div class="sf-label">Email</div>
-            <div class="sf-value" id="client-email">—</div>
+            <div class="sf-value" id="client-email">â</div>
           </div>
           <div class="sidebar-field">
             <div class="sf-label">Phone</div>
-            <div class="sf-value" id="client-phone">—</div>
+            <div class="sf-value" id="client-phone">â</div>
           </div>
-          <a class="view-profile-link" id="client-profile-link" href="#">View Client Profile →</a>
+          <a class="view-profile-link" id="client-profile-link" href="#">View Client Profile â</a>
         </div>
       </div>
 
@@ -349,19 +350,19 @@
         <div class="card-body">
           <div class="sidebar-field">
             <div class="sf-label">Service</div>
-            <div class="sf-value" id="info-service">—</div>
+            <div class="sf-value" id="info-service">â</div>
           </div>
           <div class="sidebar-field">
             <div class="sf-label">Languages</div>
-            <div class="sf-value" id="info-languages">—</div>
+            <div class="sf-value" id="info-languages">â</div>
           </div>
           <div class="sidebar-field" id="info-wordcount-wrap" style="display:none">
             <div class="sf-label">Word Count</div>
-            <div class="sf-value" id="info-wordcount">—</div>
+            <div class="sf-value" id="info-wordcount">â</div>
           </div>
           <div class="sidebar-field" id="info-pagecount-wrap" style="display:none">
             <div class="sf-label">Page Count</div>
-            <div class="sf-value" id="info-pagecount">—</div>
+            <div class="sf-value" id="info-pagecount">â</div>
           </div>
           <div class="sidebar-field" id="info-mt-wrap" style="display:none">
             <div class="sf-label">Machine Translation</div>
@@ -412,23 +413,23 @@ function statusBadge(s) {
 }
 
 function fmtDate(iso) {
-  if (!iso) return '—';
+  if (!iso) return 'â';
   return new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
 function fmtDateTime(iso) {
-  if (!iso) return '—';
+  if (!iso) return 'â';
   return new Date(iso).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
 }
 
 function fmtBytes(b) {
-  if (!b) return '—';
+  if (!b) return 'â';
   if (b < 1024) return b + ' B';
   if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
   return (b/1048576).toFixed(1) + ' MB';
 }
 
-// ── Load project ──────────────────────────────────────
+// ââ Load project ââââââââââââââââââââââââââââââââââââââ
 async function loadProject() {
   try {
     const { data: p, error } = await _sb
@@ -448,7 +449,7 @@ async function loadProject() {
 }
 
 function populateProjectHeader(p) {
-  document.title = (p.title || 'Project') + ' — Taika Admin';
+  document.title = (p.title || 'Project') + ' â Taika Admin';
   document.getElementById('project-title').textContent = p.title || '(untitled)';
   document.getElementById('project-status-badge').innerHTML = statusBadge(p.status);
   const client = p.client_profile;
@@ -473,22 +474,22 @@ function populateControls(p) {
   function populateSidebar(p) {
   const c = p.client_profile;
   if (c) {
-    document.getElementById('client-name').textContent = c.full_name || '—';
-    document.getElementById('client-org').textContent = c.organization || '—';
-    document.getElementById('client-email').innerHTML = c.email ? '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>' : '—';
-    document.getElementById('client-phone').textContent = c.phone || '—';
+    document.getElementById('client-name').textContent = c.full_name || 'â';
+    document.getElementById('client-org').textContent = c.organization || 'â';
+    document.getElementById('client-email').innerHTML = c.email ? '<a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>' : 'â';
+    document.getElementById('client-phone').textContent = c.phone || 'â';
     document.getElementById('client-profile-link').href = '/admin/client?id=' + c.id;
   }
-  document.getElementById('info-service').textContent = p.service_name || '—';
+  document.getElementById('info-service').textContent = p.service_name || 'â';
   const src = p.source_language || '';
   const tgt = Array.isArray(p.target_languages) ? p.target_languages.join(', ') : (p.target_language || '');
-  document.getElementById('info-languages').textContent = src && tgt ? src + ' → ' + tgt : (src || tgt || '—');
+  document.getElementById('info-languages').textContent = src && tgt ? src + ' â ' + tgt : (src || tgt || 'â');
   if (p.word_count) { document.getElementById('info-wordcount').textContent = p.word_count.toLocaleString(); document.getElementById('info-wordcount-wrap').style.display = ''; }
   if (p.page_count) { document.getElementById('info-pagecount').textContent = p.page_count; document.getElementById('info-pagecount-wrap').style.display = ''; }
   if (p.mt_used) document.getElementById('info-mt-wrap').style.display = '';
 }
 
-// ── Team Members ─────────────────────────────────────
+// ââ Team Members âââââââââââââââââââââââââââââââââââââ
 async function loadTeamMembers() {
   const { data, error } = await _sb.from('profiles').select('id, full_name').in('role', ['admin','super_admin']).order('full_name');
   if (error) return;
@@ -502,7 +503,7 @@ async function loadTeamMembers() {
   if (currentProject && currentProject.assigned_to) sel.value = currentProject.assigned_to;
 }
 
-// ── Save Controls ─────────────────────────────────────
+// ââ Save Controls âââââââââââââââââââââââââââââââââââââ
 document.getElementById('btn-save-controls').addEventListener('click', async () => {
   const btn = document.getElementById('btn-save-controls');
   const newStatus = document.getElementById('ctrl-status').value;
@@ -516,7 +517,7 @@ document.getElementById('btn-save-controls').addEventListener('click', async () 
   }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Saving…';
+  btn.innerHTML = '<span class="spin"></span> Savingâ¦';
 
   try {
     const updates = {
@@ -554,11 +555,11 @@ document.getElementById('btn-save-controls').addEventListener('click', async () 
   }
 });
 
-// ── Save Admin Notes ──────────────────────────────────
+// ââ Save Admin Notes ââââââââââââââââââââââââââââââââââ
 document.getElementById('btn-save-notes').addEventListener('click', async () => {
   const btn = document.getElementById('btn-save-notes');
   btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span> Saving…';
+  btn.innerHTML = '<span class="spin"></span> Savingâ¦';
   try {
     const notes = document.getElementById('admin-notes').value;
     const { error } = await _sb.from('projects').update({ admin_notes: notes }).eq('id', PROJECT_ID);
@@ -572,7 +573,7 @@ document.getElementById('btn-save-notes').addEventListener('click', async () => 
   }
 });
 
-// ── Source Files ──────────────────────────────────────
+// ââ Source Files ââââââââââââââââââââââââââââââââââââââ
 async function loadSourceFiles() {
   const { data, error } = await _sb.from('project_files').select('*, uploader:profiles!project_files_uploaded_by_fkey(full_name)').eq('project_id', PROJECT_ID).eq('file_type', 'source').order('created_at');
   if (error) return;
@@ -588,8 +589,8 @@ async function loadSourceFiles() {
   const tbody = document.createElement('tbody');
   data.forEach(f => {
     const tr = document.createElement('tr');
-    const safeName = esc(f.file_name || (f.file_path || '').split('/').pop() || '—');
-    const safeUploader = esc(f.uploader ? f.uploader.full_name : '—');
+    const safeName = esc(f.file_name || (f.file_path || '').split('/').pop() || 'â');
+    const safeUploader = esc(f.uploader ? f.uploader.full_name : 'â');
     tr.innerHTML = '<td>' + safeName + '</td>' +
       '<td>' + fmtBytes(f.file_size) + '</td>' +
       '<td>' + safeUploader + '</td>' +
@@ -613,7 +614,7 @@ async function downloadFile(filePath) {
   }
 }
 
-// ── Delivery Upload ───────────────────────────────────
+// ââ Delivery Upload âââââââââââââââââââââââââââââââââââ
 const dropZone = document.getElementById('delivery-drop');
 const fileInput = document.getElementById('delivery-input');
 const fileList = document.getElementById('delivery-file-list');
@@ -634,7 +635,7 @@ function addDeliveryFiles(files) {
 function renderDeliveryFileList() {
   btnUpload.disabled = deliveryFiles.length === 0;
   fileList.innerHTML = deliveryFiles.map((f, i) =>
-    '<div class="upload-file-item"><span>' + esc(f.name) + ' (' + fmtBytes(f.size) + ')</span><button class="remove-file" data-i="' + i + '">✕</button></div>'
+    '<div class="upload-file-item"><span>' + esc(f.name) + ' (' + fmtBytes(f.size) + ')</span><button class="remove-file" data-i="' + i + '">â</button></div>'
   ).join('');
   fileList.querySelectorAll('.remove-file').forEach(btn => {
     btn.addEventListener('click', () => { deliveryFiles.splice(parseInt(btn.dataset.i), 1); renderDeliveryFileList(); });
@@ -675,7 +676,7 @@ document.getElementById('btn-upload-delivery').addEventListener('click', async (
   }
 });
 
-// ── Messages ──────────────────────────────────────────
+// ââ Messages ââââââââââââââââââââââââââââââââââââââââââ
 async function loadMessages() {
   const { data, error } = await _sb.from('messages')
     .select('*, sender:profiles!messages_sender_id_fkey(full_name, role)')
@@ -719,14 +720,14 @@ document.getElementById('btn-msg-client').addEventListener('click', () => {
   document.getElementById('btn-msg-client').classList.add('active');
   document.getElementById('btn-msg-client').classList.remove('internal');
   document.getElementById('btn-msg-internal').classList.remove('active');
-  document.getElementById('msg-input').placeholder = 'Write a message to the client…';
+  document.getElementById('msg-input').placeholder = 'Write a message to the clientâ¦';
 });
 
 document.getElementById('btn-msg-internal').addEventListener('click', () => {
   msgIsInternal = true;
   document.getElementById('btn-msg-internal').classList.add('active', 'internal');
   document.getElementById('btn-msg-client').classList.remove('active');
-  document.getElementById('msg-input').placeholder = 'Write an internal note (not visible to client)…';
+  document.getElementById('msg-input').placeholder = 'Write an internal note (not visible to client)â¦';
 });
 
 document.getElementById('btn-send-msg').addEventListener('click', async () => {
@@ -748,7 +749,7 @@ document.getElementById('btn-send-msg').addEventListener('click', async () => {
   }
 });
 
-// ── Status History ────────────────────────────────────
+// ââ Status History ââââââââââââââââââââââââââââââââââââ
 async function loadStatusHistory() {
   const { data, error } = await _sb.from('project_status_history')
     .select('*, changer:profiles!project_status_history_changed_by_fkey(full_name)')
@@ -761,17 +762,17 @@ async function loadStatusHistory() {
     '<div class="history-item">' +
     '<div class="history-dot"></div>' +
     '<div class="history-body">' +
-    '<div class="history-change"><span class="badge badge-' + (h.from_status||'') + '">' + (h.from_status||'').replace('_',' ') + '</span> <span class="arrow">→</span> <span class="badge badge-' + (h.to_status||'') + '">' + (h.to_status||'').replace('_',' ') + '</span></div>' +
+    '<div class="history-change"><span class="badge badge-' + (h.from_status||'') + '">' + (h.from_status||'').replace('_',' ') + '</span> <span class="arrow">â</span> <span class="badge badge-' + (h.to_status||'') + '">' + (h.to_status||'').replace('_',' ') + '</span></div>' +
     (h.note ? '<div class="history-note">' + esc(h.note).replace(/\n/g,'<br>') + '</div>' : '') +
-    '<div class="history-meta">by ' + (h.changer ? h.changer.full_name : 'Unknown') + ' · ' + fmtDateTime(h.created_at) + '</div>' +
+    '<div class="history-meta">by ' + (h.changer ? h.changer.full_name : 'Unknown') + ' Â· ' + fmtDateTime(h.created_at) + '</div>' +
     '</div></div>'
   ).join('');
 }
 
-// ── Sign Out ──────────────────────────────────────────
+// ââ Sign Out ââââââââââââââââââââââââââââââââââââââââââ
 document.getElementById('btn-signout').addEventListener('click', async () => { await _sb.auth.signOut(); window.location.href = '/portal/login'; });
 
-// ── Init ──────────────────────────────────────────────
+// ââ Init ââââââââââââââââââââââââââââââââââââââââââââââ
 (async () => {
   const session = await requireAdmin();
   if (!session) return;

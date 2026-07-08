@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team Management — Taika Admin</title>
+  <title>Team Management â Taika Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
@@ -12,7 +12,7 @@
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; background: #f5f4f0; font-family: 'DM Sans', sans-serif; color: #1f2937; }
 
-    /* ── Admin Nav ── */
+    /* ââ Admin Nav ââ */
     .admin-nav {
       background: #0a1628;
       display: flex;
@@ -70,10 +70,10 @@
     }
     .btn-signout:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
 
-    /* ── Page shell ── */
+    /* ââ Page shell ââ */
     .page-wrap { max-width: 1000px; margin: 0 auto; padding: 2.2rem 1.5rem 4rem; }
 
-    /* ── Page header ── */
+    /* ââ Page header ââ */
     .page-header {
       display: flex;
       align-items: center;
@@ -89,7 +89,7 @@
       margin: 0;
     }
 
-    /* ── Buttons ── */
+    /* ââ Buttons ââ */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -121,7 +121,7 @@
       pointer-events: none;
     }
 
-    /* ── Team table ── */
+    /* ââ Team table ââ */
     .table-card {
       background: #fff;
       border: 1px solid #e5e3dc;
@@ -146,7 +146,7 @@
     tbody tr:hover { background: #faf9f7; }
     tbody td { padding: 0.9rem 1.1rem; font-size: 0.875rem; color: #374151; vertical-align: middle; }
 
-    /* ── Avatar ── */
+    /* ââ Avatar ââ */
     .member-cell { display: flex; align-items: center; gap: 0.75rem; }
     .avatar {
       width: 36px; height: 36px; border-radius: 50%;
@@ -158,7 +158,7 @@
     .member-name { font-weight: 600; color: #0a1628; }
     .member-email { font-size: 0.78rem; color: #6b7280; }
 
-    /* ── Role badges ── */
+    /* ââ Role badges ââ */
     .role-badge {
       display: inline-flex;
       align-items: center;
@@ -172,7 +172,7 @@
     .role-super_admin { background: rgba(201,168,76,0.18); color: #92650a; border: 1px solid rgba(201,168,76,0.4); }
     .role-admin       { background: rgba(10,22,40,0.1);    color: #0a1628; border: 1px solid rgba(10,22,40,0.2); }
 
-    /* ── Status badge ── */
+    /* ââ Status badge ââ */
     .status-badge {
       display: inline-flex;
       align-items: center;
@@ -187,10 +187,10 @@
     .status-inactive { background: #f3f4f6; color: #6b7280; }
     .status-invited  { background: #fef3c7; color: #92400e; }
 
-    /* ── Empty / loading ── */
+    /* ââ Empty / loading ââ */
     .empty-state { padding: 2.5rem; text-align: center; color: #9ca3af; font-size: 0.875rem; }
 
-    /* ── Permissions info card ── */
+    /* ââ Permissions info card ââ */
     .info-card {
       background: #fff;
       border: 1px solid #e5e3dc;
@@ -215,7 +215,7 @@
     .perm-label { font-weight: 700; font-size: 0.85rem; color: #0a1628; white-space: nowrap; }
     .perm-desc  { font-size: 0.85rem; color: #6b7280; }
 
-    /* ── Modal overlay ── */
+    /* ââ Modal overlay ââ */
     .admin-modal-overlay {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.45);
@@ -254,7 +254,7 @@
     }
     .admin-modal-close:hover { color: #374151; }
 
-    /* ── Modal form ── */
+    /* ââ Modal form ââ */
     .form-group { margin-bottom: 1rem; }
     .form-group label {
       display: block;
@@ -288,7 +288,7 @@
     }
     .btn-outline:hover { border-color: #9ca3af; background: #f9f8f6; }
 
-    /* ── Confirm dialog ── */
+    /* ââ Confirm dialog ââ */
     .confirm-overlay {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.45);
@@ -317,7 +317,7 @@
     .btn-danger { background: #dc2626; color: #fff; }
     .btn-danger:hover { background: #b91c1c; }
 
-    /* ── Toast ── */
+    /* ââ Toast ââ */
     .admin-toast {
       position: fixed; bottom: 1.8rem; right: 1.8rem;
       background: #0a1628; color: #fff;
@@ -337,7 +337,7 @@
 </head>
 <body>
 
-<!-- ── Admin Nav ── -->
+<!-- ââ Admin Nav ââ -->
 <nav class="admin-nav">
   <a href="/admin/dashboard" class="admin-nav-brand">
     <svg class="shield" width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -351,6 +351,7 @@
     <a href="/admin/clients">Clients</a>
     <a href="/admin/team" class="active">Team</a>
     <a href="/admin/portal-view">Client View</a>
+    <a href="/admin/analytics" target="_blank">Analytics ↗</a>
   </div>
   <div class="admin-nav-right">
     <span id="nav-username"></span>
@@ -358,10 +359,10 @@
   </div>
 </nav>
 
-<!-- ── Loading ── -->
-<div id="loading-state">Loading team…</div>
+<!-- ââ Loading ââ -->
+<div id="loading-state">Loading teamâ¦</div>
 
-<!-- ── Page Content ── -->
+<!-- ââ Page Content ââ -->
 <div class="page-wrap" id="page-content" style="display:none">
 
   <div class="page-header">
@@ -385,7 +386,7 @@
         </tr>
       </thead>
       <tbody id="team-tbody">
-        <tr><td colspan="6" class="empty-state">Loading…</td></tr>
+        <tr><td colspan="6" class="empty-state">Loadingâ¦</td></tr>
       </tbody>
     </table>
   </div>
@@ -405,7 +406,7 @@
 
 </div><!-- /page-wrap -->
 
-<!-- ── Invite Modal ── -->
+<!-- ââ Invite Modal ââ -->
 <div class="admin-modal-overlay" id="invite-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="admin-modal">
     <div class="admin-modal-header">
@@ -435,7 +436,7 @@
   </div>
 </div>
 
-<!-- ── Confirm Dialog ── -->
+<!-- ââ Confirm Dialog ââ -->
 <div class="confirm-overlay" id="confirm-dialog" role="alertdialog" aria-modal="true">
   <div class="confirm-box">
     <h3>Remove Team Member?</h3>
@@ -452,7 +453,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="../../js/portal.js"></script>
 <script>
-  /* ── Config ── */
+  /* ââ Config ââ */
   const ADMIN_FN_URL = '/.netlify/functions/portal-admin';
   const sb = getSupabase();
 
@@ -461,7 +462,7 @@
   let pendingRemoveId   = null;
   let pendingRemoveName = '';
 
-  /* ── Utilities ── */
+  /* ââ Utilities ââ */
   function showToast(msg, type = 'success') {
     const el = document.getElementById('toast');
     el.textContent = msg;
@@ -471,7 +472,7 @@
   }
 
   function fmtDate(iso) {
-    if (!iso) return '—';
+    if (!iso) return 'â';
     return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   }
 
@@ -485,7 +486,7 @@
     return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
   }
 
-  /* ── Auth / Boot ── */
+  /* ââ Auth / Boot ââ */
   async function init() {
     if (typeof requireAdmin === 'function') await requireAdmin();
 
@@ -514,7 +515,7 @@
     document.getElementById('page-content').style.display  = 'block';
   }
 
-  /* ── Load team ── */
+  /* ââ Load team ââ */
   async function loadTeam() {
     let members;
     try {
@@ -553,7 +554,7 @@
       const isSA       = m.role === 'super_admin';
 
       // Show remove button only: current user is super_admin, target is not super_admin, not self
-      let actionCell = '—';
+      let actionCell = 'â';
       if (isSuperAdmin && !isSA) {
         const disabled = isSelf ? 'disabled' : '';
         const title    = isSelf ? 'You cannot remove yourself' : `Remove ${esc(m.full_name || 'this member')}`;
@@ -573,7 +574,7 @@
               </div>
             </div>
           </td>
-          <td>${esc(m.email || '—')}</td>
+          <td>${esc(m.email || 'â')}</td>
           <td><span class="role-badge ${roleClass}">${roleLabel}</span></td>
           <td><span class="status-badge ${statusCls}">${statusLbl}</span></td>
           <td>${fmtDate(m.created_at)}</td>
@@ -583,7 +584,7 @@
     }).join('');
   }
 
-  /* ── Invite Modal ── */
+  /* ââ Invite Modal ââ */
   function openInviteModal() {
     document.getElementById('invite-form').reset();
     document.getElementById('invite-modal').classList.add('open');
@@ -600,7 +601,7 @@
     const email     = document.getElementById('i-email').value.trim();
     const role      = document.getElementById('i-role').value;
 
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true; btn.textContent = 'Sendingâ¦';
 
     try {
       const { data: { session } } = await sb.auth.getSession();
@@ -628,7 +629,7 @@
     }
   }
 
-  /* ── Confirm / Remove ── */
+  /* ââ Confirm / Remove ââ */
   function openConfirm(userId, name) {
     pendingRemoveId   = userId;
     pendingRemoveName = name;
@@ -645,7 +646,7 @@
   async function confirmRemove() {
     if (!pendingRemoveId) return;
     const btn = document.getElementById('confirm-ok-btn');
-    btn.disabled = true; btn.textContent = 'Removing…';
+    btn.disabled = true; btn.textContent = 'Removingâ¦';
 
     try {
       const { data: { session } } = await sb.auth.getSession();
@@ -686,7 +687,7 @@
     if (e.key === 'Escape') { closeInviteModal(); closeConfirm(); }
   });
 
-  /* ── Sign out ── */
+  /* ââ Sign out ââ */
   async function handleSignOut() {
     await sb.auth.signOut();
     window.location.href = '/portal/login';

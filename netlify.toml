@@ -237,7 +237,9 @@
 [[headers]]
   for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    # Revalidate on every load (cheap 304 if unchanged) so CSS edits always
+    # reach visitors without needing a ?v= bump or a manual cache clear.
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/js/*"

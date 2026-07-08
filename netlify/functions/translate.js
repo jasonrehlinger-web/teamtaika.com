@@ -13,7 +13,7 @@ const _rateLimitMap = new Map();
 function isRateLimited(ip, authenticated) {
   const now = Date.now();
   const windowMs = 60_000;
-  const limit = authenticated ? 20 : 10;
+  const limit = authenticated ? 20 : 5;
   const key = ip + (authenticated ? ':auth' : ':anon');
   const entry = _rateLimitMap.get(key) || { count: 0, start: now };
   if (now - entry.start > windowMs) {
@@ -77,8 +77,10 @@ exports.handler = async function(event, context) {
     return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid input types' }) };
   }
 
-  if (text.length > 2000) {
-    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Text too long. Maximum 2000 characters per preview.' }) };
+  // Tighter cap for unauthenticated callers to limit paid-API cost abuse
+  const maxLen = authenticated ? 2000 : 500;
+  if (text.length > maxLen) {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: `Text too long. Maximum ${maxLen} characters per preview${authenticated ? '' : ' — sign in to the portal for longer previews'}.` }) };
   }
 
   const ALLOWED_TARGETS = [

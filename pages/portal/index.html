@@ -557,6 +557,14 @@
         const { profile, missing } = await fetchMyProfile(data.session.access_token);
         if (profile?.role === 'admin' || profile?.role === 'super_admin') { window.location.href = '/admin/dashboard'; return; }
         if (missing) { window.location.href = '/admin'; return; }
+        // Block unapproved users — portal is invite-only with admin approval required
+        if (profile && !profile.is_active) {
+          await getSb().auth.signOut();
+          errEl.textContent = 'Your account is pending admin approval. You will receive an email when access is granted.';
+          errEl.style.display = 'block';
+          btn.textContent = 'Sign In'; btn.disabled = false;
+          return;
+        }
       }
       window.location.href = '/portal/dashboard';
     } catch (err) {

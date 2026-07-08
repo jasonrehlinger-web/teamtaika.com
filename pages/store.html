@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store — Certified Translation, Compliance &amp; Training | Language Access Hub</title>
+<meta name="description" content="Order certified document translation (birth, marriage, death, diploma, immunization), ADA/508 audits, compliance kits, and training online. Add multiple items to your cart and check out securely.">
+<link rel="canonical" href="https://teamtaika.com/store">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Store — Certified Translation, Compliance & Training">
+<meta property="og:description" content="Order certified document translation and compliance services online. Add multiple items to your cart and check out securely.">
+<meta property="og:url" content="https://teamtaika.com/store">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../css/main.css?v=2">
+<style>
+.store-hero{background:var(--navy-deep);padding:56px 0 40px;}
+.store-hero-inner{max-width:1160px;margin:0 auto;padding:0 24px;}
+.store-hero h1{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.6rem);color:#fff;line-height:1.15;margin-bottom:12px;}
+.store-hero p{font-size:16px;color:rgba(255,255,255,.72);max-width:640px;}
+.store-wrap{max-width:1160px;margin:0 auto;padding:40px 24px 80px;}
+.store-cat-title{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:36px 0 6px;}
+.store-cat-sub{font-size:14px;color:var(--slate);margin-bottom:20px;}
+.store-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.prod{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:22px 20px;display:flex;flex-direction:column;}
+.prod:hover{border-color:var(--gold);}
+.prod-icon{font-size:26px;margin-bottom:10px;}
+.prod-name{font-weight:700;font-size:15px;color:var(--navy);margin-bottom:4px;line-height:1.3;}
+.prod-price{font-family:var(--font-display);font-size:22px;color:var(--gold);margin-bottom:2px;}
+.prod-price small{font-size:12px;font-family:var(--font-body);color:var(--slate);}
+.prod-desc{font-size:12.5px;color:var(--slate);line-height:1.55;margin:8px 0 16px;flex:1;}
+.prod-qty{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.prod-qty label{font-size:12px;color:var(--slate);}
+.prod-qty input{width:56px;padding:6px 8px;border:1.5px solid var(--border);border-radius:6px;font-size:14px;text-align:center;}
+.btn-add{width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:13.5px;cursor:pointer;transition:.15s;font-family:inherit;}
+.btn-add:hover{background:var(--gold);color:var(--navy-deep);}
+.btn-quote{width:100%;padding:11px;background:transparent;color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-weight:700;font-size:13.5px;cursor:pointer;text-decoration:none;text-align:center;display:block;transition:.15s;}
+.btn-quote:hover{border-color:var(--gold);}
+/* Cart button (floating) */
+.cart-fab{position:fixed;bottom:20px;right:20px;z-index:150;background:var(--gold);color:var(--navy-deep);border:none;border-radius:40px;padding:14px 22px;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.25);font-family:inherit;}
+.cart-fab-count{background:var(--navy);color:#fff;border-radius:20px;padding:1px 9px;margin-left:6px;font-size:13px;}
+/* Cart drawer */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;}
+.cart-overlay.open{display:block;}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:201;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;}
+.cart-drawer.open{transform:translateX(0);}
+.cart-head{padding:20px;border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.cart-head h2{font-family:var(--font-display);font-size:1.3rem;color:var(--navy);margin:0;}
+.cart-close{background:none;border:none;font-size:26px;cursor:pointer;color:var(--slate);line-height:1;}
+.cart-items{flex:1;overflow-y:auto;padding:12px 20px;}
+.cart-empty{color:var(--slate);font-size:14px;text-align:center;padding:40px 0;}
+.cart-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);}
+.cart-item-main{flex:1;}
+.cart-item-name{font-size:14px;font-weight:600;color:var(--navy);line-height:1.3;}
+.cart-item-meta{font-size:12.5px;color:var(--slate);margin-top:3px;}
+.cart-item-remove{background:none;border:none;color:#b91c1c;font-size:12px;cursor:pointer;margin-top:4px;padding:0;}
+.cart-item-price{font-weight:700;color:var(--navy);font-size:14px;white-space:nowrap;}
+.cart-foot{border-top:1.5px solid var(--border);padding:20px;}
+.cart-total-row{display:flex;justify-content:space-between;font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px;}
+.cart-note{font-size:11.5px;color:var(--slate);margin-bottom:14px;}
+.cart-field{margin-bottom:10px;}
+.cart-field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;color:var(--navy);margin-bottom:4px;}
+.cart-field input,.cart-field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:14px;font-family:inherit;box-sizing:border-box;}
+.btn-checkout{width:100%;padding:14px;background:var(--gold);color:var(--navy-deep);border:none;border-radius:9px;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit;}
+.btn-checkout:disabled{opacity:.5;cursor:not-allowed;}
+.cart-secure{font-size:11.5px;color:var(--slate);text-align:center;margin-top:10px;}
+@media(max-width:640px){.store-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- @nav -->
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Store</span></nav></div>
+
+<section class="store-hero">
+  <div class="store-hero-inner">
+    <div class="page-hero-eyebrow"><span class="dot"></span>Order online · Add multiple items · Secure checkout</div>
+    <h1>Language Access Hub Store</h1>
+    <p>Order certified document translation, accessibility audits, compliance kits, and training. Add several items to your cart and check out once. Certified translations are ATA-certified and USCIS-accepted; final page pricing is confirmed after our team reviews your documents.</p>
+  </div>
+</section>
+
+<div class="store-wrap">
+  <div id="store-catalog"><!-- rendered by JS --></div>
+</div>
+
+<!-- Floating cart button -->
+<button class="cart-fab" id="cart-fab" aria-label="Open cart">🛒 Cart <span class="cart-fab-count" id="cart-count">0</span></button>
+
+<!-- Cart drawer -->
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="cart-head">
+    <h2>Your Cart</h2>
+    <button class="cart-close" id="cart-close" aria-label="Close cart">×</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-foot" id="cart-foot" style="display:none;">
+    <div class="cart-total-row"><span>Estimated total</span><span id="cart-total">$0.00</span></div>
+    <p class="cart-note">Final price for per-page/per-document items is confirmed after our team reviews your files. We'll email you within 1 business hour to securely collect any documents.</p>
+    <div class="cart-field"><label for="ck-name">Full name *</label><input type="text" id="ck-name" placeholder="Your name"></div>
+    <div class="cart-field"><label for="ck-email">Email *</label><input type="email" id="ck-email" placeholder="you@email.com"></div>
+    <div class="cart-field"><label for="ck-notes">Notes (optional)</label><textarea id="ck-notes" rows="2" placeholder="Languages, deadlines, or details…"></textarea></div>
+    <button class="btn-checkout" id="btn-checkout">Check Out with PayPal →</button>
+    <div class="cart-secure">🔒 Secure PayPal checkout · ATA-certified · HIPAA &amp; FERPA compliant</div>
+  </div>
+</aside>
+
+<!-- Netlify form registration (hidden) for order records -->
+<form name="store-cart-order" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="full-name"><input type="email" name="email"><input type="text" name="phone">
+  <textarea name="cart"></textarea><textarea name="notes"></textarea><input type="text" name="cart-total">
+</form>
+
+<script>
+(function () {
+  'use strict';
+  var BUSINESS = 'payments@taikatranslations.com';
+  var CART_KEY = 'lah_cart_v1';
+
+  // ── Catalog ───────────────────────────────────────────────
+  var CATALOG = [
+    { cat: 'Certified Document Translation', sub: 'ATA-certified · USCIS &amp; legal use · from the price shown per document', items: [
+      { id:'birth',       icon:'📄', name:'Birth Certificate',        price:26.00, unit:'per document', desc:'Certified translation accepted by USCIS, courts, and schools.' },
+      { id:'marriage',    icon:'💍', name:'Marriage Certificate',     price:32.50, unit:'per document', desc:'Certified translation for immigration, name changes, and legal use.' },
+      { id:'death',       icon:'📜', name:'Death Certificate',        price:32.50, unit:'per document', desc:'Certified translation for estate, probate, and immigration.' },
+      { id:'diploma',     icon:'🎓', name:'Diploma / Transcript',     price:26.00, unit:'per document', desc:'For USCIS, NACES evaluation, or college admissions.' },
+      { id:'address',     icon:'🏠', name:'Proof of Address',         price:26.00, unit:'per document', desc:'Utility bills, leases, and residency documents.' },
+      { id:'immunization',icon:'💉', name:'Immunization Record',      price:32.50, unit:'per document', desc:'For school enrollment and USCIS medical requirements.' },
+      { id:'divorce',     icon:'⚖️', name:'Divorce Decree',           price:32.50, unit:'per document', desc:'Certified translation for remarriage and immigration.' },
+      { id:'passport',    icon:'🛂', name:'Passport / ID',            price:26.00, unit:'per document', desc:'Certified translation of passports and national IDs.' },
+      { id:'perpage',     icon:'🔤', name:'Other Document (per page)',price:24.99, unit:'per page',     desc:'Any other certified translation, priced per page.' }
+    ]},
+    { cat: 'Compliance &amp; Accessibility', sub: 'For agencies, schools, and healthcare organizations', items: [
+      { id:'pdf-audit',   icon:'♿', name:'PDF Accessibility Audit',  price:299.00, unit:'per audit', desc:'WCAG 2.1 + Section 508 + PDF/UA findings in 48 hours.' },
+      { id:'starter-kit', icon:'📦', name:'Compliance Starter Kit',   price:149.00, unit:'one-time',  desc:'Language Access Plan template, checklist, and 1-hour consult.' }
+    ]},
+    { cat: 'Training', sub: 'Live and self-paced professional training', items: [
+      { id:'mcc-training', icon:'🎓', name:'Multicultural Communication Training', price:997.00, unit:'per session', desc:'Team training on culturally competent, language-accessible communication.' }
+    ]},
+    { cat: 'Custom &amp; Ongoing — Request a Quote', sub: 'Volume, contract, and variable-scope services', quote:true, items: [
+      { id:'interp',  icon:'🎙️', name:'Interpretation (OPI / VRI / On-site)', desc:'From $1.25/min OPI · $65/hr VRI. Scheduled or on-demand.' },
+      { id:'caption', icon:'📹', name:'Video Captioning',                     desc:'ADA-compliant captions & subtitles. $2.50/min.' },
+      { id:'webloc',  icon:'🌐', name:'Website Localization',                 desc:'Full multilingual website + WCAG-compliant markup.' },
+      { id:'ai',      icon:'🤖', name:'AI Automation (TVPTeam)',              desc:'Done-for-you AI workflows. From $297/mo.' }
+    ]}
+  ];
+
+  // ── Cart state ────────────────────────────────────────────
+  function loadCart(){ try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e){ return []; } }
+  function saveCart(c){ try { localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch(e){} }
+  var cart = loadCart();
+
+  function findProduct(id){
+    for (var i=0;i<CATALOG.length;i++){ for (var j=0;j<CATALOG[i].items.length;j++){ if (CATALOG[i].items[j].id===id) return CATALOG[i].items[j]; } }
+    return null;
+  }
+  function addToCart(id, qty){
+    var p = findProduct(id); if (!p) return;
+    qty = Math.max(1, parseInt(qty,10)||1);
+    var line = cart.filter(function(l){return l.id===id;})[0];
+    if (line) line.qty += qty; else cart.push({ id:id, name:p.name, price:p.price, unit:p.unit, qty:qty });
+    saveCart(cart); renderCart(); openCart();
+  }
+  function removeFromCart(id){ cart = cart.filter(function(l){return l.id!==id;}); saveCart(cart); renderCart(); }
+  function cartCount(){ return cart.reduce(function(n,l){return n+l.qty;},0); }
+  function cartTotal(){ return cart.reduce(function(t,l){return t + l.price*l.qty;},0); }
+
+  // ── Rendering ─────────────────────────────────────────────
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+  function renderCatalog(){
+    var html = '';
+    CATALOG.forEach(function(group){
+      html += '<h2 class="store-cat-title">'+group.cat+'</h2><p class="store-cat-sub">'+group.sub+'</p><div class="store-grid">';
+      group.items.forEach(function(it){
+        html += '<div class="prod"><div class="prod-icon">'+it.icon+'</div><div class="prod-name">'+esc(it.name)+'</div>';
+        if (group.quote){
+          html += '<div class="prod-desc">'+esc(it.desc)+'</div><a class="btn-quote" href="/index.html#quote">Request a Quote →</a>';
+        } else {
+          html += '<div class="prod-price">$'+it.price.toFixed(2)+' <small>'+it.unit+'</small></div>';
+          html += '<div class="prod-desc">'+esc(it.desc)+'</div>';
+          html += '<div class="prod-qty"><label for="q-'+it.id+'">Qty</label><input type="number" id="q-'+it.id+'" min="1" value="1"></div>';
+          html += '<button class="btn-add" data-add="'+it.id+'">Add to Cart</button>';
+        }
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    document.getElementById('store-catalog').innerHTML = html;
+    document.querySelectorAll('[data-add]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.getAttribute('data-add');
+        var qin = document.getElementById('q-'+id);
+        addToCart(id, qin ? qin.value : 1);
+      });
+    });
+  }
+
+  function renderCart(){
+    document.getElementById('cart-count').textContent = cartCount();
+    var box = document.getElementById('cart-items');
+    var foot = document.getElementById('cart-foot');
+    if (!cart.length){
+      box.innerHTML = '<div class="cart-empty">Your cart is empty.<br>Add items to get started.</div>';
+      foot.style.display = 'none';
+      return;
+    }
+    var html = '';
+    cart.forEach(function(l){
+      html += '<div class="cart-item"><div class="cart-item-main"><div class="cart-item-name">'+esc(l.name)+'</div>'+
+        '<div class="cart-item-meta">$'+l.price.toFixed(2)+' '+esc(l.unit||'')+' × '+l.qty+'</div>'+
+        '<button class="cart-item-remove" data-remove="'+l.id+'">Remove</button></div>'+
+        '<div class="cart-item-price">$'+(l.price*l.qty).toFixed(2)+'</div></div>';
+    });
+    box.innerHTML = html;
+    document.getElementById('cart-total').textContent = '$'+cartTotal().toFixed(2);
+    foot.style.display = 'block';
+    box.querySelectorAll('[data-remove]').forEach(function(btn){
+      btn.addEventListener('click', function(){ removeFromCart(btn.getAttribute('data-remove')); });
+    });
+  }
+
+  // ── Drawer open/close ─────────────────────────────────────
+  function openCart(){ document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').setAttribute('aria-hidden','false'); }
+  function closeCart(){ document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').setAttribute('aria-hidden','true'); }
+
+  // ── Checkout ──────────────────────────────────────────────
+  function checkout(){
+    if (!cart.length) return;
+    var name = document.getElementById('ck-name').value.trim();
+    var email = document.getElementById('ck-email').value.trim();
+    var notes = document.getElementById('ck-notes').value.trim();
+    var ok = true;
+    if (!name){ document.getElementById('ck-name').style.borderColor='#dc2626'; ok=false; }
+    if (!email || !/\S+@\S+\.\S+/.test(email)){ document.getElementById('ck-email').style.borderColor='#dc2626'; ok=false; }
+    if (!ok) return;
+
+    // Best-effort order record to Netlify (does not block checkout)
+    try {
+      var summary = cart.map(function(l){return l.qty+'× '+l.name+' ($'+(l.price*l.qty).toFixed(2)+')';}).join('; ');
+      var data = new URLSearchParams({ 'form-name':'store-cart-order','full-name':name,'email':email,'notes':notes,'cart':summary,'cart-total':'$'+cartTotal().toFixed(2) });
+      fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() }).catch(function(){});
+    } catch(e){}
+
+    var origin = window.location.origin || 'https://teamtaika.com';
+    var params = [
+      'cmd=_cart','upload=1',
+      'business='+encodeURIComponent(BUSINESS),
+      'currency_code=USD','no_shipping=1','rm=0',
+      'return='+encodeURIComponent(origin+'/store?checkout=success'),
+      'cancel_return='+encodeURIComponent(origin+'/store'),
+      'notify_url='+encodeURIComponent('https://teamtaika.com/.netlify/functions/paypal-ipn')
+    ];
+    cart.forEach(function(l, i){
+      var n = i+1;
+      params.push('item_name_'+n+'='+encodeURIComponent(l.name+' ('+(l.unit||'')+')'));
+      params.push('amount_'+n+'='+l.price.toFixed(2));
+      params.push('quantity_'+n+'='+l.qty);
+    });
+    // Clear cart after building the order (order now handed to PayPal)
+    saveCart([]);
+    window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + params.join('&');
+  }
+
+  // ── Success message on return ─────────────────────────────
+  function handleReturn(){
+    if (window.location.search.indexOf('checkout=success') === -1) return;
+    cart = []; saveCart([]);
+    var wrap = document.querySelector('.store-wrap');
+    if (wrap) wrap.insertAdjacentHTML('afterbegin',
+      '<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:24px;margin-bottom:24px;text-align:center;">'+
+      '<div style="font-size:40px;">✅</div><h2 style="font-family:var(--font-display);color:#166534;margin:8px 0;">Payment received — thank you!</h2>'+
+      '<p style="color:#166534;font-size:14px;margin:0;">Your order is confirmed. We\'ll email you within 1 business hour with next steps and to securely collect any documents.</p></div>');
+  }
+
+  // ── Init ──────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function(){
+    renderCatalog();
+    renderCart();
+    handleReturn();
+    document.getElementById('cart-fab').addEventListener('click', openCart);
+    document.getElementById('cart-close').addEventListener('click', closeCart);
+    document.getElementById('cart-overlay').addEventListener('click', closeCart);
+    document.getElementById('btn-checkout').addEventListener('click', checkout);
+    ['ck-name','ck-email'].forEach(function(id){ document.getElementById(id).addEventListener('input', function(){ this.style.borderColor=''; }); });
+  });
+})();
+</script>
+
+<script src="/js/main.js?v=27"></script>
+</body>
+</html>

@@ -892,6 +892,28 @@ ul, ol { list-style: none; }
 
   /* Buttons */
   .btn-primary-lg { font-size: 15px; padding: 13px 22px; }
+
+  /* Nav: keep logo + CTA + hamburger inside the viewport (was clipping on the right) */
+  .nav-inner { gap: 8px; }
+  .nav-logo-name { font-size: 14px; }
+  .nav-right { gap: 8px; }
+  .btn-nav-cta { padding: 8px 12px; font-size: 12px; }
+
+  /* Inline multi-column grids that don't collapse on their own. Many pages
+     (esp. the language pages) set grid-template-columns via an inline style
+     with no class, so the .grid-2/3/4 mobile rules can't reach them and their
+     cards/buttons hang off the right edge. Match the inline value directly and
+     force a single column, mirroring how the grid-* classes already collapse. */
+  [style*="grid-template-columns:repeat(2"],
+  [style*="grid-template-columns: repeat(2"],
+  [style*="grid-template-columns:repeat(3"],
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns:repeat(4"],
+  [style*="grid-template-columns: repeat(4"],
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* ── ANIMATIONS ───────────────────────────────────────────── */

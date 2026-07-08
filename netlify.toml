@@ -4,6 +4,11 @@
   status = 200
 
 [[redirects]]
+  from = "/order"
+  to = "/pages/order.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/opi-vri-guide"
   to = "/pages/resources/blog/opi-vri-guide.html"
   status = 200

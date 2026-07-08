@@ -8,6 +8,7 @@ const PAYPAL_BUSINESS   = 'payments@taikatranslations.com';
 const RESEND_API_KEY    = process.env.RESEND_API_KEY;
 const FROM_ADDRESS      = 'Taika Translations <noreply@taikatranslations.com>';
 const REPLY_TO          = 'sales@taikatranslations.com';
+const ADMIN_EMAIL       = 'ceo@taikatranslations.com';
 
 // In-memory txn dedup — prevents duplicate confirmation emails on PayPal IPN retries
 const _seenTxns = new Set();
@@ -83,6 +84,72 @@ exports.handler = async (event) => {
   }
 
   console.log('[paypal-ipn] VERIFIED payment — txn:', txnId, 'amount: $' + mcGross, 'to:', payerEmail);
+
+  // ── Step 2.5: Server-side price validation (anti-tampering) ───────────
+  // Prices are chosen client-side at checkout, so confirm PayPal actually
+  // collected at least the canonical price for each recognized product. Unknown
+  // or variable items are skipped. Underpaid orders are NOT auto-confirmed — an
+  // admin is alerted for manual review instead.
+  const MIN_UNIT_PRICE = [
+    [/multicultural communication training/i, 997.00],
+    [/pdf accessibility/i,                    299.00],
+    [/compliance starter kit/i,               149.00],
+    [/same[ -]?day/i,                          37.49],
+    [/rush/i,                                  31.24],
+    [/marriage certificate/i,                  32.50],
+    [/death certificate/i,                     32.50],
+    [/divorce/i,                               32.50],
+    [/immunization/i,                          32.50],
+    [/birth certificate/i,                     26.00],
+    [/proof of address/i,                      26.00],
+    [/diploma|transcript/i,                    26.00],
+    [/passport/i,                              26.00],
+    [/per page|certified translation/i,        24.99]
+  ];
+  const expectedUnit = (name) => {
+    for (const [re, price] of MIN_UNIT_PRICE) { if (re.test(name)) return price; }
+    return null; // unrecognized / variable — cannot validate
+  };
+  const lineItems = [];
+  if (params['item_name1']) {
+    for (let n = 1; params['item_name' + n]; n++) {
+      lineItems.push({
+        name:  params['item_name' + n] || '',
+        gross: parseFloat(params['mc_gross_' + n] || '0'),
+        qty:   parseInt(params['quantity' + n] || '1', 10) || 1
+      });
+    }
+  } else {
+    lineItems.push({ name: itemName, gross: mcGross, qty: parseInt(params.quantity || '1', 10) || 1 });
+  }
+  const mismatch = [];
+  for (const it of lineItems) {
+    const exp = expectedUnit(it.name);
+    if (exp == null) continue;
+    const unitPaid = it.qty > 0 ? it.gross / it.qty : it.gross;
+    if (unitPaid < exp - 0.01) mismatch.push(`${it.name} — paid $${unitPaid.toFixed(2)}/unit, expected >= $${exp.toFixed(2)}`);
+  }
+  if (mismatch.length) {
+    console.warn('[paypal-ipn] PRICE MISMATCH — txn', txnId, '|', mismatch.join(' ; '));
+    if (RESEND_API_KEY) {
+      const clean = (s) => String(s).replace(/[<>"]/g, '').substring(0, 200);
+      const safeTxnA = txnId.replace(/[^A-Za-z0-9_-]/g, '').substring(0, 100);
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: FROM_ADDRESS, to: [ADMIN_EMAIL], reply_to: REPLY_TO,
+            subject: `⚠ PRICE MISMATCH — manual review (txn ${safeTxnA})`,
+            html: `<p><strong>A PayPal payment was received below the expected price. Do NOT fulfill until reviewed.</strong></p>`
+              + `<p>Payer: ${clean(payerEmail)}<br>Amount paid: $${mcGross.toFixed(2)}<br>Transaction: ${safeTxnA}</p>`
+              + `<p>Discrepancies:</p><ul>${mismatch.map(m => `<li>${clean(m)}</li>`).join('')}</ul>`
+          })
+        });
+      } catch (err) { console.error('[paypal-ipn] admin alert failed:', err); }
+    }
+    return { statusCode: 200, body: 'OK' }; // acknowledged to PayPal; not auto-confirmed
+  }
 
   // ── Step 3: Send confirmation email via Resend ────────────────────────
   if (payerEmail && RESEND_API_KEY) {

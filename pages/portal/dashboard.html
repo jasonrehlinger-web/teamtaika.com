@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
 
-  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const sb = getSupabase();
 
   // Auth check
   const { data: { session } } = await sb.auth.getSession();
@@ -435,7 +435,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               projects@taikatranslations.com
             </a>
           </p>
-          <button onclick="window.supabase.createClient('https://ijwgdzrunkxrpzsrcqir.supabase.co','sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5').auth.signOut().then(()=>window.location.href='/portal')"
+          <button onclick="getSupabase().auth.signOut().then(()=>window.location.href='/portal')"
             style="margin-top:1.5rem;padding:.625rem 1.5rem;background:#0b1e35;color:#fff;
                    border:none;border-radius:7px;font-size:.9rem;cursor:pointer;">
             Sign Out

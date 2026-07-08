@@ -310,7 +310,7 @@
 
   const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const client = getSupabase();
 
   /* ── Auth guard — also handles password-recovery hash ── */
   let currentUser = null;

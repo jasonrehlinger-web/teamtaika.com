@@ -5,6 +5,8 @@
 const RESEND_API_KEY  = process.env.RESEND_API_KEY;
 const FROM_ADDRESS    = 'Taika Translations <noreply@taikatranslations.com>';
 const REPLY_TO        = 'sales@taikatranslations.com';
+const SUPABASE_URL    = process.env.SUPABASE_URL || 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
+const SERVICE_KEY     = process.env.SUPABASE_SERVICE_KEY;
 
 const ALLOWED_ORIGINS = [
   'https://teamtaika.com',
@@ -39,6 +41,21 @@ function esc(str) {
     .replace(/'/g, '&#x27;');
 }
 
+// Require a valid Supabase session (any authenticated user) before sending —
+// closes the unauthenticated arbitrary-recipient email abuse vector.
+async function verifyAuth(authHeader) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) throw new Error('Unauthorized');
+  if (!SERVICE_KEY) throw new Error('Server configuration error');
+  const token = authHeader.slice(7);
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+    headers: { 'Authorization': `Bearer ${token}`, 'apikey': SERVICE_KEY }
+  });
+  if (!res.ok) throw new Error('Unauthorized');
+  const userData = await res.json();
+  if (!userData || !userData.id) throw new Error('Unauthorized');
+  return userData;
+}
+
 exports.handler = async (event) => {
   const origin = event.headers['origin'] || event.headers['Origin'] || '';
   const corsOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
@@ -55,6 +72,13 @@ exports.handler = async (event) => {
   const ip = (event.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
   if (!rateLimit(ip)) {
     return { statusCode: 429, headers: corsHeaders, body: JSON.stringify({ error: 'Too many requests' }) };
+  }
+
+  // Require a valid Supabase session — no unauthenticated senders.
+  try {
+    await verifyAuth(event.headers['authorization'] || event.headers['Authorization']);
+  } catch (err) {
+    return { statusCode: 401, headers: corsHeaders, body: JSON.stringify({ error: 'Unauthorized' }) };
   }
 
   let body;

@@ -1,0 +1,10 @@
+# Build output — regenerated at deploy from source (do not commit)
+dist/
+
+# Local Claude Code helpers and reference (CLAUDE.md holds secrets)
+.claude/
+CLAUDE.md
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

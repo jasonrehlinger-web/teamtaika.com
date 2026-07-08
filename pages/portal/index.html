@@ -471,7 +471,7 @@
   let sb;
 
   function getSb() {
-    if (!sb) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    if (!sb) sb = getSupabase();
     return sb;
   }
 

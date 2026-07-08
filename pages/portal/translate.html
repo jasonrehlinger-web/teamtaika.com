@@ -237,7 +237,7 @@
   (async () => {
     const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5';
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const sb = getSupabase();
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { window.location.href = '/portal'; return; }
     // Store token for authenticated API calls (M-7)

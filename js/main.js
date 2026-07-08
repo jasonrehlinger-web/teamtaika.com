@@ -480,30 +480,9 @@
     });
   }
 
-  // ── Order confirmation email (server-side via /.netlify/functions/send-email) ──
-  function sendConfirmationEmail(details, description) {
-    var payer  = details.payer || {};
-    var name   = (payer.name ? payer.name.given_name + ' ' + payer.name.surname : 'Customer').trim();
-    var email  = payer.email_address || '';
-    var amount = details.purchase_units && details.purchase_units[0]
-                 ? '$' + details.purchase_units[0].amount.value
-                 : '';
-    var txn    = details.id || '';
-    if (!email) return;
-    fetch('/.netlify/functions/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to_email:       email,
-        to_name:        name,
-        product:        description,
-        amount:         amount,
-        transaction_id: txn
-      })
-    }).catch(function(err) {
-      console.warn('[send-email] request failed', err);
-    });
-  }
+  // Order-confirmation email is sent server-side by paypal-ipn.js after PayPal
+  // verifies the payment. The former client-side send-email call was removed to
+  // avoid an unauthenticated email path.
 
   function validateForm(form) {
     var ok = true;
@@ -634,17 +613,9 @@
       '</div>'
     ].join('');
 
-    if (custEmail) {
-      var nameParts  = (custName || '').split(' ');
-      var mockDetails = {
-        payer: { name: { given_name: nameParts[0] || 'Customer', surname: nameParts.slice(1).join(' ') },
-                 email_address: custEmail },
-        purchase_units: [{ amount: { value: amount } }],
-        id: ''
-      };
-      sendConfirmationEmail(mockDetails, desc);
-      try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
-    }
+    // Order summary email is sent server-side only after payment is verified
+    // (see paypal-ipn.js). No unauthenticated client-side email is sent here.
+    try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
   }
 
   function initPayPal() {

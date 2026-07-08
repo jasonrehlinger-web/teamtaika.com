@@ -860,12 +860,8 @@
 <script>
 (function() {
   try {
-    if (typeof supabase !== 'undefined' && supabase.createClient) {
-      window._supabaseClient = supabase.createClient(
-        'https://ijwgdzrunkxrpzsrcqir.supabase.co',
-        'sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5'
-      );
-    }
+    // Use the shared singleton from portal.js (also sets window._supabaseClient)
+    getSupabase();
   } catch(e) {
     console.warn('Supabase client init failed:', e);
   }

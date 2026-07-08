@@ -418,6 +418,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     // If fetch failed for another reason, continue without admin controls
   }
 
+  // Block unapproved users — must be active to access portal
+  if (profile && !profile.is_active) {
+    document.body.innerHTML = `
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;
+                  background:#f9f8f5;font-family:'DM Sans',sans-serif;padding:2rem;">
+        <div style="max-width:480px;text-align:center;">
+          <div style="font-size:3rem;margin-bottom:1rem;">⏳</div>
+          <h2 style="color:#0b1e35;font-size:1.5rem;margin-bottom:.75rem;">Account Pending Approval</h2>
+          <p style="color:#666;line-height:1.6;margin-bottom:1.5rem;">
+            Your account has been created successfully. A Taika team member will review and
+            activate your access shortly. You'll receive an email notification when you're approved.
+          </p>
+          <p style="color:#999;font-size:.875rem;">Questions? Email
+            <a href="mailto:projects@taikatranslations.com" style="color:#b8913a;">
+              projects@taikatranslations.com
+            </a>
+          </p>
+          <button onclick="window.supabase.createClient('https://ijwgdzrunkxrpzsrcqir.supabase.co','sb_publishable_UmQ1ni6871mzup_Wz7oO6w_pbqYinV5').auth.signOut().then(()=>window.location.href='/portal')"
+            style="margin-top:1.5rem;padding:.625rem 1.5rem;background:#0b1e35;color:#fff;
+                   border:none;border-radius:7px;font-size:.9rem;cursor:pointer;">
+            Sign Out
+          </button>
+        </div>
+      </div>`;
+    return;
+  }
+
   const effectiveRole = profile?.role;
   const displayName = profile?.full_name || user.email.split('@')[0];
   document.getElementById('user-greeting').textContent = 'Hi, ' + displayName;

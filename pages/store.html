@@ -99,9 +99,10 @@
   <div class="cart-items" id="cart-items"></div>
   <div class="cart-foot" id="cart-foot" style="display:none;">
     <div class="cart-total-row"><span>Estimated total</span><span id="cart-total">$0.00</span></div>
-    <p class="cart-note">Final price for per-page/per-document items is confirmed after our team reviews your files. We'll email you within 1 business hour to securely collect any documents.</p>
+    <p class="cart-note">Upload your document(s), then check out — your files go straight to our project team. Final price for per-page/per-document items is confirmed after review.</p>
     <div class="cart-field"><label for="ck-name">Full name *</label><input type="text" id="ck-name" placeholder="Your name"></div>
     <div class="cart-field"><label for="ck-email">Email *</label><input type="email" id="ck-email" placeholder="you@email.com"></div>
+    <div class="cart-field"><label for="ck-file">Upload document(s) to translate</label><input type="file" id="ck-file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.tiff,.tif,.txt,.rtf"></div>
     <div class="cart-field"><label for="ck-notes">Notes (optional)</label><textarea id="ck-notes" rows="2" placeholder="Languages, deadlines, or details…"></textarea></div>
     <button class="btn-checkout" id="btn-checkout">Check Out with PayPal →</button>
     <div class="cart-secure">🔒 Secure PayPal checkout · ATA-certified · HIPAA &amp; FERPA compliant</div>
@@ -109,9 +110,11 @@
 </aside>
 
 <!-- Netlify form registration (hidden) for order records -->
-<form name="store-cart-order" data-netlify="true" netlify-honeypot="bot-field" hidden>
+<form name="store-cart-order" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
   <input type="text" name="full-name"><input type="email" name="email"><input type="text" name="phone">
   <textarea name="cart"></textarea><textarea name="notes"></textarea><input type="text" name="cart-total">
+  <input type="file" name="document"><input type="file" name="document_2"><input type="file" name="document_3">
+  <input name="bot-field">
 </form>
 
 <script>
@@ -228,7 +231,7 @@
   function closeCart(){ document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').setAttribute('aria-hidden','true'); }
 
   // ── Checkout ──────────────────────────────────────────────
-  function checkout(){
+  async function checkout(){
     if (!cart.length) return;
     var name = document.getElementById('ck-name').value.trim();
     var email = document.getElementById('ck-email').value.trim();
@@ -238,13 +241,30 @@
     if (!email || !/\S+@\S+\.\S+/.test(email)){ document.getElementById('ck-email').style.borderColor='#dc2626'; ok=false; }
     if (!ok) return;
 
-    // Best-effort order record to Netlify (does not block checkout)
+    var btn = document.getElementById('btn-checkout');
+    btn.disabled = true;
+
+    // Submit the order + uploaded documents to Netlify Forms (multipart so files
+    // are captured); the submission-created function forwards them to
+    // projects@taikatranslations.com. Await so the upload finishes BEFORE we
+    // leave for PayPal. Best-effort — payment still proceeds if the upload fails.
     try {
       var summary = cart.map(function(l){return l.qty+'× '+l.name+' ($'+(l.price*l.qty).toFixed(2)+')';}).join('; ');
-      var data = new URLSearchParams({ 'form-name':'store-cart-order','full-name':name,'email':email,'notes':notes,'cart':summary,'cart-total':'$'+cartTotal().toFixed(2) });
-      fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() }).catch(function(){});
+      var fd = new FormData();
+      fd.append('form-name','store-cart-order');
+      fd.append('full-name',name); fd.append('email',email); fd.append('notes',notes);
+      fd.append('cart',summary); fd.append('cart-total','$'+cartTotal().toFixed(2));
+      var fileInput = document.getElementById('ck-file');
+      var hasFiles = fileInput && fileInput.files && fileInput.files.length;
+      if (hasFiles) {
+        var slots = ['document','document_2','document_3'];
+        for (var fi=0; fi<fileInput.files.length && fi<slots.length; fi++){ fd.append(slots[fi], fileInput.files[fi]); }
+      }
+      btn.textContent = hasFiles ? 'Uploading document…' : 'Processing…';
+      await fetch('/', { method:'POST', body: fd });
     } catch(e){}
 
+    btn.textContent = 'Redirecting to PayPal…';
     var origin = window.location.origin || 'https://teamtaika.com';
     var params = [
       'cmd=_cart','upload=1',
@@ -273,7 +293,7 @@
     if (wrap) wrap.insertAdjacentHTML('afterbegin',
       '<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:24px;margin-bottom:24px;text-align:center;">'+
       '<div style="font-size:40px;">✅</div><h2 style="font-family:var(--font-display);color:#166534;margin:8px 0;">Payment received — thank you!</h2>'+
-      '<p style="color:#166534;font-size:14px;margin:0;">Your order is confirmed. We\'ll email you within 1 business hour with next steps and to securely collect any documents.</p></div>');
+      '<p style="color:#166534;font-size:14px;margin:0;">Your order and any uploaded documents are in — we\'ll email you within 1 business hour with next steps. If you still need to send documents, reply to that email.</p></div>');
   }
 
   // ── Init ──────────────────────────────────────────────────

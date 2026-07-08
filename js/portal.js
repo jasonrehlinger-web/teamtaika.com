@@ -60,6 +60,13 @@ async function requireAuth() {
     window.location.href = '/portal';
     return null;
   }
+  // Check account is approved before allowing any portal page access
+  const profile = await fetchProfileViaFunction(session.access_token);
+  if (profile && !profile.is_active) {
+    // Redirect to dashboard which shows the pending-approval screen
+    window.location.href = '/portal/dashboard';
+    return null;
+  }
   return session;
 }
 

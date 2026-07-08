@@ -260,8 +260,8 @@
       params.push('amount_'+n+'='+l.price.toFixed(2));
       params.push('quantity_'+n+'='+l.qty);
     });
-    // Clear cart after building the order (order now handed to PayPal)
-    saveCart([]);
+    // Cart is cleared only on a successful return (see handleReturn), so a
+    // cancelled or failed payment keeps the cart intact for retry.
     window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + params.join('&');
   }
 

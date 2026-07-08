@@ -13,6 +13,11 @@
   to = "/pages/store.html"
   status = 200
 
+[[redirects]]
+  from = "/individuals"
+  to = "/pages/industries/individuals.html"
+  status = 200
+
 # ── Native-language clean URLs (were 404 — nav "Native Language Pages" links) ──
 [[redirects]]
   from = "/traduccion-certificada-espanol"

@@ -347,6 +347,11 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/marriage-certificate-translation-uscis"
+  to = "/pages/resources/blog/marriage-certificate-translation-uscis.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/hipaa-compliant-medical-translation"
   to = "/pages/resources/blog/hipaa-compliant-medical-translation.html"
   status = 200
@@ -1389,6 +1394,11 @@
   status = 301
   force = true
 # ── Force redirects: /pages/resources/blog/*.html → clean /blog/ URLs ────────
+[[redirects]]
+  from = "/pages/resources/blog/marriage-certificate-translation-uscis.html"
+  to = "/blog/marriage-certificate-translation-uscis"
+  status = 301
+  force = true
 [[redirects]]
   from = "/pages/resources/blog/hipaa-compliant-medical-translation.html"
   to = "/blog/hipaa-compliant-medical-translation"

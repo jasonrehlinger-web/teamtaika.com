@@ -338,6 +338,14 @@ function fmtDur(s) {
   return `${Math.floor(s/60)}m ${Math.round(s%60)}s`;
 }
 function fmtPct(n) { return ((+n||0)*100).toFixed(1)+'%'; }
+// Escape API-supplied strings (page paths, search queries) before innerHTML —
+// a visitor can request/search a URL like "><img src=x onerror=…> and, if it
+// ranks in the top 10, it would otherwise execute in the admin's session.
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
 
 /* ════ Loader orchestrator ════ */
 async function loadAll() {
@@ -478,7 +486,7 @@ async function loadPages() {
         const users = +r.metricValues[1].value;
         const pct = Math.round(views/max*100);
         return `<tr>
-          <td><div class="bar-row"><div class="mbar" style="width:${Math.max(pct,3)}px"></div><span class="pg" title="${path}">${path}</span></div></td>
+          <td><div class="bar-row"><div class="mbar" style="width:${Math.max(pct,3)}px"></div><span class="pg" title="${esc(path)}">${esc(path)}</span></div></td>
           <td>${fmt(views)}</td>
           <td>${fmt(users)}</td>
         </tr>`;
@@ -506,7 +514,7 @@ async function loadKeywords() {
       <tbody>${rows.map(r => {
         const pct = Math.round(r.clicks/maxC*100);
         return `<tr>
-          <td><div class="bar-row"><div class="mbar" style="width:${Math.max(pct,3)}px;background:#3b82f6"></div><span class="pg" title="${r.keys[0]}">${r.keys[0]}</span></div></td>
+          <td><div class="bar-row"><div class="mbar" style="width:${Math.max(pct,3)}px;background:#3b82f6"></div><span class="pg" title="${esc(r.keys[0])}">${esc(r.keys[0])}</span></div></td>
           <td>${r.clicks}</td>
           <td>${fmt(r.impressions)}</td>
           <td>${(r.ctr*100).toFixed(1)}%</td>

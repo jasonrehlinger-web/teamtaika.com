@@ -20,10 +20,13 @@
   s1.async = true;
   s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
   document.head.appendChild(s1);
-  // Restore consent if user already accepted
-  if (localStorage.getItem('cookie_consent') === 'accepted') {
-    gtag('consent', 'update', { analytics_storage: 'granted' });
-  }
+  // Restore consent if user already accepted (localStorage throws when
+  // storage is fully blocked, e.g. some iOS privacy modes)
+  try {
+    if (localStorage.getItem('cookie_consent') === 'accepted') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  } catch (e) {}
 }());
 
 // ── Cookie Consent Banner ──────────────────────────────────────────────────────
@@ -115,7 +118,9 @@
       anchor.addEventListener('click', function (e) {
         var id = this.getAttribute('href');
         if (id === '#') return;
-        var target = document.querySelector(id);
+        // getElementById instead of querySelector: ids starting with a digit
+        // (e.g. "#1") are invalid CSS selectors and threw a SyntaxError.
+        var target = document.getElementById(id.slice(1));
         if (target) {
           e.preventDefault();
           var navH = document.querySelector('.site-nav');
@@ -131,9 +136,12 @@
   function initActiveNav() {
     var path = window.location.pathname;
     document.querySelectorAll('.nav-links a').forEach(function (a) {
-      if (a.getAttribute('href') && path.includes(a.getAttribute('href').replace('../', '').replace('../../', ''))) {
-        a.classList.add('active');
-      }
+      var href = a.getAttribute('href');
+      if (!href) return;
+      var clean = href.replace(/^(\.\.\/)+/, '').split('#')[0];
+      // Skip root/empty hrefs — "/" matched every path via includes()
+      if (!clean || clean === '/') return;
+      if (path.includes(clean)) a.classList.add('active');
     });
   }
 
@@ -258,7 +266,11 @@
         if (form) {
           var data = {};
           form.querySelectorAll('input, select, textarea').forEach(function (el) {
-            if (el.name && el.type !== 'file') data[el.name] = el.value;
+            if (!el.name || el.type === 'file') return;
+            // Unchecked checkboxes/radios must not be serialized as if checked
+            // (was sending e.g. "notarization: yes" for untouched boxes).
+            if ((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
+            data[el.name] = el.value;
           });
           var formName = data['form-name'] || 'unknown';
           var downloadUrl = form.getAttribute('data-download');
@@ -283,7 +295,9 @@
             method: 'POST',
             headers: headers,
             body: body
-          }).then(function () {
+          }).then(function (res) {
+            // A 404/500 still resolves — treat as failure so leads aren't lost silently
+            if (!res.ok) throw new Error('HTTP ' + res.status);
             if (downloadUrl) {
               var a = document.createElement('a');
               a.href = downloadUrl;
@@ -414,10 +428,28 @@
 
   var PRICES = { standard: 24.99, rush: 31.24, sameday: 37.49 };
 
+  // Clamp a page-count value to a sane integer (1..500). Non-numeric input
+  // ("abc", " ") produced NaN, which survived Math.max and reached PayPal as
+  // amount=NaN — the falsy check downstream didn't catch the string "NaN".
+  function clampPages(raw) {
+    var n = parseInt(raw || '1', 10);
+    if (isNaN(n) || n < 1) n = 1;
+    if (n > 500) n = 500;
+    return n;
+  }
+
+  // Minimal HTML escaper for the few places user-typed values are rendered
+  function escHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
   function getOrderAmount(form) {
     // Fixed-price store forms (data-price attribute)
     if (form.dataset && form.dataset.price) {
       var base = parseFloat(form.dataset.price);
+      if (!isFinite(base) || base <= 0) return null; // malformed data-price → quote path
       var notarizeEl = form.querySelector('[name="notarization"]');
       if (notarizeEl && notarizeEl.checked) base += 40;
       return base.toFixed(2);
@@ -428,7 +460,7 @@
     if (!svc) return null;
     if (svc.value === 'interpretation' || svc.value === 'both') return null; // quote only
     var price = PRICES[svc.value] || 24.99;
-    var count = Math.max(1, parseInt((pages && pages.value) || '1', 10));
+    var count = clampPages(pages && pages.value);
     var notarizeEl = form.querySelector('[name="notarization"]');
     var notarize = (notarizeEl && notarizeEl.checked) ? 40 : 0;
     return (price * count + notarize).toFixed(2);
@@ -442,29 +474,12 @@
     var pg   = form.querySelector('[name="page-count"]');
     var lang = form.querySelector('[name="language"]');
     var svcLabel = { standard: 'Standard', rush: 'Rush (48h)', sameday: 'Same-Day' };
-    var count = parseInt((pg && pg.value) || '1', 10);
+    // Same clamp as getOrderAmount so the description always matches the charge
+    var count = clampPages(pg && pg.value);
     return 'Certified Translation'
       + (lang && lang.value ? ' – ' + lang.value : '')
       + ' | ' + (svcLabel[svc && svc.value] || 'Standard')
       + ' | ' + count + ' page' + (count !== 1 ? 's' : '');
-  }
-
-  function showSuccess(form, details) {
-    var name  = details.payer && details.payer.name ? details.payer.name.given_name : 'there';
-    var email = details.payer ? details.payer.email_address : '';
-    var txn   = details.id || '';
-    var card = form.closest('.order-form-card');
-    var target = card || form;
-    target.innerHTML = [
-      '<div style="text-align:center;padding:40px 16px;">',
-      '<div style="font-size:56px;line-height:1;margin-bottom:16px;">✅</div>',
-      '<h3 style="font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin-bottom:8px;">',
-      'Payment received, ' + name + '!</h3>',
-      '<p style="color:var(--slate);font-size:14px;line-height:1.7;max-width:420px;margin:0 auto 12px;">',
-      'Your order is confirmed. We\'ll email you at <strong>' + email + '</strong> within 1 business hour with next steps.</p>',
-      '<p style="font-size:11px;color:rgba(0,0,0,.35);">Transaction ID: ' + txn + '</p>',
-      '</div>'
-    ].join('');
   }
 
   function submitNetlifyForm(form, extraFields) {
@@ -490,7 +505,7 @@
 
   function validateForm(form) {
     var ok = true;
-    form.querySelectorAll('input[required], select[required]').forEach(function (el) {
+    form.querySelectorAll('input[required], select[required], textarea[required]').forEach(function (el) {
       if (!el.value.trim()) {
         el.style.borderColor = '#DC2626';
         setTimeout(function () { el.style.borderColor = ''; }, 2500);
@@ -587,12 +602,12 @@
 
     var bodyHtml = isZelle
       ? '<div style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);font-size:14px;line-height:1.7;">'
-        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 1.</strong> Open your banking app and send <strong>$' + amount + '</strong> via <strong>Zelle</strong></div>'
-        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 2.</strong> Send to <strong>' + ZELLE_EMAIL + '</strong> &mdash; Memo: <em>' + custName + '</em></div>'
+        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 1.</strong> Open your banking app and send <strong>$' + escHtml(amount) + '</strong> via <strong>Zelle</strong></div>'
+        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 2.</strong> Send to <strong>' + ZELLE_EMAIL + '</strong> &mdash; Memo: <em>' + escHtml(custName) + '</em></div>'
         + '<div><strong style="color:var(--navy);">Step 3.</strong> Reply &ldquo;Paid&rdquo; to your confirmation email &mdash; we\'ll start immediately</div>'
         + '</div>'
       : '<p style="color:var(--slate);font-size:14px;max-width:400px;margin:0 auto 16px;line-height:1.7;">'
-        + 'Click below to open our Wise page. Enter <strong>$' + amount + '</strong> as the amount.'
+        + 'Click below to open our Wise page. Enter <strong>$' + escHtml(amount) + '</strong> as the amount.'
         + '</p>'
         + '<a href="' + WISE_URL + '" target="_blank" rel="noopener" '
         + 'style="display:inline-block;background:#163300;color:#9fe870;padding:12px 28px;'
@@ -601,7 +616,7 @@
 
     var emailLine = custEmail
       ? '<p style="font-size:13px;color:var(--slate);opacity:.75;margin-top:8px;">'
-        + 'A summary is on its way to <strong>' + custEmail + '</strong>.</p>'
+        + 'A summary is on its way to <strong>' + escHtml(custEmail) + '</strong>.</p>'
       : '';
 
     var card   = form.closest('.order-form-card');
@@ -646,6 +661,15 @@
       oldBtn.parentNode.insertBefore(payBtn, oldBtn);
       oldBtn.style.display = 'none';
 
+      // Returning via the back button from PayPal/Venmo restores the page from
+      // bfcache with the button still disabled — re-enable so the user can retry.
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted && payBtn.disabled) {
+          payBtn.disabled = false;
+          refreshBtn(payBtn, getSelectedMethod(form));
+        }
+      });
+
       payBtn.addEventListener('click', function() {
         if (!validateForm(form)) return;
         var amount = getOrderAmount(form);
@@ -657,11 +681,15 @@
         var emailEl   = form.querySelector('[name="email"]');
         var custName  = nameEl  ? nameEl.value.trim() : '';
         var custEmail = emailEl ? emailEl.value.trim() : '';
+        // Correlation id: sent with the Netlify order record AND as PayPal's
+        // `custom` field so payments can be matched to uploaded documents.
+        var orderId   = 'LAH-' + Date.now().toString(36).toUpperCase() + '-'
+                      + Math.random().toString(36).slice(2, 7).toUpperCase();
 
         try {
           sessionStorage.setItem('taika-pending-order', JSON.stringify({
             name: custName, email: custEmail, amount: amount, desc: desc,
-            returnPath: window.location.pathname, method: method
+            returnPath: window.location.pathname, method: method, orderId: orderId
           }));
         } catch(e) {}
 
@@ -670,12 +698,24 @@
         payBtn.innerHTML = hasFile ? 'Uploading document…' : 'Processing…';
         payBtn.disabled  = true;
 
-        var timeout     = new Promise(function(r) { setTimeout(r, 5000); });
+        // Wait for the order record (and any uploaded document) to actually
+        // reach the server before sending the customer off to pay. The old
+        // 5-second race could take payment for an order that never arrived —
+        // and navigation aborted the in-flight upload, losing the document.
+        var waitMs  = hasFile ? 30000 : 8000;
+        var timeout = new Promise(function(r) { setTimeout(function(){ r('timeout'); }, waitMs); });
         var netlifyPost = submitNetlifyForm(form, {
-          'paypal-amount': amount, 'payment-method': method
-        }).catch(function(){});
+          'paypal-amount': amount, 'payment-method': method, 'order-id': orderId
+        }).then(function(res){ return res && res.ok ? 'ok' : 'fail'; }, function(){ return 'fail'; });
 
-        Promise.race([netlifyPost, timeout]).then(function() {
+        Promise.race([netlifyPost, timeout]).then(function(outcome) {
+          if (outcome !== 'ok' && hasFile) {
+            // The document did not reach us — do not take payment blind.
+            payBtn.disabled = false;
+            refreshBtn(payBtn, method);
+            alert('We could not upload your document. Please check your connection and try again, or email it to projects@taikatranslations.com after checkout.');
+            return;
+          }
           if (method === 'paypal') {
             var base      = window.location.origin || 'https://teamtaika.com';
             var returnUrl = base + window.location.pathname + '?payment=success';
@@ -687,6 +727,7 @@
               'amount='        + encodeURIComponent(amount),
               'currency_code=USD',
               'item_name='     + encodeURIComponent(desc.substring(0, 127)),
+              'custom='        + encodeURIComponent(orderId),
               'return='        + encodeURIComponent(returnUrl),
               'cancel_return=' + encodeURIComponent(cancelUrl),
               'notify_url='    + encodeURIComponent(notifyUrl),
@@ -697,7 +738,7 @@
           } else if (method === 'venmo') {
             window.location.href = 'https://venmo.com/' + VENMO_HANDLE
               + '?txn=pay&amount=' + encodeURIComponent(amount)
-              + '&note='           + encodeURIComponent(desc.substring(0, 100));
+              + '&note='           + encodeURIComponent((desc + ' [' + orderId + ']').substring(0, 100));
 
           } else if (method === 'zelle') {
             showManualPaymentCard('zelle', custName, custEmail, amount, desc, form);
@@ -724,7 +765,15 @@
 
     // Show confirmation when PayPal redirects back with ?payment=success
   function handlePayPalReturn() {
-    if (!window.location.search.includes('payment=success')) return;
+    // Exact param check (substring matching also matched e.g. ?x=payment=successish)
+    var isSuccess = false;
+    try { isSuccess = new URLSearchParams(window.location.search).get('payment') === 'success'; } catch(e) {}
+    if (!isSuccess) {
+      // Not a success return (fresh visit, or a PayPal/Venmo cancel) — drop any
+      // stale pending order so a later ?payment=success can't render old data.
+      try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
+      return;
+    }
 
     var pending = null;
     try { pending = JSON.parse(sessionStorage.getItem('taika-pending-order') || 'null'); } catch(e) {}
@@ -733,10 +782,9 @@
     if (!forms.length) return;
 
     var form     = forms[0];
-    var firstName = pending && pending.name  ? pending.name.split(' ')[0] : 'there';
-    var email     = pending && pending.email ? pending.email : '';
-    var amount    = pending && pending.amount ? '$' + pending.amount : '';
-    var desc      = pending && pending.desc  ? pending.desc : 'Translation Order';
+    var firstName = pending && pending.name  ? escHtml(pending.name.split(' ')[0]) : 'there';
+    var email     = pending && pending.email ? escHtml(pending.email) : '';
+    var amount    = pending && pending.amount ? '$' + escHtml(pending.amount) : '';
 
     // Replace form with success card
     var card   = form.closest('.order-form-card');

@@ -492,12 +492,11 @@
   document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === document.getElementById('modal-overlay')) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  // ── Redirect if already logged in ──────────────────
-  (async () => {
-    try {
-      const { data: { session } } = await getSb().auth.getSession();
-      if (session) {
-        async function fetchMyProfile(accessToken) {
+  // Shared profile lookup — declared at IIFE scope so BOTH the auto-redirect
+  // below and the sign-in handler can call it. It was previously nested inside
+  // the `if (session)` block, so a normal sign-in (no prior session) hit an
+  // undefined `fetchMyProfile` and login silently failed.
+  async function fetchMyProfile(accessToken) {
     const res = await fetch('/.netlify/functions/get-profile', {
       headers: { 'Authorization': 'Bearer ' + accessToken }
     });
@@ -505,6 +504,13 @@
     if (!res.ok) return { profile: null, missing: false };
     return { profile: await res.json(), missing: false };
   }
+
+  // ── Redirect if already logged in ──────────────────
+  // In DOMContentLoaded so the deferred portal.js (getSupabase) has loaded.
+  document.addEventListener('DOMContentLoaded', function () { (async () => {
+    try {
+      const { data: { session } } = await getSb().auth.getSession();
+      if (session) {
         const { profile, missing } = await fetchMyProfile(session.access_token);
         const role = profile?.role;
         if (role === 'admin' || role === 'super_admin') { window.location.href = '/admin/dashboard'; }
@@ -512,7 +518,7 @@
         else { window.location.href = '/portal/dashboard'; }
       }
     } catch(e) {}
-  })();
+  })(); });
 
   // ── Tab switching ───────────────────────────────────
   window.showTab = function(tab) {

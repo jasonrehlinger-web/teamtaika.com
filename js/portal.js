@@ -60,10 +60,14 @@ async function requireAuth() {
     window.location.href = '/portal';
     return null;
   }
-  // Check account is approved before allowing any portal page access
+  // Check account is approved before allowing any portal page access.
+  // FAIL CLOSED: if the profile can't be verified (network blip / function
+  // error), do NOT let the user through — send them to the dashboard, which
+  // does its own inline check and degrades gracefully.
+  // NOTE: /portal/dashboard must never call requireAuth() itself or inactive
+  // users would loop; its inline guard is a deliberate invariant.
   const profile = await fetchProfileViaFunction(session.access_token);
-  if (profile && !profile.is_active) {
-    // Redirect to dashboard which shows the pending-approval screen
+  if (!profile || !profile.is_active) {
     window.location.href = '/portal/dashboard';
     return null;
   }
@@ -104,7 +108,9 @@ async function getCurrentUser() {
 }
 
 async function signOut() {
-  await getSupabase().auth.signOut();
+  // Always redirect, even if the signOut call rejects (e.g. offline) —
+  // otherwise the user appears stuck logged in.
+  try { await getSupabase().auth.signOut(); } catch (e) {}
   window.location.href = '/portal';
 }
 
@@ -293,7 +299,10 @@ async function adminGetAllProjects(filters) {
     query = query.eq('priority', filters.priority);
   }
   if (filters.search) {
-    query = query.or('title.ilike.%' + filters.search + '%,description.ilike.%' + filters.search + '%');
+    // Strip PostgREST .or() grammar characters — a search containing , ( ) %
+    // broke the filter (400 → silently empty admin list) or injected clauses.
+    var q = String(filters.search).replace(/[,()%\\]/g, ' ').trim();
+    if (q) query = query.or('title.ilike.%' + q + '%,description.ilike.%' + q + '%');
   }
   query = query.order('created_at', { ascending: false });
   const { data, error } = await query;
@@ -556,7 +565,11 @@ function confirmDialog(message, onConfirm, onCancel) {
     '<button id="confirm-ok-btn" style="padding:10px 24px;border-radius:8px;border:none;background:#c9a84c;color:#0d0f1a;font-size:14px;font-weight:600;cursor:pointer;">Confirm</button>' +
     '</div></div>';
   var modal = showModal(html, { maxWidth: '420px' });
-  var dialog = document.querySelector('.modal-dialog');
+  // Grab the LAST dialog: when confirmDialog is opened from inside another
+  // modal, the old overlay is still fading out (200ms) and is earlier in the
+  // DOM, so querySelector would return it and the confirm buttons wouldn't wire.
+  var dialogs = document.querySelectorAll('.modal-dialog');
+  var dialog = dialogs[dialogs.length - 1];
   if (!dialog) return;
   dialog.querySelector('#confirm-ok-btn').addEventListener('click', function() {
     modal.close();

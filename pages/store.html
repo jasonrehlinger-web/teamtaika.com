@@ -152,19 +152,39 @@
   ];
 
   // ── Cart state ────────────────────────────────────────────
-  function loadCart(){ try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch(e){ return []; } }
+  var MAX_QTY = 99;
+  // Rebuild the cart from a trusted source of truth: keep only ids that exist
+  // in CATALOG, re-price/re-label from CATALOG (never from stored values), and
+  // clamp qty. This neutralizes tampered localStorage — price manipulation,
+  // HTML injection via a crafted id, NaN/huge quantities, and shape crashes.
+  function loadCart(){
+    var raw;
+    try { raw = JSON.parse(localStorage.getItem(CART_KEY)); } catch(e){ return []; }
+    if (!Array.isArray(raw)) return [];
+    var out = [];
+    raw.forEach(function(l){
+      if (!l || typeof l !== 'object') return;
+      var p = findProduct(l.id);
+      if (!p) return;
+      var qty = parseInt(l.qty, 10); if (isNaN(qty) || qty < 1) qty = 1; if (qty > MAX_QTY) qty = MAX_QTY;
+      out.push({ id: p.id, name: p.name, price: p.price, unit: p.unit, qty: qty });
+    });
+    return out;
+  }
   function saveCart(c){ try { localStorage.setItem(CART_KEY, JSON.stringify(c)); } catch(e){} }
-  var cart = loadCart();
 
   function findProduct(id){
     for (var i=0;i<CATALOG.length;i++){ for (var j=0;j<CATALOG[i].items.length;j++){ if (CATALOG[i].items[j].id===id) return CATALOG[i].items[j]; } }
     return null;
   }
+  var cart = loadCart();
+
   function addToCart(id, qty){
     var p = findProduct(id); if (!p) return;
-    qty = Math.max(1, parseInt(qty,10)||1);
+    qty = parseInt(qty,10); if (isNaN(qty) || qty < 1) qty = 1; if (qty > MAX_QTY) qty = MAX_QTY;
     var line = cart.filter(function(l){return l.id===id;})[0];
-    if (line) line.qty += qty; else cart.push({ id:id, name:p.name, price:p.price, unit:p.unit, qty:qty });
+    if (line) line.qty = Math.min(MAX_QTY, line.qty + qty);
+    else cart.push({ id:id, name:p.name, price:p.price, unit:p.unit, qty:qty });
     saveCart(cart); renderCart(); openCart();
   }
   function removeFromCart(id){ cart = cart.filter(function(l){return l.id!==id;}); saveCart(cart); renderCart(); }
@@ -185,7 +205,7 @@
         } else {
           html += '<div class="prod-price">$'+it.price.toFixed(2)+' <small>'+it.unit+'</small></div>';
           html += '<div class="prod-desc">'+esc(it.desc)+'</div>';
-          html += '<div class="prod-qty"><label for="q-'+it.id+'">Qty</label><input type="number" id="q-'+it.id+'" min="1" value="1"></div>';
+          html += '<div class="prod-qty"><label for="q-'+it.id+'">Qty</label><input type="number" id="q-'+it.id+'" min="1" max="99" value="1"></div>';
           html += '<button class="btn-add" data-add="'+it.id+'">Add to Cart</button>';
         }
         html += '</div>';
@@ -215,7 +235,7 @@
     cart.forEach(function(l){
       html += '<div class="cart-item"><div class="cart-item-main"><div class="cart-item-name">'+esc(l.name)+'</div>'+
         '<div class="cart-item-meta">$'+l.price.toFixed(2)+' '+esc(l.unit||'')+' × '+l.qty+'</div>'+
-        '<button class="cart-item-remove" data-remove="'+l.id+'">Remove</button></div>'+
+        '<button class="cart-item-remove" data-remove="'+esc(l.id)+'">Remove</button></div>'+
         '<div class="cart-item-price">$'+(l.price*l.qty).toFixed(2)+'</div></div>';
     });
     box.innerHTML = html;
@@ -277,8 +297,8 @@
     cart.forEach(function(l, i){
       var n = i+1;
       params.push('item_name_'+n+'='+encodeURIComponent(l.name+' ('+(l.unit||'')+')'));
-      params.push('amount_'+n+'='+l.price.toFixed(2));
-      params.push('quantity_'+n+'='+l.qty);
+      params.push('amount_'+n+'='+encodeURIComponent(l.price.toFixed(2)));
+      params.push('quantity_'+n+'='+encodeURIComponent(l.qty));
     });
     // Cart is cleared only on a successful return (see handleReturn), so a
     // cancelled or failed payment keeps the cart intact for retry.

@@ -261,6 +261,27 @@ CREATE POLICY "profiles: admins update all"
   USING (is_admin())
   WITH CHECK (is_admin());
 
+-- IMPORTANT: RLS above restricts WHICH ROWS a client may update, but not WHICH
+-- COLUMNS — without this trigger a client could set their own role to
+-- 'super_admin'. This trigger reverts privileged columns for non-admin, non-
+-- service-role callers. (Also in supabase-security-fixes.sql for existing DBs.)
+CREATE OR REPLACE FUNCTION guard_profile_privileged_columns()
+RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NOT (is_admin() OR auth.role() = 'service_role') THEN
+    NEW.role        := OLD.role;
+    NEW.is_active   := OLD.is_active;
+    NEW.blacklisted := OLD.blacklisted;
+    NEW.email       := OLD.email;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+DROP TRIGGER IF EXISTS trg_guard_profile_privileged_columns ON profiles;
+CREATE TRIGGER trg_guard_profile_privileged_columns
+  BEFORE UPDATE ON profiles
+  FOR EACH ROW EXECUTE FUNCTION guard_profile_privileged_columns();
+
 
 -- ---------------------------------------------------------------------------
 -- RLS POLICIES: projects

@@ -159,7 +159,11 @@ async function createProject(data) {
 async function uploadFile(projectId, file, fileType) {
   const timestamp = Date.now();
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const path = 'project-files/' + projectId + '/' + fileType + '/' + timestamp + '_' + safeName;
+  // Object key WITHIN the 'project-files' bucket. First path segment MUST be the
+  // projectId — the storage RLS policies grant access based on ownership of that
+  // project (see supabase-schema.sql). Do NOT prefix with the bucket name here;
+  // .from('project-files') already scopes the bucket.
+  const path = projectId + '/' + fileType + '/' + timestamp + '_' + safeName;
   const { error: uploadError } = await getSupabase()
     .storage
     .from('project-files')

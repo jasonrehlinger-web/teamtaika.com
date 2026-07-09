@@ -433,62 +433,90 @@ ON CONFLICT DO NOTHING;
 
 -- ---------------------------------------------------------------------------
 -- STORAGE RLS POLICIES: storage.objects (project-files bucket)
--- File path convention: <user_uuid>/<project_uuid>/<filename>
--- The first path segment is always the owning user's UUID.
+-- File path convention: <project_uuid>/<type>/<filename>
+--   type is 'source' (client uploads) or 'delivery' (admin uploads).
+-- Access is granted by PROJECT OWNERSHIP, not by uploader identity: a user may
+-- touch an object when they are an admin, OR the first path segment names a
+-- project they own (projects.client_id = auth.uid()). This lets a client and
+-- the admins share one project's files regardless of who uploaded each one.
+-- p.id::text = (...)[1] compares as text so a non-UUID first segment can never
+-- raise a cast error inside the policy (it simply matches no row).
+-- NOTE: supabase-security-fixes.sql carries the DROP+CREATE migration to move a
+-- live database from the old uid-keyed policies to these.
 -- ---------------------------------------------------------------------------
 
--- Authenticated users can upload to paths under their own user-id folder
-CREATE POLICY "storage: authenticated upload to own folder"
+-- Upload: admins anywhere; clients only under a project they own.
+CREATE POLICY "storage: upload to owned project or admin"
   ON storage.objects FOR INSERT
   TO authenticated
   WITH CHECK (
     bucket_id = 'project-files'
     AND (
-      (storage.foldername(name))[1] = auth.uid()::text
-      OR is_admin()
+      is_admin()
+      OR EXISTS (
+        SELECT 1 FROM projects p
+        WHERE p.id::text = (storage.foldername(name))[1]
+          AND p.client_id = auth.uid()
+      )
     )
   );
 
--- Clients can download files from their own user-id folder; admins download anything
-CREATE POLICY "storage: clients download own; admins download all"
+-- Download/list: admins anything; clients files on projects they own.
+CREATE POLICY "storage: read owned project or admin"
   ON storage.objects FOR SELECT
   TO authenticated
   USING (
     bucket_id = 'project-files'
     AND (
-      (storage.foldername(name))[1] = auth.uid()::text
-      OR is_admin()
+      is_admin()
+      OR EXISTS (
+        SELECT 1 FROM projects p
+        WHERE p.id::text = (storage.foldername(name))[1]
+          AND p.client_id = auth.uid()
+      )
     )
   );
 
--- Clients can delete from their own folder; admins can delete any file
-CREATE POLICY "storage: clients delete own; admins delete all"
+-- Delete: admins anything; clients files on projects they own.
+CREATE POLICY "storage: delete owned project or admin"
   ON storage.objects FOR DELETE
   TO authenticated
   USING (
     bucket_id = 'project-files'
     AND (
-      (storage.foldername(name))[1] = auth.uid()::text
-      OR is_admin()
+      is_admin()
+      OR EXISTS (
+        SELECT 1 FROM projects p
+        WHERE p.id::text = (storage.foldername(name))[1]
+          AND p.client_id = auth.uid()
+      )
     )
   );
 
--- Admins can update (rename/move) any object; clients update only their own folder
-CREATE POLICY "storage: clients update own; admins update all"
+-- Update (rename/move): admins anything; clients files on projects they own.
+CREATE POLICY "storage: update owned project or admin"
   ON storage.objects FOR UPDATE
   TO authenticated
   USING (
     bucket_id = 'project-files'
     AND (
-      (storage.foldername(name))[1] = auth.uid()::text
-      OR is_admin()
+      is_admin()
+      OR EXISTS (
+        SELECT 1 FROM projects p
+        WHERE p.id::text = (storage.foldername(name))[1]
+          AND p.client_id = auth.uid()
+      )
     )
   )
   WITH CHECK (
     bucket_id = 'project-files'
     AND (
-      (storage.foldername(name))[1] = auth.uid()::text
-      OR is_admin()
+      is_admin()
+      OR EXISTS (
+        SELECT 1 FROM projects p
+        WHERE p.id::text = (storage.foldername(name))[1]
+          AND p.client_id = auth.uid()
+      )
     )
   );
 

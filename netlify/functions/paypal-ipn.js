@@ -19,7 +19,11 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const rawBody = event.body || '';
+  // Netlify may deliver the POST body base64-encoded; decode so the verify
+  // round-trip to PayPal doesn't silently INVALID every IPN.
+  const rawBody = event.isBase64Encoded
+    ? Buffer.from(event.body || '', 'base64').toString('utf8')
+    : (event.body || '');
 
   // ── Step 1: POST back to PayPal for IPN verification ──────────────────
   let verified = false;
@@ -123,6 +127,7 @@ exports.handler = async (event) => {
     lineItems.push({ name: itemName, gross: mcGross, qty: parseInt(params.quantity || '1', 10) || 1 });
   }
   const mismatch = [];
+  const unknown = [];
   for (const it of lineItems) {
     // Certified-translation orders (from /order and the language pages) bake the
     // page count into the item name (e.g. "… | 3 pages") with quantity 1, so
@@ -139,25 +144,30 @@ exports.handler = async (event) => {
       continue;
     }
     const exp = expectedUnit(it.name);
-    if (exp == null) continue;
+    // Unrecognized item — we can't price-verify it, so it must NOT auto-confirm
+    // (a crafted PayPal button paying $0.01 for "Custom Deluxe" would otherwise
+    // get an official "Payment Confirmed" email). Route to manual review.
+    if (exp == null) { unknown.push(it.name); continue; }
     const unitPaid = it.qty > 0 ? it.gross / it.qty : it.gross;
     if (unitPaid < exp - 0.01) mismatch.push(`${it.name} — paid $${unitPaid.toFixed(2)}/unit, expected >= $${exp.toFixed(2)}`);
   }
-  if (mismatch.length) {
-    console.warn('[paypal-ipn] PRICE MISMATCH — txn', txnId, '|', mismatch.join(' ; '));
+  if (mismatch.length || unknown.length) {
+    console.warn('[paypal-ipn] NEEDS REVIEW — txn', txnId, '| underpaid:', mismatch.join(' ; '), '| unknown:', unknown.join(', '));
     if (RESEND_API_KEY) {
       const clean = (s) => String(s).replace(/[<>"]/g, '').substring(0, 200);
       const safeTxnA = txnId.replace(/[^A-Za-z0-9_-]/g, '').substring(0, 100);
+      const reasons = mismatch.map(m => `<li>Underpaid: ${clean(m)}</li>`)
+        .concat(unknown.map(u => `<li>Unrecognized item (can't price-verify): ${clean(u)}</li>`)).join('');
       try {
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             from: FROM_ADDRESS, to: [ADMIN_EMAIL], reply_to: REPLY_TO,
-            subject: `⚠ PRICE MISMATCH — manual review (txn ${safeTxnA})`,
-            html: `<p><strong>A PayPal payment was received below the expected price. Do NOT fulfill until reviewed.</strong></p>`
+            subject: `⚠ PAYMENT NEEDS REVIEW (txn ${safeTxnA})`,
+            html: `<p><strong>A PayPal payment could not be automatically price-verified. Do NOT fulfill until reviewed.</strong></p>`
               + `<p>Payer: ${clean(payerEmail)}<br>Amount paid: $${mcGross.toFixed(2)}<br>Transaction: ${safeTxnA}</p>`
-              + `<p>Discrepancies:</p><ul>${mismatch.map(m => `<li>${clean(m)}</li>`).join('')}</ul>`
+              + `<p>Reasons:</p><ul>${reasons}</ul>`
           })
         });
       } catch (err) { console.error('[paypal-ipn] admin alert failed:', err); }

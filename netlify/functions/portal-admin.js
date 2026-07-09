@@ -270,7 +270,8 @@ async function handleUpdateProjectStatus(body, adminProfile) {
   // Append status history
   const histRes = await sbPost('/rest/v1/project_status_history', {
     project_id:  projectId,
-    changed_by:  changedBy || adminProfile.id,
+    // Attribution is always the verified caller — never a client-supplied id
+    changed_by:  adminProfile.id,
     from_status: fromStatus,
     to_status:   newStatus,
     note:        note || null,
@@ -427,7 +428,12 @@ async function handleInviteTeamMember(body, adminProfile) {
   // Upsert profile row — creates or updates regardless of whether trigger has fired
   await sbUpsert('/rest/v1/profiles', {
     id: newUserId, email, full_name, role: safeRole,
-    is_active: false,
+    // Invited admins are approved by definition (a super_admin invited them),
+    // so activate immediately — otherwise verifyAdmin's is_active===false gate
+    // would lock every new admin out. removeTeamMember still sets is_active
+    // false to revoke access. "Invited vs joined" is tracked by
+    // email_confirmed_at, not is_active.
+    is_active: true,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString()
   });
@@ -713,12 +719,15 @@ async function handleDeleteClient(body, _adminProfile) {
   });
   if (!delRes.ok) throw new Error('Failed to delete client profile');
 
-  // Delete auth user via service role
-  if (clientId) {
-    await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${clientId}`, {
-      method: 'DELETE',
-      headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}` }
-    });
+  // Delete auth user via service role. If this fails, the profile is gone but
+  // the auth account survives and can still authenticate against send-email /
+  // notify / translate — surface the failure so it's retried, don't swallow it.
+  const authDel = await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${clientId}`, {
+    method: 'DELETE',
+    headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${SERVICE_KEY}` }
+  });
+  if (!authDel.ok && authDel.status !== 404) {
+    throw new Error('Profile deleted but auth-user removal failed — please retry the delete');
   }
 
   // Optionally blacklist the email

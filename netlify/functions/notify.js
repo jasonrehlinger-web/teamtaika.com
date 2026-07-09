@@ -81,9 +81,11 @@ exports.handler = async (event) => {
     return { statusCode: 429, headers, body: JSON.stringify({ error: 'Too many requests' }) };
   }
 
-  // Auth check — must be a logged-in portal user
+  // Auth check — must be a logged-in portal user. Capture the verified caller
+  // so signup notifications use the token identity, not spoofable body fields.
+  let caller = null;
   try {
-    await verifyAuth(event.headers['authorization'] || event.headers['Authorization']);
+    caller = await verifyAuth(event.headers['authorization'] || event.headers['Authorization']);
   } catch (err) {
     return { statusCode: 401, headers, body: JSON.stringify({ error: err.message || 'Unauthorized' }) };
   }
@@ -109,7 +111,9 @@ exports.handler = async (event) => {
 
   if (type === 'new_signup') {
     const name  = esc(data.full_name || 'Unknown');
-    const email = esc(data.email     || 'unknown');
+    // Email is taken from the verified token, not the request body, so a client
+    // can't forge a signup alert for an arbitrary address.
+    const email = esc((caller && caller.email) || data.email || 'unknown');
     const org   = data.organization  ? ` (${esc(data.organization)})` : '';
     subject = `New client signed up: ${name}`;
     html = `

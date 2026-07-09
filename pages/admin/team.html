@@ -547,7 +547,10 @@
     tbody.innerHTML = members.map(m => {
       const roleClass  = m.role === 'super_admin' ? 'role-super_admin' : 'role-admin';
       const roleLabel  = m.role === 'super_admin' ? 'Super Admin' : 'Admin';
-      const isInvited  = !m.is_active;
+      // "Invited" = hasn't confirmed/logged in yet. is_active is now true on
+      // invite (so verifyAdmin lets them in once confirmed); confirmation state
+      // is the real invited-vs-joined signal.
+      const isInvited  = !m.email_confirmed_at;
       const statusCls  = isInvited ? 'status-invited' : 'status-active';
       const statusLbl  = isInvited ? 'Invited' : 'Active';
       const isSelf     = m.id === currentUser.id;

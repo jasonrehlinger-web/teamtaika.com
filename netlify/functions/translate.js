@@ -62,9 +62,13 @@ exports.handler = async function(event, context) {
 
   let body;
   try {
-    body = JSON.parse(event.body);
+    body = JSON.parse(event.body || '{}');
   } catch (e) {
     return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid JSON' }) };
+  }
+  // JSON.parse('null'/'123') doesn't throw — guard so destructuring can't crash (was an unhandled 502)
+  if (!body || typeof body !== 'object') {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Invalid request body' }) };
   }
 
   const { text, target } = body;

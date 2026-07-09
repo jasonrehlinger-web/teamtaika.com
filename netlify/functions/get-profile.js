@@ -4,12 +4,13 @@
  * Caller must pass their Supabase access token as Authorization: Bearer <token>
  */
 exports.handler = async (event) => {
+ try {
   const SUPABASE_URL = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
   const SERVICE_KEY  = process.env.SUPABASE_SERVICE_KEY;
   if (!SERVICE_KEY) return { statusCode: 500, body: 'Server misconfigured' };
 
   // Extract user JWT
-  const jwt = (event.headers['authorization'] || '').replace(/^Bearer\s+/i, '').trim();
+  const jwt = ((event.headers && event.headers['authorization']) || '').replace(/^Bearer\s+/i, '').trim();
   if (!jwt) return { statusCode: 401, body: 'No token' };
 
   // Verify JWT and get user ID
@@ -37,7 +38,8 @@ exports.handler = async (event) => {
     return { statusCode: 404, body: JSON.stringify({ error: 'no_profile' }) };
   }
   if (!profileRes.ok) {
-    return { statusCode: 500, body: 'Profile fetch failed: ' + await profileRes.text() };
+    console.error('[get-profile] profile fetch failed:', profileRes.status, await profileRes.text());
+    return { statusCode: 500, body: 'Profile fetch failed' };
   }
 
   const profile = await profileRes.json();
@@ -46,4 +48,8 @@ exports.handler = async (event) => {
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
     body: JSON.stringify(profile)
   };
+ } catch (err) {
+  console.error('[get-profile] error:', err);
+  return { statusCode: 500, body: 'Internal error' };
+ }
 };

@@ -18,7 +18,7 @@
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
 const SERVICE_KEY  = process.env.SUPABASE_SERVICE_KEY;
 const ADMIN_EMAIL  = 'ceo@taikatranslations.com';
-const FROM_ADDRESS = 'notifications@taikatranslations.com';
+const FROM_ADDRESS = 'noreply@taikatranslations.com';
 const RESEND_API   = 'https://api.resend.com/emails';
 
 const headers = {

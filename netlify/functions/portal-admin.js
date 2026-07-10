@@ -460,7 +460,7 @@ async function handleInviteTeamMember(body, adminProfile) {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from:    'Taika Translations <no-reply@taikatranslations.com>',
+        from:    'Taika Translations <noreply@taikatranslations.com>',
         to:      [email],
         subject: "You've been invited to Taika Admin",
         html:    emailHtml
@@ -657,7 +657,7 @@ async function handleInviteClient(body, _adminProfile) {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from:    'Taika Translations <no-reply@taikatranslations.com>',
+        from:    'Taika Translations <noreply@taikatranslations.com>',
         to:      [email],
         subject: "You've been invited to the Taika Client Portal",
         html:    emailHtml

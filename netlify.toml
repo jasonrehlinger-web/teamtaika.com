@@ -443,6 +443,11 @@
   status = 200
 
 [[redirects]]
+  from = "/request-access"
+  to = "/pages/portal/request-access.html"
+  status = 200
+
+[[redirects]]
   from = "/portal/dashboard"
   to = "/pages/portal/dashboard.html"
   status = 200

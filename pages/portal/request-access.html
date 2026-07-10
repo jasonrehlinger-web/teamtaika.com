@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Request Portal Access — Taika Translations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0B1E35;
+      --gold: #B8913A;
+      --white: #F9F8F5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #EEECEA;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: var(--navy);
+    }
+
+    .portal-logo { margin-bottom: 1.75rem; text-align: center; }
+    .portal-logo a {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      text-decoration: none; color: var(--navy);
+    }
+    .logo-mark { width: 40px; height: 40px; }
+    .logo-text {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem; letter-spacing: -0.01em;
+    }
+
+    .auth-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(11,30,53,0.10), 0 1px 4px rgba(11,30,53,0.07);
+      width: 100%; max-width: 440px;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    .panel-heading {
+      font-family: 'DM Serif Display', serif; font-size: 1.5rem;
+      color: var(--navy); margin-bottom: 0.375rem;
+    }
+    .panel-sub { font-size: 0.875rem; color: #6B7280; margin-bottom: 1.75rem; }
+
+    .form-group { margin-bottom: 1.125rem; }
+    .form-group label {
+      display: block; font-size: 0.8125rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 0.375rem; letter-spacing: 0.01em;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: 0.65rem 0.875rem;
+      border: 1.5px solid #D1CDC8; border-radius: 7px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9375rem;
+      color: var(--navy); background: #FAFAF9;
+      transition: border-color 0.15s, box-shadow 0.15s; outline: none;
+      resize: vertical;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #A8A49F; }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(11,30,53,0.08);
+      background: var(--white);
+    }
+    .form-group textarea { min-height: 90px; }
+
+    /* Honeypot — visually hidden, traps bots */
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      display: block; width: 100%; padding: 0.75rem 1rem;
+      background: var(--gold); color: var(--white); border: none; border-radius: 7px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9375rem; font-weight: 600;
+      cursor: pointer; transition: background 0.18s, transform 0.1s; letter-spacing: 0.01em;
+    }
+    .btn-primary:hover { background: #A07C30; }
+    .btn-primary:active { transform: scale(0.99); }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .error-msg {
+      display: none; margin-top: 0.875rem; padding: 0.65rem 0.875rem;
+      border-radius: 7px; background: #FEF2F2; border: 1px solid #FECACA;
+      color: #991B1B; font-size: 0.875rem; line-height: 1.4;
+    }
+    .error-msg.visible { display: block; }
+
+    .success-state { display: none; text-align: center; padding: 1rem 0; }
+    .success-state.visible { display: block; }
+    .success-icon {
+      width: 52px; height: 52px; margin: 0 auto 1rem;
+      background: #F0FDF4; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .success-icon svg { display: block; }
+    .success-state h2 {
+      font-family: 'DM Serif Display', serif; font-size: 1.375rem;
+      color: var(--navy); margin-bottom: 0.5rem;
+    }
+    .success-state p { font-size: 0.9rem; color: #6B7280; line-height: 1.6; }
+
+    .back-link {
+      display: block; margin-top: 1.5rem; text-align: center;
+      font-size: 0.875rem; color: #6B7280; text-decoration: none;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--navy); }
+
+    .portal-footer { margin-top: 1.5rem; text-align: center; }
+    .portal-footer a {
+      font-size: 0.8125rem; color: #6B7280; text-decoration: none; transition: color 0.15s;
+    }
+    .portal-footer a:hover { color: var(--navy); }
+
+    @media (max-width: 480px) {
+      .auth-card { border-radius: 10px; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="portal-logo">
+    <a href="https://teamtaika.com">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="40" height="40" rx="8" fill="#0B1E35"/>
+        <path d="M8 12h24M20 12v16" stroke="#B8913A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M13 28h14" stroke="#B8913A" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <span class="logo-text">Taika</span>
+    </a>
+  </div>
+
+  <div class="auth-card" role="main">
+
+    <!-- Request form -->
+    <div id="form-state">
+      <h1 class="panel-heading">Request portal access</h1>
+      <p class="panel-sub">The Taika portal is invite-only. Tell us a bit about yourself and we'll be in touch if it's a fit.</p>
+
+      <form id="access-form" novalidate onsubmit="handleSubmit(event)">
+
+        <!-- Honeypot fields — hidden from real users, filled by bots -->
+        <div class="hp-field" aria-hidden="true">
+          <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          <label>Phone <input type="text" name="phone_number" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div class="form-group">
+          <label for="req-name">Full name <span style="color:#EF4444">*</span></label>
+          <input type="text" id="req-name" name="name" required
+                 autocomplete="name" placeholder="Jane Smith">
+        </div>
+
+        <div class="form-group">
+          <label for="req-email">Email address <span style="color:#EF4444">*</span></label>
+          <input type="email" id="req-email" name="email" required
+                 autocomplete="email" placeholder="you@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="req-org">
+            Organization
+            <span style="font-weight:400;color:#9CA3AF">(optional)</span>
+          </label>
+          <input type="text" id="req-org" name="organization"
+                 autocomplete="organization" placeholder="Company or agency">
+        </div>
+
+        <div class="form-group">
+          <label for="req-reason">Why do you need access? <span style="color:#EF4444">*</span></label>
+          <textarea id="req-reason" name="reason" required
+                    placeholder="Briefly describe your project or translation needs…"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submit-btn">Submit Request</button>
+        <div class="error-msg" id="form-error" role="alert" aria-live="polite"></div>
+      </form>
+
+      <a href="/portal" class="back-link">&larr; Back to sign in</a>
+    </div>
+
+    <!-- Success state (shown after submission) -->
+    <div class="success-state" id="success-state" role="status" aria-live="polite">
+      <div class="success-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#166534" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>Request submitted</h2>
+      <p>Thanks — your request has been received. Jason will review it and reach out directly if it's a good fit.</p>
+      <a href="https://teamtaika.com" class="back-link" style="margin-top:1.25rem;">&larr; Back to teamtaika.com</a>
+    </div>
+
+  </div><!-- /.auth-card -->
+
+  <footer class="portal-footer">
+    <a href="https://teamtaika.com">&larr; Back to teamtaika.com</a>
+  </footer>
+
+  <script>
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const errorEl = document.getElementById('form-error');
+      errorEl.classList.remove('visible');
+      errorEl.textContent = '';
+
+      const btn = document.getElementById('submit-btn');
+
+      // Collect values
+      const name     = document.getElementById('req-name').value.trim();
+      const email    = document.getElementById('req-email').value.trim();
+      const org      = document.getElementById('req-org').value.trim();
+      const reason   = document.getElementById('req-reason').value.trim();
+
+      // Honeypot values
+      const hp1 = document.querySelector('input[name="website"]').value;
+      const hp2 = document.querySelector('input[name="phone_number"]').value;
+
+      // Basic validation
+      if (!name) { showError('Please enter your full name.'); return; }
+      if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
+      if (!reason) { showError('Please briefly describe why you need access.'); return; }
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      try {
+        const resp = await fetch('/.netlify/functions/request-access', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            organization: org || undefined,
+            reason,
+            website: hp1,       // honeypot
+            phone_number: hp2,  // honeypot
+          }),
+        });
+
+        const data = await resp.json().catch(() => ({}));
+
+        if (resp.status === 429) {
+          showError(data.error || "You've already submitted a request. We'll be in touch soon.");
+          return;
+        }
+        if (!resp.ok) {
+          showError(data.error || 'Something went wrong. Please try again.');
+          return;
+        }
+
+        // Success
+        document.getElementById('form-state').style.display = 'none';
+        document.getElementById('success-state').classList.add('visible');
+
+      } catch (err) {
+        showError('Network error — please check your connection and try again.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Submit Request';
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('form-error');
+      el.textContent = msg;
+      el.classList.add('visible');
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('submit-btn').textContent = 'Submit Request';
+    }
+  </script>
+</body>
+</html>

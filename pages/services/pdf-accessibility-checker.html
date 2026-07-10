@@ -566,7 +566,7 @@
     <div class="dz-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
     <div class="dz-t">Drop your PDF here</div>
     <div class="dz-h">or <strong>browse</strong> to select &middot; .pdf up to 50 MB</div>
-    <input type="file" id="tka-fi" accept=".pdf,application/pdf">
+    <input type="file" id="tka-fi" accept=".pdf,application/pdf" aria-label="Upload a PDF to check for accessibility">
   </div>
   <div class="fp" id="tka-fp">
     <div class="fp-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
@@ -605,12 +605,12 @@
     <div class="tka-gate-sub">See every issue, WCAG reference, and step-by-step remediation guide. No cost, no commitment.</div>
     <div class="tka-gate-form">
       <div class="tka-gate-row">
-        <input type="text"  id="tka-gFname"   placeholder="First name *" required>
-        <input type="text"  id="tka-gLname"   placeholder="Last name">
+        <input type="text"  id="tka-gFname"   placeholder="First name *" aria-label="First name" required>
+        <input type="text"  id="tka-gLname"   placeholder="Last name" aria-label="Last name">
       </div>
-      <input type="email"  id="tka-gEmail"   placeholder="Work email *" required>
-      <input type="tel"    id="tka-gPhone"   placeholder="Phone number *" required>
-      <input type="text"   id="tka-gCompany" placeholder="Company (optional)">
+      <input type="email"  id="tka-gEmail"   placeholder="Work email *" aria-label="Work email" required>
+      <input type="tel"    id="tka-gPhone"   placeholder="Phone number *" aria-label="Phone number" required>
+      <input type="text"   id="tka-gCompany" placeholder="Company (optional)" aria-label="Company">
       <button class="tka-gate-btn" id="tka-gBtn" onclick="tkaUnlockReport()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
         View Full Report

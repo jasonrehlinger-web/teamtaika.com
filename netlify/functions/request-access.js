@@ -13,9 +13,10 @@
 const SUPABASE_URL   = 'https://ijwgdzrunkxrpzsrcqir.supabase.co';
 const RESEND_API_URL = 'https://api.resend.com/emails';
 const NOTIFY_EMAIL   = 'ceo@taikatranslations.com';
-// Must be a Resend-verified sending domain. All other functions send from
-// @taikatranslations.com (teamtaika.com is NOT a verified sender).
-const FROM_EMAIL     = 'Taika Portal <notifications@taikatranslations.com>';
+// Must be a Resend-verified sender. teamtaika.com is NOT verified; use the
+// same noreply@taikatranslations.com address the live send-email.js and
+// paypal-ipn.js functions already send from.
+const FROM_EMAIL     = 'Taika Portal <noreply@taikatranslations.com>';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': 'https://teamtaika.com',

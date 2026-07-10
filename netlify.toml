@@ -284,6 +284,26 @@
   status = 200
 
 [[redirects]]
+  from = "/lp/508-audit"
+  to = "/pages/lp/508-audit.html"
+  status = 200
+
+[[redirects]]
+  from = "/lp/508-healthcare"
+  to = "/pages/lp/508-healthcare.html"
+  status = 200
+
+[[redirects]]
+  from = "/lp/508-gsa"
+  to = "/pages/lp/508-gsa.html"
+  status = 200
+
+[[redirects]]
+  from = "/lp/thank-you"
+  to = "/pages/lp/thank-you.html"
+  status = 200
+
+[[redirects]]
   from = "/refund-policy"
   to = "/pages/terms.html#refunds"
   status = 301

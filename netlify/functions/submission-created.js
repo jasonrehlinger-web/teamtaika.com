@@ -12,6 +12,7 @@
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const PROJECTS_EMAIL = 'projects@taikatranslations.com';
+const SALES_EMAIL    = 'sales@taikatranslations.com';
 const FROM_ADDRESS   = 'Taika Translations <noreply@taikatranslations.com>';
 
 // Forms whose submissions should always be forwarded to the project team.
@@ -66,8 +67,12 @@ exports.handler = async (event) => {
     || formName.indexOf('lang-order') === 0
     || formName.indexOf('store-order') === 0;
 
-  // Only notify the project team for orders/quotes or anything with a file.
-  if (!isOrder && fileLinks.length === 0) return { statusCode: 200, body: 'skipped' };
+  // Landing-page lead forms (free-scan CTA): lp-508-audit / -healthcare / -gsa.
+  // These carry no file and aren't orders, so they'd otherwise be skipped.
+  const isLead = formName.indexOf('lp-') === 0;
+
+  // Only notify the team for orders/quotes, landing-page leads, or anything with a file.
+  if (!isOrder && !isLead && fileLinks.length === 0) return { statusCode: 200, body: 'skipped' };
   if (!RESEND_API_KEY) { console.warn('[submission-created] RESEND_API_KEY not set'); return { statusCode: 200, body: 'no-resend' }; }
 
   const fileFields = fileLinks.map(f => f.field);
@@ -83,12 +88,12 @@ exports.handler = async (event) => {
     ? `<p style="font-weight:700;margin:16px 0 4px;">Uploaded files:</p><ul>${fileLinks.map(f => `<li><a href="${esc(f.url)}">${esc(f.field)}</a></li>`).join('')}</ul>`
     : '<p style="color:#b45309;margin:16px 0 4px;"><em>No file uploaded with this submission.</em></p>';
 
-  const who = oneLine(data['full-name'] || data.name || data.email || 'customer', 80);
+  const who = oneLine(data['full-name'] || data.name || [data.first_name, data.last_name].filter(Boolean).join(' ') || data.email || 'customer', 80);
 
   const payload = {
     from:    FROM_ADDRESS,
-    to:      [PROJECTS_EMAIL],
-    subject: oneLine(`New order/upload (${formName}): ${who}`, 150),
+    to:      isLead ? [PROJECTS_EMAIL, SALES_EMAIL] : [PROJECTS_EMAIL],
+    subject: oneLine(`New ${isLead ? 'lead' : 'order/upload'} (${formName}): ${who}`, 150),
     html:
       `<h2 style="font-family:Arial,sans-serif;color:#0f2044;">New submission — ${esc(formName)}</h2>` +
       filesHtml +

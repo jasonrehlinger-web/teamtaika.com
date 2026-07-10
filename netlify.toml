@@ -274,6 +274,16 @@
   status = 200
 
 [[redirects]]
+  from = "/privacy"
+  to = "/pages/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/accessibility"
+  to = "/pages/accessibility.html"
+  status = 200
+
+[[redirects]]
   from = "/refund-policy"
   to = "/pages/terms.html#refunds"
   status = 301

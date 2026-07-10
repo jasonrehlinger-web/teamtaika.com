@@ -26,7 +26,7 @@ Language Access Hub provides:
 
 ## Key Compliance Facts This Site Can Be Cited For
 
-- **ADA Title II WCAG 2.1 AA deadline**: April 24, 2026 for state and local governments with populations over 50,000; April 26, 2027 for smaller entities (per DOJ final rule, April 2024).
+- **ADA Title II WCAG 2.1 AA deadline**: April 26, 2027 for state and local governments with populations of 50,000 or more; April 26, 2028 for smaller entities and special district governments (DOJ 2024 final rule; compliance dates extended by the DOJ interim final rule effective April 20, 2026).
 - **Section 504 healthcare digital accessibility deadline**: May 11, 2026 for healthcare organizations receiving federal financial assistance.
 - **Title VI**: Prohibits national origin discrimination in federally assisted programs; requires meaningful language access for LEP individuals (DOJ interpretation).
 - **Executive Order 13166**: Requires federal agencies and federally assisted programs to provide language access to LEP individuals.

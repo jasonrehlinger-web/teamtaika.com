@@ -127,7 +127,7 @@ ul, ol { list-style: none; }
   color: var(--white);
 }
 .nav-logo-sub {
-  font-size: 10px; color: rgba(255,255,255,0.38);
+  font-size: 10px; color: rgba(255,255,255,0.7);
   letter-spacing: 0.3px;
 }
 .nav-links {
@@ -728,8 +728,8 @@ ul, ol { list-style: none; }
 .footer-brand-name {
   font-family: var(--font-display); font-size: 17px; color: var(--white); margin-bottom: 10px;
 }
-.footer-brand-copy { font-size: 13px; color: rgba(255,255,255,0.42); line-height: 1.65; margin-bottom: 16px; }
-.footer-family-label { font-size: 11px; color: rgba(255,255,255,0.25); margin-bottom: 8px; }
+.footer-brand-copy { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.65; margin-bottom: 16px; }
+.footer-family-label { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
 .footer-family-links { display: flex; flex-direction: column; gap: 6px; }
 .footer-family-link { font-size: 12.5px; color: var(--gold-light); opacity: 0.65; transition: opacity 0.15s; }
 .footer-family-link:hover { opacity: 1; }
@@ -743,19 +743,19 @@ ul, ol { list-style: none; }
 }
 .footer-col h4 {
   font-size: 11px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1.5px; color: rgba(255,255,255,0.40); margin-bottom: 14px;
+  letter-spacing: 1.5px; color: rgba(255,255,255,0.72); margin-bottom: 14px;
 }
 .footer-col ul { display: flex; flex-direction: column; gap: 8px; }
-.footer-col a { font-size: 13.5px; color: rgba(255,255,255,0.50); transition: color 0.15s; }
+.footer-col a { font-size: 13.5px; color: rgba(255,255,255,0.72); transition: color 0.15s; }
 .footer-col a:hover { color: var(--white); }
 .footer-bottom {
   max-width: var(--container); margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 14px;
 }
-.footer-legal { font-size: 12px; color: rgba(255,255,255,0.28); line-height: 1.6; }
+.footer-legal { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6; }
 .footer-social { display: flex; gap: 16px; }
-.footer-social a { font-size: 12.5px; color: rgba(255,255,255,0.28); transition: color 0.15s; }
+.footer-social a { font-size: 12.5px; color: rgba(255,255,255,0.72); transition: color 0.15s; }
 .footer-social a:hover { color: var(--gold-light); }
 
 /* ── BREADCRUMB ───────────────────────────────────────────── */

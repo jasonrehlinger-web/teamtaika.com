@@ -16,6 +16,7 @@
   --gold-light:     #D4A94E;
   --gold-pale:      #F0DCA8;
   --gold-bg:        rgba(184,145,58,0.08);
+  --gold-text:      #7A5C0F;   /* WCAG-AA gold for TEXT on light backgrounds (~6:1). Use --gold only on dark/navy or for borders/backgrounds. */
   --white:          #F9F8F5;
   --pure-white:     #FFFFFF;
   --slate:          #4A5E74;
@@ -344,10 +345,10 @@ ul, ol { list-style: none; }
   border: 1.5px solid var(--border-strong);
   transition: all 0.15s; cursor: pointer;
 }
-.btn-ghost-navy:hover { border-color: var(--gold); color: var(--gold); }
+.btn-ghost-navy:hover { border-color: var(--gold); color: var(--gold-text); }
 .btn-inline {
   display: inline-flex; align-items: center; gap: 5px;
-  font-size: 13.5px; font-weight: 600; color: var(--gold);
+  font-size: 13.5px; font-weight: 600; color: var(--gold-text);
   transition: gap 0.15s;
 }
 .btn-inline:hover { gap: 9px; }
@@ -369,7 +370,7 @@ ul, ol { list-style: none; }
 .kicker {
   font-family: var(--font-mono);
   font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 12px; display: block;
+  color: var(--gold-text); margin-bottom: 12px; display: block;
 }
 .kicker-light { color: var(--gold-light); }
 .section-heading {
@@ -435,7 +436,7 @@ ul, ol { list-style: none; }
   padding: 24px 28px;
   margin: 28px 0;
 }
-.callout-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+.callout-title { font-size: 14px; font-weight: 700; color: var(--gold-text); margin-bottom: 8px; }
 .callout p { font-size: 14px; color: var(--navy); line-height: 1.65; }
 .callout-navy {
   background: rgba(11,30,53,0.04);
@@ -581,7 +582,7 @@ ul, ol { list-style: none; }
   border: 1px solid; white-space: nowrap;
 }
 .tag-emerald { background: var(--emerald-bg); border-color: rgba(26,107,74,0.25); color: var(--emerald); }
-.tag-gold    { background: var(--gold-bg);    border-color: var(--border-gold);    color: var(--gold); }
+.tag-gold    { background: var(--gold-bg);    border-color: var(--border-gold);    color: var(--gold-text); }
 .tag-navy    { background: rgba(11,30,53,0.07); border-color: var(--border-strong); color: var(--slate); }
 .tag-sky     { background: var(--sky-bg);     border-color: rgba(29,111,164,0.25); color: var(--sky); }
 .tag-white   { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.65); }

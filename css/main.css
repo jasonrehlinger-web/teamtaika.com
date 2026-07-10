@@ -307,9 +307,9 @@ ul, ol { list-style: none; }
   display: inline-flex; align-items: center; gap: 5px;
   font-family: var(--font-mono);
   font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-  background: rgba(26,107,74,0.15);
-  border: 1px solid rgba(26,107,74,0.3);
-  color: #6EE7B7;
+  background: #1A6B4A;
+  border: 1px solid #1A6B4A;
+  color: #F0FDF4;
   padding: 4px 10px; border-radius: 4px;
 }
 .comp-badge::before { content: '✓'; font-weight: 700; }

@@ -62,8 +62,12 @@
 .cart-field{margin-bottom:10px;}
 .cart-field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;color:var(--navy);margin-bottom:4px;}
 .cart-field input,.cart-field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:14px;font-family:inherit;box-sizing:border-box;}
-.btn-checkout{width:100%;padding:14px;background:var(--gold);color:var(--navy-deep);border:none;border-radius:9px;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit;}
+.btn-checkout{width:100%;padding:14px;border:none;border-radius:9px;font-weight:800;font-size:15px;cursor:pointer;font-family:inherit;}
 .btn-checkout:disabled{opacity:.5;cursor:not-allowed;}
+.btn-checkout-card{background:var(--gold);color:var(--navy-deep);}
+.btn-checkout-paypal{background:#fff;color:var(--navy-deep);border:1.5px solid var(--navy-deep);}
+.btn-or{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--slate-light);font-size:12px;}
+.btn-or::before,.btn-or::after{content:"";flex:1;height:1px;background:#e2e8f0;}
 .cart-secure{font-size:11.5px;color:var(--slate);text-align:center;margin-top:10px;}
 @media(max-width:640px){.store-grid{grid-template-columns:1fr;}}
 </style>
@@ -104,8 +108,10 @@
     <div class="cart-field"><label for="ck-email">Email *</label><input type="email" id="ck-email" placeholder="you@email.com"></div>
     <div class="cart-field"><label for="ck-file">Upload document(s) to translate</label><input type="file" id="ck-file" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.tiff,.tif,.txt,.rtf"></div>
     <div class="cart-field"><label for="ck-notes">Notes (optional)</label><textarea id="ck-notes" rows="2" placeholder="Languages, deadlines, or details…"></textarea></div>
-    <button class="btn-checkout" id="btn-checkout">Check Out with PayPal →</button>
-    <div class="cart-secure">🔒 Secure PayPal checkout · ATA-certified · HIPAA &amp; FERPA compliant</div>
+    <button class="btn-checkout btn-checkout-card" id="btn-checkout-stripe">💳 Pay with Card →</button>
+    <div class="btn-or"><span>or</span></div>
+    <button class="btn-checkout btn-checkout-paypal" id="btn-checkout">Check Out with PayPal →</button>
+    <div class="cart-secure">🔒 Secure checkout · Card via Stripe · ATA-certified · HIPAA &amp; FERPA compliant</div>
   </div>
 </aside>
 
@@ -250,29 +256,36 @@
   function openCart(){ document.getElementById('cart-drawer').classList.add('open'); document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').setAttribute('aria-hidden','false'); }
   function closeCart(){ document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').setAttribute('aria-hidden','true'); }
 
-  // ── Checkout ──────────────────────────────────────────────
-  async function checkout(){
-    if (!cart.length) return;
+  // ── Checkout (shared helpers) ─────────────────────────────
+  // Validate the checkout fields; returns {name,email,notes} or null.
+  function validateFields(){
+    if (!cart.length) return null;
     var name = document.getElementById('ck-name').value.trim();
     var email = document.getElementById('ck-email').value.trim();
     var notes = document.getElementById('ck-notes').value.trim();
     var ok = true;
     if (!name){ document.getElementById('ck-name').style.borderColor='#dc2626'; ok=false; }
     if (!email || !/\S+@\S+\.\S+/.test(email)){ document.getElementById('ck-email').style.borderColor='#dc2626'; ok=false; }
-    if (!ok) return;
+    if (!ok) return null;
+    return { name:name, email:email, notes:notes };
+  }
 
-    var btn = document.getElementById('btn-checkout');
-    btn.disabled = true;
+  function setButtonsDisabled(state){
+    document.getElementById('btn-checkout').disabled = state;
+    document.getElementById('btn-checkout-stripe').disabled = state;
+  }
 
-    // Submit the order + uploaded documents to Netlify Forms (multipart so files
-    // are captured); the submission-created function forwards them to
-    // projects@taikatranslations.com. Await so the upload finishes BEFORE we
-    // leave for PayPal. Best-effort — payment still proceeds if the upload fails.
+  // Submit the order + uploaded documents to Netlify Forms (multipart so files
+  // are captured); the submission-created function forwards them to
+  // projects@taikatranslations.com. Await so the upload finishes BEFORE we
+  // leave for the payment provider. Best-effort — payment still proceeds if
+  // the upload fails.
+  async function submitOrderRecord(f, btn){
     try {
       var summary = cart.map(function(l){return l.qty+'× '+l.name+' ($'+(l.price*l.qty).toFixed(2)+')';}).join('; ');
       var fd = new FormData();
       fd.append('form-name','store-cart-order');
-      fd.append('full-name',name); fd.append('email',email); fd.append('notes',notes);
+      fd.append('full-name',f.name); fd.append('email',f.email); fd.append('notes',f.notes);
       fd.append('cart',summary); fd.append('cart-total','$'+cartTotal().toFixed(2));
       var fileInput = document.getElementById('ck-file');
       var hasFiles = fileInput && fileInput.files && fileInput.files.length;
@@ -280,9 +293,17 @@
         var slots = ['document','document_2','document_3'];
         for (var fi=0; fi<fileInput.files.length && fi<slots.length; fi++){ fd.append(slots[fi], fileInput.files[fi]); }
       }
-      btn.textContent = hasFiles ? 'Uploading document…' : 'Processing…';
+      if (btn) btn.textContent = hasFiles ? 'Uploading document…' : 'Processing…';
       await fetch('/', { method:'POST', body: fd });
     } catch(e){}
+  }
+
+  // ── PayPal checkout ───────────────────────────────────────
+  async function checkout(){
+    var f = validateFields(); if (!f) return;
+    var btn = document.getElementById('btn-checkout');
+    setButtonsDisabled(true);
+    await submitOrderRecord(f, btn);
 
     btn.textContent = 'Redirecting to PayPal…';
     var origin = window.location.origin || 'https://teamtaika.com';
@@ -305,6 +326,37 @@
     window.location.href = 'https://www.paypal.com/cgi-bin/webscr?' + params.join('&');
   }
 
+  // ── Stripe (card) checkout ────────────────────────────────
+  // Sends ONLY {id, qty} per line — the server resolves authoritative prices
+  // from Stripe. If any item isn't available for card yet (HTTP 409), we tell
+  // the customer to use PayPal instead of silently dropping items.
+  async function checkoutStripe(){
+    var f = validateFields(); if (!f) return;
+    var btn = document.getElementById('btn-checkout-stripe');
+    setButtonsDisabled(true);
+    await submitOrderRecord(f, btn);
+
+    btn.textContent = 'Starting secure checkout…';
+    try {
+      var res = await fetch('/.netlify/functions/create-checkout-session', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          items: cart.map(function(l){ return { id:l.id, qty:l.qty }; }),
+          name: f.name, email: f.email, notes: f.notes
+        })
+      });
+      var data = {};
+      try { data = await res.json(); } catch(e){}
+      if (res.ok && data.url){ window.location.href = data.url; return; }
+      alert(data.error || 'Card checkout is unavailable right now — please use the PayPal option below.');
+    } catch(e){
+      alert('Could not start card checkout. Please try again, or use the PayPal option below.');
+    }
+    setButtonsDisabled(false);
+    btn.textContent = '💳 Pay with Card →';
+  }
+
   // ── Success message on return ─────────────────────────────
   function handleReturn(){
     if (window.location.search.indexOf('checkout=success') === -1) return;
@@ -325,6 +377,7 @@
     document.getElementById('cart-close').addEventListener('click', closeCart);
     document.getElementById('cart-overlay').addEventListener('click', closeCart);
     document.getElementById('btn-checkout').addEventListener('click', checkout);
+    document.getElementById('btn-checkout-stripe').addEventListener('click', checkoutStripe);
     ['ck-name','ck-email'].forEach(function(id){ document.getElementById(id).addEventListener('input', function(){ this.style.borderColor=''; }); });
   });
 })();

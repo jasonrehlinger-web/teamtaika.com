@@ -1,6 +1,9 @@
 # Build output — regenerated at deploy from source (do not commit)
 dist/
 
+# Node deps — Netlify installs from package.json at build (do not commit)
+node_modules/
+
 # Local Claude Code helpers and reference (CLAUDE.md holds secrets)
 .claude/
 CLAUDE.md

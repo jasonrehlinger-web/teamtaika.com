@@ -1,0 +1,12 @@
+{
+  "name": "teamtaika.com",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Language Access Hub — teamtaika.com. Static site (build.py) + Netlify Functions.",
+  "scripts": {
+    "test:stripe": "node scripts/test-stripe-session.js"
+  },
+  "dependencies": {
+    "stripe": "^17.0.0"
+  }
+}

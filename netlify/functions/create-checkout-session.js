@@ -12,11 +12,19 @@
 // tagged metadata.site = 'teamtaika' + client_reference_id = 'teamtaika' so
 // teamtaika revenue is cleanly separable in reporting/reconciliation.
 
-// Guard init so a missing key returns a clean 500 in-handler instead of
-// throwing at module load (which would crash cold-start).
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? require('stripe')(process.env.STRIPE_SECRET_KEY)
-  : null;
+// The Stripe client is created lazily via getStripe(), which is called from
+// INSIDE the handler — so STRIPE_SECRET_KEY is read from the runtime
+// environment on invocation, never inlined at build/bundle time. Only the
+// library is required at module load (no key needed for that). A missing key
+// returns a clean 500 in-handler instead of crashing cold-start.
+const Stripe = require('stripe');
+let _stripe = null;
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;   // resolved at runtime, per invocation
+  if (!key) return null;
+  if (!_stripe) _stripe = Stripe(key);
+  return _stripe;
+}
 
 // ── Store cart id → Stripe product metadata.productKey ────────────────────
 // The 7 keys already exist in the Stripe catalog (test + live). The 5 marked
@@ -47,7 +55,7 @@ let _priceCache = null;
 let _priceCacheAt = 0;
 const PRICE_TTL_MS = 5 * 60 * 1000;
 
-async function buildPriceMap() {
+async function buildPriceMap(stripe) {
   const now = Date.now();
   if (_priceCache && (now - _priceCacheAt) < PRICE_TTL_MS) return _priceCache;
 
@@ -89,8 +97,10 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return json(405, { error: 'Method Not Allowed' });
   }
-  if (!process.env.STRIPE_SECRET_KEY) {
-    console.error('[create-checkout-session] STRIPE_SECRET_KEY not set');
+  // Read the key from the runtime env, inside the handler, on every request.
+  const stripe = getStripe();
+  if (!stripe) {
+    console.error('[create-checkout-session] STRIPE_SECRET_KEY not set at runtime');
     return json(500, { error: 'Payment is not configured yet. Please use PayPal or contact us.' });
   }
 
@@ -116,7 +126,7 @@ exports.handler = async (event) => {
   // ── Resolve every line to an authoritative Price ID ───────────────────
   let priceMap;
   try {
-    priceMap = await buildPriceMap();
+    priceMap = await buildPriceMap(stripe);
   } catch (e) {
     console.error('[create-checkout-session] Failed to load Stripe prices:', e.message);
     return json(502, { error: 'Could not reach payment provider. Please try again.' });

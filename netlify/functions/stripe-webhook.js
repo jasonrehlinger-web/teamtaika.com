@@ -11,11 +11,18 @@
 // charged from a server-resolved Stripe Price ID, so the amount is already
 // authoritative.
 
-// Guard init so a missing key returns a clean 500 in-handler instead of
-// throwing at module load (which would crash cold-start).
-const stripe = process.env.STRIPE_SECRET_KEY
-  ? require('stripe')(process.env.STRIPE_SECRET_KEY)
-  : null;
+// The Stripe client is created lazily via getStripe(), called from INSIDE the
+// handler, so STRIPE_SECRET_KEY is read from the runtime environment on each
+// invocation — never inlined at build/bundle time. Only the library is
+// required at module load.
+const Stripe = require('stripe');
+let _stripe = null;
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;   // resolved at runtime, per invocation
+  if (!key) return null;
+  if (!_stripe) _stripe = Stripe(key);
+  return _stripe;
+}
 
 const RESEND_API_KEY   = process.env.RESEND_API_KEY;
 const WEBHOOK_SECRET   = process.env.STRIPE_WEBHOOK_SECRET;
@@ -122,8 +129,10 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
-  if (!WEBHOOK_SECRET || !process.env.STRIPE_SECRET_KEY) {
-    console.error('[stripe-webhook] STRIPE_WEBHOOK_SECRET / STRIPE_SECRET_KEY not set');
+  // Read the key from the runtime env, inside the handler.
+  const stripe = getStripe();
+  if (!WEBHOOK_SECRET || !stripe) {
+    console.error('[stripe-webhook] STRIPE_WEBHOOK_SECRET / STRIPE_SECRET_KEY not set at runtime');
     return { statusCode: 500, body: 'Not configured' };
   }
 

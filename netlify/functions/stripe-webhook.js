@@ -28,7 +28,7 @@ const RESEND_API_KEY   = process.env.RESEND_API_KEY;
 const WEBHOOK_SECRET   = process.env.STRIPE_WEBHOOK_SECRET;
 const FROM_ADDRESS     = 'Taika Translations <noreply@taikatranslations.com>';
 const REPLY_TO         = 'sales@taikatranslations.com';
-const ADMIN_EMAIL      = 'ceo@taikatranslations.com';
+const ADMIN_EMAIL      = 'margarita.ehlinger@taikatranslations.com'; // order-alert recipient (per Jason, 2026-07-14)
 
 // In-memory dedup — Stripe retries webhook delivery on non-2xx / timeout.
 const _seen = new Set();
@@ -108,7 +108,7 @@ async function sendConfirmationEmail({ toEmail, name, service, amount, ref }) {
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: FROM_ADDRESS, to: [toEmail], reply_to: REPLY_TO, subject: `Payment Confirmed: ${safeProduct}`, html })
     });
-    // Admin alert (new order to fulfill) → projects@ handles docs; ceo@ gets the ping
+    // Admin alert (new order to fulfill) → projects@ handles docs; ADMIN_EMAIL gets the ping
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },

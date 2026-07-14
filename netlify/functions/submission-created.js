@@ -11,8 +11,9 @@
 // by paypal-ipn.js — verify payment before fulfilling.
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const PROJECTS_EMAIL = 'projects@taikatranslations.com';
-const SALES_EMAIL    = 'sales@taikatranslations.com';
+const PROJECTS_EMAIL  = 'projects@taikatranslations.com';
+const SALES_EMAIL     = 'sales@taikatranslations.com';
+const MARGARITA_EMAIL = 'margarita.ehlinger@taikatranslations.com'; // extra order-notification inbox (per Jason, 2026-07-14)
 const FROM_ADDRESS   = 'Taika Translations <noreply@taikatranslations.com>';
 
 // Forms whose submissions should always be forwarded to the project team.
@@ -99,7 +100,7 @@ exports.handler = async (event) => {
 
   const payload = {
     from:    FROM_ADDRESS,
-    to:      isLead ? [PROJECTS_EMAIL, SALES_EMAIL] : [PROJECTS_EMAIL],
+    to:      isLead ? [PROJECTS_EMAIL, SALES_EMAIL] : [PROJECTS_EMAIL, MARGARITA_EMAIL],
     subject: oneLine(`New ${isLead ? 'lead' : 'order/upload'} (${formName}): ${who}`, 150),
     html:
       `<h2 style="font-family:Arial,sans-serif;color:#0f2044;">New submission — ${esc(formName)}</h2>` +

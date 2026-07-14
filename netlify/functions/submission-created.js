@@ -29,6 +29,10 @@ function oneLine(s, n) { return String(s == null ? '' : s).replace(/[\r\n]+/g, '
 function safeUrl(u) {
   try { const p = new URL(String(u)); return p.protocol === 'https:' ? p.href : null; } catch (e) { return null; }
 }
+// Best-effort display name for a file link (last path segment, decoded).
+function fileNameFromUrl(u) {
+  try { return decodeURIComponent(new URL(u).pathname.split('/').pop() || '') || null; } catch (e) { return null; }
+}
 
 // In-memory rate limiter (best-effort; resets per cold start).
 const _hits = new Map();
@@ -57,10 +61,13 @@ exports.handler = async (event) => {
   const fileLinks = [];
   Object.keys(data).forEach(k => {
     const v = data[k];
-    var url = null;
+    var url = null, name = null;
     if (typeof v === 'string') url = safeUrl(v);
-    else if (v && typeof v === 'object' && typeof v.url === 'string') url = safeUrl(v.url);
-    if (url) fileLinks.push({ field: k, url: url });
+    else if (v && typeof v === 'object' && typeof v.url === 'string') {
+      url = safeUrl(v.url);
+      if (typeof v.filename === 'string' && v.filename) name = v.filename;
+    }
+    if (url) fileLinks.push({ field: k, url: url, name: oneLine(name || fileNameFromUrl(url) || k, 120) });
   });
 
   const isOrder = ORDER_FORMS.includes(formName)
@@ -85,7 +92,7 @@ exports.handler = async (event) => {
     }).join('');
 
   const filesHtml = fileLinks.length
-    ? `<p style="font-weight:700;margin:16px 0 4px;">Uploaded files:</p><ul>${fileLinks.map(f => `<li><a href="${esc(f.url)}">${esc(f.field)}</a></li>`).join('')}</ul>`
+    ? `<p style="font-weight:700;margin:16px 0 4px;">Uploaded files:</p><ul>${fileLinks.map(f => `<li><a href="${esc(f.url)}">${esc(f.name)}</a> <span style="color:#94a3b8;">(${esc(f.field)})</span></li>`).join('')}</ul>`
     : '<p style="color:#b45309;margin:16px 0 4px;"><em>No file uploaded with this submission.</em></p>';
 
   const who = oneLine(data['full-name'] || data.name || [data.first_name, data.last_name].filter(Boolean).join(' ') || data.email || 'customer', 80);
@@ -98,7 +105,7 @@ exports.handler = async (event) => {
       `<h2 style="font-family:Arial,sans-serif;color:#0f2044;">New submission — ${esc(formName)}</h2>` +
       filesHtml +
       `<table style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;margin-top:8px;">${rows}</table>` +
-      `<p style="color:#94a3b8;font-size:12px;margin-top:20px;">Payment is confirmed separately by the PayPal IPN — verify payment before processing.</p>`
+      `<p style="color:#94a3b8;font-size:12px;margin-top:20px;">Payment is confirmed separately (Stripe email or PayPal IPN) — verify payment before processing.</p>`
   };
   // Only set reply-to if it's a valid-looking email (prevents reply-to spoofing/injection).
   if (data.email && EMAIL_RE.test(String(data.email))) payload.reply_to = String(data.email);

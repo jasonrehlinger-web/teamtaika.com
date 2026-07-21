@@ -7,6 +7,7 @@ node_modules/
 # Local Claude Code helpers and reference (CLAUDE.md holds secrets)
 .claude/
 CLAUDE.md
+HANDOFF.md
 
 # OS / editor cruft
 .DS_Store

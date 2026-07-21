@@ -138,6 +138,11 @@
   to = "/pages/resources/blog/most-spoken-languages.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/ada-video-captioning-requirements"
+  to = "/pages/resources/blog/ada-video-captioning-requirements.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1497,6 +1502,11 @@
 [[redirects]]
   from = "/pages/resources/blog/most-spoken-languages.html"
   to = "/blog/most-spoken-languages"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/ada-video-captioning-requirements.html"
+  to = "/blog/ada-video-captioning-requirements"
   status = 301
   force = true
 [[redirects]]

@@ -143,6 +143,11 @@
   to = "/pages/resources/blog/ada-video-captioning-requirements.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/transcription-services-ada-508-compliance"
+  to = "/pages/resources/blog/transcription-services-ada-508-compliance.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1507,6 +1512,11 @@
 [[redirects]]
   from = "/pages/resources/blog/ada-video-captioning-requirements.html"
   to = "/blog/ada-video-captioning-requirements"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/transcription-services-ada-508-compliance.html"
+  to = "/blog/transcription-services-ada-508-compliance"
   status = 301
   force = true
 [[redirects]]

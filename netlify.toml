@@ -148,6 +148,11 @@
   to = "/pages/resources/blog/transcription-services-ada-508-compliance.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/school-document-translation-lep-parents"
+  to = "/pages/resources/blog/school-document-translation-lep-parents.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1517,6 +1522,11 @@
 [[redirects]]
   from = "/pages/resources/blog/transcription-services-ada-508-compliance.html"
   to = "/blog/transcription-services-ada-508-compliance"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/school-document-translation-lep-parents.html"
+  to = "/blog/school-document-translation-lep-parents"
   status = 301
   force = true
 [[redirects]]

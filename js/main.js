@@ -528,13 +528,12 @@
   var PAYPAL_BUSINESS = 'payments@taikatranslations.com';
   var VENMO_HANDLE    = 'taikallc';
   var ZELLE_EMAIL     = 'ceo@taikatranslations.com';
-  var WISE_URL        = 'https://wise.com/pay/business/thevisionpeoplellc';
 
   var PM_CONFIG = {
+    stripe: { label: 'Card / Google Pay / Apple Pay', bg: '#635bff', text: '#fff', btn: 'Pay by Card · Google Pay · Apple Pay →' },
     paypal: { label: 'PayPal', bg: '#0070ba', text: '#fff' },
     venmo:  { label: 'Venmo',  bg: '#008CFF', text: '#fff' },
-    zelle:  { label: 'Zelle',  bg: '#6d1ed4', text: '#fff' },
-    wise:   { label: 'Card / Google Pay / Apple Pay', bg: '#163300', text: '#9fe870', btn: 'Pay by Card · Google Pay · Apple Pay →' }
+    zelle:  { label: 'Zelle',  bg: '#6d1ed4', text: '#fff' }
   };
 
   function buildPaymentSelector(form) {
@@ -551,7 +550,7 @@
             + 'border-radius:20px;padding:6px 14px;font-size:13px;font-weight:600;'
             + 'transition:all .15s;user-select:none;">'
             + '<input type="radio" name="pm-choice-' + form.name + '" value="' + m + '"'
-            + (m === 'paypal' ? ' checked' : '') + ' style="display:none;">'
+            + (m === 'stripe' ? ' checked' : '') + ' style="display:none;">'
             + cfg.label + '</label>';
         }).join('')
       + '</div>';
@@ -593,26 +592,15 @@
     var radio = form.closest('*').querySelector
       ? (form.closest('.order-form-card') || form).querySelector('input[name^="pm-choice-"]:checked')
       : null;
-    return radio ? radio.value : 'paypal';
+    return radio ? radio.value : 'stripe';
   }
 
-  function showManualPaymentCard(method, custName, custEmail, amount, desc, form) {
-    var firstName = custName ? custName.split(' ')[0] : 'there';
-    var isZelle   = (method === 'zelle');
-
-    var bodyHtml = isZelle
-      ? '<div style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);font-size:14px;line-height:1.7;">'
-        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 1.</strong> Open your banking app and send <strong>$' + escHtml(amount) + '</strong> via <strong>Zelle</strong></div>'
-        + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 2.</strong> Send to <strong>' + ZELLE_EMAIL + '</strong> &mdash; Memo: <em>' + escHtml(custName) + '</em></div>'
-        + '<div><strong style="color:var(--navy);">Step 3.</strong> Reply &ldquo;Paid&rdquo; to your confirmation email &mdash; we\'ll start immediately</div>'
-        + '</div>'
-      : '<p style="color:var(--slate);font-size:14px;max-width:400px;margin:0 auto 16px;line-height:1.7;">'
-        + 'Click below to open our Wise page. Enter <strong>$' + escHtml(amount) + '</strong> as the amount.'
-        + '</p>'
-        + '<a href="' + WISE_URL + '" target="_blank" rel="noopener" '
-        + 'style="display:inline-block;background:#163300;color:#9fe870;padding:12px 28px;'
-        + 'border-radius:6px;text-decoration:none;font-weight:700;font-size:15px;margin-bottom:20px;">'
-        + 'Open Wise →</a>';
+  function showZellePaymentCard(custName, custEmail, amount, form) {
+    var bodyHtml = '<div style="text-align:left;max-width:400px;margin:0 auto 20px;color:var(--slate);font-size:14px;line-height:1.7;">'
+      + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 1.</strong> Open your banking app and send <strong>$' + escHtml(amount) + '</strong> via <strong>Zelle</strong></div>'
+      + '<div style="margin-bottom:12px;"><strong style="color:var(--navy);">Step 2.</strong> Send to <strong>' + ZELLE_EMAIL + '</strong> &mdash; Memo: <em>' + escHtml(custName) + '</em></div>'
+      + '<div><strong style="color:var(--navy);">Step 3.</strong> Reply &ldquo;Paid&rdquo; to your confirmation email &mdash; we\'ll start immediately</div>'
+      + '</div>';
 
     var emailLine = custEmail
       ? '<p style="font-size:13px;color:var(--slate);opacity:.75;margin-top:8px;">'
@@ -623,11 +611,9 @@
     var target = card || form;
     target.innerHTML = [
       '<div style="text-align:center;padding:40px 16px;">',
-      '<div style="font-size:48px;line-height:1;margin-bottom:14px;">',
-      isZelle ? '💜' : '💚', '</div>',
-      '<h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:12px;',
-      'color:', isZelle ? '#6d1ed4' : '#163300', ';">',
-      isZelle ? 'Send your Zelle payment' : 'Complete your Wise payment', '</h3>',
+      '<div style="font-size:48px;line-height:1;margin-bottom:14px;">💜</div>',
+      '<h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:12px;color:#6d1ed4;">',
+      'Send your Zelle payment</h3>',
       bodyHtml, emailLine,
       '</div>'
     ].join('');
@@ -635,6 +621,56 @@
     // Order summary email is sent server-side only after payment is verified
     // (see paypal-ipn.js). No unauthenticated client-side email is sent here.
     try { sessionStorage.removeItem('taika-pending-order'); } catch(e) {}
+  }
+
+  // ── Stripe (card / Apple Pay / Google Pay) checkout ────────────────────
+  // The server (create-checkout-session) re-derives the price from validated
+  // fields — the browser never sends an amount. Dynamic translation forms send
+  // an { order } payload; fixed-price store forms send { items } keyed by their
+  // data-store-id (resolved to an authoritative Stripe price server-side).
+  function startStripeCheckout(form, custName, custEmail, notes, orderId, payBtn) {
+    var svcEl = form.querySelector('[name="service-type"]');
+    var body;
+    if (svcEl) {
+      var pgEl = form.querySelector('[name="page-count"]');
+      var langEl = form.querySelector('[name="language"]');
+      var notEl = form.querySelector('[name="notarization"]');
+      body = {
+        order: {
+          serviceType: svcEl.value,
+          pages: pgEl ? pgEl.value : 1,
+          notarization: !!(notEl && notEl.checked),
+          language: langEl ? langEl.value : ''
+        },
+        name: custName, email: custEmail, notes: notes,
+        orderId: orderId, returnPath: window.location.pathname
+      };
+    } else if (form.dataset && form.dataset.storeId) {
+      body = {
+        items: [{ id: form.dataset.storeId, qty: 1 }],
+        name: custName, email: custEmail, notes: notes,
+        orderId: orderId, returnPath: window.location.pathname
+      };
+    } else {
+      payBtn.disabled = false; refreshBtn(payBtn, 'stripe');
+      alert('Card checkout isn\'t available for this item — please choose PayPal.');
+      return;
+    }
+
+    fetch('/.netlify/functions/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function(res) {
+      return res.json().catch(function() { return {}; }).then(function(d) { return { ok: res.ok, d: d }; });
+    }).then(function(r) {
+      if (r.ok && r.d && r.d.url) { window.location.href = r.d.url; return; }
+      payBtn.disabled = false; refreshBtn(payBtn, 'stripe');
+      alert((r.d && r.d.error) || 'Could not start card checkout. Please try again or choose PayPal.');
+    }).catch(function() {
+      payBtn.disabled = false; refreshBtn(payBtn, 'stripe');
+      alert('Could not start card checkout. Please try again or choose PayPal.');
+    });
   }
 
   function initPayPal() {
@@ -656,7 +692,7 @@
       payBtn.style.cssText = 'width:100%;border:none;border-radius:6px;padding:14px;'
         + 'font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;letter-spacing:.01em;'
         + 'transition:background .15s,color .15s;';
-      refreshBtn(payBtn, 'paypal');
+      refreshBtn(payBtn, 'stripe');
 
       oldBtn.parentNode.insertBefore(payBtn, oldBtn);
       oldBtn.style.display = 'none';
@@ -679,8 +715,10 @@
         var desc      = getOrderDescription(form);
         var nameEl    = form.querySelector('[name="name"], [name="full-name"], [name="full_name"]');
         var emailEl   = form.querySelector('[name="email"]');
+        var notesEl   = form.querySelector('[name="notes"]');
         var custName  = nameEl  ? nameEl.value.trim() : '';
         var custEmail = emailEl ? emailEl.value.trim() : '';
+        var custNotes = notesEl ? notesEl.value.trim() : '';
         // Correlation id: sent with the Netlify order record AND as PayPal's
         // `custom` field so payments can be matched to uploaded documents.
         var orderId   = 'LAH-' + Date.now().toString(36).toUpperCase() + '-'
@@ -716,7 +754,11 @@
             alert('We could not upload your document. Please check your connection and try again, or email it to projects@taikatranslations.com after checkout.');
             return;
           }
-          if (method === 'paypal') {
+          if (method === 'stripe') {
+            payBtn.innerHTML = 'Starting secure checkout…';
+            startStripeCheckout(form, custName, custEmail, custNotes, orderId, payBtn);
+
+          } else if (method === 'paypal') {
             var base      = window.location.origin || 'https://teamtaika.com';
             var returnUrl = base + window.location.pathname + '?payment=success';
             var cancelUrl = base + window.location.pathname;
@@ -741,10 +783,7 @@
               + '&note='           + encodeURIComponent((desc + ' [' + orderId + ']').substring(0, 100));
 
           } else if (method === 'zelle') {
-            showManualPaymentCard('zelle', custName, custEmail, amount, desc, form);
-
-          } else if (method === 'wise') {
-            showManualPaymentCard('wise', custName, custEmail, amount, desc, form);
+            showZellePaymentCard(custName, custEmail, amount, form);
           }
         });
       });

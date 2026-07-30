@@ -21,6 +21,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="../../css/main.css?v=2">
+<style>
+.order-section{background:var(--mist,#f8f9fa);padding:72px 0;}
+.order-form-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg,16px);padding:40px;max-width:600px;margin:0 auto;box-shadow:0 4px 32px rgba(0,0,0,.06);}
+.order-form-card h2{font-family:var(--font-display);font-size:1.6rem;color:var(--navy);margin-bottom:6px;}
+.order-form-card .form-sub{font-size:14px;color:var(--slate);margin-bottom:28px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:12.5px;font-weight:600;color:var(--navy);margin-bottom:5px;letter-spacing:.3px;text-transform:uppercase;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font-sans,inherit);color:var(--navy);background:#fff;box-sizing:border-box;transition:.15s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);}
+.price-calc{background:var(--navy-deep);border-radius:10px;padding:16px 20px;margin:20px 0;display:flex;align-items:center;justify-content:space-between;}
+.price-calc-label{font-size:13px;color:rgba(255,255,255,.7);}
+.price-calc-total{font-family:var(--font-display);font-size:1.6rem;color:#fff;font-weight:900;}
+.price-calc-note{font-size:11px;color:rgba(255,255,255,.5);}
+.upload-drop{border:1.5px dashed var(--border-strong,#cbd5e0);border-radius:8px;padding:20px;text-align:center;cursor:pointer;position:relative;background:#fafafa;transition:.15s;}
+.upload-drop.drag-over,.upload-drop:hover{border-color:var(--gold);background:#fffbf0;}
+.upload-drop.has-file{border-color:var(--emerald,#1a6b4a);background:#f0faf5;}
+.upload-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:24px;margin-bottom:8px;}
+.upload-text{font-size:13px;color:var(--slate);font-weight:500;}
+.upload-filename{display:none;font-size:12.5px;font-weight:600;color:var(--emerald,#1a6b4a);margin-top:6px;}
+.upload-drop.has-file .upload-filename{display:block;}
+.btn-order{width:100%;padding:16px;background:var(--gold);color:var(--navy-deep);font-weight:800;font-size:16px;border:none;border-radius:10px;cursor:pointer;transition:.15s;font-family:inherit;letter-spacing:.3px;}
+.btn-order:hover{background:#b8943c;}
+.form-guarantee{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--slate);margin-top:12px;justify-content:center;text-align:center;}
+@media(max-width:640px){.form-row{grid-template-columns:1fr;}.order-form-card{padding:24px 16px;}}
+</style>
 </head>
 <body>
 
@@ -213,6 +240,97 @@
 </section>
 
 <!-- LEAD STRIP -->
+<!-- ORDER FORM (certified translation — pay online) -->
+<section class="order-section" id="order-form" aria-label="Order Korean translation">
+  <div class="container">
+    <div class="order-form-card">
+      <h2>Order Certified Korean Translation</h2>
+      <p class="form-sub">Choose your service level, upload your document, and pay securely by card, Apple Pay, Google Pay, PayPal, Venmo, or Zelle. Final price is confirmed after our team reviews your document.</p>
+
+      <form name="lang-order-korean" method="POST" action="/" enctype="multipart/form-data"
+            data-netlify="true" netlify-honeypot="bot-field" id="lang-order-korean-form">
+        <input type="hidden" name="form-name" value="lang-order-korean">
+        <input type="hidden" name="language" value="Korean">
+        <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+        <div class="form-group">
+          <label for="korean-service">Service Type</label>
+          <select id="korean-service" name="service-type" onchange="calcPrice_korean()">
+            <option value="standard">Certified Translation — Standard ($24.99/page)</option>
+            <option value="rush">Certified Translation — Rush ($31.24/page)</option>
+            <option value="sameday">Certified Translation — Same-Day ($37.49/page)</option>
+            <option value="interpretation">Interpretation (OPI/VRI) — Request a Quote</option>
+            <option value="both">Translation + Interpretation — Request a Quote</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="korean-page-group">
+          <label for="korean-pages">Number of Pages</label>
+          <input type="number" id="korean-pages" name="page-count" min="1" max="500" value="1"
+                 oninput="calcPrice_korean()" placeholder="1">
+        </div>
+
+        <div class="price-calc" id="korean-price-calc">
+          <div>
+            <div class="price-calc-label">Estimated Total</div>
+            <div class="price-calc-note">Final price confirmed after document review</div>
+          </div>
+          <div class="price-calc-total" id="korean-price-total">$24.99</div>
+        </div>
+
+        <div style="margin:4px 0 16px;padding:14px 16px;background:rgba(201,168,76,.08);border:2px solid rgba(201,168,76,.35);border-radius:10px;">
+          <label style="display:flex;align-items:flex-start;gap:14px;cursor:pointer;">
+            <input type="checkbox" name="notarization" id="korean-notarization" value="yes"
+                   onchange="calcPrice_korean()" style="margin-top:3px;width:22px;height:22px;accent-color:var(--gold,#c9a84c);flex-shrink:0;">
+            <span style="font-size:15px;line-height:1.5;">Add Notarization <strong style="color:var(--gold,#c9a84c);">+$40.00</strong> — accepted by USCIS, courts &amp; government agencies</span>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="korean-name">Full Name *</label>
+            <input type="text" id="korean-name" name="full-name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="korean-email">Email Address *</label>
+            <input type="email" id="korean-email" name="email" required placeholder="you@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="korean-phone">Phone (optional)</label>
+          <input type="tel" id="korean-phone" name="phone" placeholder="(555) 000-0000">
+        </div>
+
+        <div class="form-group">
+          <label>Upload Your Document <span style="text-transform:none;font-weight:400;color:var(--slate);">(optional — you can email it later)</span></label>
+          <div class="upload-drop" id="korean-drop">
+            <input type="file" name="document" class="upload-input" id="korean-file-input"
+                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.tiff,.tif">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Drag &amp; drop your document here, or click to browse<br>
+              <span style="font-size:11px;color:var(--slate-light,#a0aec0);">PDF, Word, JPG, PNG, TIFF accepted · Max 25MB</span>
+            </div>
+            <div class="upload-filename" id="korean-filename"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="korean-notes">Notes / Special Instructions</label>
+          <textarea id="korean-notes" name="notes" rows="3"
+                    placeholder="Mention any rush deadline, specific formatting needs, notarization request, or questions..."></textarea>
+        </div>
+
+        <button type="button" class="btn-submit btn-order" data-form="lang-order-korean-form">
+          Continue to Payment →
+        </button>
+        <div class="form-guarantee">
+          <span>🔒</span> Secure checkout · ATA-certified · HIPAA &amp; FERPA compliant · Confirmation within 1 business hour
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <section class="section section-sm" aria-labelledby="checklist-h">
   <div class="container">
     <div class="lead-strip">
@@ -380,6 +498,45 @@
     </nav>
   </div>
 </footer>
+<script>
+var PRICES_KOREAN = { standard: 24.99, rush: 31.24, sameday: 37.49 };
+function calcPrice_korean() {
+  var svc  = document.getElementById('korean-service').value;
+  var pg   = parseInt(document.getElementById('korean-pages').value) || 1;
+  var calc = document.getElementById('korean-price-calc');
+  var tot  = document.getElementById('korean-price-total');
+  var grp  = document.getElementById('korean-page-group');
+  if (svc === 'interpretation' || svc === 'both') {
+    calc.style.display = 'none';
+    grp.style.display = 'none';
+  } else {
+    calc.style.display = 'flex';
+    grp.style.display = 'block';
+    var notarize = document.getElementById('korean-notarization') && document.getElementById('korean-notarization').checked ? 40 : 0;
+    var price = (PRICES_KOREAN[svc] || 24.99) * pg + notarize;
+    tot.textContent = '$' + price.toFixed(2);
+  }
+}
+(function() {
+  var drop  = document.getElementById('korean-drop');
+  var inp   = document.getElementById('korean-file-input');
+  var fname = document.getElementById('korean-filename');
+  if (!drop || !inp) return;
+  function setFile(file) {
+    if (!file) return;
+    drop.classList.add('has-file');
+    fname.textContent = file.name;
+  }
+  inp.addEventListener('change', function() { if (this.files[0]) setFile(this.files[0]); });
+  drop.addEventListener('dragover',  function(e) { e.preventDefault(); drop.classList.add('drag-over'); });
+  drop.addEventListener('dragleave', function()  { drop.classList.remove('drag-over'); });
+  drop.addEventListener('drop', function(e) {
+    e.preventDefault(); drop.classList.remove('drag-over');
+    var f = e.dataTransfer && e.dataTransfer.files[0];
+    if (f) { var dt = new DataTransfer(); dt.items.add(f); inp.files = dt.files; setFile(f); }
+  });
+})();
+</script>
 <script src="../../js/main.js?v=27"></script>
 </body>
 </html>

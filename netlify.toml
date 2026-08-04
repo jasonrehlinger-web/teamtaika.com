@@ -153,6 +153,11 @@
   to = "/pages/resources/blog/school-document-translation-lep-parents.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/ai-automation-language-access-workflows"
+  to = "/pages/resources/blog/ai-automation-language-access-workflows.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1527,6 +1532,11 @@
 [[redirects]]
   from = "/pages/resources/blog/school-document-translation-lep-parents.html"
   to = "/blog/school-document-translation-lep-parents"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/ai-automation-language-access-workflows.html"
+  to = "/blog/ai-automation-language-access-workflows"
   status = 301
   force = true
 [[redirects]]

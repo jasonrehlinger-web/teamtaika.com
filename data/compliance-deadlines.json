@@ -1,0 +1,12 @@
+{
+  "_README": "SINGLE SOURCE OF TRUTH for digital-accessibility compliance deadlines. Edit dates HERE ONLY — build.py injects them into every page via {{TOKEN}} placeholders (see build.py replace_tokens). Do NOT hardcode these dates in HTML again. Keys beginning with '_' are ignored by the build.",
+  "_FACTS": "Verified Aug 2026 against ada.gov / hhs.gov. DOJ ADA Title II extended one year by an April 2026 interim final rule. HHS Section 504 extended one year by a May 2026 interim final rule. ALL deadlines are still UPCOMING — copy must frame them as 'get ahead of the deadline', never 'passed' or 'in effect'.",
+  "_SOURCES": "ADA Title II: https://www.ada.gov/resources/2024-03-08-web-rule/  ·  HHS Section 504: https://www.hhs.gov/civil-rights/for-providers/laws-regulations-guidance/section-504-rehabilitation-act/index.html",
+
+  "ADA_DEADLINE_LARGE": "April 26, 2027",
+  "ADA_DEADLINE_SMALL": "April 26, 2028",
+
+  "SEC504_DEADLINE": "May 11, 2027",
+  "SEC504_DEADLINE_LARGE": "May 11, 2027",
+  "SEC504_DEADLINE_SMALL": "May 10, 2028"
+}

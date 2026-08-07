@@ -21,7 +21,7 @@ Government agencies remain the best-covered audience already (3 posts) — delib
 
 ## Queue
 
-- [ ] **1. `iep-meeting-interpreter-requirements`** — *Do Schools Have to Provide an Interpreter at IEP Meetings?*
+- [x] **1. `iep-meeting-interpreter-requirements`** — *Do Schools Have to Provide an Interpreter at IEP Meetings?*
   Keyword: `IEP meeting interpreter requirements`. Schools × Interpretation — top service + top audience.
   Evidence: IDEA requires the district to take whatever action is necessary for the parent to understand IEP proceedings, including arranging an interpreter. ED/OCR guidance: districts may not rely on students, siblings, friends, or untrained staff, and it is not sufficient for staff merely to be bilingual. Obligation extends beyond the IEP meeting to parent-teacher conferences, suspension meetings, meetings with the nurse, mediation, and due process hearings. Interpreter should be impartial and not a member of the IEP team.
   Category: `compliance` · CTA: `/pages/services/interpretation.html` · Links: `/pages/industries/schools.html`, `/blog/school-document-translation-lep-parents`
@@ -108,3 +108,5 @@ Government agencies remain the best-covered audience already (3 posts) — delib
 ## Published
 
 _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>`)_
+
+- [x] iep-meeting-interpreter-requirements — published 2026-08-07 → /blog/iep-meeting-interpreter-requirements

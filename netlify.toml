@@ -158,6 +158,11 @@
   to = "/pages/resources/blog/ai-automation-language-access-workflows.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/iep-meeting-interpreter-requirements"
+  to = "/pages/resources/blog/iep-meeting-interpreter-requirements.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1537,6 +1542,11 @@
 [[redirects]]
   from = "/pages/resources/blog/ai-automation-language-access-workflows.html"
   to = "/blog/ai-automation-language-access-workflows"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/iep-meeting-interpreter-requirements.html"
+  to = "/blog/iep-meeting-interpreter-requirements"
   status = 301
   force = true
 [[redirects]]

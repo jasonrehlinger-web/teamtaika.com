@@ -26,7 +26,7 @@ Government agencies remain the best-covered audience already (3 posts) — delib
   Evidence: IDEA requires the district to take whatever action is necessary for the parent to understand IEP proceedings, including arranging an interpreter. ED/OCR guidance: districts may not rely on students, siblings, friends, or untrained staff, and it is not sufficient for staff merely to be bilingual. Obligation extends beyond the IEP meeting to parent-teacher conferences, suspension meetings, meetings with the nurse, mediation, and due process hearings. Interpreter should be impartial and not a member of the IEP team.
   Category: `compliance` · CTA: `/pages/services/interpretation.html` · Links: `/pages/industries/schools.html`, `/blog/school-document-translation-lep-parents`
 
-- [ ] **2. `section-1557-qualified-interpreter`** — *Section 1557: What Actually Counts as a Qualified Interpreter*
+- [x] **2. `section-1557-qualified-interpreter`** — *Section 1557: What Actually Counts as a Qualified Interpreter*
   Keyword: `Section 1557 qualified interpreter`. Healthcare × Interpretation.
   Evidence: The 2024 Section 1557 final rule (effective July 2024, HHS guidance clarified December 2024) defines qualified interpreter competencies — proficiency, ability to interpret effectively/accurately/impartially including specialized vocabulary, while retaining tone and sentiment, plus confidentiality. Covered entities must post an annual Notice of Nondiscrimination and a Notice of Availability of language assistance, in English plus at least the 15 most common LEP languages in the states where they operate. Taglines were established in 2016, eliminated in 2020, and reinstated in 2024.
   Category: `healthcare` · CTA: `/pages/services/interpretation.html` · Links: `/pages/industries/healthcare.html`, `/blog/joint-commission-2026-language-access`
@@ -110,3 +110,4 @@ Government agencies remain the best-covered audience already (3 posts) — delib
 _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>`)_
 
 - [x] iep-meeting-interpreter-requirements — published 2026-08-07 → /blog/iep-meeting-interpreter-requirements
+- [x] section-1557-qualified-interpreter — published 2026-08-11 → /blog/section-1557-qualified-interpreter

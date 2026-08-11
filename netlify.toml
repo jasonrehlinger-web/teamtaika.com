@@ -163,6 +163,11 @@
   to = "/pages/resources/blog/iep-meeting-interpreter-requirements.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/section-1557-qualified-interpreter"
+  to = "/pages/resources/blog/section-1557-qualified-interpreter.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1547,6 +1552,11 @@
 [[redirects]]
   from = "/pages/resources/blog/iep-meeting-interpreter-requirements.html"
   to = "/blog/iep-meeting-interpreter-requirements"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/section-1557-qualified-interpreter.html"
+  to = "/blog/section-1557-qualified-interpreter"
   status = 301
   force = true
 [[redirects]]

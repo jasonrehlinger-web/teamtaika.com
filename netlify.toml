@@ -168,6 +168,11 @@
   to = "/pages/resources/blog/section-1557-qualified-interpreter.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/school-website-accessibility-ada-title-ii"
+  to = "/pages/resources/blog/school-website-accessibility-ada-title-ii.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1459,6 +1464,16 @@
   status = 301
   force = true
 # ── Force redirects: /pages/resources/blog/*.html → clean /blog/ URLs ────────
+[[redirects]]
+  from = "/pages/resources/blog/school-website-accessibility-ada-title-ii.html"
+  to = "/blog/school-website-accessibility-ada-title-ii"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/divorce-decree-translation-uscis.html"
+  to = "/blog/divorce-decree-translation-uscis"
+  status = 301
+  force = true
 [[redirects]]
   from = "/pages/resources/blog/marriage-certificate-translation-uscis.html"
   to = "/blog/marriage-certificate-translation-uscis"

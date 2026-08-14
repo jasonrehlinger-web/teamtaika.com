@@ -14,7 +14,7 @@ Government agencies remain the best-covered audience already (3 posts) — delib
 - **No prices.** Never quote a dollar figure or rate. Say "request a quote" and link the quote form. (Existing older posts do quote rates; new posts do not.)
 - **Distinct primary keyword.** Every topic must target a primary keyword that is not already the primary keyword of a live post. Check `pages/resources/blog/` before adding.
 - **Verified facts only.** Accurate statutory citations, no invented statistics, no fabricated case names.
-- **Compliance dates** must match the site's urgency bar — ADA Title II WCAG 2.1 AA: April 26, 2027 (≥50,000 pop.) / April 26, 2028 (smaller + special districts). Healthcare Section 504: May 11, 2026. **If research conflicts with these, do not assert a date** — write it generally and flag the conflict in the run report. (There is a known live conflict on the Section 504 date; see topic 6.)
+- **Compliance dates** live in `data/compliance-deadlines.json` ONLY — that file is the single source of truth and `build.py` substitutes the `{{TOKEN}}`s at deploy. **Never hardcode a date in HTML; always emit the token.** Current values: ADA Title II WCAG 2.1 AA `{{ADA_DEADLINE_LARGE}}` April 26, 2027 (≥50,000 pop.) / `{{ADA_DEADLINE_SMALL}}` April 26, 2028 (smaller + special districts); Healthcare Section 504: `{{SEC504_DEADLINE}}` May 11, 2027 / `{{SEC504_DEADLINE_SMALL}}` May 10, 2028. All still UPCOMING — frame as “get ahead of the deadline”. If research conflicts with the JSON, do not assert a date: emit the token and flag it in the run report.
 - **Credential claims** may only include what already appears on teamtaika.com pages (GSA, NASPO, VOSB, SAM, ATA-certified linguists). Do not claim GSA coverage for AI automation.
 
 ---
@@ -31,7 +31,7 @@ Government agencies remain the best-covered audience already (3 posts) — delib
   Evidence: The 2024 Section 1557 final rule (effective July 2024, HHS guidance clarified December 2024) defines qualified interpreter competencies — proficiency, ability to interpret effectively/accurately/impartially including specialized vocabulary, while retaining tone and sentiment, plus confidentiality. Covered entities must post an annual Notice of Nondiscrimination and a Notice of Availability of language assistance, in English plus at least the 15 most common LEP languages in the states where they operate. Taglines were established in 2016, eliminated in 2020, and reinstated in 2024.
   Category: `healthcare` · CTA: `/pages/services/interpretation.html` · Links: `/pages/industries/healthcare.html`, `/blog/joint-commission-2026-language-access`
 
-- [ ] **3. `school-website-accessibility-ada-title-ii`** — *K-12 Website Accessibility: What the ADA Title II Deadline Means for Your District*
+- [x] **3. `school-website-accessibility-ada-title-ii`** — *K-12 Website Accessibility: What the ADA Title II Deadline Means for Your District*
   Keyword: `school website accessibility ADA Title II`. Schools × ADA/508. Deadline-driven urgency.
   Evidence: DOJ 2024 final rule sets WCAG 2.1 Level AA; deadlines April 26, 2027 (≥50,000 pop.) and April 26, 2028 (smaller districts / special districts). Scope is not just the main site — it reaches the full range of public digital content, **including third-party vendor tools** (student platforms, payment systems, parent apps) the district contracts for. Exceptions include archived content not in active use, password-protected documents, and pre-deadline social posts.
   Category: `accessibility` · CTA: `/pages/services/508-compliance.html` · Links: `/pages/industries/schools.html`, `/blog/wcag-ada-compliance-tips`
@@ -49,7 +49,7 @@ Government agencies remain the best-covered audience already (3 posts) — delib
 - [ ] **6. `section-504-healthcare-digital-accessibility`** — *Section 504 Digital Accessibility for Healthcare: Websites, Patient Portals, and Vendor Tools*
   Keyword: `Section 504 healthcare digital accessibility`. Healthcare × ADA/508.
   Evidence: HHS Section 504 final rule (effective July 8, 2024) requires covered digital properties to meet WCAG 2.1 Level A and AA — institutional websites, patient portals, intranet resources, mobile apps, kiosks, and third-party tools. Non-discrimination obligations applied from the effective date forward, so OCR enforcement authority predates the technical deadline and documented good-faith progress matters.
-  **⚠ VERIFY BEFORE PUBLISHING:** sources conflict on the compliance date. Some report May 11, 2026 (15+ employees) / May 10–11, 2027 (under 15); others report an extension to May 11, 2027 / May 11, 2028. The site's urgency bar says May 11, 2026. Confirm against the HHS rule itself; if it cannot be confirmed, describe the deadline structure without asserting specific dates and flag it in the run report.
+  **✓ RESOLVED 2026-08-14:** the conflict is settled — HHS extended the Section 504 date by one year via a May 2026 interim final rule, and `data/compliance-deadlines.json` now carries `SEC504_DEADLINE` = May 11, 2027 and `SEC504_DEADLINE_SMALL` = May 10, 2028. Emit the tokens, never the literal dates. Do not re-litigate this.
   Category: `healthcare` · CTA: `/pages/services/508-compliance.html` · Links: `/pages/industries/healthcare.html`, `/blog/pdf-remediation-guide`
 
 - [ ] **7. `nonprofit-language-access-federal-funding`** — *Language Access for Nonprofits: What Accepting Federal Funding Actually Obligates You To Do*
@@ -111,3 +111,4 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 
 - [x] iep-meeting-interpreter-requirements — published 2026-08-07 → /blog/iep-meeting-interpreter-requirements
 - [x] section-1557-qualified-interpreter — published 2026-08-11 → /blog/section-1557-qualified-interpreter
+- [x] school-website-accessibility-ada-title-ii — published 2026-08-14 → /blog/school-website-accessibility-ada-title-ii

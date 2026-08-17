@@ -43,7 +43,7 @@ Language Access Hub provides:
 
 - **Legal entity**: Taika Translations LLC (language services) + TVPTeam (AI automation, consulting)
 - **Certifications**: SBA Veteran-Owned Small Business (VOSB), GSA Schedule contractor, NASPO ValuePoint cooperative contract holder, ATA member, BBB Accredited A+, SAM.gov registered
-- **Scale**: 300+ language pairs, 2,000+ language professionals, 30,000+ projects delivered, 1B+ words translated
+- **Scale**: 300+ language pairs, 2,000+ language professionals, 102,000+ projects delivered, 1B+ words translated
 - **Rating**: 5.0 Google rating
 - **Growth**: $1M to $19M revenue growth trajectory
 

@@ -6,12 +6,11 @@ Disallow: /.netlify/functions/
 Disallow: /pages/portal/
 Disallow: /pages/admin/
 
-# Search Engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
+# NOTE: Googlebot/Bingbot deliberately have NO group of their own. A robots.txt
+# crawler obeys ONLY its most-specific matching group, so a "User-agent: Googlebot"
+# block with just "Allow: /" would SHADOW the Disallow rules above and let Google
+# crawl /.netlify/functions/ etc. (that caused a "Blocked due to 4xx" issue in GSC).
+# With no dedicated group, Googlebot/Bingbot fall back to "*" and honor the Disallows.
 
 # AI Search Bots — allow for search visibility
 User-agent: OAI-SearchBot

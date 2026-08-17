@@ -1608,3 +1608,227 @@
   for = "/admin/analytics"
   [headers.values]
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.paypalobjects.com https://www.paypal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com https://analyticsdata.googleapis.com https://searchconsole.googleapis.com https://*.supabase.co https://api.resend.com https://translation.googleapis.com https://www.paypal.com; frame-src https://accounts.google.com https://www.paypal.com; object-src 'none'; base-uri 'self';"
+
+# ── GSC consolidation: force /pages/*.html duplicates → clean canonical ──
+# (extends the existing state/language/blog force-301 pattern to the remaining
+#  public pages so Google consolidates "Alternate page" duplicates.)
+[[redirects]]
+  from = "/pages/accessibility.html"
+  to = "/accessibility"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/certified/certified-translation.html"
+  to = "/certified-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/certified/uscis-translation-services.html"
+  to = "/uscis-translation-services"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/credentials.html"
+  to = "/credentials"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/healthcare.html"
+  to = "/healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/individuals.html"
+  to = "/individuals"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/legal-translation.html"
+  to = "/legal-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/legal.html"
+  to = "/legal"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/industries/nonprofits.html"
+  to = "/nonprofits"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/lp/508-audit.html"
+  to = "/lp/508-audit"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/lp/508-gsa.html"
+  to = "/lp/508-gsa"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/lp/508-healthcare.html"
+  to = "/lp/508-healthcare"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/lp/thank-you.html"
+  to = "/lp/thank-you"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/order.html"
+  to = "/order"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/privacy.html"
+  to = "/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/case-studies.html"
+  to = "/case-studies"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/compliance-faq.html"
+  to = "/compliance-faq"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/why-taika.html"
+  to = "/why-taika"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/508-compliance.html"
+  to = "/508-compliance"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/ai-assessment.html"
+  to = "/ai-assessment"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/ai-automation.html"
+  to = "/ai-automation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/conference-interpretation.html"
+  to = "/conference-interpretation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/desktop-publishing.html"
+  to = "/desktop-publishing"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/birth-certificate-translation.html"
+  to = "/birth-certificate-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/court-document-translation.html"
+  to = "/court-document-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/diploma-transcript-translation.html"
+  to = "/diploma-transcript-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/divorce-decree-translation.html"
+  to = "/divorce-decree-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/driver-license-translation.html"
+  to = "/driver-license-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/marriage-certificate-translation.html"
+  to = "/marriage-certificate-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/medical-records-translation.html"
+  to = "/medical-records-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/documents/passport-translation.html"
+  to = "/passport-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/elearning-localization.html"
+  to = "/elearning-localization"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/government-bilingual-pay.html"
+  to = "/government-bilingual-pay"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/gsa-translation-services.html"
+  to = "/gsa-translation-services"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/hipaa-compliant-translation.html"
+  to = "/hipaa-compliant-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/interpretation.html"
+  to = "/interpretation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/machine-translation-post-editing.html"
+  to = "/machine-translation-post-editing"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/spanish-translation-services.html"
+  to = "/spanish-translation-services"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/transcription.html"
+  to = "/transcription"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/translation.html"
+  to = "/translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/services/website-translation.html"
+  to = "/website-translation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/site-directory.html"
+  to = "/site-directory"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/store.html"
+  to = "/store"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/terms.html"
+  to = "/terms"
+  status = 301
+  force = true

@@ -38,7 +38,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Keyword: `school website accessibility ADA Title II`. Lane A · Schools × ADA/508.
   Category: `accessibility` · CTA: `/pages/services/508-compliance.html`
 
-- [ ] **4. `medical-device-ifu-translation-eu-mdr`** — *EU MDR Translation Requirements for IFUs, Labels, and Implant Cards*
+- [x] **4. `medical-device-ifu-translation-eu-mdr`** — *EU MDR Translation Requirements for IFUs, Labels, and Implant Cards*
   Keyword: `EU MDR translation requirements`. **Lane B · Life sciences — highest contract value in the queue.**
   Evidence: Regulation (EU) 2017/745. **Article 10(11) is the correct citation** for accompanying information in the language(s) accepted by the member state where the device is placed on market; Annex I §23 governs label and IFU content. **Many competitor articles miscite "Article 41" — Article 41 sits in Chapter IV and concerns Notified Body designation documents, nothing to do with IFU language.** Getting this right is a credibility differentiator; say so plainly. Language requirements vary by state (Belgium: French/Dutch/German; Finland: Finnish/Swedish; Luxembourg: French/German/Luxembourgish). ISO 15223-1:2021 symbols can replace text on many label elements but there is no symbol shortcut for IFU narrative. Verify all of this against the regulation text before publishing.
   Category: `translation` · CTA: `/pages/industries/medical-device-translation.html` · Links: `/pages/industries/life-sciences-translation.html`, `/pages/services/desktop-publishing.html`
@@ -184,6 +184,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] iep-meeting-interpreter-requirements — published 2026-08-07 → /blog/iep-meeting-interpreter-requirements
 - [x] section-1557-qualified-interpreter — published 2026-08-11 → /blog/section-1557-qualified-interpreter
 - [x] school-website-accessibility-ada-title-ii — published 2026-08-14 → /blog/school-website-accessibility-ada-title-ii
+- [x] medical-device-ifu-translation-eu-mdr — published 2026-08-18 → /blog/medical-device-ifu-translation-eu-mdr
 
 ---
 
@@ -193,7 +194,7 @@ Every run also upgrades ONE older post, taken from the top of this list. These p
 
 The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answer-box` "Quick answer" near the top where missing. Where a post has no `.post-cta` it already has an inline-styled CTA block instead — leave that alone rather than duplicating it. **Do not rewrite body copy, do not add or remove prices, and do not change the byline or dates.**
 
-- [ ] what-is-certified-translation
+- [x] what-is-certified-translation — upgraded 2026-08-18 (.answer-box + .inline-cta added; existing inline CTA block left in place)
 - [ ] opi-vri-guide
 - [ ] wcag-ada-compliance-tips
 - [ ] pdf-remediation-guide

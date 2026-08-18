@@ -173,6 +173,11 @@
   to = "/pages/resources/blog/school-website-accessibility-ada-title-ii.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/medical-device-ifu-translation-eu-mdr"
+  to = "/pages/resources/blog/medical-device-ifu-translation-eu-mdr.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1467,6 +1472,12 @@
 [[redirects]]
   from = "/pages/resources/blog/school-website-accessibility-ada-title-ii.html"
   to = "/blog/school-website-accessibility-ada-title-ii"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/resources/blog/medical-device-ifu-translation-eu-mdr.html"
+  to = "/blog/medical-device-ifu-translation-eu-mdr"
   status = 301
   force = true
 [[redirects]]

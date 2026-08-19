@@ -668,6 +668,14 @@
   to = "/pages/languages/haitian-creole.html"
   status = 200
 [[redirects]]
+  from = "/languages/garifuna"
+  to = "/pages/languages/garifuna.html"
+  status = 200
+[[redirects]]
+  from = "/languages/navajo"
+  to = "/pages/languages/navajo.html"
+  status = 200
+[[redirects]]
   from = "/languages/es"
   to = "/pages/languages/es.html"
   status = 200
@@ -763,6 +771,43 @@
 [[redirects]]
   from = "/italian-translation"
   to = "/languages/italian"
+  status = 301
+# ── Rare / Indigenous language SEO clean URLs → canonical /languages/ ─────────
+[[redirects]]
+  from = "/garifuna-translation"
+  to = "/languages/garifuna"
+  status = 301
+[[redirects]]
+  from = "/garifuna-translation-services"
+  to = "/languages/garifuna"
+  status = 301
+[[redirects]]
+  from = "/garifuna-interpreter"
+  to = "/languages/garifuna"
+  status = 301
+[[redirects]]
+  from = "/garifuna-interpretation-services"
+  to = "/languages/garifuna"
+  status = 301
+[[redirects]]
+  from = "/navajo-translation"
+  to = "/languages/navajo"
+  status = 301
+[[redirects]]
+  from = "/navajo-translation-services"
+  to = "/languages/navajo"
+  status = 301
+[[redirects]]
+  from = "/navajo-interpreter"
+  to = "/languages/navajo"
+  status = 301
+[[redirects]]
+  from = "/navajo-interpretation-services"
+  to = "/languages/navajo"
+  status = 301
+[[redirects]]
+  from = "/dine-bizaad-translation"
+  to = "/languages/navajo"
   status = 301
 # ── State page clean URL rewrites (50 states) ────────────────────────────────
 [[redirects]]

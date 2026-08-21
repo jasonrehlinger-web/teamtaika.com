@@ -376,8 +376,10 @@ function showSuccess(){
   document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
   document.getElementById('progressbar').style.display='none';
   document.getElementById('success-screen').classList.add('active');
+  if(window.taikaTrack)window.taikaTrack('generate_lead',{form_name:'ai-assessment'});
   window.scrollTo({top:0,behavior:'smooth'})
 }
 </script>
+<script defer src="/js/main.js"></script>
 </body>
 </html>

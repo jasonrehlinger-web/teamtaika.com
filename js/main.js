@@ -9,6 +9,11 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   window.gtag = gtag;
+  // Safe GA4 event helper — never throws, silently no-ops if gtag is absent
+  // (ad blocker, offline, consent-blocked). Use everywhere instead of raw gtag.
+  window.taikaTrack = function (name, params) {
+    try { gtag('event', name, params || {}); } catch (e) {}
+  };
   gtag('consent', 'default', {
     analytics_storage: 'denied',
     ad_storage: 'denied',
@@ -298,6 +303,11 @@
           }).then(function (res) {
             // A 404/500 still resolves — treat as failure so leads aren't lost silently
             if (!res.ok) throw new Error('HTTP ' + res.status);
+            // GA4 conversion: a lead form reached us successfully
+            if (window.taikaTrack) window.taikaTrack('generate_lead', {
+              form_name: formName,
+              is_download: !!downloadUrl
+            });
             if (downloadUrl) {
               var a = document.createElement('a');
               a.href = downloadUrl;
@@ -719,6 +729,14 @@
         var custName  = nameEl  ? nameEl.value.trim() : '';
         var custEmail = emailEl ? emailEl.value.trim() : '';
         var custNotes = notesEl ? notesEl.value.trim() : '';
+
+        // GA4 funnel: customer started a paid checkout
+        if (window.taikaTrack) window.taikaTrack('begin_checkout', {
+          currency: 'USD',
+          value: parseFloat(amount) || 0,
+          payment_type: method,
+          items: [{ item_name: desc }]
+        });
         // Correlation id: sent with the Netlify order record AND as PayPal's
         // `custom` field so payments can be matched to uploaded documents.
         var orderId   = 'LAH-' + Date.now().toString(36).toUpperCase() + '-'
@@ -824,6 +842,21 @@
     var firstName = pending && pending.name  ? escHtml(pending.name.split(' ')[0]) : 'there';
     var email     = pending && pending.email ? escHtml(pending.email) : '';
     var amount    = pending && pending.amount ? '$' + escHtml(pending.amount) : '';
+
+    // GA4 conversion: a payment completed. transaction_id (the order id) lets
+    // GA4 de-duplicate if the success page is reloaded. Fires for every method
+    // (Stripe / PayPal / Venmo / Zelle) since all return via ?payment=success.
+    if (pending && window.taikaTrack) {
+      var _sid = '';
+      try { _sid = new URLSearchParams(window.location.search).get('session_id') || ''; } catch (e) {}
+      window.taikaTrack('purchase', {
+        transaction_id: pending.orderId || _sid || ('LAH-' + (pending.email || '')),
+        currency: 'USD',
+        value: parseFloat(pending.amount) || 0,
+        payment_type: pending.method || '',
+        items: [{ item_name: pending.desc || 'Order' }]
+      });
+    }
 
     // Replace form with success card
     var card   = form.closest('.order-form-card');
@@ -961,4 +994,71 @@
     }
 
   });
+}());
+
+/* ============================================================
+   GA4 Auto Event Tracking (site-wide, dependency-free)
+   Delegated listeners so it works on any page that loads this
+   file, including hand-built pages with no per-page JS. Fires:
+     • phone_click   — tel: links
+     • email_click   — mailto: links
+     • file_download — data-download attr or a downloadable href
+     • cta_click     — links to conversion destinations / CTA buttons
+     • generate_lead — native (non-AJAX) form submissions
+   AJAX lead forms, begin_checkout and purchase are tracked inline
+   where those flows run (see initForms / initPayPal above).
+   ============================================================ */
+(function () {
+  'use strict';
+  function track(name, params) {
+    try { if (window.taikaTrack) window.taikaTrack(name, params || {}); } catch (e) {}
+  }
+  function label(el) {
+    var t = (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim();
+    return t.slice(0, 100);
+  }
+
+  var DOWNLOAD_RE = /\.(pdf|docx?|xlsx?|pptx?|zip|csv|txt)(\?|$)/i;
+  // href patterns that indicate conversion intent (quote / order / contact)
+  var CTA_HREF_RE = /(#quote|\/quote|\/order|\/store|\/get-a-quote|\/contact|\/pricing|\/lp\/|calendly\.com)/i;
+
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a, button') : null;
+    if (!el) return;
+    var href = (el.getAttribute && el.getAttribute('href')) || '';
+
+    if (/^tel:/i.test(href)) {
+      track('phone_click', { link_text: label(el), phone: href.replace(/^tel:/i, '') });
+      return;
+    }
+    if (/^mailto:/i.test(href)) {
+      track('email_click', { link_text: label(el), email: href.replace(/^mailto:/i, '') });
+      return;
+    }
+    // Downloads: explicit data-download (main.js AJAX forms) or a file href
+    if ((el.hasAttribute && el.hasAttribute('data-download')) || DOWNLOAD_RE.test(href)) {
+      track('file_download', {
+        link_text: label(el),
+        file_name: (el.getAttribute('data-download') || href).split('/').pop()
+      });
+      return;
+    }
+    // CTA clicks: conversion-destination links, or prominent CTA buttons
+    var cls = (el.className && el.className.baseVal !== undefined) ? el.className.baseVal : (el.className || '');
+    var isCtaClass = /\b(lp-cta|btn-primary|btn-cta|btn-hero|btn-lead|btn-order|btn-quote)\b/.test(cls);
+    if (CTA_HREF_RE.test(href) || isCtaClass) {
+      track('cta_click', { link_text: label(el), destination: href || '(button)' });
+    }
+  }, true);
+
+  // Native form submissions (e.g. the /lp Netlify landing-page forms that POST
+  // and navigate). AJAX forms are handled in initForms and won't fire a native
+  // submit, so this won't double-count them.
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (!form || form.tagName !== 'FORM') return;
+    var nameField = form.querySelector('[name="form-name"]');
+    var formName = (nameField && nameField.value) || form.getAttribute('name') || 'unknown';
+    track('generate_lead', { form_name: formName, transport_type: 'beacon' });
+  }, true);
 }());

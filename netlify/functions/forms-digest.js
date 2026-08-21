@@ -27,13 +27,28 @@ function esc(s) {
   return String(s == null ? '' : s).replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
 }
 
+async function sendResend(resendKey, payload) {
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) console.error('[forms-digest] Resend error:', res.status, await res.text());
+    return res.ok;
+  } catch (err) {
+    console.error('[forms-digest] email failed:', err);
+    return false;
+  }
+}
+
 async function fetchSubmissions(siteId, token, sinceMs) {
   // Paginate newest-first until we pass the cutoff (or run out / hit a safety cap).
   const out = [];
   for (let page = 1; page <= 20; page++) {
     const url = `https://api.netlify.com/api/v1/sites/${siteId}/submissions?per_page=100&page=${page}`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) throw new Error(`Netlify API ${res.status}: ${await res.text()}`);
+    if (!res.ok) { const e = new Error(`Netlify API ${res.status}: ${await res.text()}`); e.status = res.status; throw e; }
     const batch = await res.json();
     if (!Array.isArray(batch) || batch.length === 0) break;
     let passedCutoff = false;
@@ -63,6 +78,20 @@ exports.handler = async () => {
     subs = await fetchSubmissions(siteId, token, sinceMs);
   } catch (err) {
     console.error('[forms-digest] fetch failed:', err);
+    // A rejected token (expired / revoked / invalid) would otherwise fail
+    // SILENTLY — the weekly email would simply stop arriving, with no signal.
+    // Turn that into a LOUD alert so the token gets rotated promptly.
+    if (err && (err.status === 401 || err.status === 403)) {
+      await sendResend(resendKey, {
+        from: FROM_ADDRESS,
+        to,
+        subject: '⚠️ ACTION NEEDED: Netlify form-digest token expired',
+        html: `<h2 style="font-family:Arial,sans-serif;color:#b91c1c;">Form-digest token needs rotating</h2>`
+          + `<p style="font-family:Arial,sans-serif;font-size:14px;color:#1e293b;">The weekly Netlify form-submission digest could not run: its API token (env <code>NETLIFY_ACCESS_TOKEN</code>) was rejected (HTTP ${err.status}) — most likely expired or revoked.</p>`
+          + `<p style="font-family:Arial,sans-serif;font-size:14px;color:#1e293b;"><strong>Fix:</strong> create a new Netlify personal access token and update the <code>NETLIFY_ACCESS_TOKEN</code> environment variable on the teamtaika project (Project configuration → Environment variables).</p>`
+          + `<p style="font-family:Arial,sans-serif;font-size:13px;color:#64748b;">Per-submission lead notifications are unaffected — only this weekly rollup is paused until the token is replaced.</p>`
+      });
+    }
     return { statusCode: 200, body: 'fetch-failed' };
   }
 
@@ -108,15 +137,6 @@ exports.handler = async () => {
       + `Full details + CSV export: Netlify → teamtaika → Forms. This is a safety-net summary; you also get a real-time email on each submission.</p>`
   };
 
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    if (!res.ok) console.error('[forms-digest] Resend error:', res.status, await res.text());
-  } catch (err) {
-    console.error('[forms-digest] email failed:', err);
-  }
+  await sendResend(resendKey, payload);
   return { statusCode: 200, body: `ok (${total})` };
 };

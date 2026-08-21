@@ -56,6 +56,26 @@ exports.handler = async (event) => {
   const formName = p.form_name || p.formName || '';
   const data     = (p.data && typeof p.data === 'object') ? p.data : {};
 
+  // Best-effort: stash a compact record of EVERY (verified) submission into a
+  // Netlify Blobs store so the weekly safety-net digest (forms-digest.js) can
+  // roll them up with no API token. Wrapped so a Blobs hiccup can NEVER affect
+  // the lead/order notification below. One key per submission = no read-modify-
+  // write race. Netlify only invokes this function for non-spam submissions.
+  try {
+    const { getStore } = await import('@netlify/blobs');
+    const store = getStore('form-digest');
+    const rec = {
+      form:  formName,
+      name:  data['full-name'] || data.name || [data.first_name, data.last_name].filter(Boolean).join(' ') || data.email || 'customer',
+      email: data.email || '',
+      at:    new Date().toISOString(),
+      page:  p.title || (p.data && p.data.page_url) || ''
+    };
+    await store.setJSON('sub/' + Date.now() + '-' + Math.random().toString(36).slice(2, 8), rec);
+  } catch (e) {
+    console.warn('[submission-created] digest stash failed (non-fatal):', e && e.message);
+  }
+
   // Detect uploaded files. Netlify exposes each as a URL (string) or {url}.
   // Accept ONLY https URLs so a forged payload can't smuggle a javascript:/
   // data: link (or an off-host phishing link) into the staff email.

@@ -188,8 +188,9 @@
   functions = "netlify/functions"
 
 # Weekly safety-net digest of all Netlify form submissions (Mondays 13:00 UTC
-# ≈ 8am Central). See netlify/functions/forms-digest.js. Needs env
-# NETLIFY_ACCESS_TOKEN (Netlify PAT) + RESEND_API_KEY (already set).
+# ≈ 8am Central). See netlify/functions/forms-digest.js. Tokenless: reads the
+# Netlify Blobs store that submission-created.js fills. Only needs RESEND_API_KEY
+# (already set for the other email functions).
 [functions."forms-digest"]
   schedule = "0 13 * * 1"
 

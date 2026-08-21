@@ -73,11 +73,22 @@ exports.handler = async (event) => {
 
   const isOrder = ORDER_FORMS.includes(formName)
     || formName.indexOf('lang-order') === 0
+    || formName.indexOf('lang-native') === 0
     || formName.indexOf('store-order') === 0;
 
-  // Landing-page lead forms (free-scan CTA): lp-508-audit / -healthcare / -gsa.
-  // These carry no file and aren't orders, so they'd otherwise be skipped.
-  const isLead = formName.indexOf('lp-') === 0;
+  // Lead / quote / inquiry forms. HubSpot used to receive and route ALL of these
+  // (it was the CRM + alerting path); it is no longer in use, so Netlify is now
+  // the ONLY capture — every lead form must notify the team or the lead is
+  // silently missed. Covers landing pages (lp-*), the 50 state pages
+  // (state-inquiry-*), industry inquiries, every *-inquiry / *-quote service
+  // form, and the named lead magnets.
+  const LEAD_FORMS = ['checklist', 'ai-assessment', 'pdf-checker-lead'];
+  const isLead = formName.indexOf('lp-') === 0
+    || formName.indexOf('state-inquiry') === 0
+    || formName.indexOf('industry-inquiry') === 0
+    || /-inquiry$/.test(formName)
+    || /-quote$/.test(formName)
+    || LEAD_FORMS.includes(formName);
 
   // Only notify the team for orders/quotes, landing-page leads, or anything with a file.
   if (!isOrder && !isLead && fileLinks.length === 0) return { statusCode: 200, body: 'skipped' };

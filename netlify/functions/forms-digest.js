@@ -20,7 +20,7 @@
 
 const SITE_ID_DEFAULT = '7601c3cf-b7f6-44fd-b3e5-5bab387cf978'; // teamtaika (not secret)
 const FROM_ADDRESS    = 'Taika Translations <noreply@taikatranslations.com>';
-const DIGEST_TO_DEFAULT = ['projects@taikatranslations.com', 'sales@taikatranslations.com'];
+const DIGEST_TO_DEFAULT = ['projects@taikatranslations.com', 'sales@taikatranslations.com', 'ceo@taikatranslations.com'];
 const WINDOW_DAYS = 7;
 
 function esc(s) {

@@ -187,6 +187,12 @@
   publish = "."
   functions = "netlify/functions"
 
+# Weekly safety-net digest of all Netlify form submissions (Mondays 13:00 UTC
+# ≈ 8am Central). See netlify/functions/forms-digest.js. Needs env
+# NETLIFY_ACCESS_TOKEN (Netlify PAT) + RESEND_API_KEY (already set).
+[functions."forms-digest"]
+  schedule = "0 13 * * 1"
+
 [[redirects]]
   from = "/services"
   to = "/pages/services/translation.html"

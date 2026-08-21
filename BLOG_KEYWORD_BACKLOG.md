@@ -43,7 +43,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Regulation (EU) 2017/745. **Article 10(11) is the correct citation** for accompanying information in the language(s) accepted by the member state where the device is placed on market; Annex I §23 governs label and IFU content. **Many competitor articles miscite "Article 41" — Article 41 sits in Chapter IV and concerns Notified Body designation documents, nothing to do with IFU language.** Getting this right is a credibility differentiator; say so plainly. Language requirements vary by state (Belgium: French/Dutch/German; Finland: Finnish/Swedish). **CORRECTION 2026-08-18:** this note previously listed Luxembourg as French/German/**Luxembourgish** — wrong for MDR purposes. Article 10(11) requires an *official Union language* determined by the member state, and Luxembourgish is not one of the 24 official EU languages (Regulation No 1/1958 as amended), so it cannot be demanded under 10(11). Many vendor tables make this same error by reaching for national languages instead of the Union set. Do not reuse the old figure in a future life-sciences topic. ISO 15223-1:2021 symbols can replace text on many label elements but there is no symbol shortcut for IFU narrative. Verify all of this against the regulation text before publishing.
   Category: `translation` · CTA: `/pages/industries/medical-device-translation.html` · Links: `/pages/industries/life-sciences-translation.html`, `/pages/services/desktop-publishing.html`
 
-- [ ] **5. `bilingual-staff-are-not-interpreters`** — *Why Your Bilingual Staff Are Not Interpreters (and What That Exposes You To)*
+- [x] **5. `bilingual-staff-are-not-interpreters`** — *Why Your Bilingual Staff Are Not Interpreters (and What That Exposes You To)*
   Keyword: `bilingual staff vs professional interpreter`. Lane A · all three audiences × Interpretation. Strong villain framing; the most common cost-cutting mistake.
   Evidence: Federal and state education guidance states plainly that it is not sufficient for staff merely to be bilingual, and that districts may not use students or untrained staff. Section 1557 sets an explicit qualified-interpreter standard for health programs. Cover the competence gap (specialized terminology, impartiality, confidentiality, role confusion) and the liability that follows.
   Category: `interpretation` · CTA: `/pages/services/interpretation.html` · Links: `/blog/opi-vri-guide`, `/blog/translation-vs-interpretation`
@@ -185,6 +185,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] section-1557-qualified-interpreter — published 2026-08-11 → /blog/section-1557-qualified-interpreter
 - [x] school-website-accessibility-ada-title-ii — published 2026-08-14 → /blog/school-website-accessibility-ada-title-ii
 - [x] medical-device-ifu-translation-eu-mdr — published 2026-08-18 → /blog/medical-device-ifu-translation-eu-mdr
+- [x] bilingual-staff-are-not-interpreters — published 2026-08-21 → /blog/bilingual-staff-are-not-interpreters
 
 ---
 
@@ -195,7 +196,7 @@ Every run also upgrades ONE older post, taken from the top of this list. These p
 The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answer-box` "Quick answer" near the top where missing. Where a post has no `.post-cta` it already has an inline-styled CTA block instead — leave that alone rather than duplicating it. **Do not rewrite body copy, do not add or remove prices, and do not change the byline or dates.**
 
 - [x] what-is-certified-translation — upgraded 2026-08-18 (.answer-box + .inline-cta added; existing inline CTA block left in place)
-- [ ] opi-vri-guide
+- [x] opi-vri-guide — upgraded 2026-08-21 (.answer-box + .inline-cta added)
 - [ ] wcag-ada-compliance-tips
 - [ ] pdf-remediation-guide
 - [ ] translation-for-government

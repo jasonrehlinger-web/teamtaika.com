@@ -178,6 +178,11 @@
   to = "/pages/resources/blog/medical-device-ifu-translation-eu-mdr.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/bilingual-staff-are-not-interpreters"
+  to = "/pages/resources/blog/bilingual-staff-are-not-interpreters.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1523,6 +1528,12 @@
 [[redirects]]
   from = "/pages/resources/blog/medical-device-ifu-translation-eu-mdr.html"
   to = "/blog/medical-device-ifu-translation-eu-mdr"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/resources/blog/bilingual-staff-are-not-interpreters.html"
+  to = "/blog/bilingual-staff-are-not-interpreters"
   status = 301
   force = true
 [[redirects]]

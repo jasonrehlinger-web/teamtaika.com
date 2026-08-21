@@ -204,45 +204,13 @@
   }
 
   /* -- FORM SUBMISSION -------------------------------------- */
-  var HS_PORTAL = '47509323';
-  var HS_FORM   = 'a2c15341-e287-4b14-bc2c-ed20dc17acff';
-  var HS_URL    = 'https://api.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL + '/' + HS_FORM;
+  // Leads are captured by Netlify Forms (POST to '/'). The former HubSpot
+  // mirror-submit was removed — HubSpot is no longer in use.
 
   function encode(data) {
     return Object.keys(data).map(function (key) {
       return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
     }).join('&');
-  }
-
-  function submitToHubSpot(data, formName, fileName) {
-    var emailVal = '';
-    Object.keys(data).forEach(function (k) {
-      if (!emailVal && k.toLowerCase().indexOf('email') !== -1) emailVal = data[k];
-    });
-    if (!emailVal) return;
-
-    var companyVal = data['org-type'] || data['l_org'] || data['ai_org'] || data['level'] || '';
-
-    var skip = ['form-name', 'bot-field'];
-    var msgParts = ['[Form: ' + formName + ']'];
-    Object.keys(data).forEach(function (k) {
-      if (skip.indexOf(k) !== -1 || k.toLowerCase().indexOf('email') !== -1) return;
-      if (data[k]) msgParts.push(k + ': ' + data[k]);
-    });
-    if (fileName) msgParts.push('attachment: ' + fileName);
-
-    var fields = [{ name: 'email', value: emailVal }];
-    if (companyVal) fields.push({ name: 'company', value: companyVal });
-    fields.push({ name: 'message', value: msgParts.join(' | ') });
-
-    fetch(HS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fields: fields,
-        context: { pageUri: window.location.href, pageName: document.title }
-      })
-    }).catch(function () {});
   }
 
   function initForms() {
@@ -283,8 +251,6 @@
           // Check for file attachment
           var fileInput = form.querySelector('input[type="file"]');
           var fileName = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0].name : null;
-
-          submitToHubSpot(data, formName, fileName);
 
           // Use FormData if there's a file, otherwise URL-encoded
           var body, headers;

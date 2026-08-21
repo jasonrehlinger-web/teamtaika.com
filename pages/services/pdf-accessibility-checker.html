@@ -774,9 +774,6 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/p
 var selFile=null,pdfDoc=null,findings=[];
 var root=document.querySelector('.tka-pdf-checker');
 
-var HS_PORTAL_ID='47509323';
-var HS_FORM_GUID='a2c15341-e287-4b14-bc2c-ed20dc17acff';
-
 var SVG={
   chev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>',
   arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>',
@@ -1105,14 +1102,15 @@ window.tkaUnlockReport=function(){
     div+nl+'Standards: Section 508 · ADA · WCAG 2.2 (A/AA)'+nl+
     'Source: taikatranslations.com/pdf-accessibility-checker';
 
-  fetch('https://api.hsforms.com/submissions/v3/integration/submit/'+HS_PORTAL_ID+'/'+HS_FORM_GUID,{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({fields:[
-      {name:'firstname',value:fname},{name:'lastname',value:lname},
-      {name:'email',value:email},{name:'phone',value:phone},
-      {name:'company',value:company},{name:'message',value:msg}
-    ],context:{pageUri:window.location.href,pageName:document.title}})
-  }).then(revealReport).catch(function(e){console.warn('HubSpot:',e);revealReport()});
+  // Capture the lead via Netlify Forms (the hidden "pdf-checker-lead" form is
+  // registered above). HubSpot is no longer in use — posting here previously
+  // sent leads to a dead endpoint and they were lost.
+  var _lead={'form-name':'pdf-checker-lead','bot-field':'',
+    firstname:fname,lastname:lname,email:email,phone:phone,company:company,message:msg};
+  var _enc=Object.keys(_lead).map(function(k){return encodeURIComponent(k)+'='+encodeURIComponent(_lead[k]);}).join('&');
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:_enc})
+    .then(revealReport).catch(function(e){console.warn('Lead capture:',e);revealReport()});
+  if(window.taikaTrack)window.taikaTrack('generate_lead',{form_name:'pdf-checker-lead'});
 };
 
 function revealReport(){

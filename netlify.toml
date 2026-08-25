@@ -179,6 +179,11 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/informed-consent-form-translation-requirements"
+  to = "/pages/resources/blog/informed-consent-form-translation-requirements.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/bilingual-staff-are-not-interpreters"
   to = "/pages/resources/blog/bilingual-staff-are-not-interpreters.html"
   status = 200
@@ -1538,6 +1543,11 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/pages/resources/blog/informed-consent-form-translation-requirements.html"
+  to = "/blog/informed-consent-form-translation-requirements"
+  status = 301
+  force = true
 [[redirects]]
   from = "/pages/resources/blog/bilingual-staff-are-not-interpreters.html"
   to = "/blog/bilingual-staff-are-not-interpreters"

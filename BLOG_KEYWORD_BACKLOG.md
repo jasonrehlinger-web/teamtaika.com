@@ -48,7 +48,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Federal and state education guidance states plainly that it is not sufficient for staff merely to be bilingual, and that districts may not use students or untrained staff. Section 1557 sets an explicit qualified-interpreter standard for health programs. Cover the competence gap (specialized terminology, impartiality, confidentiality, role confusion) and the liability that follows.
   Category: `interpretation` · CTA: `/pages/services/interpretation.html` · Links: `/blog/opi-vri-guide`, `/blog/translation-vs-interpretation`
 
-- [ ] **6. `informed-consent-form-translation-requirements`** — *Informed Consent Form Translation: What IRBs and the FDA Actually Require*
+- [x] **6. `informed-consent-form-translation-requirements`** — *Informed Consent Form Translation: What IRBs and the FDA Actually Require*
   Keyword: `informed consent form translation requirements`. **Lane B · Clinical trials — high value, recurring revenue.**
   Evidence: 21 CFR 50.20 requires information in a language understandable to the subject; 50.25 and 50.27 govern required elements and documentation. ICH E6(R3) addresses appropriateness of translation method for the population. Short-form consent plus interpreter is a recognized path for unanticipated LEP enrollment. Back-translation and reconciliation are how sponsors evidence understandability; weak translation is a documented cause of IRB deferral and re-consent. Do NOT promise IRB approval — position on defensible process and documentation.
   Category: `healthcare` · CTA: `/pages/industries/clinical-trial-translation.html` · Links: `/pages/industries/life-sciences-translation.html`, `/pages/services/translation.html`
@@ -186,6 +186,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] school-website-accessibility-ada-title-ii — published 2026-08-14 → /blog/school-website-accessibility-ada-title-ii
 - [x] medical-device-ifu-translation-eu-mdr — published 2026-08-18 → /blog/medical-device-ifu-translation-eu-mdr
 - [x] bilingual-staff-are-not-interpreters — published 2026-08-21 → /blog/bilingual-staff-are-not-interpreters
+- [x] informed-consent-form-translation-requirements — published 2026-08-25 → /blog/informed-consent-form-translation-requirements
 
 ---
 
@@ -197,7 +198,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 
 - [x] what-is-certified-translation — upgraded 2026-08-18 (.answer-box + .inline-cta added; existing inline CTA block left in place)
 - [x] opi-vri-guide — upgraded 2026-08-21 (.answer-box + .inline-cta added)
-- [ ] wcag-ada-compliance-tips
+- [x] wcag-ada-compliance-tips — upgraded 2026-08-25 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [ ] pdf-remediation-guide
 - [ ] translation-for-government
 - [ ] title-vi-language-access-plan

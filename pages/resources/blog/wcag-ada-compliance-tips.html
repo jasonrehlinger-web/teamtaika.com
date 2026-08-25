@@ -217,6 +217,9 @@
 <div class="post-inner">
   <div class="post-body">
     <p>The ADA Title II WCAG 2.1 AA deadlines are {{ADA_DEADLINE_LARGE}} (agencies with 50,000+ population) and {{ADA_DEADLINE_SMALL}} (smaller agencies and special districts). If your government website isn't compliant, you're at legal risk. DOJ is actively enforcing, complaint filing is up, and organizations with no documented remediation activity are most exposed. The good news: most government websites fail on the same handful of issues.</p>
+    <div class="answer-box" style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:0 0 32px;">
+      <strong style="color:#166534;">Quick answer:</strong> <span style="font-size:16px;color:var(--slate);line-height:1.75;">Five WCAG 2.1 Level AA failures account for most government website violations: insufficient color contrast (below 4.5:1 for normal text and 3:1 for large text), missing or uninformative image alt text, untagged PDFs that screen readers cannot read, form fields with no associated &lt;label&gt; element, and video published without accurate captions. Automated scanners such as WAVE and Axe catch only roughly 30&ndash;40% of WCAG failures, so conformance also requires manual keyboard-only and screen-reader testing. ADA Title II applies WCAG 2.1 Level AA to state and local government websites, and a documented audit plus a remediation plan is itself evidence of good-faith effort.</span>
+    </div>
     <h2>1. Color Contrast</h2>
     <p>WCAG 2.1 AA requires a minimum contrast ratio of 4.5:1 between text and its background (3:1 for large text). This is the single most common failure on government websites. Common violations: light gray text on white, gold text on white, white text on medium-blue backgrounds, faded placeholder text in form fields.</p>
     <p><strong>Fix:</strong> Use the WebAIM Contrast Checker to test any color pair. Update your CSS. Don't forget form field placeholder text — it's frequently overlooked.</p>
@@ -226,6 +229,10 @@
     <h2>3. PDF Documents Without Tags</h2>
     <p>Every PDF linked from your website must be accessible. Most legacy government PDFs are not. An untagged PDF is invisible to screen readers. This matters especially because government agencies typically have hundreds or thousands of PDFs — benefit forms, meeting agendas, policy documents, permit applications.</p>
     <p><strong>Fix:</strong> Use our <a href="/pdf-accessibility-checker">Free PDF Accessibility Checker</a> to identify failures. Prioritize PDFs that gate access to services, then remediate with Acrobat Pro or a remediation vendor.</p>
+    <div class="inline-cta" style="background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:32px 0;">
+      <p style="margin:0 0 12px;font-size:15px;color:var(--navy);"><strong>Have hundreds of PDFs and no idea which ones fail?</strong> We remediate and tag document libraries at scale for agencies, districts, and health systems &mdash; and we document the work so it stands up as evidence of good-faith progress.</p>
+      <p style="margin:0;font-size:15px;"><a href="/508-compliance#quote" style="font-weight:700;color:var(--gold-text,#7A5C0F);">Get a Section 508 remediation quote &rarr;</a></p>
+    </div>
     <h2>4. Forms Without Proper Labels</h2>
     <p>A form field without a proper <code>&lt;label&gt;</code> element is inaccessible to screen reader users. The common mistake: using placeholder text as a visual label. When a user focuses the field, the placeholder disappears and the screen reader announces nothing.</p>
     <p><strong>Fix:</strong> Every form input needs an associated <code>&lt;label&gt;</code> element — visually displayed or visually hidden but present in the HTML. Never rely solely on placeholder text. Required fields must indicate requirement in the label, not just by color.</p>

@@ -179,6 +179,11 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/nonprofit-website-accessibility-requirements"
+  to = "/pages/resources/blog/nonprofit-website-accessibility-requirements.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/informed-consent-form-translation-requirements"
   to = "/pages/resources/blog/informed-consent-form-translation-requirements.html"
   status = 200
@@ -1543,6 +1548,11 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/pages/resources/blog/nonprofit-website-accessibility-requirements.html"
+  to = "/blog/nonprofit-website-accessibility-requirements"
+  status = 301
+  force = true
 [[redirects]]
   from = "/pages/resources/blog/informed-consent-form-translation-requirements.html"
   to = "/blog/informed-consent-form-translation-requirements"

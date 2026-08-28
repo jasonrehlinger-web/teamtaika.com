@@ -42,6 +42,11 @@
 .post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
 .post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
 .post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+.answer-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:1.6em 0;}
+.answer-box strong{color:#166534;}
+.inline-cta{background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:2em 0;}
+.inline-cta p{margin:0 0 12px;font-size:15px;color:var(--navy);}
+.inline-cta a{font-weight:700;color:var(--gold-text,#7A5C0F);}
 @media(max-width:640px){.blog-grid{grid-template-columns:1fr;padding:0 16px;}}
 </style>
 <script type="application/ld+json">
@@ -217,6 +222,9 @@
 <div class="post-inner">
   <div class="post-body">
     <p>Section 508 requires government agencies and their contractors to make all electronic and information technology accessible. For PDFs, that means meeting the PDF/UA standard. Most government PDFs fail on the same six criteria. This guide walks through each one: what failure looks like, why it matters, and how to fix it.</p>
+    <div class="answer-box">
+      <strong>Quick answer:</strong> A PDF is Section 508 compliant when it is tagged to the PDF/UA standard — meaning it has a correct tag tree (headings, paragraphs, lists, tables), a real text layer rather than a scanned image, alt text on every meaningful image, properly tagged table headers with scope, a logical reading order that matches the visual order, and a document language set in the file properties. Automated checkers can flag which of these are missing, but they cannot fix them: remediation is manual work in Adobe Acrobat Pro. Those six failures account for nearly every non-compliant government PDF.
+    </div>
     <h2>Why PDF Accessibility Is Hard</h2>
     <p>PDFs were designed as final-form documents that replicate the visual appearance of print — they don't inherently carry the semantic structure that assistive technology needs. Retrofitting accessibility into legacy PDFs is time-consuming manual work. Automated tools can identify failures, but they can't fix them — remediation requires human review in Adobe Acrobat Pro.</p>
     <h2>Failure 1: No Tags (or Corrupted Tags)</h2>
@@ -228,6 +236,10 @@
     <h2>Failure 3: Missing Alt Text on Images</h2>
     <p>Charts, diagrams, photos, and infographics in PDFs need alternative text descriptions. Without alt text, the screen reader announces "Figure" and the user has no idea what the image contains.</p>
     <p><strong>Fix:</strong> In Acrobat Pro's Tags panel, locate each Figure tag, right-click &gt; Properties, and add descriptive alt text. Write alt text that describes what the image communicates — not just what it looks like. Mark purely decorative images as Artifact.</p>
+    <div class="inline-cta">
+      <p><strong>Sitting on a backlog you cannot remediate in-house?</strong> We remediate PDFs to PDF/UA and WCAG 2.1 AA for agencies, districts, and health systems — including documents that also have to exist in other languages.</p>
+      <p><a href="/508-compliance">See Section 508 &amp; ADA compliance services &rarr;</a></p>
+    </div>
     <h2>Failure 4: Untagged or Mis-Tagged Tables</h2>
     <p>Tables need proper tag structure: Table &gt; TR &gt; TH/TD. Headers need scope attributes so screen readers can associate each data cell with its headers. Without this, a screen reader reads table cells as a stream of text with no structural context.</p>
     <p><strong>Fix:</strong> In Acrobat Pro, use the Table Editor under Accessibility tools to visually assign Header cells and set scope attributes. For complex tables with merged cells, this requires careful manual verification of every cell.</p>

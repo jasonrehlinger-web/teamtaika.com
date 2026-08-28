@@ -53,7 +53,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: 21 CFR 50.20 requires information in a language understandable to the subject; 50.25 and 50.27 govern required elements and documentation. ICH E6(R3) addresses appropriateness of translation method for the population. Short-form consent plus interpreter is a recognized path for unanticipated LEP enrollment. Back-translation and reconciliation are how sponsors evidence understandability; weak translation is a documented cause of IRB deferral and re-consent. Do NOT promise IRB approval — position on defensible process and documentation.
   Category: `healthcare` · CTA: `/pages/industries/clinical-trial-translation.html` · Links: `/pages/industries/life-sciences-translation.html`, `/pages/services/translation.html`
 
-- [ ] **7. `nonprofit-website-accessibility-requirements`** — *Is Your Nonprofit's Website Legally Required to Be Accessible?*
+- [x] **7. `nonprofit-website-accessibility-requirements`** — *Is Your Nonprofit's Website Legally Required to Be Accessible?*
   Keyword: `nonprofit website accessibility requirements`. Lane A · Nonprofits × ADA/508. Zero existing nonprofit coverage.
   Evidence: ADA Title III reaches most 501(c)(3) organizations as places of public accommodation, regardless of staff size. Section 504 separately attaches to any organization receiving federal financial assistance. DOJ enforces using WCAG 2.1 Level AA as the baseline. An inaccessible site that blocks program access can put federal grants at risk.
   Category: `accessibility` · CTA: `/pages/services/508-compliance.html` · Links: `/pages/industries/nonprofits.html`, `/blog/pdf-remediation-guide`
@@ -187,6 +187,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] medical-device-ifu-translation-eu-mdr — published 2026-08-18 → /blog/medical-device-ifu-translation-eu-mdr
 - [x] bilingual-staff-are-not-interpreters — published 2026-08-21 → /blog/bilingual-staff-are-not-interpreters
 - [x] informed-consent-form-translation-requirements — published 2026-08-25 → /blog/informed-consent-form-translation-requirements
+- [x] nonprofit-website-accessibility-requirements — published 2026-08-28 → /blog/nonprofit-website-accessibility-requirements
 
 ---
 
@@ -199,7 +200,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] what-is-certified-translation — upgraded 2026-08-18 (.answer-box + .inline-cta added; existing inline CTA block left in place)
 - [x] opi-vri-guide — upgraded 2026-08-21 (.answer-box + .inline-cta added)
 - [x] wcag-ada-compliance-tips — upgraded 2026-08-25 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
-- [ ] pdf-remediation-guide
+- [x] pdf-remediation-guide — upgraded 2026-08-28 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [ ] translation-for-government
 - [ ] title-vi-language-access-plan
 - [ ] most-spoken-languages

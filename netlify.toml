@@ -204,6 +204,18 @@
 [functions."forms-digest"]
   schedule = "0 13 * * 1"
 
+# Government "Contracts We Hold" pages — clean URLs for pages/government/<slug>.html
+# (one rule covers all 15). Reverse 301 keeps the .html path canonical-clean.
+[[redirects]]
+  from = "/government/:slug"
+  to = "/pages/government/:slug.html"
+  status = 200
+[[redirects]]
+  from = "/pages/government/:slug.html"
+  to = "/government/:slug"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/services"
   to = "/pages/services/translation.html"

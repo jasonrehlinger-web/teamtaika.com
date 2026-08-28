@@ -102,7 +102,7 @@ exports.handler = async (event) => {
   // silently missed. Covers landing pages (lp-*), the 50 state pages
   // (state-inquiry-*), industry inquiries, every *-inquiry / *-quote service
   // form, and the named lead magnets.
-  const LEAD_FORMS = ['checklist', 'ai-assessment', 'pdf-checker-lead'];
+  const LEAD_FORMS = ['checklist', 'ai-assessment', 'pdf-checker-lead', 'contract-info', 'contract-management'];
   const isLead = formName.indexOf('lp-') === 0
     || formName.indexOf('state-inquiry') === 0
     || formName.indexOf('industry-inquiry') === 0

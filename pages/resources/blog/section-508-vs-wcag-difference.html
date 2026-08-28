@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 508 vs. WCAG vs. ADA: Which Accessibility Standard Applies to You? | Language Access Hub</title>
+<meta name="description" content="Section 508, WCAG, and the ADA are constantly confused. Here is what each one actually is, how they relate, and which standard your organization is legally required to meet.">
+<link rel="canonical" href="https://teamtaika.com/blog/section-508-vs-wcag-difference">
+<meta property="og:title" content="Section 508 vs. WCAG vs. ADA: Which Accessibility Standard Applies to You?">
+<meta property="og:description" content="Section 508, WCAG, and the ADA are constantly confused. Here is what each one actually is, how they relate, and which standard your organization is legally required to meet.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/section-508-vs-wcag-difference">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Section 508 vs. WCAG vs. ADA: Which Accessibility Standard Applies to You?",
+  "description": "Section 508, WCAG, and the ADA are constantly confused. Here is what each one actually is, how they relate, and which standard your organization is legally required to meet.",
+  "url": "https://teamtaika.com/blog/section-508-vs-wcag-difference",
+  "datePublished": "2026-08-26",
+  "dateModified": "2026-08-26",
+  "author": { "@type": "Organization", "name": "Language Access Hub \u2014 Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "publisher": { "@type": "Organization", "name": "Language Access Hub \u2014 Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://teamtaika.com/blog/section-508-vs-wcag-difference" }
+}
+</script>
+</head>
+<body>
+<!-- @nav -->
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">&rsaquo;</span><a href="/blog">Blog</a><span class="breadcrumb-sep">&rsaquo;</span><span class="breadcrumb-current">Digital Accessibility</span></nav></div>
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Digital Accessibility</span>
+    <h1 class="post-title">Section 508 vs. WCAG vs. ADA: Which Accessibility Standard Applies to You?</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>&middot;</span>August 26, 2026<span>&middot;</span>7 min read</div>
+  </div>
+</section>
+<div class="post-inner">
+  <div class="post-body">
+    <p>“Section 508,” “WCAG,” and “ADA” get used interchangeably in accessibility conversations — but they are three different things, and knowing which one applies to you is the first step to compliance. One is a set of technical guidelines. The others are laws. Here is how they fit together.</p>
+    <div class="answer-box" style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:0 0 32px;"><strong style="color:#166534;">Quick answer:</strong> <span style="font-size:16px;color:var(--slate);line-height:1.75;"><strong>WCAG</strong> (Web Content Accessibility Guidelines) is the technical standard — the testable checklist, published by the W3C, that defines what “accessible” means. <strong>Section 508</strong> is a federal law requiring federal agencies and federally funded programs to make their information technology accessible, and it adopts WCAG 2.0 Level AA as its technical benchmark. The <strong>ADA</strong> is the civil-rights law that prohibits disability discrimination; under its Title II web rule, state and local governments must meet WCAG 2.1 Level AA by {{ADA_DEADLINE_LARGE}} (large entities) and {{ADA_DEADLINE_SMALL}} (smaller entities and special districts). In short: the ADA and Section 508 are the <em>laws</em> that say you must be accessible; WCAG is the <em>how</em> that everyone points to.</span></div>
+    <h2>WCAG: the technical standard everyone references</h2>
+<p>The Web Content Accessibility Guidelines are maintained by the World Wide Web Consortium (W3C). They are organized around four principles — content must be <strong>Perceivable, Operable, Understandable, and Robust</strong> (POUR) — and broken into testable “success criteria” at three conformance levels: A (minimum), AA (the legal target almost everywhere), and AAA (aspirational). When a law requires “accessibility,” it almost always does so by pointing at a specific WCAG version and level. WCAG itself is not a law; it is the ruler the laws measure against.</p>
+<h2>Section 508: the federal IT law</h2>
+<p>Section 508 of the Rehabilitation Act requires federal agencies to make their electronic and information technology — websites, documents, software, kiosks, and more — accessible to people with disabilities. The 2018 “508 Refresh” aligned the technical requirements with WCAG 2.0 Level AA. If you are a federal agency, or you sell IT to one, or you run a program funded by federal dollars that flow through a 508-obligated entity, Section 508 is your standard.</p>
+<h2>The ADA: the civil-rights law with the biggest reach</h2>
+<p>The Americans with Disabilities Act prohibits discrimination on the basis of disability. Two titles matter for the web:</p>
+<ul>
+<li><strong>Title II</strong> covers state and local governments. In 2024 the Department of Justice published a rule adopting WCAG 2.1 Level AA as the required standard for their websites and mobile apps, with compliance dates of {{ADA_DEADLINE_LARGE}} and {{ADA_DEADLINE_SMALL}}.</li>
+<li><strong>Title III</strong> covers private businesses that are “places of public accommodation.” There is no numeric web regulation here yet, but courts have repeatedly treated WCAG 2.1 AA as the practical benchmark in accessibility lawsuits.</li>
+</ul>
+<h2>Which standard applies to you?</h2>
+<ul>
+<li><strong>Federal agency or contractor:</strong> Section 508 → WCAG 2.0 AA (build to 2.1 AA to stay ahead).</li>
+<li><strong>State or local government (agency, city, county, school district, special district):</strong> ADA Title II → WCAG 2.1 AA by the deadlines above.</li>
+<li><strong>Healthcare provider receiving federal funds:</strong> Section 1557 of the ACA and Section 504 of the Rehabilitation Act — the HHS Section 504 digital-accessibility deadline is {{SEC504_DEADLINE}}.</li>
+<li><strong>Private business:</strong> ADA Title III — no fixed regulation, but WCAG 2.1 AA is the defensible target.</li>
+</ul>
+<h2>The good news: they converge</h2>
+<p>You do not have to reconcile three different rulebooks. Whatever your obligation, the practical answer is the same: <strong>conform to WCAG 2.1 Level AA, document the work, and keep it current.</strong> Meeting WCAG 2.1 AA satisfies Section 508's 2.0 AA baseline and the ADA Title II standard simultaneously. Build to that target once and you have covered every version of the requirement.</p>
+    <div class="inline-cta" style="background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:32px 0;"><p style="margin:0 0 12px;font-size:15px;color:var(--navy);"><strong>Not sure which standard governs your organization — or how far your current site is from it?</strong> We assess your websites and document libraries against WCAG 2.1 AA and give you a prioritized, documented remediation plan.</p><p style="margin:0;font-size:15px;"><a href="/508-compliance#quote" style="font-weight:700;color:var(--gold-text,#7A5C0F);">Get a Section 508 remediation quote &rarr;</a></p></div>
+    
+  </div>
+  <div class="post-cta">
+    <h3>Need help with Section 508 or WCAG compliance?</h3>
+    <p>Our team remediates documents, websites, and video for government agencies, school districts, and healthcare organizations across all 50 states. GSA &amp; NASPO contracts available.</p>
+    <a href="/index.html#quote" class="btn-primary">Get a Free Quote &rarr;</a>
+  </div>
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"><a href="/blog/wcag-ada-compliance-tips" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">5 WCAG 2.1 Fixes Every Government Website Needs Right Now</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; May 28, 2026</div></a><a href="/blog/ada-title-ii-web-rule-deadline-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">The ADA Title II Web Rule: Deadlines, Who's Covered, and Where to Start</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; August 25, 2026</div></a></div>
+  </div>
+</div>
+
+<!-- @footer -->
+</body>
+</html>

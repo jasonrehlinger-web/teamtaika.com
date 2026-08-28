@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Run a Website Accessibility Audit (Section 508 & WCAG): A Step-by-Step Guide | Language Access Hub</title>
+<meta name="description" content="Automated scanners catch only a third of accessibility problems. Here is how to run a real Section 508 / WCAG audit that combines automated, keyboard, and screen-reader testing.">
+<link rel="canonical" href="https://teamtaika.com/blog/website-accessibility-audit-guide">
+<meta property="og:title" content="How to Run a Website Accessibility Audit (Section 508 & WCAG): A Step-by-Step Guide">
+<meta property="og:description" content="Automated scanners catch only a third of accessibility problems. Here is how to run a real Section 508 / WCAG audit that combines automated, keyboard, and screen-reader testing.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/website-accessibility-audit-guide">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Run a Website Accessibility Audit (Section 508 & WCAG): A Step-by-Step Guide",
+  "description": "Automated scanners catch only a third of accessibility problems. Here is how to run a real Section 508 / WCAG audit that combines automated, keyboard, and screen-reader testing.",
+  "url": "https://teamtaika.com/blog/website-accessibility-audit-guide",
+  "datePublished": "2026-08-18",
+  "dateModified": "2026-08-18",
+  "author": { "@type": "Organization", "name": "Language Access Hub \u2014 Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "publisher": { "@type": "Organization", "name": "Language Access Hub \u2014 Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://teamtaika.com/blog/website-accessibility-audit-guide" }
+}
+</script>
+</head>
+<body>
+<!-- @nav -->
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">&rsaquo;</span><a href="/blog">Blog</a><span class="breadcrumb-sep">&rsaquo;</span><span class="breadcrumb-current">Digital Accessibility</span></nav></div>
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Digital Accessibility</span>
+    <h1 class="post-title">How to Run a Website Accessibility Audit (Section 508 & WCAG): A Step-by-Step Guide</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>&middot;</span>August 18, 2026<span>&middot;</span>9 min read</div>
+  </div>
+</section>
+<div class="post-inner">
+  <div class="post-body">
+    <p>“We ran a scanner and it passed” is one of the most common — and most dangerous — things an organization can believe about its website. Automated tools are a useful first pass, but they catch only a fraction of what WCAG requires. A real audit combines four kinds of testing and ends in a documented, prioritized report. Here is how to run one.</p>
+    <div class="answer-box" style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:0 0 32px;"><strong style="color:#166534;">Quick answer:</strong> <span style="font-size:16px;color:var(--slate);line-height:1.75;">A credible Section 508 / WCAG audit has four parts: <strong>(1) automated scanning</strong> with tools like WAVE or Axe, which catches roughly 30–40% of failures; <strong>(2) manual keyboard-only testing</strong> for focus order, visible focus, and keyboard traps; <strong>(3) screen-reader testing</strong> with NVDA or VoiceOver for reading order, labels, and dynamic content; and <strong>(4) document and media review</strong> for untagged PDFs and uncaptioned video. The deliverable is a report mapping every finding to a specific WCAG 2.1 AA success criterion, prioritized by user impact — and that document is itself evidence of good-faith effort.</span></div>
+    <h2>Step 1: Inventory your digital assets</h2>
+<p>You cannot audit what you have not listed. Catalog your website's key page templates (home, landing, article, form, search results), any mobile apps, and your document libraries (PDFs, Word, PowerPoint). You do not test all 4,000 pages — you test each unique <em>template</em> and a representative sample, plus every high-traffic and service-critical page.</p>
+<h2>Step 2: Run automated scans</h2>
+<p>Tools like <strong>WAVE</strong>, <strong>Axe</strong>, and Lighthouse quickly flag missing alt text, low contrast, empty links, missing form labels, and structural problems. Run them on every template. But understand their ceiling: automated tools catch only about a third of WCAG failures because most criteria — “is this alt text meaningful?”, “is the focus order logical?” — require human judgment. A clean scan is the floor, not the finish line.</p>
+<h2>Step 3: Test with the keyboard only</h2>
+<p>Unplug your mouse. Using only <kbd>Tab</kbd>, <kbd>Shift+Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>, and arrow keys, try to complete every task on the page. Check that:</p>
+<ul>
+<li>You can reach and operate every interactive element — links, buttons, form fields, menus, and custom widgets.</li>
+<li>The <strong>focus indicator is always visible</strong> so you can see where you are.</li>
+<li>Focus order follows the visual/logical order of the page.</li>
+<li>You never get <strong>trapped</strong> (stuck inside a widget or modal with no keyboard way out).</li>
+<li>A <strong>skip link</strong> lets you jump past the navigation to the main content.</li>
+</ul>
+<h2>Step 4: Test with a screen reader</h2>
+<p>Install <strong>NVDA</strong> (free, Windows) or use <strong>VoiceOver</strong> (built into Mac and iOS); JAWS is the enterprise standard on Windows. Navigate the page by headings, by links, and by form fields. Listen for: are headings announced in a sensible hierarchy? Do images convey useful information or just read a filename? Are form fields announced with their labels and required state? When content updates dynamically (an error message, a live search result), is the change announced? This is where the majority of real barriers surface.</p>
+    <div class="inline-cta" style="background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:32px 0;"><p style="margin:0 0 12px;font-size:15px;color:var(--navy);"><strong>Don't have the tools, time, or trained testers in-house?</strong> We run full Section 508 / WCAG 2.1 AA audits — automated, keyboard, and screen-reader — and deliver a prioritized report your procurement file can stand on.</p><p style="margin:0;font-size:15px;"><a href="/508-compliance#quote" style="font-weight:700;color:var(--gold-text,#7A5C0F);">Get a Section 508 remediation quote &rarr;</a></p></div>
+    <h2>Step 5: Review documents and media</h2>
+<p>Your PDFs are web content under the ADA Title II rule. Check a representative sample for tags, reading order, and alt text — our <a href="/pdf-accessibility-checker">free PDF Accessibility Checker</a> is a fast first pass. For video, confirm accurate (not auto-generated) captions, and audio description where visual information isn't spoken aloud.</p>
+<h2>Step 6: Write the report</h2>
+<p>Turn findings into an action plan. For each issue, record: the <strong>WCAG success criterion</strong> it violates, the <strong>severity/user impact</strong>, where it occurs, and how to fix it. Then <strong>prioritize</strong> — fix the barriers that block access to services (online forms, applications, high-traffic pages) first, then work down. A findings list mapped to WCAG is what turns “we should be accessible” into a schedule someone can execute.</p>
+<h2>Step 7: Remediate, re-test, and keep records</h2>
+<p>Fix, then verify each fix with the same manual methods — automated re-scans alone won't confirm a keyboard or screen-reader repair. And keep the paper trail: your audit, your plan, your progress. Accessibility is not a one-time project; every new page, PDF, and video is a new opportunity to regress, so bake a check into your publishing workflow. The documented, ongoing effort is exactly what regulators look for.</p>
+  </div>
+  <div class="post-cta">
+    <h3>Need help with Section 508 or WCAG compliance?</h3>
+    <p>Our team remediates documents, websites, and video for government agencies, school districts, and healthcare organizations across all 50 states. GSA &amp; NASPO contracts available.</p>
+    <a href="/index.html#quote" class="btn-primary">Get a Free Quote &rarr;</a>
+  </div>
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"><a href="/blog/screen-reader-keyboard-testing-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">Screen Reader & Keyboard Testing: The Checks Automated Tools Miss</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; August 13, 2026</div></a><a href="/blog/ada-title-ii-web-rule-deadline-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">The ADA Title II Web Rule: Deadlines, Who's Covered, and Where to Start</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; August 25, 2026</div></a></div>
+  </div>
+</div>
+
+<!-- @footer -->
+</body>
+</html>

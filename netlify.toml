@@ -129,6 +129,35 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/section-508-vs-wcag-difference"
+  to = "/pages/resources/blog/section-508-vs-wcag-difference.html"
+  status = 200
+[[redirects]]
+  from = "/blog/ada-title-ii-web-rule-deadline-guide"
+  to = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
+  status = 200
+[[redirects]]
+  from = "/blog/accessible-word-documents-508"
+  to = "/pages/resources/blog/accessible-word-documents-508.html"
+  status = 200
+[[redirects]]
+  from = "/blog/wcag-2-1-vs-2-2-whats-new"
+  to = "/pages/resources/blog/wcag-2-1-vs-2-2-whats-new.html"
+  status = 200
+[[redirects]]
+  from = "/blog/website-accessibility-audit-guide"
+  to = "/pages/resources/blog/website-accessibility-audit-guide.html"
+  status = 200
+[[redirects]]
+  from = "/blog/accessibility-statement-guide"
+  to = "/pages/resources/blog/accessibility-statement-guide.html"
+  status = 200
+[[redirects]]
+  from = "/blog/screen-reader-keyboard-testing-guide"
+  to = "/pages/resources/blog/screen-reader-keyboard-testing-guide.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/pdf-remediation-guide"
   to = "/pages/resources/blog/pdf-remediation-guide.html"
   status = 200
@@ -1683,6 +1712,41 @@
 [[redirects]]
   from = "/pages/resources/blog/wcag-ada-compliance-tips.html"
   to = "/blog/wcag-ada-compliance-tips"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/section-508-vs-wcag-difference.html"
+  to = "/blog/section-508-vs-wcag-difference"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
+  to = "/blog/ada-title-ii-web-rule-deadline-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/accessible-word-documents-508.html"
+  to = "/blog/accessible-word-documents-508"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/wcag-2-1-vs-2-2-whats-new.html"
+  to = "/blog/wcag-2-1-vs-2-2-whats-new"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/website-accessibility-audit-guide.html"
+  to = "/blog/website-accessibility-audit-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/accessibility-statement-guide.html"
+  to = "/blog/accessibility-statement-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/screen-reader-keyboard-testing-guide.html"
+  to = "/blog/screen-reader-keyboard-testing-guide"
   status = 301
   force = true
 [[redirects]]

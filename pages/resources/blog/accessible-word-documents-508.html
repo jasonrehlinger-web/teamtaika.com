@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Create 508-Compliant Word Documents (Before They Become PDFs) | Language Access Hub</title>
+<meta name="description" content="Most inaccessible government PDFs start as inaccessible Word documents. Here is how to build accessibility into the source file so your exported PDF is compliant from the start.">
+<link rel="canonical" href="https://teamtaika.com/blog/accessible-word-documents-508">
+<meta property="og:title" content="How to Create 508-Compliant Word Documents (Before They Become PDFs)">
+<meta property="og:description" content="Most inaccessible government PDFs start as inaccessible Word documents. Here is how to build accessibility into the source file so your exported PDF is compliant from the start.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/accessible-word-documents-508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Create 508-Compliant Word Documents (Before They Become PDFs)",
+  "description": "Most inaccessible government PDFs start as inaccessible Word documents. Here is how to build accessibility into the source file so your exported PDF is compliant from the start.",
+  "url": "https://teamtaika.com/blog/accessible-word-documents-508",
+  "datePublished": "2026-08-22",
+  "dateModified": "2026-08-22",
+  "author": { "@type": "Organization", "name": "Language Access Hub \u2014 Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "publisher": { "@type": "Organization", "name": "Language Access Hub \u2014 Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://teamtaika.com/blog/accessible-word-documents-508" }
+}
+</script>
+</head>
+<body>
+<!-- @nav -->
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">&rsaquo;</span><a href="/blog">Blog</a><span class="breadcrumb-sep">&rsaquo;</span><span class="breadcrumb-current">Digital Accessibility</span></nav></div>
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Digital Accessibility</span>
+    <h1 class="post-title">How to Create 508-Compliant Word Documents (Before They Become PDFs)</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>&middot;</span>August 22, 2026<span>&middot;</span>7 min read</div>
+  </div>
+</section>
+<div class="post-inner">
+  <div class="post-body">
+    <p>Almost every inaccessible government PDF began life as a Word document that was never built for accessibility. Fixing structure in the source Word file takes minutes; remediating the exported PDF afterward can take hours per document. If your team creates its own forms, reports, and notices, this is the highest-leverage accessibility habit you can adopt.</p>
+    <div class="answer-box" style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:0 0 32px;"><strong style="color:#166534;">Quick answer:</strong> <span style="font-size:16px;color:var(--slate);line-height:1.75;">To make a Word document 508-compliant, build structure into the source: use the built-in <strong>heading styles</strong> (not bold text) for hierarchy, add <strong>alt text</strong> to every meaningful image, use real <strong>table headers</strong> with no merged or split cells, create lists with the <strong>list buttons</strong>, write <strong>descriptive link text</strong>, ensure <strong>4.5:1 color contrast</strong>, set the document <strong>title and language</strong> in Properties, run the built-in <strong>Accessibility Checker</strong>, and export to a <strong>tagged PDF</strong>. Done in Word, this is roughly ten times cheaper than remediating the PDF later.</span></div>
+    <h2>1. Use real heading styles</h2>
+<p>Screen-reader users navigate by heading, jumping from section to section the way sighted readers skim. That only works if your headings are actual Word styles — Heading 1, Heading 2, Heading 3 — applied from the Styles gallery, not text you made big and bold. Use one Heading 1 for the title, then nest 2s and 3s logically without skipping levels.</p>
+<h2>2. Add alt text to images</h2>
+<p>Right-click any image → <em>View Alt Text</em> and write a concise description of what the image communicates. If the image is purely decorative, mark it as decorative so screen readers skip it. For a chart, describe the data or trend — not “bar chart.”</p>
+<h2>3. Build tables the right way</h2>
+<p>Use Word's <em>Insert Table</em> tool, designate a header row (Table Design → Header Row, and Table Layout → Repeat Header Rows), and — critically — <strong>never merge or split cells</strong>. Merged cells destroy the row/column relationships a screen reader relies on. Keep tables for tabular data only; do not use them to lay out a page.</p>
+<h2>4. Make lists real lists</h2>
+<p>Use the bulleted and numbered list buttons rather than typing dashes or numbers by hand. A real list tells assistive technology “this is a list of five items,” which a row of manual hyphens does not.</p>
+<h2>5. Write descriptive link text</h2>
+<p>“Click here” and a raw URL are both barriers. A screen-reader user often pulls up a list of every link on the page; out of context, “click here” means nothing. Write links that describe their destination, like “download the 2026 benefits enrollment form.”</p>
+<h2>6. Check color and contrast</h2>
+<p>Body text needs a contrast ratio of at least 4.5:1 against its background (3:1 for large text). And never use color <em>alone</em> to convey meaning — if “red means overdue,” add a word or symbol so colorblind readers get the same information.</p>
+<h2>7. Set the document properties</h2>
+<p>In File → Info, give the document a real <strong>Title</strong>, and confirm the <strong>editing language</strong> is set correctly (Review → Language). These become the PDF's title and language attributes, both of which screen readers announce.</p>
+    <div class="inline-cta" style="background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:32px 0;"><p style="margin:0 0 12px;font-size:15px;color:var(--navy);"><strong>Sitting on a library of legacy Word and PDF documents that were never built this way?</strong> We remediate and tag documents at scale — and train your team to author accessibly so the backlog stops growing.</p><p style="margin:0;font-size:15px;"><a href="/508-compliance#quote" style="font-weight:700;color:var(--gold-text,#7A5C0F);">Get a Section 508 remediation quote &rarr;</a></p></div>
+    <h2>8. Run the built-in Accessibility Checker</h2>
+<p>Word ships with a checker: <em>Review → Check Accessibility</em>. It flags missing alt text, bad table structure, low contrast, and more, with inline fix suggestions. Run it before every export and clear the errors. It is not a complete audit — it cannot judge whether your alt text is <em>good</em> — but it catches the mechanical failures.</p>
+<h2>9. Export to a tagged PDF correctly</h2>
+<p>When you save as PDF, use <em>File → Save As → PDF</em> (or Export) and make sure “Document structure tags for accessibility” is enabled in the options. Never “print to PDF” — that flattens the document and strips every tag you just built, leaving a file a screen reader cannot read. A properly exported tagged PDF carries your headings, alt text, table structure, and reading order straight through.</p>
+<h2>The payoff</h2>
+<p>Every one of these steps takes seconds while you are already in the document. Skip them, and each file becomes a remediation project later — multiplied across the hundreds or thousands of documents a public agency publishes. Author it right once, and accessibility becomes a byproduct of normal work instead of a separate, expensive cleanup.</p>
+  </div>
+  <div class="post-cta">
+    <h3>Need help with Section 508 or WCAG compliance?</h3>
+    <p>Our team remediates documents, websites, and video for government agencies, school districts, and healthcare organizations across all 50 states. GSA &amp; NASPO contracts available.</p>
+    <a href="/index.html#quote" class="btn-primary">Get a Free Quote &rarr;</a>
+  </div>
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"><a href="/blog/pdf-remediation-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Make Your PDFs Section 508 Compliant: A Step-by-Step Guide</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; May 20, 2026</div></a><a href="/blog/wcag-ada-compliance-tips" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">5 WCAG 2.1 Fixes Every Government Website Needs Right Now</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; May 28, 2026</div></a></div>
+  </div>
+</div>
+
+<!-- @footer -->
+</body>
+</html>

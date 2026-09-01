@@ -213,6 +213,11 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/gsa-schedule-translation-services-buying"
+  to = "/pages/resources/blog/gsa-schedule-translation-services-buying.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/informed-consent-form-translation-requirements"
   to = "/pages/resources/blog/informed-consent-form-translation-requirements.html"
   status = 200
@@ -1594,6 +1599,13 @@
   to = "/blog/nonprofit-website-accessibility-requirements"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/pages/resources/blog/gsa-schedule-translation-services-buying.html"
+  to = "/blog/gsa-schedule-translation-services-buying"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/pages/resources/blog/informed-consent-form-translation-requirements.html"
   to = "/blog/informed-consent-form-translation-requirements"

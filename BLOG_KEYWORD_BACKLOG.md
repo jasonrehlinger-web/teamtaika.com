@@ -58,7 +58,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: ADA Title III reaches most 501(c)(3) organizations as places of public accommodation, regardless of staff size. Section 504 separately attaches to any organization receiving federal financial assistance. DOJ enforces using WCAG 2.1 Level AA as the baseline. An inaccessible site that blocks program access can put federal grants at risk.
   Category: `accessibility` · CTA: `/pages/services/508-compliance.html` · Links: `/pages/industries/nonprofits.html`, `/blog/pdf-remediation-guide`
 
-- [ ] **8. `gsa-schedule-translation-services-buying`** — *How to Buy Translation Services Off a GSA Schedule (Without Running a Full RFP)*
+- [x] **8. `gsa-schedule-translation-services-buying`** — *How to Buy Translation Services Off a GSA Schedule (Without Running a Full RFP)*
   Keyword: `GSA schedule translation services`. **Lane B · Procurement — how public buyers actually transact.**
   Evidence: GSA Multiple Award Schedule mechanics — ordering procedures, competition requirements for schedule buys, why a schedule contract shortens the acquisition timeline versus an open-market solicitation, micro-purchase and simplified-acquisition thresholds, and how NASPO ValuePoint serves state/local buyers. Verify current threshold figures against acquisition.gov / GSA before asserting numbers. Taika holds GSA + NASPO + SAM + VOSB — name them, since VOSB can support small-business goaling.
   Category: `compliance` · CTA: `/pages/services/gsa-translation-services.html` · Links: `/pages/industries/government.html`, `/blog/translation-for-government`
@@ -188,6 +188,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] bilingual-staff-are-not-interpreters — published 2026-08-21 → /blog/bilingual-staff-are-not-interpreters
 - [x] informed-consent-form-translation-requirements — published 2026-08-25 → /blog/informed-consent-form-translation-requirements
 - [x] nonprofit-website-accessibility-requirements — published 2026-08-28 → /blog/nonprofit-website-accessibility-requirements
+- [x] gsa-schedule-translation-services-buying — published 2026-09-01 → /blog/gsa-schedule-translation-services-buying
 
 ---
 
@@ -201,7 +202,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] opi-vri-guide — upgraded 2026-08-21 (.answer-box + .inline-cta added)
 - [x] wcag-ada-compliance-tips — upgraded 2026-08-25 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [x] pdf-remediation-guide — upgraded 2026-08-28 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
-- [ ] translation-for-government
+- [x] translation-for-government — upgraded 2026-09-01 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [ ] title-vi-language-access-plan
 - [ ] most-spoken-languages
 - [ ] translation-for-legal-documents-law-firms

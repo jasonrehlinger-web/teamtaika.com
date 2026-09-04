@@ -63,7 +63,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: GSA Multiple Award Schedule mechanics — ordering procedures, competition requirements for schedule buys, why a schedule contract shortens the acquisition timeline versus an open-market solicitation, micro-purchase and simplified-acquisition thresholds, and how NASPO ValuePoint serves state/local buyers. Verify current threshold figures against acquisition.gov / GSA before asserting numbers. Taika holds GSA + NASPO + SAM + VOSB — name them, since VOSB can support small-business goaling.
   Category: `compliance` · CTA: `/pages/services/gsa-translation-services.html` · Links: `/pages/industries/government.html`, `/blog/translation-for-government`
 
-- [ ] **9. `school-enrollment-document-translation`** — *Translating Enrollment, Immunization, and Residency Documents for School Registration*
+- [x] **9. `school-enrollment-document-translation`** — *Translating Enrollment, Immunization, and Residency Documents for School Registration*
   Keyword: `school enrollment document translation`. Lane A · Schools × Certified translation. Seasonal fit (registration cycles).
   Evidence: Districts must provide vital documents in languages parents understand under Title VI; families frequently need certified translations of foreign birth records, immunization records, and prior transcripts to register. Distinguish what the *district* must translate from what the *family* needs certified.
   Category: `translation` · CTA: `/pages/services/translation.html` · Links: `/pages/industries/schools.html`, `/blog/what-is-certified-translation`
@@ -189,6 +189,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] informed-consent-form-translation-requirements — published 2026-08-25 → /blog/informed-consent-form-translation-requirements
 - [x] nonprofit-website-accessibility-requirements — published 2026-08-28 → /blog/nonprofit-website-accessibility-requirements
 - [x] gsa-schedule-translation-services-buying — published 2026-09-01 → /blog/gsa-schedule-translation-services-buying
+- [x] school-enrollment-document-translation — published 2026-09-04 → /blog/school-enrollment-document-translation
 
 ---
 
@@ -203,7 +204,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] wcag-ada-compliance-tips — upgraded 2026-08-25 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [x] pdf-remediation-guide — upgraded 2026-08-28 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [x] translation-for-government — upgraded 2026-09-01 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
-- [ ] title-vi-language-access-plan
+- [x] title-vi-language-access-plan — upgraded 2026-09-04 (.answer-box + .inline-cta added; also corrected a present-tense EO 13166 claim — revoked by EO 14224, March 2025 — to match the sitewide fix)
 - [ ] most-spoken-languages
 - [ ] translation-for-legal-documents-law-firms
 - [ ] joint-commission-2026-language-access

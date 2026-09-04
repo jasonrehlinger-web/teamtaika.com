@@ -227,6 +227,11 @@
   to = "/pages/resources/blog/bilingual-staff-are-not-interpreters.html"
   status = 200
 
+[[redirects]]
+  from = "/blog/school-enrollment-document-translation"
+  to = "/pages/resources/blog/school-enrollment-document-translation.html"
+  status = 200
+
 [build]
   publish = "."
   functions = "netlify/functions"
@@ -1603,6 +1608,12 @@
 [[redirects]]
   from = "/pages/resources/blog/gsa-schedule-translation-services-buying.html"
   to = "/blog/gsa-schedule-translation-services-buying"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/resources/blog/school-enrollment-document-translation.html"
+  to = "/blog/school-enrollment-document-translation"
   status = 301
   force = true
 

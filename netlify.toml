@@ -228,6 +228,11 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/vpat-acr-section-508-procurement"
+  to = "/pages/resources/blog/vpat-acr-section-508-procurement.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/school-enrollment-document-translation"
   to = "/pages/resources/blog/school-enrollment-document-translation.html"
   status = 200
@@ -1608,6 +1613,12 @@
 [[redirects]]
   from = "/pages/resources/blog/gsa-schedule-translation-services-buying.html"
   to = "/blog/gsa-schedule-translation-services-buying"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/resources/blog/vpat-acr-section-508-procurement.html"
+  to = "/blog/vpat-acr-section-508-procurement"
   status = 301
   force = true
 

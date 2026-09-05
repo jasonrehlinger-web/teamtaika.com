@@ -141,6 +141,10 @@
   to = "/pages/resources/blog/accessible-word-documents-508.html"
   status = 200
 [[redirects]]
+  from = "/blog/accessibility-overlays-ada-compliance"
+  to = "/pages/resources/blog/accessibility-overlays-ada-compliance.html"
+  status = 200
+[[redirects]]
   from = "/blog/wcag-2-1-vs-2-2-whats-new"
   to = "/pages/resources/blog/wcag-2-1-vs-2-2-whats-new.html"
   status = 200
@@ -1761,6 +1765,11 @@
 [[redirects]]
   from = "/pages/resources/blog/accessible-word-documents-508.html"
   to = "/blog/accessible-word-documents-508"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/accessibility-overlays-ada-compliance.html"
+  to = "/blog/accessibility-overlays-ada-compliance"
   status = 301
   force = true
 [[redirects]]

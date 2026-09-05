@@ -742,6 +742,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://teamtaika.com/blog/accessibility-overlays-ada-compliance</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://teamtaika.com/blog/wcag-2-1-vs-2-2-whats-new</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>

@@ -145,6 +145,10 @@
   to = "/pages/resources/blog/accessibility-overlays-ada-compliance.html"
   status = 200
 [[redirects]]
+  from = "/blog/ada-title-ii-exceptions-explained"
+  to = "/pages/resources/blog/ada-title-ii-exceptions-explained.html"
+  status = 200
+[[redirects]]
   from = "/blog/wcag-2-1-vs-2-2-whats-new"
   to = "/pages/resources/blog/wcag-2-1-vs-2-2-whats-new.html"
   status = 200
@@ -1770,6 +1774,11 @@
 [[redirects]]
   from = "/pages/resources/blog/accessibility-overlays-ada-compliance.html"
   to = "/blog/accessibility-overlays-ada-compliance"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/ada-title-ii-exceptions-explained.html"
+  to = "/blog/ada-title-ii-exceptions-explained"
   status = 301
   force = true
 [[redirects]]

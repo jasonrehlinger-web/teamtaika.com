@@ -4,6 +4,14 @@ dist/
 # Node deps — Netlify installs from package.json at build (do not commit)
 node_modules/
 
+# Environment / secrets — NEVER commit real values.
+# Netlify env vars (SUPABASE_SERVICE_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
+# RESEND_API_KEY, GOOGLE_TRANSLATE_API_KEY, …) live in the Netlify UI, not the repo.
+# .env.example (dummy values, for documentation) is intentionally NOT ignored.
+.env
+.env.*
+!.env.example
+
 # Local Claude Code helpers and reference (CLAUDE.md holds secrets)
 .claude/
 CLAUDE.md

@@ -145,6 +145,10 @@
   to = "/pages/resources/blog/accessibility-overlays-ada-compliance.html"
   status = 200
 [[redirects]]
+  from = "/blog/section-508-trusted-tester-vendor-requirements"
+  to = "/pages/resources/blog/section-508-trusted-tester-vendor-requirements.html"
+  status = 200
+[[redirects]]
   from = "/blog/ada-title-ii-exceptions-explained"
   to = "/pages/resources/blog/ada-title-ii-exceptions-explained.html"
   status = 200
@@ -1774,6 +1778,11 @@
 [[redirects]]
   from = "/pages/resources/blog/accessibility-overlays-ada-compliance.html"
   to = "/blog/accessibility-overlays-ada-compliance"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/section-508-trusted-tester-vendor-requirements.html"
+  to = "/blog/section-508-trusted-tester-vendor-requirements"
   status = 301
   force = true
 [[redirects]]

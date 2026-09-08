@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Localization vs. Translation: What Actually Has to Change | Language Access Hub</title>
+<meta name="description" content="The website localization process, step by step: what translation alone leaves broken — date and number formats, address and phone validation, text expansion, RTL mirroring, hreflang reciprocity — and why WCAG conformance never carries over to a translated page.">
+<link rel="canonical" href="https://teamtaika.com/blog/website-localization-vs-translation">
+<meta property="og:title" content="Website Localization vs. Translation: What Actually Has to Change">
+<meta property="og:description" content="Translation changes the words. Localization changes everything the words sit inside — formats, form validation, layout, reading direction, hreflang, and accessibility per language.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/website-localization-vs-translation">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-body table{width:100%;border-collapse:collapse;margin:1.6em 0;font-size:14.5px;}
+.post-body th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;}
+.post-body td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.post-body tr:nth-child(even) td{background:var(--mist,#f8f9fa);}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+.answer-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:1.6em 0;}
+.answer-box strong{color:#166534;}
+.inline-cta{background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:2em 0;}
+.inline-cta p{margin:0 0 12px;font-size:15px;color:var(--navy);}
+.inline-cta a{font-weight:700;color:var(--gold-text,#7A5C0F);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Website Localization vs. Website Translation: What Actually Has to Change",
+  "description": "The website localization process, step by step: what translation alone leaves broken — date and number formats, address and phone validation, text expansion, RTL mirroring, hreflang reciprocity — and why WCAG conformance never carries over to a translated page.",
+  "url": "https://teamtaika.com/blog/website-localization-vs-translation",
+  "datePublished": "2026-09-08",
+  "dateModified": "2026-09-08",
+  "author": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://teamtaika.com/blog/website-localization-vs-translation"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-bar" role="alert">
+  <div class="urgency-bar-inner">
+    <span class="urgency-tag">⚠ Compliance Deadline</span>
+    <p class="urgency-copy"><strong>ADA Title II WCAG 2.1 AA deadlines: {{ADA_DEADLINE_LARGE}} (public entities &ge;50,000 pop.) &middot; {{ADA_DEADLINE_SMALL}} (under 50,000 &amp; special districts).</strong> Healthcare Section 504 deadline: {{SEC504_DEADLINE}}.</p>
+    <a href="/compliance-faq" class="urgency-link">Am I compliant? →</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Language Access Hub home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </div>
+      <div class="nav-logo-wordmark">
+        <span class="nav-logo-name">Language Access Hub</span>
+        <span class="nav-logo-sub">Powered by Taika Translations + TVPTeam</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li class="nav-dropdown">
+        <a href="/translation">Services</a>
+        <div class="nav-dropdown-menu">
+          <a href="/translation">Certified Translation</a>
+          <a href="/interpretation">Interpretation (OPI/VRI)</a>
+          <a href="/508-compliance">ADA / Section 508 Compliance</a>
+          <a href="/captioning">Video Captioning</a>
+          <a href="/transcription">Transcription</a>
+          <a href="/desktop-publishing">Desktop Publishing (DTP)</a>
+          <a href="/ai-automation">AI Automation (TVPTeam)</a>
+          <a href="/pdf-accessibility-checker">Free PDF Accessibility Checker</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/government">Who We Serve</a>
+        <div class="nav-dropdown-menu">
+          <a href="/government">Government Agencies</a>
+          <a href="/schools">School Districts</a>
+          <a href="/healthcare">Healthcare</a>
+          <a href="/legal">Legal &amp; Courts</a>
+          <a href="/nonprofits">Nonprofits</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/translation#languages">Languages</a>
+        <div class="nav-dropdown-menu" style="min-width:520px;padding:8px;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">English Pages</div>
+            <a href="/spanish-translation">Spanish Translation</a>
+            <a href="/french-translation">French Translation</a>
+            <a href="/portuguese-translation">Portuguese Translation</a>
+            <a href="/german-translation">German Translation</a>
+            <a href="/italian-translation">Italian Translation</a>
+            <a href="/chinese-translation">Chinese Translation</a>
+            <a href="/arabic-translation">Arabic Translation</a>
+            <a href="/hindi-translation">Hindi Translation</a>
+            <a href="/russian-translation">Russian Translation</a>
+            <a href="/polish-translation">Polish Translation</a>
+            <a href="/urdu-translation">Urdu Translation</a>
+            <a href="/bengali-translation">Bengali Translation</a>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">Native Language Pages</div>
+            <a href="/traduccion-certificada-espanol">Español</a>
+            <a href="/traduction-certifiee-francais">Français</a>
+            <a href="/traducao-certificada-portugues">Português</a>
+            <a href="/beglaubigte-uebersetzung-deutsch">Deutsch</a>
+            <a href="/traduzione-certificata-italiano">Italiano</a>
+            <a href="/fanyi-zhongwen">中文</a>
+            <a href="/tarjama-arabiya-rasmiya">عربي</a>
+            <a href="/praman-patra-anuvad-hindi">हिंदी</a>
+            <a href="/zaverenniy-perevod-russkiy">Русский</a>
+            <a href="/tlumaczenia-uwierzytelnione-polskie">Polski</a>
+            <a href="/tarjuma-rasmi-urdu">اردو</a>
+            <a href="/praman-anuvad-bangla">বাংলা</a>
+          </div>
+        </div></div>
+      </li>
+      <li><a href="/compliance-faq">Compliance FAQ</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/store">Store</a></li>
+      <li><a href="/index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
+      <a href="/compliance-faq#checklist" class="btn-nav-ghost">Free Checklist</a>
+      <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
+      <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- TRUST WALL -->
+<div style="background:#0a1729;border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 24px;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" class="trust-wall-scroll">
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">GSA Schedule</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">NASPO ValuePoint</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="18" r="7" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M14 22l-2.6-1.5.7 2.8-2.1-2 2.8-.3L14 18.5l1.2 2.5 2.8.3-2.1 2 .7-2.8z" fill="#c9a84c"/><path d="M11 11.5L8.5 5h5z" fill="#c9a84c"/><path d="M17 11.5L19.5 5h-5z" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SBA VOSB</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><ellipse cx="14" cy="14" rx="4.5" ry="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">ATA Certified Vendors</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="19" rx="2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="8" y1="9" x2="15" y2="9" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="21" r="5" fill="#0a1729" stroke="#c9a84c" stroke-width="1.5"/><path d="M18.5 21l1.5 1.5 3-3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SAM Registered</span></div>
+  </div>
+</div>
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><a href="/blog">Blog</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Certified Translation</span></nav></div>
+
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Certified Translation</span>
+    <h1 class="post-title">Website Localization vs. Website Translation: What Actually Has to Change</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>·</span>September 8, 2026<span>·</span>9 min read</div>
+  </div>
+</section>
+
+<div class="post-inner">
+  <div class="post-body">
+
+    <p>Your board approved a Spanish version of the site back in the spring. Six months later there is a Spanish version of the site — and it is quietly failing in ways nobody has logged as a defect. It ranks for nothing, because search engines never accepted it as a separate version. The registration form rejects half the phone numbers people type into it. Two of the buttons show text clipped mid-word. And the district or health system now owns a second site's worth of accessibility obligations that no one has budgeted for, because everyone assumed the accessibility work done on the English pages came along with the words.</p>
+
+    <p>Here is the specific thing most teams have wrong. Somebody added <code>lang="es"</code> to the Spanish pages and considered the multilingual wiring done. That attribute does nothing at all for your search visibility — Google's own documentation states plainly that it does not use the HTML <code>lang</code> attribute (or <code>hreflang</code>) to determine what language a page is in. Meanwhile the <code>hreflang</code> tags an SEO consultant added do nothing for your accessibility, where <code>lang</code> is the mechanism a Level A success criterion actually requires. Two attributes, two entirely separate jobs. Most multilingual sites ship one of them and assume it covered both.</p>
+
+    <div class="answer-box">
+      <strong>Quick answer:</strong> Website translation converts the words on your pages. Website localization changes everything the words sit inside — date, number, and currency formats; name, address, and phone fields and the validation rules behind them; layout that has to survive text getting substantially longer; right-to-left mirroring; images and legal notices that are market-specific; and the <code>hreflang</code> and canonical wiring that tells a search engine which version belongs to whom. Translation alone produces a page that can be read. Localization is what makes it usable, findable, and defensible. Critically, accessibility conformance does not carry over from the source language: every localized page, PDF, and video caption has to be produced and tested again in that language.
+    </div>
+
+    <h2>The Distinction, Stated Once and Properly</h2>
+
+    <p><strong>Translation</strong> is the linguistic operation: source text in, target text out, meaning preserved. <strong>Localization</strong> is the larger operation that contains it — adapting the whole experience to the conventions, formats, and technical expectations of a particular locale. You can translate without localizing. You cannot localize without translating.</p>
+
+    <p>That is where nearly every article on this subject ends. It is also, unhelpfully, where the actual work begins. So the rest of this is not about the definitions. It is about what specifically breaks when a project is scoped as translation and delivered into a site that needed localization — and what it costs to find that out after launch instead of before.</p>
+
+    <h2>What Translation Alone Leaves Broken</h2>
+
+    <p>Every item below is something a word-for-word translation of your page content leaves in exactly the state it was already in. None of them are edge cases; they are the things that break on a normal organizational website.</p>
+
+    <table>
+      <thead>
+        <tr><th>Element</th><th>What translation gives you</th><th>What localization has to do</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dates and numbers</strong></td>
+          <td>The month name translated.</td>
+          <td>Reorder the fields and swap the separators. A deadline rendered <code>04/26/2027</code> is not merely unfamiliar to a day-first reader — parsed day-first it is month 26, which does not exist. Decimal commas, thousands separators, and 24-hour clocks all shift with the locale too.</td>
+        </tr>
+        <tr>
+          <td><strong>Names, addresses, phone fields</strong></td>
+          <td>Translated labels above unchanged inputs.</td>
+          <td>Rebuild the fields and their validation. A single required "Last Name," a five-digit postal-code mask, a US state dropdown, and a <code>(555) 555-5555</code> phone pattern will each reject legitimate real-world input. Validation logic is where localization failures turn into abandoned forms.</td>
+        </tr>
+        <tr>
+          <td><strong>Layout and components</strong></td>
+          <td>Longer text in boxes sized for English.</td>
+          <td>Set expansion budgets per component before build — see the table below, because the usual rule of thumb gets applied backwards.</td>
+        </tr>
+        <tr>
+          <td><strong>Reading direction</strong></td>
+          <td>Arabic, Hebrew, Farsi, or Urdu text inside a left-to-right layout.</td>
+          <td>Mirror the interface: navigation, progress indicators, breadcrumb separators, and directional icons all flip, while phone numbers and embedded Latin-script strings do not. This is a build decision, not a styling pass.</td>
+        </tr>
+        <tr>
+          <td><strong>Images and legal copy</strong></td>
+          <td>Translated captions on the original graphics.</td>
+          <td>Replace screenshots that show English interface text, re-typeset any text baked into graphics, and source the locale's own version of required notices — nondiscrimination statements, privacy language, and grievance procedures are jurisdiction-specific, not translatable boilerplate.</td>
+        </tr>
+        <tr>
+          <td><strong>Search wiring</strong></td>
+          <td>Nothing. Translation does not touch the head of the document.</td>
+          <td>Reciprocal <code>hreflang</code> annotations, a correct canonical per locale, and an <code>x-default</code> fallback for visitors whose language matches none of your versions. Without these, your language versions read to a crawler as duplicate or competing pages.</td>
+        </tr>
+        <tr>
+          <td><strong>Linked documents</strong></td>
+          <td>A translated PDF, untagged.</td>
+          <td>Re-tag the translated file: reading order, alt text, table headers, and language metadata inside the document itself. The remediation you paid for on the English PDF does not transfer to its translation.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>The Text-Expansion Buffer Most Teams Set Is Backwards</h3>
+
+    <p>Designers generally know that translated text runs longer, and the figure they have usually heard is around thirty percent. That number is roughly right — for long prose, which is the least useful place to apply it. Per the IBM guidance published by the W3C, the expected expansion ratio climbs sharply as the source string gets <em>shorter</em>:</p>
+
+    <table>
+      <thead>
+        <tr><th>English source length</th><th>Expected translated length (European languages)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Up to 10 characters</td><td>200–300% of source</td></tr>
+        <tr><td>11–20 characters</td><td>180–200%</td></tr>
+        <tr><td>21–30 characters</td><td>160–180%</td></tr>
+        <tr><td>31–50 characters</td><td>140–160%</td></tr>
+        <tr><td>51–70 characters</td><td>151–170%</td></tr>
+        <tr><td>Over 70 characters</td><td>130%</td></tr>
+      </tbody>
+    </table>
+
+    <p>Read the first row again. A ten-character button label — "Apply Now," "Submit," "Next Step" — should be expected to come back two to three times longer. The components with the least room to give are precisely the ones that expand the most, which is why localized sites break at the buttons, the navigation, and the form labels while the body copy sits comfortably. A thirty-percent buffer applied evenly across a design protects the paragraphs and leaves every control exposed.</p>
+
+    <div class="inline-cta">
+      <p><strong>Already have language versions live?</strong> The two fastest things to check today are <code>hreflang</code> reciprocity and the <code>lang</code> attribute on each localized template — between them they explain most of the "we launched Spanish and nothing happened" cases we get called into.</p>
+      <p><a href="/website-translation">See how website translation and localization get scoped &rarr;</a></p>
+    </div>
+
+    <h2>The <code>lang</code> Attribute and <code>hreflang</code> Do Not Do Each Other's Job</h2>
+
+    <p>This is the confusion that costs the most, because both attributes look like they announce a page's language, and neither one does what teams assume.</p>
+
+    <p>The <code>lang</code> attribute is an <strong>accessibility</strong> mechanism. WCAG Success Criterion 3.1.1 Language of Page (Level A) requires the default human language of each page to be programmatically determinable, and 3.1.2 Language of Parts (Level AA) requires the same for passages that switch language mid-page. This is not paperwork. A screen reader uses that declaration to select its pronunciation rules, so a Spanish page left at <code>lang="en"</code> gets read aloud in an English voice — every word technically present, the output close to unintelligible. A page that quotes an untranslated passage needs 3.1.2 handled as well, with a <code>lang</code> on that passage.</p>
+
+    <p>The <code>hreflang</code> annotation is a <strong>search</strong> mechanism, and it carries a requirement teams routinely miss:</p>
+
+    <blockquote>Google treats <code>hreflang</code> as a signal rather than a strict directive — and its documentation is explicit that if two pages do not both point at each other, the annotations are ignored entirely. Every localized version has to reference all the others, including itself.</blockquote>
+
+    <p>That reciprocity rule is unforgiving in practice. Add <code>hreflang</code> to the Spanish pages only, and you have added nothing at all; the tags are discarded rather than half-credited. It can be implemented three ways — <code>link</code> elements in the HTML head, HTTP <code>Link</code> headers (the only option for non-HTML files such as PDFs), or <code>xhtml:link</code> entries in your XML sitemap — and one method applied consistently everywhere beats a partial mix of all three.</p>
+
+    <p>Then the point that ties the two together: Google determines a page's language <em>algorithmically, from the content itself</em>, treating neither attribute as its source of truth. So a page with flawless markup and a half-translated body — Spanish article text inside English navigation, or an untranslated footer and cookie notice — still reads as ambiguous. Partial translation is not a partial win here; it actively muddies the signal you were trying to send.</p>
+
+    <h2>Accessibility Does Not Carry Over — Plan for That Before You Launch</h2>
+
+    <p>This is the part that turns a localization project into an unbudgeted second project, so it is worth being blunt: for accessibility purposes, every localized page is a new page.</p>
+
+    <ul>
+      <li><strong>Per-language text alternatives.</strong> Alt text, form labels, error messages, button names, and link text all have to exist in the target language. An <code>alt</code> attribute left in English on a Spanish page is a failure on that page.</li>
+      <li><strong>Per-language media.</strong> Captions and transcripts are language-specific. An English caption track does not serve a Spanish video, and auto-generated captions in a second language are typically worse than in the first.</li>
+      <li><strong>Per-language documents.</strong> Tags, reading order, alt text, and table headers live inside each individual PDF. Exporting a translated file from the same layout does not reliably preserve tagging — the accessibility work has to be redone per language, and that is where translated document programs most often stall.</li>
+      <li><strong>The deadlines apply to all of it.</strong> Public entities working toward the ADA Title II WCAG 2.1 AA dates of {{ADA_DEADLINE_LARGE}} and {{ADA_DEADLINE_SMALL}}, and healthcare organizations working toward Section 504's {{SEC504_DEADLINE}}, are measured on their localized content too. Launching a second language now without planning for this does not defer that scope — it multiplies it.</li>
+    </ul>
+
+    <p>The sequencing lesson is simple. Localizing first and remediating later means paying to fix the same structural problems once per language. Building accessibility into the localized templates and documents as they are produced costs a fraction of that. For the document half of this, our <a href="/blog/pdf-remediation-guide">guide to Section 508 PDF remediation</a> covers what "tagged properly" actually means, and our <a href="/508-compliance">508 and WCAG compliance services</a> page covers how per-language testing gets scoped.</p>
+
+    <h2>A Three-Step Plan That Prevents All of This</h2>
+
+    <ol>
+      <li><strong>Inventory the page, not the word count.</strong> Most localization quotes are wrong because the scope submitted was a word count. Separate three things instead: translatable strings, locale-bound elements (dates, numbers, addresses, phone and postal validation, currency, imagery, legal notices), and linked documents and media. The deliverable of this step is a scope that names each of them — not a total.</li>
+      <li><strong>Localize and lay out in the same pass.</strong> Translate against the actual target templates, with expansion budgets set per component from the string-length table above, and decide right-to-left mirroring before the build rather than after it. Own your translation memory and terminology so the second language costs less than the first, and the third less than the second.</li>
+      <li><strong>Re-test per language before launch.</strong> Run WCAG testing on each localized template, verify <code>hreflang</code> reciprocity in both directions, and submit every form with real local data — a genuine address, a genuine phone number, a genuine postal code from the market you are entering. Nearly every defect described in this article surfaces in that one test.</li>
+    </ol>
+
+    <h2>Why Work With Taika</h2>
+
+    <p>The reason localization projects generate that unbudgeted second project is almost always vendor structure. The translation vendor does not do accessibility, the accessibility vendor does not do languages, and the gap between them is exactly where the tagged PDFs, the caption tracks, and the per-language WCAG testing quietly fail to happen — usually discovered by a complaint rather than an audit.</p>
+
+    <p>Taika Translations covers both sides in one house: website translation and localization, multilingual desktop publishing, captioning and transcription, and Section 508 and WCAG 2.1 AA remediation — with ATA-certified linguists doing the language work. We are registered in SAM, hold a GSA Schedule and NASPO ValuePoint, and are a Veteran-Owned Small Business, so public-sector buyers can transact without standing up a fresh solicitation. And we will tell you plainly which parts of a localization scope you do not need, which is usually the more valuable half of the conversation.</p>
+
+  </div>
+
+  <div class="post-cta">
+    <h3>Localize your site without doubling your accessibility debt</h3>
+    <p>Website localization and translation, multilingual desktop publishing, captioning, and WCAG 2.1 AA remediation — per language, from one team. ATA-certified linguists. GSA Schedule, NASPO ValuePoint, SAM registered, VOSB.</p>
+    <a href="/website-localization#quote" class="btn-primary">Get a Website Localization Quote &rarr;</a>
+  </div>
+
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+      <a href="/blog/school-website-accessibility-ada-title-ii" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">K-12 Website Accessibility: What the ADA Title II Deadline Means for Your District</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; August 14, 2026</div>
+      </a>
+      <a href="/blog/pdf-remediation-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Make Your PDFs Section 508 Compliant: A Step-by-Step Guide</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger &middot; May 20, 2026</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Language Access Hub</div>
+      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
+      <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
+      <div class="footer-family-links">
+        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ taikatranslations.com</a>
+        <a href="https://www.tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ tvpteam.com</a>
+      </div>
+      <div class="footer-comp-tags">
+        <span class="footer-comp-tag">HIPAA</span>
+        <span class="footer-comp-tag">FERPA</span>
+        <span class="footer-comp-tag">WCAG 2.2</span>
+        <span class="footer-comp-tag">VOSB</span>
+        <span class="footer-comp-tag">GSA</span>
+        <span class="footer-comp-tag">NASPO</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/translation">Certified Translation</a></li>
+        <li><a href="/interpretation">Interpretation (OPI/VRI)</a></li>
+        <li><a href="/508-compliance">ADA / Section 508</a></li>
+        <li><a href="/captioning">Video Captioning</a></li>
+        <li><a href="/transcription">Transcription</a></li>
+        <li><a href="/desktop-publishing">Desktop Publishing</a></li>
+        <li><a href="/ai-automation">AI Automation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Who We Serve</h4>
+      <ul>
+        <li><a href="/government">Government Agencies</a></li>
+        <li><a href="/schools">School Districts</a></li>
+        <li><a href="/healthcare">Healthcare</a></li>
+        <li><a href="/legal">Legal &amp; Courts</a></li>
+        <li><a href="/nonprofits">Nonprofits</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/compliance-faq">Compliance FAQ</a></li>
+        <li><a href="/compliance-faq#checklist">Free Compliance Checklist</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/store">Online Store</a></li>
+        <li><a href="/index.html#quote">Contact / Quote</a></li>
+        <li><a href="/site-directory">Site Directory</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
+        <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
+        <li style="color:rgba(255,255,255,0.72);font-size:12.5px;line-height:1.65;margin-top:6px;">TaikaTranslations LLC<br>2028 E Ben White Blvd. #240-1178<br>Austin, TX 78741</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. All rights reserved.</p>
+      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
+    </div>
+    <nav class="footer-social" aria-label="Social media">
+      <a href="https://www.youtube.com/@taikatranslations" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+      <a href="https://www.linkedin.com/company/taikatranslations-llc/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+      <a href="https://www.facebook.com/TaikaTranslations" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+      <a href="https://www.instagram.com/taikatranslations/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/js/main.js?v=27"></script>
+</body>
+</html>

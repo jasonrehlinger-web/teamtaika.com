@@ -68,7 +68,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Districts must provide vital documents in languages parents understand under Title VI; families frequently need certified translations of foreign birth records, immunization records, and prior transcripts to register. Distinguish what the *district* must translate from what the *family* needs certified.
   Category: `translation` · CTA: `/pages/services/translation.html` · Links: `/pages/industries/schools.html`, `/blog/what-is-certified-translation`
 
-- [ ] **10. `website-localization-vs-translation`** — *Website Localization vs. Website Translation: What Actually Has to Change*
+- [x] **10. `website-localization-vs-translation`** — *Website Localization vs. Website Translation: What Actually Has to Change*
   Keyword: `website localization process`. **Lane B · Enterprise.**
   Evidence: Separate translation of strings from locale adaptation — date/number/currency formats, address and name fields, form validation, text expansion breaking layouts, RTL mirroring, locale-specific imagery and legal copy, `hreflang` and canonical handling for multilingual SEO, and CMS/TMS integration versus manual page duplication. Tie the accessibility angle in: a translated page still has to meet WCAG per language, and remediation does not carry over.
   Category: `translation` · CTA: `/pages/services/website-localization.html` · Links: `/pages/services/website-translation.html`, `/pages/services/508-compliance.html`
@@ -190,6 +190,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] nonprofit-website-accessibility-requirements — published 2026-08-28 → /blog/nonprofit-website-accessibility-requirements
 - [x] gsa-schedule-translation-services-buying — published 2026-09-01 → /blog/gsa-schedule-translation-services-buying
 - [x] school-enrollment-document-translation — published 2026-09-04 → /blog/school-enrollment-document-translation
+- [x] website-localization-vs-translation — published 2026-09-08 → /blog/website-localization-vs-translation
 
 ---
 
@@ -205,7 +206,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] pdf-remediation-guide — upgraded 2026-08-28 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [x] translation-for-government — upgraded 2026-09-01 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [x] title-vi-language-access-plan — upgraded 2026-09-04 (.answer-box + .inline-cta added; also corrected a present-tense EO 13166 claim — revoked by EO 14224, March 2025 — to match the sitewide fix)
-- [ ] most-spoken-languages
+- [x] most-spoken-languages — upgraded 2026-09-08 (.answer-box + .inline-cta added; existing .post-cta left unchanged; also dropped the revoked EO 13166 from a live-requirements list, matching the title-vi correction. NOTE: 109 other teamtaika.com pages still cite EO 13166 as current law — flagged to Jason, out of scope for one run)
 - [ ] translation-for-legal-documents-law-firms
 - [ ] joint-commission-2026-language-access
 - [ ] birth-certificate-translation-uscis

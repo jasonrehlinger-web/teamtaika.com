@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Make an Excel Spreadsheet 508 Compliant (And Why Most Agency Workbooks Fail) | Language Access Hub</title>
+<meta name="description" content="Agencies remediate their PDFs and forget the spreadsheets. Merged cells, unlabeled charts, and color-coded status columns are the failures we find in almost every published workbook &mdash; and how to fix them.">
+<link rel="canonical" href="https://teamtaika.com/blog/accessible-excel-spreadsheets-508">
+<meta property="og:title" content="How to Make an Excel Spreadsheet 508 Compliant (And Why Most Agency Workbooks Fail)">
+<meta property="og:description" content="Agencies remediate their PDFs and forget the spreadsheets. Merged cells, unlabeled charts, and color-coded status columns are the failures we find in almost every published workbook &mdash; and how to fix them.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/accessible-excel-spreadsheets-508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Make an Excel Spreadsheet 508 Compliant (And Why Most Agency Workbooks Fail)",
+  "description": "Agencies remediate their PDFs and forget the spreadsheets. Merged cells, unlabeled charts, and color-coded status columns are the failures we find in almost every published workbook — and how to fix them.",
+  "url": "https://teamtaika.com/blog/accessible-excel-spreadsheets-508",
+  "datePublished": "2026-09-09",
+  "dateModified": "2026-09-09",
+  "author": { "@type": "Organization", "name": "Language Access Hub — Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "publisher": { "@type": "Organization", "name": "Language Access Hub — Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://teamtaika.com/blog/accessible-excel-spreadsheets-508" }
+}
+</script>
+</head>
+<body>
+<!-- @nav -->
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">&rsaquo;</span><a href="/blog">Blog</a><span class="breadcrumb-sep">&rsaquo;</span><span class="breadcrumb-current">Digital Accessibility</span></nav></div>
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Digital Accessibility</span>
+    <h1 class="post-title">How to Make an Excel Spreadsheet 508 Compliant (And Why Most Agency Workbooks Fail)</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>&middot;</span>September 9, 2026<span>&middot;</span>8 min read</div>
+  </div>
+</section>
+<div class="post-inner">
+  <div class="post-body">
+    <p>Ask a public agency what it has remediated for accessibility and you will hear about the website and the PDFs. Almost nobody mentions the spreadsheets &mdash; and yet the budget workbook, the salary schedule, the quarterly performance data, and the open-records export are all sitting on the same public site, in the same compliance scope, usually untouched. A spreadsheet published for the public is electronic content, and the law does not care that it happens to be an <code>.xlsx</code>.</p>
+    <div class="answer-box" style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:0 0 32px;"><strong style="color:#166534;">Quick answer:</strong> <span style="font-size:16px;color:var(--slate);line-height:1.75;">To make an Excel workbook 508 compliant: give every worksheet a unique <strong>descriptive tab name</strong> and delete the empty ones; convert each data range into a real <strong>Excel Table with a header row</strong>; <strong>eliminate every merged cell</strong> and every blank row or column inside the data; add <strong>alt text</strong> to charts, images, and shapes while keeping the underlying data on the sheet; never let <strong>color alone</strong> carry meaning; move anything vital out of <strong>headers, footers, and floating text boxes</strong> into real cells; set the document <strong>title and language</strong>; save with the cursor in cell A1; then run <strong>Review &rarr; Check Accessibility</strong> and verify with a screen reader.</span></div>
+
+    <h2>Yes, spreadsheets are in scope</h2>
+    <p>Two separate rules land on the same file. For federal agencies and their vendors, the Revised Section 508 Standards require electronic content &mdash; which explicitly includes the documents an agency publishes or distributes &mdash; to conform to <strong>WCAG 2.0 Level A and AA</strong>. For state and local government, the Department of Justice's ADA Title II web rule requires web content and mobile apps to meet <strong>WCAG 2.1 Level AA</strong>, with compliance dates of <strong>{{ADA_DEADLINE_LARGE}}</strong> for public entities serving 50,000 or more people and <strong>{{ADA_DEADLINE_SMALL}}</strong> for smaller entities and special district governments. A spreadsheet you post for download is web content under that rule.</p>
+    <p>The practical consequence: the success criteria that spreadsheets fail most often are 1.1.1 (Non-text Content), 1.3.1 (Info and Relationships), 1.4.1 (Use of Color), and 1.4.3 (Contrast). Every fix below maps to one of them.</p>
+
+    <h2>1. Name the tabs, delete the debris</h2>
+    <p>A screen-reader user navigates a workbook sheet by sheet, and the tab name is the only signal they get about what is on it. &ldquo;Sheet1,&rdquo; &ldquo;Sheet2,&rdquo; and &ldquo;Copy of Sheet2&rdquo; tell them nothing. Give each sheet a short, unique, meaningful name &mdash; &ldquo;FY27 Operating Budget,&rdquo; &ldquo;Notes and Sources&rdquo; &mdash; and delete blank or abandoned worksheets outright. An empty sheet a sighted user skips past in half a second is a dead end someone else has to arrow through.</p>
+
+    <h2>2. Use a real Excel Table with a header row</h2>
+    <p>This is the single highest-value fix in the whole file. Select your data, choose <em>Insert &rarr; Table</em>, and confirm &ldquo;My table has headers.&rdquo; That turns a loose block of cells into a structure assistive technology understands, so a screen reader announces the column name with each value &mdash; &ldquo;Department: Public Works, Amount: $412,000&rdquo; &mdash; instead of reading a naked number and leaving the user to count columns backwards to work out what it meant. Give the table a descriptive name in <em>Table Design</em> while you are there.</p>
+    <p>Some agency authoring guides additionally have you define named ranges such as <code>Title_Region</code>, <code>Row_Title</code>, and <code>Column_Title</code>. That convention helps older versions of JAWS announce context and still appears in several federal guides, but treat it as a supplement to a properly structured table, not a substitute for one.</p>
+
+    <h2>3. Kill the merged cells and the blank rows</h2>
+    <p>Merged cells are the most common structural defect we find in government workbooks, and they are almost always cosmetic &mdash; a title stretched across the top, a category label spanning four rows. Merging destroys the row-and-column relationship a screen reader uses to place a value, and it breaks sorting and filtering for everyone else too. Use <em>Center Across Selection</em> if you want the visual effect, or just put the label in one cell.</p>
+    <p>Blank rows and columns are the second most common. A screen reader treats an empty row as the end of the data region, so a workbook &ldquo;spaced out for readability&rdquo; reads as three unrelated fragments. If you need visual separation, use row height, borders, or cell styles &mdash; not emptiness.</p>
+
+    <h2>4. Alt text on every chart, image, and shape</h2>
+    <p>Right-click any chart, picture, SmartArt object, or shape and choose <em>View Alt Text</em>. For a chart, describe what the chart shows &mdash; the trend, the comparison, the outlier &mdash; not the words &ldquo;bar chart.&rdquo; And keep the source data visible on a sheet: a chart is a rendering of numbers, and alt text can summarize a rendering but cannot replace access to the numbers themselves. If the data lives only inside the chart object, put it in a table.</p>
+
+    <h2>5. Color is not information</h2>
+    <p>Conditional formatting is where good intentions go wrong. If red fill means &ldquo;over budget&rdquo; and green means &ldquo;on track,&rdquo; a screen reader announces neither, and a colorblind reader sees two similar grays. Add a status column carrying the actual word, or a symbol, alongside the color. Separately, check contrast: text needs at least 4.5:1 against its fill, and the pale yellows and light grays that look tasteful in a workbook frequently fail. Put a legend on the sheet explaining any coding you use.</p>
+
+    <div class="inline-cta" style="background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:32px 0;"><p style="margin:0 0 12px;font-size:15px;color:var(--navy);"><strong>Have a library of published workbooks nobody has ever tested?</strong> We remediate spreadsheets, Word files, and PDFs at volume for agencies, districts, and health systems &mdash; and train your staff to author them accessibly so the backlog stops growing.</p><p style="margin:0;font-size:15px;"><a href="/508-compliance#quote" style="font-weight:700;color:var(--gold-text,#7A5C0F);">Get a Section 508 remediation quote &rarr;</a></p></div>
+
+    <h2>6. Headers, footers, and floating text boxes are invisible</h2>
+    <p>Content placed in a worksheet's header or footer, in a watermark, or in a floating text box is unreliable for assistive technology &mdash; it may be skipped entirely. That matters because it is exactly where agencies put the things that count: the effective date, the data source, the &ldquo;preliminary &mdash; do not cite&rdquo; caveat. Repeat any vital information in a real cell on the sheet. A short &ldquo;About this workbook&rdquo; sheet holding the title, date, source, contact, and a note on how the sheets are organized is a cheap fix that solves this permanently.</p>
+
+    <h2>7. Set the properties and the landing cell</h2>
+    <p>In <em>File &rarr; Info</em>, give the workbook a real <strong>Title</strong> in the document properties &mdash; the filename is not a title &mdash; and confirm the editing language is set correctly so a screen reader pronounces the content properly. Then, before you save, press <kbd>Ctrl</kbd>+<kbd>Home</kbd> on each sheet so the file opens at cell A1 rather than wherever you happened to be editing. Use descriptive hyperlink text instead of pasted URLs, and freeze the header row so it stays in view while scrolling.</p>
+
+    <h2>8. Run the checker &mdash; then actually test it</h2>
+    <p><em>Review &rarr; Check Accessibility</em> catches the mechanical failures: missing alt text, merged cells, default or blank sheet names, low contrast. Clear every error before publishing. But understand what it cannot do &mdash; it cannot tell you whether your alt text is meaningful, whether your table headers describe the right columns, or whether the workbook makes any sense read linearly. That takes opening the file in a screen reader and navigating it the way a user would. Automated checks are a floor, not a finish line.</p>
+
+    <h2>What this means when you are buying remediation</h2>
+    <p>Ask vendors two questions. Does the scope include spreadsheets and other non-PDF documents, or only PDFs? And does the deliverable come with documented manual testing, or just a clean automated-checker screenshot? Both answers separate real remediation from a file that has merely stopped throwing warnings. And if your team produces new workbooks every month, authoring training pays for itself faster than remediation does &mdash; building structure while you are already in the file takes minutes, while retrofitting a finished workbook takes hours.</p>
+  </div>
+  <div class="post-cta">
+    <h3>Need help with Section 508 or WCAG compliance?</h3>
+    <p>Our team remediates documents, spreadsheets, websites, and video for government agencies, school districts, and healthcare organizations across all 50 states. GSA &amp; NASPO contracts available.</p>
+    <a href="/index.html#quote" class="btn-primary">Get a Free Quote &rarr;</a>
+  </div>
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"><a href="/blog/accessible-word-documents-508" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Create 508-Compliant Word Documents (Before They Become PDFs)</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger</div></a><a href="/blog/pdf-remediation-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Make Your PDFs Section 508 Compliant: A Step-by-Step Guide</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger</div></a></div>
+  </div>
+</div>
+
+<!-- @footer -->
+</body>
+</html>

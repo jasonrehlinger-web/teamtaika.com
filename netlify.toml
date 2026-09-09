@@ -137,6 +137,10 @@
   to = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
   status = 200
 [[redirects]]
+  from = "/blog/accessible-excel-spreadsheets-508"
+  to = "/pages/resources/blog/accessible-excel-spreadsheets-508.html"
+  status = 200
+[[redirects]]
   from = "/blog/accessible-word-documents-508"
   to = "/pages/resources/blog/accessible-word-documents-508.html"
   status = 200
@@ -1779,6 +1783,11 @@
 [[redirects]]
   from = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
   to = "/blog/ada-title-ii-web-rule-deadline-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/accessible-excel-spreadsheets-508.html"
+  to = "/blog/accessible-excel-spreadsheets-508"
   status = 301
   force = true
 [[redirects]]

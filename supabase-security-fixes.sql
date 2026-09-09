@@ -174,10 +174,35 @@ CREATE POLICY "storage: update owned project or admin"
     )
   );
 
+-- ── M3: the services catalog table has no RLS — lock it to read-only ──────────
+-- supabase-schema.sql enables RLS on profiles/projects/project_files/messages/
+-- project_status_history, but NOT on `services`. Supabase grants the anon and
+-- authenticated roles table privileges by default, so a public table with RLS
+-- disabled is fully writable through PostgREST with only the (public) anon key:
+--     supabase.from('services').update({ base_price: 0 })         -- would succeed
+--     supabase.from('services').insert({ name:'x', slug:'x' })    -- would succeed
+-- No app code reads this table today (prices are derived server-side in
+-- create-checkout-session.js), so impact is low — but an RLS-off, world-writable
+-- table in production is exactly the kind of thing the review must not skip.
+-- Enable RLS and grant PUBLIC READ only; with no write policy, all writes fall
+-- through to the service_role (server-side) alone.
+ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "services: public read active" ON services;
+CREATE POLICY "services: public read active"
+  ON services FOR SELECT
+  TO anon, authenticated
+  USING (is_active = true);
+
 -- =============================================================================
 -- OPTIONAL VERIFICATION (run as a normal client session, should be a no-op):
 --   UPDATE profiles SET role='super_admin' WHERE id = auth.uid();
 --   SELECT role FROM profiles WHERE id = auth.uid();   -- still 'client'
+--
+--   SERVICES (M3): as an anon/client session, writes must now be denied:
+--     INSERT INTO services (name, slug) VALUES ('x','x');   -- 0 rows / denied
+--     UPDATE services SET base_price = 0;                   -- 0 rows affected
+--   SELECT on services still returns active rows.
 --
 -- STORAGE (M2): after running this, do one real portal round-trip:
 --   1. Log in as a client, submit a project WITH a source file  -> upload OK.

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Make a PowerPoint 508 Compliant (And the Reading-Order Trap Nobody Checks) | Language Access Hub</title>
+<meta name="description" content="Every slide deck an agency posts is electronic content in compliance scope. The failure we find most often is not missing alt text &mdash; it is reading order, and PowerPoint&rsquo;s two ordering panes list objects in opposite directions.">
+<link rel="canonical" href="https://teamtaika.com/blog/accessible-powerpoint-presentations-508">
+<meta property="og:title" content="How to Make a PowerPoint 508 Compliant (And the Reading-Order Trap Nobody Checks)">
+<meta property="og:description" content="Every slide deck an agency posts is electronic content in compliance scope. The failure we find most often is not missing alt text &mdash; it is reading order, and PowerPoint&rsquo;s two ordering panes list objects in opposite directions.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/accessible-powerpoint-presentations-508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Make a PowerPoint 508 Compliant (And the Reading-Order Trap Nobody Checks)",
+  "description": "Every slide deck an agency posts is electronic content in compliance scope. The failure we find most often is not missing alt text — it is reading order, and PowerPoint's two ordering panes list objects in opposite directions.",
+  "url": "https://teamtaika.com/blog/accessible-powerpoint-presentations-508",
+  "datePublished": "2026-09-10",
+  "dateModified": "2026-09-10",
+  "author": { "@type": "Organization", "name": "Language Access Hub — Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "publisher": { "@type": "Organization", "name": "Language Access Hub — Powered by Taika Translations", "url": "https://teamtaika.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://teamtaika.com/blog/accessible-powerpoint-presentations-508" }
+}
+</script>
+</head>
+<body>
+<!-- @nav -->
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">&rsaquo;</span><a href="/blog">Blog</a><span class="breadcrumb-sep">&rsaquo;</span><span class="breadcrumb-current">Digital Accessibility</span></nav></div>
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Digital Accessibility</span>
+    <h1 class="post-title">How to Make a PowerPoint 508 Compliant (And the Reading-Order Trap Nobody Checks)</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>&middot;</span>September 10, 2026<span>&middot;</span>8 min read</div>
+  </div>
+</section>
+<div class="post-inner">
+  <div class="post-body">
+    <p>The slide deck is the most-published and least-remediated document type in government. Every board meeting, every public hearing, every grant webinar, every all-hands training ends with a <code>.pptx</code> or a slides-to-PDF export posted to the agency website &mdash; and almost none of them have ever been opened in a screen reader. Teams that have carefully remediated their entire PDF library will hand you a 60-slide deck built out of dragged-in text boxes and be genuinely surprised that it counts.</p>
+    <div class="answer-box" style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:0 0 32px;"><strong style="color:#166534;">Quick answer:</strong> <span style="font-size:16px;color:var(--slate);line-height:1.75;">To make a PowerPoint 508 compliant: build every slide from a built-in <strong>slide layout</strong> rather than dragged-in text boxes; give each slide a <strong>unique, descriptive title</strong> in the real title placeholder; fix the <strong>reading order</strong> of every object; add <strong>alt text</strong> to images, charts, and SmartArt and mark decorative objects as decorative; use <strong>built-in bullet and numbering</strong> lists; designate <strong>header rows</strong> on tables; caption and transcribe all <strong>embedded audio and video</strong>; write descriptive <strong>hyperlink text</strong>; keep <strong>contrast</strong> at 4.5:1 and never let color alone carry meaning; avoid automatic slide advancement; set the document <strong>title and language</strong> in properties; then run <strong>Review &rarr; Check Accessibility</strong> and verify with a screen reader.</span></div>
+
+    <h2>Slide decks are electronic content, and they are in scope</h2>
+    <p>Two rules land on the same file. For federal agencies and the vendors who deliver to them, the Revised Section 508 Standards require electronic content &mdash; including the documents an agency publishes, distributes, or uses in official communication &mdash; to conform to <strong>WCAG 2.0 Level A and AA</strong>. For state and local government, the Department of Justice&rsquo;s ADA Title II web rule requires web content to meet <strong>WCAG 2.1 Level AA</strong>, with compliance dates of <strong>{{ADA_DEADLINE_LARGE}}</strong> for public entities serving 50,000 or more people and <strong>{{ADA_DEADLINE_SMALL}}</strong> for smaller entities and special district governments. A deck posted for download is web content under that rule &mdash; and so is the PDF you exported from it, which inherits every structural defect the source deck had.</p>
+    <p>That inheritance is the reason to fix the deck rather than the export. Remediating a tagged PDF that came out of a badly built PowerPoint is slow, manual work you will repeat every single time the deck is updated. Fixing the source takes minutes and holds.</p>
+
+    <h2>1. Use the layouts. Stop dragging text boxes.</h2>
+    <p>This is the root cause of most of the rest. PowerPoint&rsquo;s built-in layouts (<em>Home &rarr; Layout</em>, or <em>View &rarr; Slide Master</em> to customize them) produce placeholders that assistive technology recognizes as titles, body content, and captions, in a defined order. A text box you drew yourself is an anonymous floating object with no semantic role and no reliable position in the reading sequence.</p>
+    <p>If a layout is close but not exact, edit it in the Slide Master rather than abandoning it. Build the deck the way you want it to be read, and most of the accessibility work is already done before you start.</p>
+
+    <h2>2. Every slide needs a unique title &mdash; verify it in Outline View</h2>
+    <p>Screen-reader users navigate a deck by slide title the way sighted users skim by headline. Each slide needs a title, in the actual title placeholder, and each one needs to be different: five consecutive slides all called &ldquo;FY27 Budget&rdquo; give a user no way to tell where they are. Distinguish continued topics &mdash; &ldquo;FY27 Budget: Revenue,&rdquo; &ldquo;FY27 Budget: Expenditures&rdquo; &mdash; instead of repeating one title.</p>
+    <p>The fastest audit in this entire article: switch to <em>View &rarr; Outline View</em>. Every slide number should have text beside it. A blank means a missing title placeholder; a repeat means a duplicate. You can read the structural health of a 60-slide deck in about fifteen seconds. If a title has to be visually hidden for design reasons, keep the real placeholder and move it off the visible slide canvas rather than deleting it.</p>
+
+    <h2>3. Reading order &mdash; and the pane that runs backwards</h2>
+    <p>This is the failure we find most often, and the one most likely to survive an automated check, because a slide with the wrong reading order has no missing attribute for a checker to flag. It simply reads in nonsense order: the footnote before the headline, the callout before the chart it annotates.</p>
+    <p>Here is the trap. PowerPoint gives you two panes for this, and <strong>they list objects in opposite directions</strong>:</p>
+    <ul>
+      <li>The <strong>Reading Order pane</strong> (<em>Review &rarr; Check Accessibility &rarr; Reading Order</em>, Windows) lists objects <strong>top to bottom</strong> in the order they will be announced. The top item is read first. This is the one to use.</li>
+      <li>The <strong>Selection Pane</strong> (<em>Home &rarr; Arrange &rarr; Selection Pane</em>) lists objects in z-order, <strong>bottom to top</strong> &mdash; the <em>bottommost</em> entry is announced <em>first</em>. On Mac this is the only pane available.</li>
+    </ul>
+    <p>A good share of the reading-order &ldquo;corrections&rdquo; we see in the field were made in the Selection Pane by someone who assumed it read downward, which reverses the slide instead of fixing it. Know which pane you are in. Then confirm with the keyboard: press <kbd>Tab</kbd> repeatedly on the slide in normal view and watch focus move object to object &mdash; that is the announcement order, and it takes about ten seconds per slide.</p>
+
+    <div class="inline-cta" style="background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:32px 0;"><p style="margin:0 0 12px;font-size:15px;color:var(--navy);"><strong>Sitting on years of posted board decks and webinar slides nobody has ever tested?</strong> We remediate presentations, Word files, spreadsheets, and PDFs at volume for agencies, districts, and health systems &mdash; and train your staff to build them accessibly so the backlog stops growing.</p><p style="margin:0;font-size:15px;"><a href="/508-compliance#quote" style="font-weight:700;color:var(--gold-text,#7A5C0F);">Get a Section 508 remediation quote &rarr;</a></p></div>
+
+    <h2>4. Alt text &mdash; and knowing what is decorative</h2>
+    <p>Right-click any image, chart, SmartArt object, or grouped shape and choose <em>View Alt Text</em>. Describe what the object communicates, not what it is: for a chart, the trend or comparison it exists to show, not &ldquo;line chart.&rdquo; Complex charts deserve the underlying numbers in a real table on the slide or in an appendix &mdash; alt text can summarize a picture of data, but it cannot substitute for the data.</p>
+    <p>Equally important: mark genuinely decorative objects &mdash; divider bars, background flourishes, the agency seal repeated on all forty slides &mdash; using the <strong>Mark as decorative</strong> checkbox in the same pane. Alt-texting decoration is its own accessibility failure; it fills a user&rsquo;s ears with noise on every slide. And never keep the automatic description PowerPoint sometimes supplies: it is a guess, and it is frequently wrong.</p>
+
+    <h2>5. Lists, tables, links, and media</h2>
+    <p>Use the built-in <strong>Bullets</strong> and <strong>Numbering</strong> buttons so lists are announced as lists with a count, rather than as a paragraph that happens to begin with a dash. Insert real tables (<em>Insert &rarr; Table</em>) rather than pasting pictures of tables or faking columns with tabs, designate the header row in <em>Table Design</em>, keep tables simple, and avoid merged cells and nested tables entirely &mdash; those destroy the row-and-column relationship assistive technology relies on to place a value.</p>
+    <p>Write hyperlink text that describes the destination: &ldquo;Read the FY27 adopted budget,&rdquo; not &ldquo;click here,&rdquo; and not a pasted URL a screen reader will spell out character by character. Any embedded video needs synchronized captions and any embedded audio needs a transcript &mdash; and if the video carries visual information the narration does not, it needs audio description as well.</p>
+
+    <h2>6. Contrast, font size, and motion</h2>
+    <p>Text needs a contrast ratio of at least 4.5:1 against its background (3:1 for large text), which the tasteful light grays and mid-tone accent colors in many agency templates quietly fail. Check the template once and you have fixed every future deck built from it. Never let color alone carry meaning: if red means &ldquo;behind schedule,&rdquo; the word or a symbol has to appear too.</p>
+    <p>Federal agency authoring checklists &mdash; HHS, SSA, and FEMA each publish one &mdash; commonly set a floor of 18-point body text for presentations. That is a legibility convention for projected content rather than a WCAG success criterion, but it is what an agency reviewer will hold you to, so build to it. Finally, avoid automatic slide advancement and elaborate transitions: a reader who needs more time cannot ask a timed deck for it, and heavy motion can trigger vestibular symptoms.</p>
+
+    <h2>7. Properties, checker, screen reader</h2>
+    <p>In <em>File &rarr; Info</em>, set a real document <strong>Title</strong> in the properties &mdash; the filename is not a title &mdash; and confirm the language is set correctly so speech synthesis pronounces the content properly. Then run <em>Review &rarr; Check Accessibility</em> and clear every error and warning it reports.</p>
+    <p>Then stop trusting it. The built-in checker verifies that attributes exist; it cannot tell you whether your alt text is accurate, whether your slide titles describe the right slides, or whether the deck makes any sense read linearly &mdash; and it will not flag a reversed reading order at all. Open the finished file in a screen reader and listen to three slides. Automated checks are a floor, not a finish line.</p>
+
+    <h2>What to ask when you are buying remediation</h2>
+    <p>Two questions separate real remediation from a clean screenshot. Does the scope include presentations and other non-PDF source documents, or only the exported PDFs? And does the deliverable include documented <strong>manual</strong> testing &mdash; reading order confirmed by keyboard and screen reader &mdash; or only an automated-checker report? If the answer to the second is &ldquo;checker only,&rdquo; reading order is precisely what you are not buying, and reading order is where these files actually fail.</p>
+    <p>One more piece of arithmetic worth doing before you sign anything. If your agency produces new decks every month, authoring training costs less than perpetual remediation. Building one accessible template and teaching staff the layout-and-title habit stops the backlog at the source, which retrofitting finished files never does.</p>
+  </div>
+  <div class="post-cta">
+    <h3>Need help with Section 508 or WCAG compliance?</h3>
+    <p>Our team remediates documents, presentations, spreadsheets, websites, and video for government agencies, school districts, and healthcare organizations across all 50 states. GSA &amp; NASPO contracts available.</p>
+    <a href="/index.html#quote" class="btn-primary">Get a Free Quote &rarr;</a>
+  </div>
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"><a href="/blog/accessible-word-documents-508" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Create 508-Compliant Word Documents (Before They Become PDFs)</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger</div></a><a href="/blog/accessible-excel-spreadsheets-508" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'"><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div><div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Make an Excel Spreadsheet 508 Compliant (And Why Most Agency Workbooks Fail)</div><div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger</div></a></div>
+  </div>
+</div>
+
+<!-- @footer -->
+</body>
+</html>

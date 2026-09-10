@@ -81,7 +81,11 @@ print(f'Build complete → {DIST}')
 
 # Copy robots.txt, llms.txt, sitemap.xml — text extras go through token
 # replacement too (llms.txt cites the compliance deadlines).
-for extra in ('robots.txt', 'llms.txt', 'sitemap.xml'):
+# The ab45…2564.txt file is the IndexNow key (public by design — proves domain
+# ownership so Bing/Yandex accept instant re-crawl pings). Content is the key
+# itself; token replacement is a harmless no-op on it.
+for extra in ('robots.txt', 'llms.txt', 'sitemap.xml',
+              'ab45a16551e7dd95dfb5cc1977162564.txt'):
     src = os.path.join(ROOT, extra)
     if os.path.exists(src):
         with open(src, encoding='utf-8') as fh:

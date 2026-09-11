@@ -1012,6 +1012,16 @@
     // CTA clicks: conversion-destination links, or prominent CTA buttons
     var cls = (el.className && el.className.baseVal !== undefined) ? el.className.baseVal : (el.className || '');
     var isCtaClass = /\b(lp-cta|btn-primary|btn-cta|btn-hero|btn-lead|btn-order|btn-quote)\b/.test(cls);
+    // Mid-article CTAs live inside a .inline-cta block. They report under their
+    // own event name so in-content CTA performance can be read separately from
+    // page-level CTAs, and so an in-content CTA is tracked whether or not its
+    // href or class happens to match the page-level patterns above.
+    // Counted once, never as both.
+    var inInlineBlock = el.closest ? !!el.closest('.inline-cta') : false;
+    if (inInlineBlock) {
+      track('inline_cta_click', { link_text: label(el), destination: href || '(button)' });
+      return;
+    }
     if (CTA_HREF_RE.test(href) || isCtaClass) {
       track('cta_click', { link_text: label(el), destination: href || '(button)' });
     }

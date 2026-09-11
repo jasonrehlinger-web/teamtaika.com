@@ -73,7 +73,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Separate translation of strings from locale adaptation — date/number/currency formats, address and name fields, form validation, text expansion breaking layouts, RTL mirroring, locale-specific imagery and legal copy, `hreflang` and canonical handling for multilingual SEO, and CMS/TMS integration versus manual page duplication. Tie the accessibility angle in: a translated page still has to meet WCAG per language, and remediation does not carry over.
   Category: `translation` · CTA: `/pages/services/website-localization.html` · Links: `/pages/services/website-translation.html`, `/pages/services/508-compliance.html`
 
-- [ ] **11. `section-504-healthcare-digital-accessibility`** — *Section 504 Digital Accessibility for Healthcare: Websites, Patient Portals, and Vendor Tools*
+- [x] **11. `section-504-healthcare-digital-accessibility`** — *Section 504 Digital Accessibility for Healthcare: Websites, Patient Portals, and Vendor Tools*
   Keyword: `Section 504 healthcare digital accessibility`. Lane A · Healthcare × ADA/508.
   Evidence: HHS Section 504 final rule (effective July 8, 2024) requires covered digital properties to meet WCAG 2.1 Level A and AA — institutional websites, patient portals, intranet resources, mobile apps, kiosks, and third-party tools. Non-discrimination obligations applied from the effective date forward, so OCR enforcement authority predates the technical deadline and documented good-faith progress matters.
   **✓ Date conflict RESOLVED 2026-08-14:** verified against hhs.gov — the May 2026 HHS interim final rule sets `SEC504_DEADLINE` May 11, 2027 (15+ employees) and `SEC504_DEADLINE_SMALL` May 10, 2028 (under 15), matching `data/compliance-deadlines.json`. Emit the tokens, never literal dates. Do not re-litigate.
@@ -191,6 +191,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] gsa-schedule-translation-services-buying — published 2026-09-01 → /blog/gsa-schedule-translation-services-buying
 - [x] school-enrollment-document-translation — published 2026-09-04 → /blog/school-enrollment-document-translation
 - [x] website-localization-vs-translation — published 2026-09-08 → /blog/website-localization-vs-translation
+- [x] section-504-healthcare-digital-accessibility — published 2026-09-11 → /blog/section-504-healthcare-digital-accessibility
 
 ---
 
@@ -207,7 +208,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] translation-for-government — upgraded 2026-09-01 (.answer-box + .inline-cta added; existing .post-cta left unchanged)
 - [x] title-vi-language-access-plan — upgraded 2026-09-04 (.answer-box + .inline-cta added; also corrected a present-tense EO 13166 claim — revoked by EO 14224, March 2025 — to match the sitewide fix)
 - [x] most-spoken-languages — upgraded 2026-09-08 (.answer-box + .inline-cta added; existing .post-cta left unchanged; also dropped the revoked EO 13166 from a live-requirements list, matching the title-vi correction. NOTE: 109 other teamtaika.com pages still cite EO 13166 as current law — flagged to Jason, out of scope for one run)
-- [ ] translation-for-legal-documents-law-firms
+- [x] translation-for-legal-documents-law-firms — upgraded 2026-09-11 (.answer-box + .inline-cta added; existing inline-styled navy CTA block left in place; 13 legacy price mentions left untouched)
 - [ ] joint-commission-2026-language-access
 - [ ] birth-certificate-translation-uscis
 - [ ] hipaa-compliant-medical-translation

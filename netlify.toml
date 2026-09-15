@@ -137,6 +137,10 @@
   to = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
   status = 200
 [[redirects]]
+  from = "/blog/machine-translation-post-editing-when-to-use"
+  to = "/pages/resources/blog/machine-translation-post-editing-when-to-use.html"
+  status = 200
+[[redirects]]
   from = "/blog/section-504-healthcare-digital-accessibility"
   to = "/pages/resources/blog/section-504-healthcare-digital-accessibility.html"
   status = 200
@@ -1791,6 +1795,11 @@
 [[redirects]]
   from = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
   to = "/blog/ada-title-ii-web-rule-deadline-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/machine-translation-post-editing-when-to-use.html"
+  to = "/blog/machine-translation-post-editing-when-to-use"
   status = 301
   force = true
 [[redirects]]

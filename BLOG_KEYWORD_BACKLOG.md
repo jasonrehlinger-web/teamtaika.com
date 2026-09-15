@@ -79,7 +79,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   **✓ Date conflict RESOLVED 2026-08-14:** verified against hhs.gov — the May 2026 HHS interim final rule sets `SEC504_DEADLINE` May 11, 2027 (15+ employees) and `SEC504_DEADLINE_SMALL` May 10, 2028 (under 15), matching `data/compliance-deadlines.json`. Emit the tokens, never literal dates. Do not re-litigate.
   Category: `healthcare` · CTA: `/pages/services/508-compliance.html` · Links: `/pages/industries/healthcare.html`, `/blog/pdf-remediation-guide`
 
-- [ ] **12. `machine-translation-post-editing-when-to-use`** — *When Machine Translation Post-Editing Is Appropriate — and When It Is Malpractice*
+- [x] **12. `machine-translation-post-editing-when-to-use`** — *When Machine Translation Post-Editing Is Appropriate — and When It Is Malpractice*
   Keyword: `machine translation post-editing vs human translation`. **Lane B · Buyers are already asking this; owning the honest answer wins trust.**
   Evidence: ISO 18587 defines post-editing of machine translation output and distinguishes light from full post-editing. Map content types to appropriate process: high-volume internal or low-risk content suits MTPE; certified, legal, clinical, safety, and IFU content does not. Be candid that raw MT fails certification requirements and that a certification statement affixed to MT output is a misrepresentation. Ties to the existing Google Translate post without repeating it.
   Category: `translation` · CTA: `/pages/services/machine-translation-post-editing.html` · Links: `/blog/google-translate-official-documents`, `/pages/services/managed-translation-services.html`
@@ -192,6 +192,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] school-enrollment-document-translation — published 2026-09-04 → /blog/school-enrollment-document-translation
 - [x] website-localization-vs-translation — published 2026-09-08 → /blog/website-localization-vs-translation
 - [x] section-504-healthcare-digital-accessibility — published 2026-09-11 → /blog/section-504-healthcare-digital-accessibility
+- [x] machine-translation-post-editing-when-to-use — published 2026-09-15 → /blog/machine-translation-post-editing-when-to-use
 
 ---
 
@@ -209,7 +210,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] title-vi-language-access-plan — upgraded 2026-09-04 (.answer-box + .inline-cta added; also corrected a present-tense EO 13166 claim — revoked by EO 14224, March 2025 — to match the sitewide fix)
 - [x] most-spoken-languages — upgraded 2026-09-08 (.answer-box + .inline-cta added; existing .post-cta left unchanged; also dropped the revoked EO 13166 from a live-requirements list, matching the title-vi correction. NOTE: 109 other teamtaika.com pages still cite EO 13166 as current law — flagged to Jason, out of scope for one run)
 - [x] translation-for-legal-documents-law-firms — upgraded 2026-09-11 (.answer-box + .inline-cta added; existing inline-styled navy CTA block left in place; 13 legacy price mentions left untouched)
-- [ ] joint-commission-2026-language-access
+- [x] joint-commission-2026-language-access — upgraded 2026-09-15 (.answer-box + .inline-cta added with inline styles, since this legacy template does not load the post-template CSS classes; the existing inline-styled navy CTA block at the end was left in place, and no body copy, byline, or dates were touched)
 - [ ] birth-certificate-translation-uscis
 - [ ] hipaa-compliant-medical-translation
 - [ ] marriage-certificate-translation-uscis

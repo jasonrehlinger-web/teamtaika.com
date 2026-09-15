@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When Machine Translation Post-Editing Is Appropriate — and When It's Malpractice | Language Access Hub</title>
+<meta name="description" content="Machine translation post-editing vs human translation: what ISO 18587 actually requires, why an ISO 17100 certificate cannot cover MTPE work, and the content types where post-edited machine output is indefensible.">
+<link rel="canonical" href="https://teamtaika.com/blog/machine-translation-post-editing-when-to-use">
+<meta property="og:title" content="When Machine Translation Post-Editing Is Appropriate — and When It's Malpractice">
+<meta property="og:description" content="The honest map of machine translation post-editing vs human translation: which standard governs which, the certification claim that does not transfer, and the content where MTPE is the wrong process at any speed.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/machine-translation-post-editing-when-to-use">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-body table{width:100%;border-collapse:collapse;margin:1.6em 0;font-size:14.5px;}
+.post-body th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;}
+.post-body td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.post-body tr:nth-child(even) td{background:var(--mist,#f8f9fa);}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+.answer-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:1.6em 0;}
+.answer-box strong{color:#166534;}
+.inline-cta{background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:2em 0;}
+.inline-cta p{margin:0 0 12px;font-size:15px;color:var(--navy);}
+.inline-cta a{font-weight:700;color:var(--gold-text,#7A5C0F);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "When Machine Translation Post-Editing Is Appropriate — and When It's Malpractice",
+  "description": "Machine translation post-editing vs human translation: what ISO 18587 actually requires, why an ISO 17100 certificate cannot cover MTPE work, and the content types where post-edited machine output is indefensible.",
+  "url": "https://teamtaika.com/blog/machine-translation-post-editing-when-to-use",
+  "datePublished": "2026-09-15",
+  "dateModified": "2026-09-15",
+  "author": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://teamtaika.com/blog/machine-translation-post-editing-when-to-use"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-bar" role="alert">
+  <div class="urgency-bar-inner">
+    <span class="urgency-tag">⚠ Compliance Deadline</span>
+    <p class="urgency-copy"><strong>ADA Title II WCAG 2.1 AA deadlines: {{ADA_DEADLINE_LARGE}} (public entities &ge;50,000 pop.) &middot; {{ADA_DEADLINE_SMALL}} (under 50,000 &amp; special districts).</strong> Healthcare Section 504 deadline: {{SEC504_DEADLINE}}.</p>
+    <a href="/compliance-faq" class="urgency-link">Am I compliant? →</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Language Access Hub home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </div>
+      <div class="nav-logo-wordmark">
+        <span class="nav-logo-name">Language Access Hub</span>
+        <span class="nav-logo-sub">Powered by Taika Translations + TVPTeam</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li class="nav-dropdown">
+        <a href="/translation">Services</a>
+        <div class="nav-dropdown-menu">
+          <a href="/translation">Certified Translation</a>
+          <a href="/interpretation">Interpretation (OPI/VRI)</a>
+          <a href="/508-compliance">ADA / Section 508 Compliance</a>
+          <a href="/captioning">Video Captioning</a>
+          <a href="/transcription">Transcription</a>
+          <a href="/desktop-publishing">Desktop Publishing (DTP)</a>
+          <a href="/ai-automation">AI Automation (TVPTeam)</a>
+          <a href="/pdf-accessibility-checker">Free PDF Accessibility Checker</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/government">Who We Serve</a>
+        <div class="nav-dropdown-menu">
+          <a href="/government">Government Agencies</a>
+          <a href="/schools">School Districts</a>
+          <a href="/healthcare">Healthcare</a>
+          <a href="/legal">Legal &amp; Courts</a>
+          <a href="/nonprofits">Nonprofits</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/translation#languages">Languages</a>
+        <div class="nav-dropdown-menu" style="min-width:520px;padding:8px;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">English Pages</div>
+            <a href="/spanish-translation">Spanish Translation</a>
+            <a href="/french-translation">French Translation</a>
+            <a href="/portuguese-translation">Portuguese Translation</a>
+            <a href="/german-translation">German Translation</a>
+            <a href="/italian-translation">Italian Translation</a>
+            <a href="/chinese-translation">Chinese Translation</a>
+            <a href="/arabic-translation">Arabic Translation</a>
+            <a href="/hindi-translation">Hindi Translation</a>
+            <a href="/russian-translation">Russian Translation</a>
+            <a href="/polish-translation">Polish Translation</a>
+            <a href="/urdu-translation">Urdu Translation</a>
+            <a href="/bengali-translation">Bengali Translation</a>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">Native Language Pages</div>
+            <a href="/traduccion-certificada-espanol">Español</a>
+            <a href="/traduction-certifiee-francais">Français</a>
+            <a href="/traducao-certificada-portugues">Português</a>
+            <a href="/beglaubigte-uebersetzung-deutsch">Deutsch</a>
+            <a href="/traduzione-certificata-italiano">Italiano</a>
+            <a href="/fanyi-zhongwen">中文</a>
+            <a href="/tarjama-arabiya-rasmiya">عربي</a>
+            <a href="/praman-patra-anuvad-hindi">हिंदी</a>
+            <a href="/zaverenniy-perevod-russkiy">Русский</a>
+            <a href="/tlumaczenia-uwierzytelnione-polskie">Polski</a>
+            <a href="/tarjuma-rasmi-urdu">اردو</a>
+            <a href="/praman-anuvad-bangla">বাংলা</a>
+          </div>
+        </div></div>
+      </li>
+      <li><a href="/compliance-faq">Compliance FAQ</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/store">Store</a></li>
+      <li><a href="/index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
+      <a href="/compliance-faq#checklist" class="btn-nav-ghost">Free Checklist</a>
+      <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
+      <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- TRUST WALL -->
+<div style="background:#0a1729;border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 24px;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" class="trust-wall-scroll">
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">GSA Schedule</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">NASPO ValuePoint</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="18" r="7" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M14 22l-2.6-1.5.7 2.8-2.1-2 2.8-.3L14 18.5l1.2 2.5 2.8.3-2.1 2 .7-2.8z" fill="#c9a84c"/><path d="M11 11.5L8.5 5h5z" fill="#c9a84c"/><path d="M17 11.5L19.5 5h-5z" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SBA VOSB</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><ellipse cx="14" cy="14" rx="4.5" ry="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">ATA Certified Vendors</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="19" rx="2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="8" y1="9" x2="15" y2="9" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="21" r="5" fill="#0a1729" stroke="#c9a84c" stroke-width="1.5"/><path d="M18.5 21l1.5 1.5 3-3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SAM Registered</span></div>
+  </div>
+</div>
+
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><a href="/blog">Blog</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Certified Translation</span></nav></div>
+
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Certified Translation</span>
+    <h1 class="post-title">When Machine Translation Post-Editing Is Appropriate &mdash; and When It&#39;s Malpractice</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>·</span>September 15, 2026<span>·</span>9 min read</div>
+  </div>
+</section>
+
+<div class="post-inner">
+  <div class="post-body">
+
+    <p>There is a line on the quote in front of you that reads something like <em>&ldquo;AI-assisted translation with human review.&rdquo;</em> It is priced well under the human line. Further down the same document, a logo block advertises the vendor&rsquo;s ISO 17100 certification. You are a procurement lead, or a compliance officer, or simply the person who got handed the language budget, and the implication seems clear: same standard, same protection, less money.</p>
+
+    <p>Here is the thing most buyers have wrong, and it is checkable in about ninety seconds. <strong>ISO 17100 does not cover post-edited machine translation at all.</strong> Raw machine output plus post-editing sits expressly outside that standard&rsquo;s scope; it is governed by a different standard entirely, ISO 18587. A vendor can hold a genuine ISO 17100 certificate and still be selling you a service that certificate says nothing about. Nobody is necessarily lying. The certificate is simply pointing at the wrong line item.</p>
+
+    <div class="answer-box">
+      <strong>Quick answer:</strong> Machine translation post-editing (MTPE) means a qualified human editing raw machine output to a defined quality level. It is appropriate for high-volume, low-risk, short-shelf-life content &mdash; internal knowledge bases, support archives, product catalogs, user-generated content, first-pass comprehension of incoming documents. It is <em>not</em> appropriate for certified translations, clinical trial and informed-consent documents, medical device instructions for use, safety and warning content, contracts and filings, or anything a regulator, court, or patient will rely on. Two different standards govern the two processes: ISO 17100 covers human translation and requires independent revision by a second qualified person, and it excludes post-edited machine output from its scope; ISO 18587 is the standard that covers full post-editing of machine translation output. A certification statement attesting that a translation is complete and accurate is a human attestation of competence &mdash; affixing one to lightly-touched machine output misrepresents what was done.
+    </div>
+
+    <h2>What post-editing actually is, and what the standard requires</h2>
+
+    <p>ISO 18587:2017, <em>Translation services &mdash; Post-editing of machine translation output &mdash; Requirements</em>, is the only international standard that addresses machine translation directly. It defines the process, sets out the competences and qualifications a post-editor must hold, and structures the work across pre-production, production, and post-production stages, including final verification and feedback into the engine.</p>
+
+    <p>Two details in that standard matter enormously to a buyer, and almost no vendor marketing mentions either.</p>
+
+    <p><strong>First: the requirements are for <em>full</em> post-editing only.</strong> ISO 18587 provides the requirements against which a conformity claim can be made for full post-editing &mdash; output intended to be comparable to the product of human translation. Light post-editing, the cheaper tier that aims only at comprehensible text without trying to read like human translation, is described in an <em>annex</em>. It is not the normative requirement set. So &ldquo;we post-edit to ISO 18587&rdquo; means full post-editing or it means very little; if the quote is priced at light-touch rates, ask which one you are actually buying and get the answer into the scope of work.</p>
+
+    <p><strong>Second: ISO 18587 applies only to content processed by a machine translation system.</strong> It is a process standard for a specific production method. It is not a quality grade you can sprinkle onto a project, and it does not make post-edited output interchangeable with human translation for regulatory purposes.</p>
+
+    <h2>The certification claim that does not transfer</h2>
+
+    <p>ISO 17100:2015 sets requirements for human translation services. Its defining production control is that a translation must be revised by a person other than the translator &mdash; the translator&rsquo;s own self-check does not satisfy it. That independent revision step is a large part of why the standard carries weight with regulated buyers.</p>
+
+    <p>And that standard explicitly excludes the use of raw machine translation output with post-editing from its scope. This is not an interpretation; it is how the scope is drawn, and it is why ISO 18587 had to be written as a separate document in the first place.</p>
+
+    <p>The practical consequence for your procurement file: <strong>an ISO 17100 certificate cannot be the quality evidence for an MTPE line item.</strong> If your specification invoked ISO 17100 and the delivered work was post-edited machine output, you did not get what you specified, and you may not discover it until something goes wrong downstream. Put the question in writing at bid stage: <em>for each deliverable, which standard governs, and is the human step revision by a second linguist or post-editing by one?</em></p>
+
+    <blockquote>A vendor that cannot tell you, per deliverable, whether you are buying ISO 17100 human translation or ISO 18587 post-editing is not running either process deliberately.</blockquote>
+
+    <div class="inline-cta">
+      <p><strong>Not sure which process your current work is actually going through?</strong> The fastest tell is the revision record. Human translation under ISO 17100 produces evidence of a second linguist&rsquo;s revision; post-editing does not, because there is only one human in the chain. Ask for the record, not the certificate.</p>
+      <p><a href="/machine-translation-post-editing">See how we scope post-editing work &rarr;</a></p>
+    </div>
+
+    <h2>Where MTPE fits, and where it does not</h2>
+
+    <p>The honest answer is not &ldquo;machine translation is bad.&rdquo; Used on the right content, post-editing is a legitimate, standards-backed production method that gets far more material into more languages than a human-only budget ever could. The discipline is in matching the process to the risk the content carries.</p>
+
+    <table>
+      <thead>
+        <tr><th>Content type</th><th>Appropriate process</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Internal knowledge base, IT and HR help articles</td><td>MTPE</td><td>High volume, short shelf life, low consequence if phrasing is imperfect</td></tr>
+        <tr><td>Support ticket and chat archives, user reviews</td><td>MTPE, or raw MT for gisting</td><td>Comprehension is the whole goal; nobody relies on it as a record</td></tr>
+        <tr><td>Large product catalogs, spec sheets, inventory copy</td><td>MTPE, full</td><td>Repetitive and template-driven; terminology control does the heavy lifting</td></tr>
+        <tr><td>Marketing, brand, and campaign copy</td><td>Human translation or transcreation</td><td>Machines optimize for fidelity, not persuasion; tone does not survive the round trip</td></tr>
+        <tr><td>Certified translations for USCIS, courts, licensing boards</td><td>Human translation</td><td>The certification statement is a personal attestation &mdash; see below</td></tr>
+        <tr><td>Contracts, filings, evidence, discovery for the record</td><td>Human translation, ISO 17100</td><td>Ambiguity is adversarial; one mistranslated clause is the whole exposure</td></tr>
+        <tr><td>Informed consent, patient instructions, clinical trial documents</td><td>Human translation with documented review</td><td>Comprehension by the subject is a regulatory requirement, not a quality preference</td></tr>
+        <tr><td>Medical device IFUs, labels, safety and warning content</td><td>Human translation</td><td>Harm is physical, and the language obligation is set by regulation</td></tr>
+        <tr><td>Public notices where language access is legally required</td><td>Human translation</td><td>The obligation is meaningful access; unreliable output does not discharge it</td></tr>
+      </tbody>
+    </table>
+
+    <p>Notice what separates the two halves of that table. It is not difficulty, and it is not length. It is <strong>who bears the cost of an error</strong>. When the reader absorbs a bad sentence as mild confusion, MTPE is a reasonable trade. When the reader absorbs it as a wrong dose, a waived right, a signature on something they did not understand, or a filing that gets rejected, the trade does not exist at any price.</p>
+
+    <h2>Certified translation is a different thing entirely</h2>
+
+    <p>This is where &ldquo;AI-assisted&rdquo; quotes cross from cost-saving into misrepresentation. A certified translation is not a quality tier. It is a signed statement, attached to the translation, in which a competent person attests that the translation is complete and accurate and that they are competent to translate from the source language. For immigration filings, that requirement sits at <strong>8 CFR 103.2(b)(3)</strong>: any foreign-language document submitted must be accompanied by a full English translation the translator has certified as complete and accurate, together with the translator&rsquo;s certification that they are competent to translate from the foreign language into English.</p>
+
+    <p>Read that as what it is &mdash; a personal attestation about work a person did. Raw machine output has nobody standing behind it. If a certification statement is affixed to output that no one with the required competence actually translated or fully revised, the statement is not merely weak; it is inaccurate on its face, and the person whose name is on it carries that. We covered the downstream version of this problem in <a href="/blog/google-translate-official-documents">what USCIS, courts, and employers actually accept</a>, and rejection is the mild outcome. Re-filing after a rejection costs more than doing it correctly would have.</p>
+
+    <p>The same logic runs through regulated life sciences work. Where a regulation requires that information be understandable to a patient or trial subject, the sponsor has to be able to evidence <em>how</em> that was achieved. &ldquo;An engine produced it and someone skimmed it&rdquo; is not a defensible answer to a monitor, an IRB, or a notified body.</p>
+
+    <h2>A three-step way to get this right</h2>
+
+    <h3>1. Sort your content by consequence, not by volume</h3>
+    <p>Take an inventory and put every content type into one of three buckets: <em>record</em> (certified, regulated, contractual, safety), <em>reliance</em> (customer-facing, brand, instructional), and <em>reference</em> (internal, archival, gisting). The record bucket is human translation, full stop. The reference bucket is where MTPE pays for itself. The reliance bucket is the judgment call, and it usually turns on whether the content is instructional or persuasive.</p>
+
+    <h3>2. Name the standard per deliverable in your scope of work</h3>
+    <p>Not per contract &mdash; per deliverable. Write &ldquo;ISO 17100, including independent revision by a second qualified linguist&rdquo; against the record bucket and &ldquo;ISO 18587 full post-editing&rdquo; against the reference bucket. This single change makes bids comparable and makes substitution visible instead of invisible.</p>
+
+    <h3>3. Require disclosure of the production method, in writing</h3>
+    <p>Ask every vendor to state, per deliverable, whether machine translation was used in production and at what post-editing level. A provider running a deliberate process answers in a sentence. A broker reselling to the lowest bidder cannot, because they do not know.</p>
+
+    <h2>What it costs you to get this wrong in either direction</h2>
+
+    <p>Over-specify and the damage is bounded and financial: you paid human rates for an internal wiki nobody will read twice. That is a budget conversation.</p>
+
+    <p>Under-specify and the damage is unbounded. A rejected immigration filing restarts a clock a family is living inside. A mistranslated consent form can invalidate enrollment and force re-consent across a site. An inaccurate warning in device instructions is a safety event before it is a compliance event. A contract clause that says something different in the other language gets discovered by the party it favors. None of that is recovered by the savings on the line item that caused it &mdash; and in every case, the record will show a process the organization chose.</p>
+
+    <h2>Why work with Taika</h2>
+
+    <p>Language Access Hub, powered by Taika Translations, is a veteran-owned (VOSB), SAM-registered, GSA- and NASPO ValuePoint-contracted language services provider. We run both processes deliberately, and we tell you which one you are buying: certified <a href="/translation">human translation</a> by ATA-certified linguists with independent revision for anything that becomes a record, and disciplined <a href="/machine-translation-post-editing">machine translation post-editing</a> where volume and risk profile genuinely support it. For organizations running both at once, our <a href="/managed-translation-services">managed translation services</a> keep terminology, translation memory, and routing rules consistent across the two, so content does not quietly drift into the wrong pipeline.</p>
+
+    <p>We will also tell you when post-editing is the wrong answer for a given deliverable. That conversation is cheaper to have before the work than after the rejection.</p>
+
+  </div>
+
+  <div class="post-cta">
+    <h3>Get the right process on the right content</h3>
+    <p>Send us your content inventory and we will map it to the appropriate process, per deliverable, with the governing standard named in writing. GSA, NASPO ValuePoint, VOSB, and SAM-registered. ATA-certified linguists.</p>
+    <a href="/machine-translation-post-editing#quote" class="btn-primary">Get a Post-Editing Quote &rarr;</a>
+  </div>
+
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+      <a href="/blog/google-translate-official-documents" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Certified Translation</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">Can You Use Google Translate for Official Documents? What USCIS, Courts, and Employers Actually Accept</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger · June 29, 2026</div>
+      </a>
+      <a href="/blog/ai-automation-language-access-workflows" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">AI &amp; Automation</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">AI Automation for Language Access Workflows: Faster Turnaround Without Losing Compliance</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger · August 4, 2026</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Language Access Hub</div>
+      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
+      <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
+      <div class="footer-family-links">
+        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ taikatranslations.com</a>
+        <a href="https://tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ tvpteam.com</a>
+      </div>
+      <div class="footer-comp-tags">
+        <span class="footer-comp-tag">HIPAA</span>
+        <span class="footer-comp-tag">FERPA</span>
+        <span class="footer-comp-tag">WCAG 2.2</span>
+        <span class="footer-comp-tag">VOSB</span>
+        <span class="footer-comp-tag">GSA</span>
+        <span class="footer-comp-tag">NASPO</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/translation">Certified Translation</a></li>
+        <li><a href="/interpretation">Interpretation (OPI/VRI)</a></li>
+        <li><a href="/508-compliance">ADA / Section 508</a></li>
+        <li><a href="/captioning">Video Captioning</a></li>
+        <li><a href="/transcription">Transcription</a></li>
+        <li><a href="/desktop-publishing">Desktop Publishing</a></li>
+        <li><a href="/ai-automation">AI Automation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Who We Serve</h4>
+      <ul>
+        <li><a href="/government">Government Agencies</a></li>
+        <li><a href="/schools">School Districts</a></li>
+        <li><a href="/healthcare">Healthcare</a></li>
+        <li><a href="/legal">Legal &amp; Courts</a></li>
+        <li><a href="/nonprofits">Nonprofits</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/compliance-faq">Compliance FAQ</a></li>
+        <li><a href="/compliance-faq#checklist">Free Compliance Checklist</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/store">Online Store</a></li>
+        <li><a href="/index.html#quote">Contact / Quote</a></li>
+        <li><a href="/site-directory">Site Directory</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
+        <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
+        <li style="color:rgba(255,255,255,0.72);font-size:12.5px;line-height:1.65;margin-top:6px;">TaikaTranslations LLC<br>2028 E Ben White Blvd. #240-1178<br>Austin, TX 78741</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. All rights reserved.</p>
+      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
+    </div>
+    <nav class="footer-social" aria-label="Social media">
+      <a href="https://www.youtube.com/@taikatranslations" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+      <a href="https://www.linkedin.com/company/taikatranslations-llc/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+      <a href="https://www.facebook.com/TaikaTranslations" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+      <a href="https://www.instagram.com/taikatranslations/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/js/main.js?v=27"></script>
+</body>
+</html>

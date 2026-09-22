@@ -137,6 +137,10 @@
   to = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
   status = 200
 [[redirects]]
+  from = "/blog/accessible-school-documents-section-508"
+  to = "/pages/resources/blog/accessible-school-documents-section-508.html"
+  status = 200
+[[redirects]]
   from = "/blog/machine-translation-post-editing-when-to-use"
   to = "/pages/resources/blog/machine-translation-post-editing-when-to-use.html"
   status = 200
@@ -1795,6 +1799,11 @@
 [[redirects]]
   from = "/pages/resources/blog/ada-title-ii-web-rule-deadline-guide.html"
   to = "/blog/ada-title-ii-web-rule-deadline-guide"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/accessible-school-documents-section-508.html"
+  to = "/blog/accessible-school-documents-section-508"
   status = 301
   force = true
 [[redirects]]

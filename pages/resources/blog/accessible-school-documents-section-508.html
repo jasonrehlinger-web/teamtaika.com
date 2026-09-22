@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessible School Documents: Why Section 508 Is Not Your District's Rule | Language Access Hub</title>
+<meta name="description" content="Accessible school documents and Section 508: why the 508 standard almost certainly does not bind your district, what ADA Title II requires of handbooks, enrollment forms, and report cards, which of the five exceptions really apply, and why a translated PDF has to be remediated twice.">
+<link rel="canonical" href="https://teamtaika.com/blog/accessible-school-documents-section-508">
+<meta property="og:title" content="Accessible School Documents: Why Section 508 Is Not Your District's Rule">
+<meta property="og:description" content="Districts scope document remediation against a federal-agency checklist that is one WCAG version behind the rule they are actually measured against &mdash; and then translate the file and lose the work.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/accessible-school-documents-section-508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-body table{width:100%;border-collapse:collapse;margin:1.6em 0;font-size:14.5px;}
+.post-body th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;}
+.post-body td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.post-body tr:nth-child(even) td{background:var(--mist,#f8f9fa);}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+.answer-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:1.6em 0;}
+.answer-box strong{color:#166534;}
+.inline-cta{background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:2em 0;}
+.inline-cta p{margin:0 0 12px;font-size:15px;color:var(--navy);}
+.inline-cta a{font-weight:700;color:var(--gold-text,#7A5C0F);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Accessible School Documents: Why Section 508 Is Not Your District's Rule",
+  "description": "Accessible school documents and Section 508: why the 508 standard almost certainly does not bind your district, what ADA Title II requires of handbooks, enrollment forms, and report cards, which of the five exceptions really apply, and why a translated PDF has to be remediated twice.",
+  "url": "https://teamtaika.com/blog/accessible-school-documents-section-508",
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "author": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://teamtaika.com/blog/accessible-school-documents-section-508"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-bar" role="alert">
+  <div class="urgency-bar-inner">
+    <span class="urgency-tag">⚠ Compliance Deadline</span>
+    <p class="urgency-copy"><strong>ADA Title II WCAG 2.1 AA deadlines: {{ADA_DEADLINE_LARGE}} (public entities &ge;50,000 pop.) &middot; {{ADA_DEADLINE_SMALL}} (under 50,000 &amp; special districts).</strong> Healthcare Section 504 deadline: {{SEC504_DEADLINE}}.</p>
+    <a href="/compliance-faq" class="urgency-link">Am I compliant? →</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Language Access Hub home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </div>
+      <div class="nav-logo-wordmark">
+        <span class="nav-logo-name">Language Access Hub</span>
+        <span class="nav-logo-sub">Powered by Taika Translations + TVPTeam</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li class="nav-dropdown">
+        <a href="/translation">Services</a>
+        <div class="nav-dropdown-menu">
+          <a href="/translation">Certified Translation</a>
+          <a href="/interpretation">Interpretation (OPI/VRI)</a>
+          <a href="/508-compliance">ADA / Section 508 Compliance</a>
+          <a href="/captioning">Video Captioning</a>
+          <a href="/transcription">Transcription</a>
+          <a href="/desktop-publishing">Desktop Publishing (DTP)</a>
+          <a href="/ai-automation">AI Automation (TVPTeam)</a>
+          <a href="/pdf-accessibility-checker">Free PDF Accessibility Checker</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/government">Who We Serve</a>
+        <div class="nav-dropdown-menu">
+          <a href="/government">Government Agencies</a>
+          <a href="/schools">School Districts</a>
+          <a href="/healthcare">Healthcare</a>
+          <a href="/legal">Legal &amp; Courts</a>
+          <a href="/nonprofits">Nonprofits</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/translation#languages">Languages</a>
+        <div class="nav-dropdown-menu" style="min-width:520px;padding:8px;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">English Pages</div>
+            <a href="/spanish-translation">Spanish Translation</a>
+            <a href="/french-translation">French Translation</a>
+            <a href="/portuguese-translation">Portuguese Translation</a>
+            <a href="/german-translation">German Translation</a>
+            <a href="/italian-translation">Italian Translation</a>
+            <a href="/chinese-translation">Chinese Translation</a>
+            <a href="/arabic-translation">Arabic Translation</a>
+            <a href="/hindi-translation">Hindi Translation</a>
+            <a href="/russian-translation">Russian Translation</a>
+            <a href="/polish-translation">Polish Translation</a>
+            <a href="/urdu-translation">Urdu Translation</a>
+            <a href="/bengali-translation">Bengali Translation</a>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">Native Language Pages</div>
+            <a href="/traduccion-certificada-espanol">Español</a>
+            <a href="/traduction-certifiee-francais">Français</a>
+            <a href="/traducao-certificada-portugues">Português</a>
+            <a href="/beglaubigte-uebersetzung-deutsch">Deutsch</a>
+            <a href="/traduzione-certificata-italiano">Italiano</a>
+            <a href="/fanyi-zhongwen">中文</a>
+            <a href="/tarjama-arabiya-rasmiya">عربي</a>
+            <a href="/praman-patra-anuvad-hindi">हिंदी</a>
+            <a href="/zaverenniy-perevod-russkiy">Русский</a>
+            <a href="/tlumaczenia-uwierzytelnione-polskie">Polski</a>
+            <a href="/tarjuma-rasmi-urdu">اردو</a>
+            <a href="/praman-anuvad-bangla">বাংলা</a>
+          </div>
+        </div></div>
+      </li>
+      <li><a href="/compliance-faq">Compliance FAQ</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/store">Store</a></li>
+      <li><a href="/index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
+      <a href="/compliance-faq#checklist" class="btn-nav-ghost">Free Checklist</a>
+      <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
+      <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- TRUST WALL -->
+<div style="background:#0a1729;border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 24px;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" class="trust-wall-scroll">
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">GSA Schedule</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">NASPO ValuePoint</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="18" r="7" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M14 22l-2.6-1.5.7 2.8-2.1-2 2.8-.3L14 18.5l1.2 2.5 2.8.3-2.1 2 .7-2.8z" fill="#c9a84c"/><path d="M11 11.5L8.5 5h5z" fill="#c9a84c"/><path d="M17 11.5L19.5 5h-5z" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SBA VOSB</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><ellipse cx="14" cy="14" rx="4.5" ry="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">ATA Certified Vendors</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="19" rx="2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="8" y1="9" x2="15" y2="9" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="21" r="5" fill="#0a1729" stroke="#c9a84c" stroke-width="1.5"/><path d="M18.5 21l1.5 1.5 3-3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SAM Registered</span></div>
+  </div>
+</div>
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><a href="/blog">Blog</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Digital Accessibility</span></nav></div>
+
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Digital Accessibility</span>
+    <h1 class="post-title">Accessible School Documents: Why Section 508 Is Not Your District&rsquo;s Rule &mdash; and What Is</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>·</span>September 22, 2026<span>·</span>9 min read</div>
+  </div>
+</section>
+
+<div class="post-inner">
+  <div class="post-body">
+
+    <p>Somebody at your district finally counted the PDFs. Four thousand of them, going back nine years &mdash; student handbooks, registration packets, bell schedules, board minutes, meal applications, athletics physicals, the special-education procedural safeguards notice in English and again in Spanish. The website redesign is handled; the vendor put WCAG 2.1 AA in writing. Nobody has a plan for the four thousand, and the compliance date is no longer comfortably far away.</p>
+
+    <p>Before you scope that work, there is a good chance you are about to buy against the wrong standard. If your team went looking for guidance, you almost certainly searched for <strong>accessible school documents</strong> and <strong>Section 508</strong> &mdash; that is simply how the phrase is used in K-12 &mdash; and landed on a checklist written for federal agencies. Section 508 is not your district&rsquo;s rule. The checklist it produces is one WCAG version behind the rule you are actually measured against, and it will pass documents that a Title II review fails.</p>
+
+    <div class="answer-box">
+      <strong>Quick answer:</strong> Section 508 of the Rehabilitation Act binds federal agencies, not public school districts. A district&rsquo;s documents are governed by ADA Title II &mdash; 28 CFR Part 35, Subpart H &mdash; which treats PDFs, word processor files, presentations, and spreadsheets published as part of a public entity&rsquo;s web content as &ldquo;conventional electronic documents&rdquo; and requires them to meet WCAG 2.1 Level AA by <strong>{{ADA_DEADLINE_LARGE}}</strong> for entities serving a population of 50,000 or more, and <strong>{{ADA_DEADLINE_SMALL}}</strong> for smaller entities and special districts. Section 504 and Title VI impose their own, undated duties on top. The distinction is not academic: the Revised Section 508 Standards incorporate WCAG 2.0 Level AA, so a 508-built checklist never asks the questions WCAG 2.1 added.
+    </div>
+
+    <h2>Why &ldquo;Section 508&rdquo; Is the Wrong Search</h2>
+
+    <p>Section 508 (29 U.S.C. &sect;794d) obligates <em>federal agencies</em> when they develop, procure, maintain, or use information and communication technology. A school district is a unit of local government. It is covered by Title II of the ADA, and &mdash; because essentially every district accepts federal financial assistance &mdash; by Section 504 of the same Rehabilitation Act. Neither of those is Section 508.</p>
+
+    <p>The bridge people reach for is the Assistive Technology Act, which requires states accepting AT Act funds to assure Section 508 compliance. The 2004 amendments narrowed that assurance so it applies to the State Assistive Technology Program itself &mdash; not to every state agency, and certainly not down to local school districts. Separately, many states have adopted 508-equivalent requirements by statute, executive order, or procurement policy, and some of those do reach districts. That is worth checking, but it is <em>state law borrowing the standard</em>, not Section 508 reaching you on its own.</p>
+
+    <p>Here is what the mix-up costs. The Revised 508 Standards incorporate WCAG 2.0 Level A and AA. The DOJ Title II rule requires WCAG <strong>2.1</strong> Level A and AA. WCAG 2.1 added success criteria that bear directly on documents &mdash; among them 1.4.10 Reflow, 1.4.11 Non-text Contrast, 1.4.12 Text Spacing, and 1.3.5 Identify Input Purpose, which is exactly the criterion a fillable enrollment form with name and address fields has to answer for. A vendor quoting against a 2.0-era checklist is not necessarily cutting corners. They are answering a different question than the one your compliance date asks.</p>
+
+    <h2>Your Documents Are &ldquo;Web Content&rdquo; Under the Rule</h2>
+
+    <p>Districts read the Title II rule as a website rule, and it is easy to see why &mdash; it is usually described as one. But the regulation defines <strong>conventional electronic documents</strong> as a specific list of file formats: portable document format (PDF), word processor file formats, presentation file formats, and spreadsheet file formats. If a document in one of those formats is part of your web content or mobile app, it is in scope on exactly the same terms as the page linking to it.</p>
+
+    <p>That sweeps up more than the district website. It reaches the learning management system, the parent portal, the board-agenda platform, and the documents your food-service or registration vendor posts on a page you link to. There is an exception for content posted by a third party &mdash; but it applies only to a genuinely unaffiliated third party, like a member of the public writing on an open community message board. A vendor publishing under a contract, license, or other arrangement with your district is not that. As the Department of Justice puts it, a public entity cannot contract away its responsibilities under the ADA.</p>
+
+    <h2>The Five Exceptions &mdash; and the Two Districts Read Backwards</h2>
+
+    <p>The rule provides five exceptions. Two of them are far narrower than the way they get quoted in planning meetings.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Exception</th>
+          <th>What it actually covers</th>
+          <th>Where districts get it wrong</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Archived web content</strong></td>
+          <td>Content created before the compliance date, kept only for reference, research, or recordkeeping, not changed since it was archived, and clearly identified as archived.</td>
+          <td>All four conditions have to hold at once. A page of old minutes is not &ldquo;archived&rdquo; because it is old &mdash; it has to be frozen and labeled.</td>
+        </tr>
+        <tr>
+          <td><strong>Preexisting conventional electronic documents</strong></td>
+          <td>Documents already posted before your district&rsquo;s compliance date &mdash; <em>unless</em> they are currently used to apply for, gain access to, or participate in the district&rsquo;s services, programs, or activities.</td>
+          <td>That clause swallows the exception. The handbook, the registration packet, the meal application, the athletics forms, and the procedural safeguards notice are all still in use &mdash; which is most of what anyone actually opens.</td>
+        </tr>
+        <tr>
+          <td><strong>Third-party content</strong></td>
+          <td>Content posted by a truly unaffiliated third party who is not posting on the entity&rsquo;s behalf.</td>
+          <td>It does not cover a vendor, contractor, or licensed platform posting under an arrangement with the district.</td>
+        </tr>
+        <tr>
+          <td><strong>Individualized, password-protected documents</strong></td>
+          <td>A conventional electronic document about a specific person, property, or account, secured behind a login.</td>
+          <td>It covers one student&rsquo;s report card in the portal. It does not cover the blank template, the portal itself, or a district-wide notice pushed into every family&rsquo;s account.</td>
+        </tr>
+        <tr>
+          <td><strong>Preexisting social media posts</strong></td>
+          <td>Posts published before the compliance date.</td>
+          <td>Everything posted from that date forward is in scope, including the flyer image with the schedule baked into it.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>And then the caveat that should decide how you plan. An exception removes a document from the technical standard in Subpart H. It does not remove your underlying Title II and Section 504 obligation to communicate effectively. If a parent who is blind asks for an excepted document in an accessible format, you still have to provide it &mdash; on request, under time pressure, one document at a time, by whoever happens to be available that week. That is the most expensive way in the world to do this work. The exceptions are a way to sequence the project, not a way to avoid it.</p>
+
+    <h2>A Triage Your Team Can Run This Week</h2>
+
+    <p>Sort by whether a document is used to apply for, access, or participate in something &mdash; not by how old it is or where it sits in the folder tree.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>In scope?</th>
+          <th>When to do it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Blank templates staff reuse each year</td><td>Yes</td><td><strong>First.</strong> An untagged template regenerates the problem every August.</td></tr>
+        <tr><td>Registration and enrollment packets (fillable)</td><td>Yes &mdash; used to apply</td><td>First. Fillable forms need labeled fields and a correct tab order, not just tags.</td></tr>
+        <tr><td>Meal benefit applications</td><td>Yes &mdash; used to apply</td><td>First.</td></tr>
+        <tr><td>Student and parent handbook</td><td>Yes &mdash; used to participate</td><td>First.</td></tr>
+        <tr><td>Special education procedural safeguards notice</td><td>Yes &mdash; and separately owed under the IDEA and Section 504</td><td>First.</td></tr>
+        <tr><td>Current board agendas, minutes, and budgets</td><td>Yes</td><td>Second &mdash; and build it into the publishing workflow.</td></tr>
+        <tr><td>Board minutes from prior years</td><td>Likely excepted, if frozen and labeled as archived</td><td>Label them, then defer.</td></tr>
+        <tr><td>Calendars, newsletters, event flyers</td><td>Yes</td><td>Second.</td></tr>
+        <tr><td>Individual report cards and IEPs in the portal</td><td>Excepted &mdash; but still owed on request</td><td>Build a response path, not a bulk remediation project.</td></tr>
+      </tbody>
+    </table>
+
+    <p>The first row is the leverage. Most districts republish the same forty documents every year out of the same source files. Fix the sources and the backlog stops growing while you work through it.</p>
+
+    <div class="inline-cta">
+      <p><strong>Want a real number before you build the budget?</strong> Run one of your own district PDFs through our free checker. It tests tags, reading order, alt text, and the document language declaration right in your browser &mdash; nothing is uploaded &mdash; and tells you which of those is failing before you send anything out for quote.</p>
+      <p><a href="/pdf-accessibility-checker">Check a district PDF free →</a></p>
+    </div>
+
+    <h2>The Part That Doubles the Work: Your Translated Documents</h2>
+
+    <p>Title VI obligates districts to communicate with limited-English-proficient parents in a language they understand, so most districts already publish the handbook, the registration packet, and the safeguards notice in Spanish and often in two or three more languages. Accessibility and translation are almost always bought from different vendors, in that order &mdash; and the remediation does not survive the trip.</p>
+
+    <ul>
+      <li><strong>Tags do not come along.</strong> A translated document rebuilt in InDesign or re-exported from Word starts untagged. The heading structure, reading order, and table markup you paid for exist only in the English file.</li>
+      <li><strong>The language declaration is the failure nobody checks.</strong> WCAG 3.1.1 requires a document&rsquo;s default language to be programmatically determinable, and in PDF that means setting the <code>/Lang</code> entry. A Spanish handbook still declaring <code>en-US</code> gets read aloud by a screen reader in an English voice, applying English pronunciation rules to Spanish words. It is technically tagged and practically unusable. A bilingual side-by-side form needs 3.1.2 handled as well, marking the language of each passage.</li>
+      <li><strong>Alt text is content.</strong> It has to be rewritten in the target language, not carried across. So do the labels on a fillable form, and any text baked into an image.</li>
+      <li><strong>Text expansion breaks the layout you just fixed.</strong> Spanish routinely runs longer than the English it came from. Cells overflow, frames reflow, columns re-order &mdash; and a reflowed layout invalidates the reading order the remediation established.</li>
+    </ul>
+
+    <blockquote>A district that publishes an accessible English handbook and an untagged Spanish one has not satisfied one obligation and missed the other. It has satisfied accessibility for the families least likely to need translation, and missed it for the families who need both at once.</blockquote>
+
+    <p>The fix is a sequencing decision, and either order works so long as you make it deliberately: remediate the source, translate, then re-remediate and re-test the target &mdash; or finalize the translated layout first and remediate once, in the target language. What is not defensible is doing the work once in English and assuming it carried.</p>
+
+    <h2>The Villain: Remediation Priced by the Page</h2>
+
+    <p>Procurement&rsquo;s instinct is to put a document backlog out for bid by the page and take the lowest number. What that reliably buys is an automated tagging pass and a checker report showing zero errors &mdash; which is not the same thing as an accessible document.</p>
+
+    <p>Auto-tagging guesses heading levels from font size, reads multi-column layouts in the wrong order, marks layout tables as data tables, and gives images either an empty alternative or the file name. An automated checker cannot evaluate whether alt text is <em>meaningful</em>, whether reading order matches the visual order a sighted reader follows, or whether a heading outline is logical. Those three judgments are most of the job, they require a person, and they are the first thing cut when the unit of sale is a page. Accessibility overlays, whatever they promise for web pages, do nothing at all for a PDF.</p>
+
+    <p>Two questions separate a real vendor from a wizard-and-invoice shop. <em>Who performs the manual reading-order review, and what are their credentials?</em> And: <em>who screen-reader tests the Spanish file, and do they speak Spanish?</em> A remediation house with no linguists cannot answer the second one &mdash; and that is the file your LEP families depend on.</p>
+
+    <h2>A Three-Step Plan</h2>
+
+    <ol>
+      <li><strong>Inventory and triage, worst-first.</strong> Crawl the site, the LMS, and the portal for those four file formats. Rank by the &ldquo;used to apply for, gain access to, or participate in&rdquo; test. Freeze and clearly label anything that genuinely qualifies as archived &mdash; that is real scope reduction you can take unilaterally, today.</li>
+      <li><strong>Fix the templates before the backlog.</strong> Every recurring document comes from a source file in Word, InDesign, or your student information system. Remediate the source so next year&rsquo;s version ships accessible, then work backward through the archive. Our <a href="/blog/pdf-remediation-guide">step-by-step PDF remediation guide</a> covers the six failures that account for most of what reviewers find.</li>
+      <li><strong>Scope remediation and translation as one workflow.</strong> Put both in the same statement of work. Require the language declaration to be set per file, require alt text authored in each published language, and require a screen-reader test in every language you publish &mdash; performed by someone who speaks it.</li>
+    </ol>
+
+    <p>Do this and the compliance date turns into a project plan instead of a threat. A parent using a screen reader can read the handbook. A parent using a screen reader <em>in Spanish</em> can read the same handbook. And when someone asks what your district did, the answer is an inventory, a priority order, and a dated record &mdash; not a scramble.</p>
+
+    <h2>Why Districts Work With Taika</h2>
+
+    <p>Language Access Hub, powered by Taika Translations, is a veteran-owned (VOSB), SAM-registered language access provider on GSA Schedule and NASPO ValuePoint &mdash; so most districts can buy without running a full solicitation. We handle document remediation and certified translation under one roof, which means the Spanish version of your handbook is tagged, declared, and screen-reader tested by people who actually read it. See our <a href="/508-compliance">ADA and Section 508 compliance services</a> and what we build for <a href="/schools">school districts</a>.</p>
+
+  </div>
+
+  <div class="post-cta">
+    <h3>Get your district&rsquo;s document backlog scoped</h3>
+    <p>ADA Title II document remediation, certified translation for LEP families, and screen-reader testing in every language you publish &mdash; from a veteran-owned, GSA- and NASPO-contracted provider. We start with an inventory, not an invoice.</p>
+    <a href="/508-compliance#quote" class="btn-primary">Get a Document Remediation Quote →</a>
+  </div>
+
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+      <a href="/blog/school-website-accessibility-ada-title-ii" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">K-12 Website Accessibility: The ADA Title II Deadline for School Districts</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger · August 14, 2026</div>
+      </a>
+      <a href="/blog/pdf-remediation-guide" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">How to Make Your PDFs Section 508 Compliant: A Step-by-Step Guide</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger · May 20, 2026</div>
+      </a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Language Access Hub</div>
+      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
+      <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
+      <div class="footer-family-links">
+        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ taikatranslations.com</a>
+        <a href="https://tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ tvpteam.com</a>
+      </div>
+      <div class="footer-comp-tags">
+        <span class="footer-comp-tag">HIPAA</span>
+        <span class="footer-comp-tag">FERPA</span>
+        <span class="footer-comp-tag">WCAG 2.2</span>
+        <span class="footer-comp-tag">VOSB</span>
+        <span class="footer-comp-tag">GSA</span>
+        <span class="footer-comp-tag">NASPO</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/translation">Certified Translation</a></li>
+        <li><a href="/interpretation">Interpretation (OPI/VRI)</a></li>
+        <li><a href="/508-compliance">ADA / Section 508</a></li>
+        <li><a href="/captioning">Video Captioning</a></li>
+        <li><a href="/transcription">Transcription</a></li>
+        <li><a href="/desktop-publishing">Desktop Publishing</a></li>
+        <li><a href="/ai-automation">AI Automation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Who We Serve</h4>
+      <ul>
+        <li><a href="/government">Government Agencies</a></li>
+        <li><a href="/schools">School Districts</a></li>
+        <li><a href="/healthcare">Healthcare</a></li>
+        <li><a href="/legal">Legal &amp; Courts</a></li>
+        <li><a href="/nonprofits">Nonprofits</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/compliance-faq">Compliance FAQ</a></li>
+        <li><a href="/compliance-faq#checklist">Free Compliance Checklist</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/store">Online Store</a></li>
+        <li><a href="/index.html#quote">Contact / Quote</a></li>
+        <li><a href="/site-directory">Site Directory</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
+        <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
+        <li style="color:rgba(255,255,255,0.72);font-size:12.5px;line-height:1.65;margin-top:6px;">TaikaTranslations LLC<br>2028 E Ben White Blvd. #240-1178<br>Austin, TX 78741</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. All rights reserved.</p>
+      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
+    </div>
+    <nav class="footer-social" aria-label="Social media">
+      <a href="https://www.youtube.com/@taikatranslations" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+      <a href="https://www.linkedin.com/company/taikatranslations-llc/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+      <a href="https://www.facebook.com/TaikaTranslations" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+      <a href="https://www.instagram.com/taikatranslations/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/js/main.js?v=27"></script>
+</body>
+</html>

@@ -84,7 +84,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: ISO 18587 defines post-editing of machine translation output and distinguishes light from full post-editing. Map content types to appropriate process: high-volume internal or low-risk content suits MTPE; certified, legal, clinical, safety, and IFU content does not. Be candid that raw MT fails certification requirements and that a certification statement affixed to MT output is a misrepresentation. Ties to the existing Google Translate post without repeating it.
   Category: `translation` · CTA: `/pages/services/machine-translation-post-editing.html` · Links: `/blog/google-translate-official-documents`, `/pages/services/managed-translation-services.html`
 
-- [ ] **13. `accessible-school-documents-section-508`** — *Making District Documents Accessible: Handbooks, Report Cards, and Enrollment Forms*
+- [x] **13. `accessible-school-documents-section-508`** — *Making District Documents Accessible: Handbooks, Report Cards, and Enrollment Forms*
   Keyword: `accessible school documents Section 508`. Lane A · Schools × ADA/508.
   Evidence: ADA Title II covers documents published to the public, not just web pages. Tagging, reading order, and alt text cannot be automated. Where documents are also translated, accessibility work must be redone per language.
   Category: `accessibility` · CTA: `/pages/services/508-compliance.html` · Links: `/blog/pdf-remediation-guide`, `/pages/services/pdf-accessibility-checker.html`
@@ -193,6 +193,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] website-localization-vs-translation — published 2026-09-08 → /blog/website-localization-vs-translation
 - [x] section-504-healthcare-digital-accessibility — published 2026-09-11 → /blog/section-504-healthcare-digital-accessibility
 - [x] machine-translation-post-editing-when-to-use — published 2026-09-15 → /blog/machine-translation-post-editing-when-to-use
+- [x] accessible-school-documents-section-508 — published 2026-09-22 → /blog/accessible-school-documents-section-508
 
 ---
 
@@ -211,7 +212,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] most-spoken-languages — upgraded 2026-09-08 (.answer-box + .inline-cta added; existing .post-cta left unchanged; also dropped the revoked EO 13166 from a live-requirements list, matching the title-vi correction. NOTE: 109 other teamtaika.com pages still cite EO 13166 as current law — flagged to Jason, out of scope for one run)
 - [x] translation-for-legal-documents-law-firms — upgraded 2026-09-11 (.answer-box + .inline-cta added; existing inline-styled navy CTA block left in place; 13 legacy price mentions left untouched)
 - [x] joint-commission-2026-language-access — upgraded 2026-09-15 (.answer-box + .inline-cta added with inline styles, since this legacy template does not load the post-template CSS classes; the existing inline-styled navy CTA block at the end was left in place, and no body copy, byline, or dates were touched)
-- [ ] birth-certificate-translation-uscis
+- [x] birth-certificate-translation-uscis — upgraded 2026-09-22 (.answer-box + .inline-cta added with inline styles plus the class names, since this legacy template does not load the post-template CSS; the existing inline-styled end CTA block was left in place, and no body copy, byline, dates, or prices were touched)
 - [ ] hipaa-compliant-medical-translation
 - [ ] marriage-certificate-translation-uscis
 - [ ] certified-translation-cost

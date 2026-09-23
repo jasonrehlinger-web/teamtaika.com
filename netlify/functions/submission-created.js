@@ -45,6 +45,39 @@ function rateLimited(ip) {
   return false;
 }
 
+// ── GA4 server-side event (Measurement Protocol) ────────────────────────────
+// Counts a lead in GA4 regardless of the visitor's browser consent. The client
+// loader (js/main.js) defaults Consent Mode to analytics_storage:'denied', so on
+// this low-traffic site the client generate_lead is a cookieless ping GA4 won't
+// model — leads effectively vanish from reports. This server-side event does not
+// depend on cookies or consent, so every lead is counted.
+// SILENT NO-OP when GA4_MP_API_SECRET is unset (Jason sets it in Netlify, Production
+// scope only) — it must NEVER throw or change the function's response.
+const GA4_MEASUREMENT_ID = 'G-GZBSYL1ZWT';
+function ga4ClientId(seed) {
+  // Reuse the real GA client id if a form captured it; else synthesise the
+  // <random>.<seconds> shape GA4 expects.
+  if (seed && /^\d+\.\d+$/.test(String(seed))) return String(seed);
+  return Math.floor(Math.random() * 1e10) + '.' + Math.floor(Date.now() / 1000);
+}
+async function ga4Track(clientId, eventName, params) {
+  const secret = process.env.GA4_MP_API_SECRET;
+  if (!secret) return; // no secret yet → silent no-op
+  try {
+    await fetch('https://www.google-analytics.com/mp/collect?measurement_id='
+      + GA4_MEASUREMENT_ID + '&api_secret=' + encodeURIComponent(secret), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: clientId,
+        events: [{ name: eventName, params: Object.assign({ engagement_time_msec: 1 }, params || {}) }]
+      })
+    });
+  } catch (e) {
+    console.warn('[submission-created] ga4-mp non-fatal:', e && e.message);
+  }
+}
+
 exports.handler = async (event) => {
   const ip = ((event.headers && (event.headers['x-forwarded-for'] || event.headers['client-ip'])) || 'unknown').split(',')[0].trim();
   if (rateLimited(ip)) return { statusCode: 429, body: 'rate-limited' };
@@ -109,6 +142,21 @@ exports.handler = async (event) => {
     || /-inquiry$/.test(formName)
     || /-quote$/.test(formName)
     || LEAD_FORMS.includes(formName);
+
+  // GA4 lead count — fire BEFORE the notification gate so a form that is missing
+  // from ORDER_FORMS/LEAD_FORMS still registers in GA4 (the allowlists only decide
+  // who gets EMAILED, never whether the lead is counted). Orders are counted as a
+  // `purchase` by stripe-webhook.js instead, so they are excluded here. Contract
+  // forms use `contract_inquiry` to match the client-side naming; everything else
+  // uses `generate_lead`. Never throws (ga4Track swallows errors).
+  if (!isOrder) {
+    const evtName = /contract/i.test(formName) ? 'contract_inquiry' : 'generate_lead';
+    const pageLoc = safeUrl(data.page_url) || safeUrl(p.title) || undefined;
+    await ga4Track(ga4ClientId(data.ga_client_id || data['ga-client-id']), evtName, {
+      form_name: formName || 'unknown',
+      page_location: pageLoc
+    });
+  }
 
   // Only notify the team for orders/quotes, landing-page leads, or anything with a file.
   if (!isOrder && !isLead && fileLinks.length === 0) return { statusCode: 200, body: 'skipped' };

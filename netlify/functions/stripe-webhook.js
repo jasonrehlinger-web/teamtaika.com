@@ -33,6 +33,33 @@ const ADMIN_EMAILS     = ['margarita.ehlinger@taikatranslations.com', 'projects@
 // In-memory dedup — Stripe retries webhook delivery on non-2xx / timeout.
 const _seen = new Set();
 
+// ── GA4 server-side purchase (Measurement Protocol) ─────────────────────────
+// Counts the sale in GA4 regardless of the buyer's browser consent (the client
+// fires purchase on the ?payment=success return, but Consent Mode defaults to
+// denied, so on this low-traffic site that ping is not modeled). We send the
+// SAME transaction_id the client uses (the LAH- order id, stored on the Stripe
+// session as metadata.order_id) so GA4 de-duplicates to a single purchase.
+// SILENT NO-OP when GA4_MP_API_SECRET is unset (Jason sets it in Netlify,
+// Production scope only). Must NEVER throw and the webhook must still return 200.
+const GA4_MEASUREMENT_ID = 'G-GZBSYL1ZWT';
+async function ga4Track(clientId, eventName, params) {
+  const secret = process.env.GA4_MP_API_SECRET;
+  if (!secret) return; // no secret yet → silent no-op
+  try {
+    await fetch('https://www.google-analytics.com/mp/collect?measurement_id='
+      + GA4_MEASUREMENT_ID + '&api_secret=' + encodeURIComponent(secret), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: clientId,
+        events: [{ name: eventName, params: Object.assign({ engagement_time_msec: 1 }, params || {}) }]
+      })
+    });
+  } catch (e) {
+    console.warn('[stripe-webhook] ga4-mp non-fatal:', e && e.message);
+  }
+}
+
 function humanizeCart(cart) {
   // "1× birth-certificate; 2× school-diploma" → "1× Birth Certificate; 2× School Diploma"
   return String(cart || '')
@@ -178,6 +205,20 @@ exports.handler = async (event) => {
 
     console.log('[stripe-webhook] PAID teamtaika order:', session.id, '$' + amount.toFixed(2), email);
     await sendConfirmationEmail({ toEmail: email, name, service: cart, amount, ref: session.id });
+
+    // GA4 server-side purchase — same transaction_id the client sends (the LAH-
+    // order id on session.metadata.order_id) so GA4 de-dupes the two into one.
+    const orderId = (session.metadata && session.metadata.order_id) || session.id;
+    await ga4Track(
+      Math.floor(Math.random() * 1e10) + '.' + Math.floor(Date.now() / 1000),
+      'purchase',
+      {
+        transaction_id: String(orderId),
+        currency: String(session.currency || 'usd').toUpperCase(),
+        value: amount,
+        items: [{ item_name: humanizeCart(cart) }]
+      }
+    );
   }
 
   // Acknowledge everything else so Stripe stops retrying.

@@ -141,6 +141,10 @@
   to = "/pages/resources/blog/accessible-school-documents-section-508.html"
   status = 200
 [[redirects]]
+  from = "/blog/elearning-localization-requirements"
+  to = "/pages/resources/blog/elearning-localization-requirements.html"
+  status = 200
+[[redirects]]
   from = "/blog/machine-translation-post-editing-when-to-use"
   to = "/pages/resources/blog/machine-translation-post-editing-when-to-use.html"
   status = 200
@@ -1804,6 +1808,11 @@
 [[redirects]]
   from = "/pages/resources/blog/accessible-school-documents-section-508.html"
   to = "/blog/accessible-school-documents-section-508"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/elearning-localization-requirements.html"
+  to = "/blog/elearning-localization-requirements"
   status = 301
   force = true
 [[redirects]]

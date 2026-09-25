@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eLearning Localization Services: Audio, On-Screen Text, Assessments &amp; SCORM | Language Access Hub</title>
+<meta name="description" content="eLearning localization services explained: why the authoring-tool text export is not the whole course, how voiceover and on-screen text break timing, how to localize assessments fairly, and how to re-publish SCORM and xAPI packages without breaking LMS tracking.">
+<link rel="canonical" href="https://teamtaika.com/blog/elearning-localization-requirements">
+<meta property="og:title" content="Localizing eLearning: Audio, On-Screen Text, Assessments, and SCORM Packages">
+<meta property="og:description" content="The translation export captures the words on the slide, not the course. What eLearning localization actually has to cover: narration, baked-in graphics, assessments, per-language accessibility, and SCORM re-publishing.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://teamtaika.com/blog/elearning-localization-requirements">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../../../css/main.css?v=2">
+<style>
+.post-hero{background:var(--navy-deep);padding:64px 0 48px;}
+.post-inner{max-width:760px;margin:0 auto;padding:48px 24px 80px;}
+.post-cat{font-family:var(--font-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block;}
+.post-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;line-height:1.15;margin-bottom:16px;}
+.post-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:rgba(255,255,255,.6);margin-top:20px;flex-wrap:wrap;}
+.post-meta strong{color:rgba(255,255,255,.9);}
+.post-body{font-size:16px;line-height:1.75;color:var(--body-text,#2d3748);}
+.post-body h2{font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin:2.2em 0 .8em;line-height:1.2;}
+.post-body h3{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.8em 0 .6em;}
+.post-body p{margin:0 0 1.2em;}
+.post-body ul,.post-body ol{margin:0 0 1.4em 1.4em;padding:0;}
+.post-body li{margin-bottom:.45em;}
+.post-body blockquote{border-left:3px solid var(--gold);padding:12px 20px;background:var(--mist,#f8f9fa);margin:1.8em 0;border-radius:0 6px 6px 0;font-style:italic;color:var(--slate);}
+.post-body a{color:var(--navy);text-decoration:underline;}
+.post-body table{width:100%;border-collapse:collapse;margin:1.6em 0;font-size:14.5px;}
+.post-body th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:600;}
+.post-body td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.post-body tr:nth-child(even) td{background:var(--mist,#f8f9fa);}
+.post-cta{background:var(--navy);border-radius:var(--radius-md);padding:32px;text-align:center;margin:48px 0 0;}
+.post-cta h3{color:#fff;font-family:var(--font-display);font-size:1.3rem;margin-bottom:8px;}
+.post-cta p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px;}
+.post-cta .btn-primary{display:inline-block;background:var(--gold);color:var(--navy-deep);font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;font-size:14px;}
+.post-related{border-top:1.5px solid var(--border);margin-top:64px;padding-top:40px;}
+.post-related h3{font-family:var(--font-display);font-size:1.2rem;color:var(--navy);margin-bottom:24px;}
+.answer-box{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:18px 22px;margin:1.6em 0;}
+.answer-box strong{color:#166534;}
+.inline-cta{background:var(--mist,#f8f9fa);border:1.5px solid var(--border);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:20px 24px;margin:2em 0;}
+.inline-cta p{margin:0 0 12px;font-size:15px;color:var(--navy);}
+.inline-cta a{font-weight:700;color:var(--gold-text,#7A5C0F);}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Localizing eLearning: Audio, On-Screen Text, Assessments, and SCORM Packages",
+  "description": "eLearning localization services explained: why the authoring-tool text export is not the whole course, how voiceover and on-screen text break timing, how to localize assessments fairly, and how to re-publish SCORM and xAPI packages without breaking LMS tracking.",
+  "url": "https://teamtaika.com/blog/elearning-localization-requirements",
+  "datePublished": "2026-09-25",
+  "dateModified": "2026-09-25",
+  "author": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Language Access Hub — Powered by Taika Translations",
+    "url": "https://teamtaika.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://teamtaika.com/blog/elearning-localization-requirements"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-bar" role="alert">
+  <div class="urgency-bar-inner">
+    <span class="urgency-tag">⚠ Compliance Deadline</span>
+    <p class="urgency-copy"><strong>ADA Title II WCAG 2.1 AA deadlines: {{ADA_DEADLINE_LARGE}} (public entities &ge;50,000 pop.) &middot; {{ADA_DEADLINE_SMALL}} (under 50,000 &amp; special districts).</strong> Healthcare Section 504 deadline: {{SEC504_DEADLINE}}.</p>
+    <a href="/compliance-faq" class="urgency-link">Am I compliant? →</a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Language Access Hub home">
+      <div class="nav-logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+      </div>
+      <div class="nav-logo-wordmark">
+        <span class="nav-logo-name">Language Access Hub</span>
+        <span class="nav-logo-sub">Powered by Taika Translations + TVPTeam</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li class="nav-dropdown">
+        <a href="/translation">Services</a>
+        <div class="nav-dropdown-menu">
+          <a href="/translation">Certified Translation</a>
+          <a href="/interpretation">Interpretation (OPI/VRI)</a>
+          <a href="/508-compliance">ADA / Section 508 Compliance</a>
+          <a href="/captioning">Video Captioning</a>
+          <a href="/transcription">Transcription</a>
+          <a href="/desktop-publishing">Desktop Publishing (DTP)</a>
+          <a href="/ai-automation">AI Automation (TVPTeam)</a>
+          <a href="/pdf-accessibility-checker">Free PDF Accessibility Checker</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/government">Who We Serve</a>
+        <div class="nav-dropdown-menu">
+          <a href="/government">Government Agencies</a>
+          <a href="/schools">School Districts</a>
+          <a href="/healthcare">Healthcare</a>
+          <a href="/legal">Legal &amp; Courts</a>
+          <a href="/nonprofits">Nonprofits</a>
+        </div>
+      </li>
+      <li class="nav-dropdown">
+        <a href="/translation#languages">Languages</a>
+        <div class="nav-dropdown-menu" style="min-width:520px;padding:8px;"><div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">English Pages</div>
+            <a href="/spanish-translation">Spanish Translation</a>
+            <a href="/french-translation">French Translation</a>
+            <a href="/portuguese-translation">Portuguese Translation</a>
+            <a href="/german-translation">German Translation</a>
+            <a href="/italian-translation">Italian Translation</a>
+            <a href="/chinese-translation">Chinese Translation</a>
+            <a href="/arabic-translation">Arabic Translation</a>
+            <a href="/hindi-translation">Hindi Translation</a>
+            <a href="/russian-translation">Russian Translation</a>
+            <a href="/polish-translation">Polish Translation</a>
+            <a href="/urdu-translation">Urdu Translation</a>
+            <a href="/bengali-translation">Bengali Translation</a>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold,#c9a84c);padding:12px 16px 6px;">Native Language Pages</div>
+            <a href="/traduccion-certificada-espanol">Español</a>
+            <a href="/traduction-certifiee-francais">Français</a>
+            <a href="/traducao-certificada-portugues">Português</a>
+            <a href="/beglaubigte-uebersetzung-deutsch">Deutsch</a>
+            <a href="/traduzione-certificata-italiano">Italiano</a>
+            <a href="/fanyi-zhongwen">中文</a>
+            <a href="/tarjama-arabiya-rasmiya">عربي</a>
+            <a href="/praman-patra-anuvad-hindi">हिंदी</a>
+            <a href="/zaverenniy-perevod-russkiy">Русский</a>
+            <a href="/tlumaczenia-uwierzytelnione-polskie">Polski</a>
+            <a href="/tarjuma-rasmi-urdu">اردو</a>
+            <a href="/praman-anuvad-bangla">বাংলা</a>
+          </div>
+        </div></div>
+      </li>
+      <li><a href="/compliance-faq">Compliance FAQ</a></li>
+      <li><a href="/blog">Blog</a></li>
+      <li><a href="/store">Store</a></li>
+      <li><a href="/index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-trust" aria-label="5.0 Google rating">5.0 Google Rating</span>
+      <a href="/compliance-faq#checklist" class="btn-nav-ghost">Free Checklist</a>
+      <a href="/index.html#quote" class="btn-nav-cta">Get a Quote</a>
+      <button class="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- TRUST WALL -->
+<div style="background:#0a1729;border-bottom:1px solid rgba(255,255,255,0.07);padding:10px 24px;">
+  <div style="max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" class="trust-wall-scroll">
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="22" width="20" height="2" rx="1" fill="#c9a84c"/><rect x="2" y="24" width="24" height="2" rx="1" fill="#c9a84c"/><rect x="6" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="11" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="14.5" y="10" width="2.5" height="12" fill="#c9a84c"/><rect x="19.5" y="10" width="2.5" height="12" fill="#c9a84c"/><polygon points="14,2 3,10 25,10" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">GSA Schedule</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="3" fill="#c9a84c"/><circle cx="5" cy="7" r="2.5" fill="#c9a84c"/><circle cx="23" cy="7" r="2.5" fill="#c9a84c"/><circle cx="5" cy="21" r="2.5" fill="#c9a84c"/><circle cx="23" cy="21" r="2.5" fill="#c9a84c"/><line x1="14" y1="11.2" x2="6.8" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="11.2" x2="21.2" y2="8.8" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="6.8" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/><line x1="14" y1="16.8" x2="21.2" y2="19.2" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">NASPO ValuePoint</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="18" r="7" stroke="#c9a84c" stroke-width="1.5" fill="none"/><path d="M14 22l-2.6-1.5.7 2.8-2.1-2 2.8-.3L14 18.5l1.2 2.5 2.8.3-2.1 2 .7-2.8z" fill="#c9a84c"/><path d="M11 11.5L8.5 5h5z" fill="#c9a84c"/><path d="M17 11.5L19.5 5h-5z" fill="#c9a84c"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SBA VOSB</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;border-right:1px solid rgba(255,255,255,0.08);flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><ellipse cx="14" cy="14" rx="4.5" ry="10" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="4" y1="14" x2="24" y2="14" stroke="#c9a84c" stroke-width="1.5"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">ATA Certified Vendors</span></div>
+    <div style="display:flex;align-items:center;gap:7px;padding:6px 18px;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="14" height="19" rx="2" stroke="#c9a84c" stroke-width="1.5" fill="none"/><line x1="8" y1="9" x2="15" y2="9" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><line x1="8" y1="13" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="21" r="5" fill="#0a1729" stroke="#c9a84c" stroke-width="1.5"/><path d="M18.5 21l1.5 1.5 3-3" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#e8c56a;white-space:nowrap;">SAM Registered</span></div>
+  </div>
+</div>
+
+<div style="background:var(--navy-deep);"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="/index.html">Home</a><span class="breadcrumb-sep">›</span><a href="/blog">Blog</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Certified Translation</span></nav></div>
+
+<section class="post-hero">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;">
+    <span class="post-cat">Certified Translation</span>
+    <h1 class="post-title">Localizing eLearning: Audio, On-Screen Text, Assessments, and SCORM Packages</h1>
+    <div class="post-meta"><strong>Jason R. Ehlinger</strong><span>·</span>September 25, 2026<span>·</span>8 min read</div>
+  </div>
+</section>
+
+<div class="post-inner">
+  <div class="post-body">
+
+    <p>You own the training catalog. Maybe you run L&amp;D for a company that just opened a plant in Monterrey, maybe you manage compliance training for a health system whose workforce speaks six languages, maybe you are the instructional technologist at a district that needs its staff onboarding modules in Spanish and Vietnamese before the next hiring wave. The course is built. It works. Someone opened the authoring tool, found the translation export, and said: <em>&ldquo;Great &mdash; we&rsquo;ll send this file out and import it back.&rdquo;</em></p>
+
+    <p>Here is what that plan gets wrong. <strong>The translation export is not the course.</strong> In Articulate Storyline 360, for example, File &rsaquo; Translation &rsaquo; Export produces a Word or XLIFF file of the text the tool can see: slide text, buttons, quiz questions. It cannot see words that are part of a graphic, a screenshot, or a video frame. It does not contain your narration audio. It knows nothing about the animation timeline that was built around English sentence lengths. Translate the export, import it back, publish &mdash; and you get a course that is partly in the target language, partly in English, and timed for a language nobody on the receiving end is listening to.</p>
+
+    <div class="answer-box">
+      <strong>Quick answer:</strong> eLearning localization adapts an entire course for another language &mdash; not just the text your authoring tool exports. A complete scope covers: (1) on-screen text, including words embedded in images, screenshots, and video; (2) audio, handled by re-recorded voiceover, subtitles, or both, with animations re-synced to the new audio length; (3) quizzes and assessments, localized so answer logic, feedback, and difficulty stay equivalent; (4) accessibility per language &mdash; captions, transcripts, and correct language tagging in the player; and (5) re-publishing and testing the SCORM or xAPI package in your LMS so completion and scores still report. Translating the text export alone typically leaves English inside graphics and narration, broken timing, and untested tracking.
+    </div>
+
+    <h2>The five layers of a course, and which ones the export sees</h2>
+
+    <p>A published course is a stack. Each layer needs its own decision, and the export touches only one of them.</p>
+
+    <table>
+      <thead>
+        <tr><th>Layer</th><th>What it contains</th><th>In the text export?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>On-screen text</td><td>Slide copy, buttons, labels, quiz questions, feedback</td><td>Mostly yes</td></tr>
+        <tr><td>Embedded text</td><td>Words inside images, screenshots, infographics, video frames</td><td>No &mdash; source files needed</td></tr>
+        <tr><td>Audio</td><td>Narration, scenario dialogue, video soundtracks</td><td>No &mdash; script and recording needed</td></tr>
+        <tr><td>Timing and interaction</td><td>Animation cues, synced highlights, timed navigation, branching</td><td>No &mdash; must be re-synced after translation</td></tr>
+        <tr><td>Package and tracking</td><td>SCORM/xAPI manifest, completion rules, scoring, LMS metadata</td><td>No &mdash; must be re-published and tested</td></tr>
+      </tbody>
+    </table>
+
+    <p>The villain in most failed eLearning localization projects is not bad translation. It is scope that was drawn around the export file, because the export file is what the authoring tool made easy.</p>
+
+    <h2>On-screen text: plan for expansion, and find the text you cannot select</h2>
+
+    <p>English is compact. Most European target languages run longer, and short strings grow the most: W3C&rsquo;s internationalization guidance, citing IBM&rsquo;s design guidelines, shows strings of ten characters or fewer commonly running two to three times their English length. Button labels, menu items, and callouts are exactly those strings. A &ldquo;Next&rdquo; button that fit perfectly becomes a truncated or overflowing one.</p>
+
+    <p>Three decisions keep this from turning into a slide-by-slide repair job:</p>
+    <ul>
+      <li><strong>Get the source files for every graphic with words in it.</strong> Layered design files let a designer swap text; a flattened PNG means rebuilding the graphic. Screenshots of software need to be re-captured in the localized interface where one exists, or annotated where it does not.</li>
+      <li><strong>Leave room.</strong> Fixed-size text boxes and tight button shapes are where expansion breaks layouts. Auto-fit settings help but can shrink text below legibility.</li>
+      <li><strong>Decide right-to-left early.</strong> Arabic, Hebrew, Farsi, and Urdu need mirrored layouts, not just translated strings &mdash; the same issue we covered for websites in <a href="/blog/website-localization-vs-translation">website localization vs. translation</a>.</li>
+    </ul>
+
+    <h2>Audio: voiceover, subtitles, or both</h2>
+
+    <p>This is the biggest scope and budget decision in the project, and it should be made deliberately, per course, not by default.</p>
+
+    <h3>Re-recorded voiceover</h3>
+    <p>Best for learner experience and for content where learners need their eyes on the screen &mdash; software simulations, equipment procedures, safety demonstrations. It is also the option that most disturbs timing: a translated script almost never lands at the same length as the English, so every animation cue, synced highlight, and timed slide transition built against the English audio has to be re-synced. Scripts should be translated and adapted for speech before recording, not read cold from on-screen text.</p>
+
+    <h3>Subtitles</h3>
+    <p>Faster to produce and easier to update, and they leave the original audio in place. The trade-off is reading load: a learner reading subtitles over a busy animated screen with its own on-screen text is splitting attention. Subtitles work well for talking-head video and interviews; they work poorly for dense procedural slides.</p>
+
+    <h3>Both</h3>
+    <p>For many organizations the answer is voiceover plus same-language captions &mdash; and for accessibility, that is often not optional. Which brings us to the layer most localization scopes forget.</p>
+
+    <div class="inline-cta">
+      <p><strong>Not sure which of your courses need voiceover and which can run on subtitles?</strong> Send us the course list with a short description of each. We will recommend an audio approach per course and flag which ones have text baked into graphics before anyone starts translating.</p>
+      <p><a href="/elearning-localization">See how we scope eLearning localization &rarr;</a></p>
+    </div>
+
+    <h2>Accessibility does not carry over between languages</h2>
+
+    <p>If your English course was built to WCAG 2.1 Level AA &mdash; the standard DOJ adopted for ADA Title II web content and mobile apps, with the first compliance date {{ADA_DEADLINE_LARGE}} for larger public entities &mdash; the localized version has to meet it too. Conformance is a property of each published version, not of the project. In practice that means:</p>
+    <ul>
+      <li><strong>Captions per language (WCAG 1.2.2).</strong> Prerecorded audio in a video needs synchronized captions. New Spanish narration needs Spanish captions; the English caption file does not satisfy it. Our <a href="/captioning">captioning services</a> produce human-reviewed caption files in the target language.</li>
+      <li><strong>Transcripts for audio-only content (WCAG 1.2.1).</strong> Podcast-style modules and audio scenarios need a text alternative in the language of the audio. A <a href="/transcription">transcription</a> of the localized recording, not a translation of the English script, is what matches what the learner actually hears.</li>
+      <li><strong>Language of page and parts (WCAG 3.1.1 and 3.1.2).</strong> The player and content must declare the correct language so screen readers pronounce it properly. A Spanish course still tagged as English is read aloud with English pronunciation rules &mdash; unusable for the learner it was built for.</li>
+      <li><strong>Alt text for every localized image.</strong> Alternative text is text. It has to be translated, and it has to describe the localized graphic, not the original.</li>
+    </ul>
+
+    <blockquote>An accessible English course plus a translation is not an accessible translated course. The accessibility work is redone, or at least re-verified, in every language.</blockquote>
+
+    <h2>Assessments: equivalent, not just translated</h2>
+
+    <p>Quizzes are where literal translation quietly does the most damage, because a bad assessment does not look broken &mdash; it just measures the wrong thing.</p>
+    <ul>
+      <li><strong>Clues that appear or disappear.</strong> In English, the correct answer might be the only option that agrees grammatically with the stem. In a gendered language, a careless translation can create that tell or remove it, changing difficulty.</li>
+      <li><strong>Distractors that stop being plausible.</strong> A wrong answer built on an English idiom or a U.S.-specific reference may be obviously wrong, or confusingly right, in another market.</li>
+      <li><strong>Interaction logic.</strong> Drag-and-drop targets, fill-in-the-blank fields with an exact-match answer key, and text-entry questions all need their accepted answers localized &mdash; including accents, alternate spellings, and word order.</li>
+      <li><strong>Regulated content.</strong> For compliance training that has to be defensible &mdash; safety, harassment prevention, clinical procedures &mdash; the assessment is part of the record that a worker was trained and understood. That is a reason to use qualified human translators with subject-matter review, not raw machine output.</li>
+    </ul>
+
+    <h2>SCORM and xAPI: re-publish, then test in your LMS</h2>
+
+    <p>Every localized version is typically published as its own package &mdash; a separate SCORM zip (with its own <code>imsmanifest.xml</code>) or a separate xAPI/cmi5 package &mdash; and uploaded to the LMS as a new course or a language variant. Three things go wrong here more often than anywhere else:</p>
+    <ol>
+      <li><strong>Things that should not be translated get translated.</strong> Interaction identifiers, variable names, and xAPI activity IDs are machine keys, not copy. Translate them and completion or scoring stops reporting, frequently without any visible error.</li>
+      <li><strong>Reporting splits.</strong> If you need to compare completion or scores across languages, the tracking scheme has to be consistent across versions from the start. Decide what a completion means, and how the language variants roll up, before the first package is built.</li>
+      <li><strong>Nobody tests in the real LMS.</strong> A package that previews correctly in the authoring tool can still fail to launch, resume, or report in production. Each language version should be launched, completed, and failed deliberately in the actual LMS before learners see it.</li>
+    </ol>
+
+    <h2>A three-step plan that gets it right the first time</h2>
+    <ol>
+      <li><strong>Inventory the course, not the export.</strong> List every layer from the table above for each course: text, embedded text, audio, timing, package. Collect source files for graphics and the final narration scripts.</li>
+      <li><strong>Decide per course.</strong> Voiceover or subtitles, which languages, which assessments need subject-matter review, and what accessibility deliverables each version requires.</li>
+      <li><strong>Localize, rebuild, and test end to end.</strong> Human translation with independent review, audio production, re-sync, per-language accessibility, re-publishing, and a documented test pass in your LMS.</li>
+    </ol>
+
+    <p>Get this wrong and the costs are concrete: learners in the new market tuning out a half-English course, completions that never reach the LMS, an assessment record that would not survive scrutiny, and a second project to fix the first. Get it right and a single master course serves every workforce you have, with records you can stand behind.</p>
+
+    <h2>Why a language access provider, not just a translation shop</h2>
+
+    <p>Language Access Hub, powered by Taika Translations, is a veteran-owned (VOSB), SAM-registered, GSA- and NASPO ValuePoint-contracted language services provider working with ATA-certified linguists. eLearning localization sits where three of our service lines meet: <a href="/translation">human translation</a>, <a href="/captioning">captioning</a> and <a href="/transcription">transcription</a>, and <a href="/508-compliance">Section 508 and WCAG accessibility</a>. That matters because the failures above happen in the handoffs between those disciplines &mdash; and a single provider accountable for all of them has no handoff to hide behind.</p>
+
+  </div>
+
+  <div class="post-cta">
+    <h3>Localize the whole course, not just the export</h3>
+    <p>Send us your course list and authoring-tool details. We will scope every layer &mdash; text, graphics, audio, assessments, accessibility, and SCORM/xAPI re-publishing &mdash; per course and per language. GSA, NASPO ValuePoint, VOSB, and SAM-registered. ATA-certified linguists.</p>
+    <a href="/elearning-localization#quote" class="btn-primary">Get an eLearning Localization Quote &rarr;</a>
+  </div>
+
+  <div class="post-related">
+    <h3>More from the blog</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+      <a href="/blog/website-localization-vs-translation" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Certified Translation</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">Website Localization vs. Website Translation: What Actually Has to Change</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger · September 8, 2026</div>
+      </a>
+      <a href="/blog/ada-video-captioning-requirements" style="display:block;padding:20px;border:1.5px solid var(--border);border-radius:var(--radius-md);text-decoration:none;transition:.2s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Digital Accessibility</div>
+        <div style="font-family:var(--font-display);font-size:15px;color:var(--navy);font-weight:700;line-height:1.3;">ADA Video Captioning Requirements: What Government, School &amp; Healthcare Video Must Include in 2026</div>
+        <div style="font-size:12px;color:var(--slate);margin-top:8px;">Jason R. Ehlinger · July 21, 2026</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Language Access Hub</div>
+      <p class="footer-brand-copy">Certified translation, interpretation, ADA/Section 508 compliance, and AI automation for government agencies, school districts, and nonprofits — all 50 states, 300+ languages.</p>
+      <div class="footer-family-label">Part of the Taika &amp; TVPTeam family</div>
+      <div class="footer-family-links">
+        <a href="https://www.taikatranslations.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ taikatranslations.com</a>
+        <a href="https://tvpteam.com" class="footer-family-link" target="_blank" rel="noopener noreferrer">↗ tvpteam.com</a>
+      </div>
+      <div class="footer-comp-tags">
+        <span class="footer-comp-tag">HIPAA</span>
+        <span class="footer-comp-tag">FERPA</span>
+        <span class="footer-comp-tag">WCAG 2.2</span>
+        <span class="footer-comp-tag">VOSB</span>
+        <span class="footer-comp-tag">GSA</span>
+        <span class="footer-comp-tag">NASPO</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="/translation">Certified Translation</a></li>
+        <li><a href="/interpretation">Interpretation (OPI/VRI)</a></li>
+        <li><a href="/508-compliance">ADA / Section 508</a></li>
+        <li><a href="/captioning">Video Captioning</a></li>
+        <li><a href="/transcription">Transcription</a></li>
+        <li><a href="/desktop-publishing">Desktop Publishing</a></li>
+        <li><a href="/ai-automation">AI Automation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Who We Serve</h4>
+      <ul>
+        <li><a href="/government">Government Agencies</a></li>
+        <li><a href="/schools">School Districts</a></li>
+        <li><a href="/healthcare">Healthcare</a></li>
+        <li><a href="/legal">Legal &amp; Courts</a></li>
+        <li><a href="/nonprofits">Nonprofits</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="/compliance-faq">Compliance FAQ</a></li>
+        <li><a href="/compliance-faq#checklist">Free Compliance Checklist</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/store">Online Store</a></li>
+        <li><a href="/index.html#quote">Contact / Quote</a></li>
+        <li><a href="/site-directory">Site Directory</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+18303552205" style="font-weight:600;">830-355-2205</a></li>
+        <li><a href="tel:+18652587903" style="font-weight:600;">865-258-7903</a></li>
+        <li style="color:rgba(255,255,255,0.72);font-size:12.5px;line-height:1.65;margin-top:6px;">TaikaTranslations LLC<br>2028 E Ben White Blvd. #240-1178<br>Austin, TX 78741</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      <p>© 2026 Language Access Hub — Powered by TaikaTranslations LLC. All rights reserved.</p>
+      <p>Veteran-Owned · GSA Contract Holder · NASPO ValuePoint · SAM UEI Registered · ATA Member · BBB Accredited A+</p>
+    </div>
+    <nav class="footer-social" aria-label="Social media">
+      <a href="https://www.youtube.com/@taikatranslations" target="_blank" rel="noopener" aria-label="YouTube">YouTube</a>
+      <a href="https://www.linkedin.com/company/taikatranslations-llc/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+      <a href="https://www.facebook.com/TaikaTranslations" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+      <a href="https://www.instagram.com/taikatranslations/" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="/js/main.js?v=27"></script>
+</body>
+</html>

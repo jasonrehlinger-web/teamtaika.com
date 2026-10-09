@@ -94,7 +94,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Scope beyond slide text — voiceover versus subtitling decisions, on-screen text baked into graphics, quiz and assessment localization, variable-length audio against fixed animation timing, SCORM/xAPI package re-publishing, and LMS locale handling. Accessibility overlap: captions and transcripts per language, and WCAG conformance inside the course player.
   Category: `translation` · CTA: `/pages/services/elearning-localization.html` · Links: `/pages/services/captioning.html`, `/pages/services/transcription.html`
 
-- [ ] **15. `hospital-after-hours-interpretation`** — *After-Hours and Emergency Interpretation: Covering the 3 a.m. Language Gap*
+- [x] **15. `hospital-after-hours-interpretation`** — *After-Hours and Emergency Interpretation: Covering the 3 a.m. Language Gap*
   Keyword: `24/7 hospital interpretation services`. Lane A · Healthcare × Interpretation.
   Evidence: Section 1557 and Joint Commission obligations do not pause overnight; emergency departments and on-call services are where language access most often fails. Focus on coverage models, escalation paths, and documentation.
   Category: `healthcare` · CTA: `/pages/services/interpretation.html` · Links: `/blog/joint-commission-2026-language-access`, `/blog/opi-vri-guide`
@@ -195,6 +195,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] machine-translation-post-editing-when-to-use — published 2026-09-15 → /blog/machine-translation-post-editing-when-to-use
 - [x] accessible-school-documents-section-508 — published 2026-09-22 → /blog/accessible-school-documents-section-508
 - [x] elearning-localization-requirements — published 2026-09-25 → /blog/elearning-localization-requirements
+- [x] hospital-after-hours-interpretation — published 2026-10-09 → /blog/hospital-after-hours-interpretation
 
 ---
 
@@ -215,7 +216,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] joint-commission-2026-language-access — upgraded 2026-09-15 (.answer-box + .inline-cta added with inline styles, since this legacy template does not load the post-template CSS classes; the existing inline-styled navy CTA block at the end was left in place, and no body copy, byline, or dates were touched)
 - [x] birth-certificate-translation-uscis — upgraded 2026-09-22 (.answer-box + .inline-cta added with inline styles plus the class names, since this legacy template does not load the post-template CSS; the existing inline-styled end CTA block was left in place, and no body copy, byline, dates, or prices were touched)
 - [x] hipaa-compliant-medical-translation — upgraded 2026-09-25 (.inline-cta added after the machine-translation section, inline-styled plus class name since this template has no .inline-cta CSS, linking /hipaa-compliant-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
-- [ ] marriage-certificate-translation-uscis
+- [x] marriage-certificate-translation-uscis — upgraded 2026-10-09 (.inline-cta added after the USCIS-requirements section, inline-styled plus class name since this template has no .inline-cta CSS, linking /marriage-certificate-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [ ] certified-translation-cost
 - [ ] certified-vs-notarized-translation
 - [ ] google-translate-official-documents

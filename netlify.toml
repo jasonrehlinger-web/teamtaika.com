@@ -145,6 +145,10 @@
   to = "/pages/resources/blog/elearning-localization-requirements.html"
   status = 200
 [[redirects]]
+  from = "/blog/hospital-after-hours-interpretation"
+  to = "/pages/resources/blog/hospital-after-hours-interpretation.html"
+  status = 200
+[[redirects]]
   from = "/blog/machine-translation-post-editing-when-to-use"
   to = "/pages/resources/blog/machine-translation-post-editing-when-to-use.html"
   status = 200
@@ -1813,6 +1817,11 @@
 [[redirects]]
   from = "/pages/resources/blog/elearning-localization-requirements.html"
   to = "/blog/elearning-localization-requirements"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/hospital-after-hours-interpretation.html"
+  to = "/blog/hospital-after-hours-interpretation"
   status = 301
   force = true
 [[redirects]]

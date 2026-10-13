@@ -148,6 +148,11 @@
   from = "/blog/hospital-after-hours-interpretation"
   to = "/pages/resources/blog/hospital-after-hours-interpretation.html"
   status = 200
+
+[[redirects]]
+  from = "/blog/translation-vendor-selection-criteria"
+  to = "/pages/resources/blog/translation-vendor-selection-criteria.html"
+  status = 200
 [[redirects]]
   from = "/blog/machine-translation-post-editing-when-to-use"
   to = "/pages/resources/blog/machine-translation-post-editing-when-to-use.html"
@@ -1822,6 +1827,11 @@
 [[redirects]]
   from = "/pages/resources/blog/hospital-after-hours-interpretation.html"
   to = "/blog/hospital-after-hours-interpretation"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/translation-vendor-selection-criteria.html"
+  to = "/blog/translation-vendor-selection-criteria"
   status = 301
   force = true
 [[redirects]]

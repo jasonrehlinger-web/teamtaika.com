@@ -99,7 +99,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Section 1557 and Joint Commission obligations do not pause overnight; emergency departments and on-call services are where language access most often fails. Focus on coverage models, escalation paths, and documentation.
   Category: `healthcare` · CTA: `/pages/services/interpretation.html` · Links: `/blog/joint-commission-2026-language-access`, `/blog/opi-vri-guide`
 
-- [ ] **16. `translation-vendor-selection-criteria`** — *How to Evaluate a Translation Vendor: The Criteria That Actually Predict Quality*
+- [x] **16. `translation-vendor-selection-criteria`** — *How to Evaluate a Translation Vendor: The Criteria That Actually Predict Quality*
   Keyword: `how to choose a translation services vendor`. **Lane B · Pure bottom-of-funnel; captures comparison shoppers.**
   Evidence: ISO 17100 requirements for translator competence and the revision step; ISO 18587 for MTPE; what ATA certification does and does not cover; why "certified agency" is not a defined term while "certified translation" is; security and confidentiality posture (BAA availability, data residency, subcontractor disclosure); SLA and turnaround structure; and the specific questions that expose a broker reselling to the lowest bidder. Include a buyer's checklist table.
   Category: `translation` · CTA: `/index.html#quote` · Links: `/pages/services/managed-translation-services.html`, `/blog/what-is-certified-translation`
@@ -196,6 +196,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] accessible-school-documents-section-508 — published 2026-09-22 → /blog/accessible-school-documents-section-508
 - [x] elearning-localization-requirements — published 2026-09-25 → /blog/elearning-localization-requirements
 - [x] hospital-after-hours-interpretation — published 2026-10-09 → /blog/hospital-after-hours-interpretation
+- [x] translation-vendor-selection-criteria — published 2026-10-13 → /blog/translation-vendor-selection-criteria
 
 ---
 
@@ -217,7 +218,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] birth-certificate-translation-uscis — upgraded 2026-09-22 (.answer-box + .inline-cta added with inline styles plus the class names, since this legacy template does not load the post-template CSS; the existing inline-styled end CTA block was left in place, and no body copy, byline, dates, or prices were touched)
 - [x] hipaa-compliant-medical-translation — upgraded 2026-09-25 (.inline-cta added after the machine-translation section, inline-styled plus class name since this template has no .inline-cta CSS, linking /hipaa-compliant-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [x] marriage-certificate-translation-uscis — upgraded 2026-10-09 (.inline-cta added after the USCIS-requirements section, inline-styled plus class name since this template has no .inline-cta CSS, linking /marriage-certificate-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
-- [ ] certified-translation-cost
+- [x] certified-translation-cost — upgraded 2026-10-13 (.answer-box + .inline-cta added; no body copy, byline, dates, or prices touched)
 - [ ] certified-vs-notarized-translation
 - [ ] google-translate-official-documents
 - [ ] divorce-decree-translation-uscis

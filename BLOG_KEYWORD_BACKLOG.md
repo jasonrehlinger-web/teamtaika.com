@@ -104,7 +104,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: ISO 17100 requirements for translator competence and the revision step; ISO 18587 for MTPE; what ATA certification does and does not cover; why "certified agency" is not a defined term while "certified translation" is; security and confidentiality posture (BAA availability, data residency, subcontractor disclosure); SLA and turnaround structure; and the specific questions that expose a broker reselling to the lowest bidder. Include a buyer's checklist table.
   Category: `translation` · CTA: `/index.html#quote` · Links: `/pages/services/managed-translation-services.html`, `/blog/what-is-certified-translation`
 
-- [ ] **17. `nonprofit-language-access-federal-funding`** — *Language Access for Nonprofits: What Accepting Federal Funding Actually Obligates You To Do*
+- [x] **17. `nonprofit-language-access-federal-funding`** — *Language Access for Nonprofits: What Accepting Federal Funding Actually Obligates You To Do*
   Keyword: `nonprofit language access requirements`. Lane A · Nonprofits × Certified translation.
   Evidence: Title VI obligations attach to *recipients* of federal financial assistance, not only to government agencies — so subgrantees and pass-through recipients are covered, frequently without knowing it. Section 504 attaches the same way. HHS maintains the canonical Title VI guidance for federal financial assistance recipients.
   Category: `compliance` · CTA: `/index.html#quote` · Links: `/pages/industries/nonprofits.html`, `/blog/title-vi-language-access-plan`
@@ -197,6 +197,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] elearning-localization-requirements — published 2026-09-25 → /blog/elearning-localization-requirements
 - [x] hospital-after-hours-interpretation — published 2026-10-09 → /blog/hospital-after-hours-interpretation
 - [x] translation-vendor-selection-criteria — published 2026-10-13 → /blog/translation-vendor-selection-criteria
+- [x] nonprofit-language-access-federal-funding — published 2026-10-20 → /blog/nonprofit-language-access-federal-funding
 
 ---
 
@@ -219,7 +220,7 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] hipaa-compliant-medical-translation — upgraded 2026-09-25 (.inline-cta added after the machine-translation section, inline-styled plus class name since this template has no .inline-cta CSS, linking /hipaa-compliant-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [x] marriage-certificate-translation-uscis — upgraded 2026-10-09 (.inline-cta added after the USCIS-requirements section, inline-styled plus class name since this template has no .inline-cta CSS, linking /marriage-certificate-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [x] certified-translation-cost — upgraded 2026-10-13 (.answer-box + .inline-cta added; no body copy, byline, dates, or prices touched)
-- [ ] certified-vs-notarized-translation
+- [x] certified-vs-notarized-translation — upgraded 2026-10-20 (.inline-cta added, inline-styled since this template has no .inline-cta CSS; no body copy, byline, dates, or prices touched)
 - [ ] google-translate-official-documents
 - [ ] divorce-decree-translation-uscis
 - [ ] translation-vs-interpretation

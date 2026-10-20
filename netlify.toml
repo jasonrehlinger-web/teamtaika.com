@@ -150,6 +150,11 @@
   status = 200
 
 [[redirects]]
+  from = "/blog/nonprofit-language-access-federal-funding"
+  to = "/pages/resources/blog/nonprofit-language-access-federal-funding.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/translation-vendor-selection-criteria"
   to = "/pages/resources/blog/translation-vendor-selection-criteria.html"
   status = 200
@@ -1829,6 +1834,12 @@
   to = "/blog/hospital-after-hours-interpretation"
   status = 301
   force = true
+[[redirects]]
+  from = "/pages/resources/blog/nonprofit-language-access-federal-funding.html"
+  to = "/blog/nonprofit-language-access-federal-funding"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/pages/resources/blog/translation-vendor-selection-criteria.html"
   to = "/blog/translation-vendor-selection-criteria"

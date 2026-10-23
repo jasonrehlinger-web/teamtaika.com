@@ -296,6 +296,15 @@
   publish = "."
   functions = "netlify/functions"
 
+[build.environment]
+  # Pin the Node.js runtime for the build AND the Netlify Functions (incl. the
+  # Stripe functions create-checkout-session.js / stripe-webhook.js). Netlify
+  # resolves "22" to its latest PATCHED 22.x LTS, so the functions always run a
+  # current, security-patched Node — addressing the Stripe telemetry alert about
+  # outdated Node runtimes. Bump the major here to move lines; never pin an exact
+  # patch (Netlify ships the security patches for the major you choose).
+  NODE_VERSION = "22"
+
 # Weekly safety-net digest of all Netlify form submissions (Mondays 13:00 UTC
 # ≈ 8am Central). See netlify/functions/forms-digest.js. Tokenless: reads the
 # Netlify Blobs store that submission-created.js fills. Only needs RESEND_API_KEY

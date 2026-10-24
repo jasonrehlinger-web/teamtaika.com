@@ -8,5 +8,11 @@
 
   "SEC504_DEADLINE": "May 11, 2027",
   "SEC504_DEADLINE_LARGE": "May 11, 2027",
-  "SEC504_DEADLINE_SMALL": "May 10, 2028"
+  "SEC504_DEADLINE_SMALL": "May 10, 2028",
+
+  "_ISO_NOTE": "Machine-readable (YYYY-MM-DD) twins of the dates above, consumed by js/countdown.js to drive the live compliance countdown clocks. Keep these in lockstep with the human-readable dates above — edit BOTH when a deadline moves.",
+  "ADA_DEADLINE_LARGE_ISO": "2027-04-26",
+  "ADA_DEADLINE_SMALL_ISO": "2028-04-26",
+  "SEC504_DEADLINE_ISO": "2027-05-11",
+  "SEC504_DEADLINE_SMALL_ISO": "2028-05-10"
 }

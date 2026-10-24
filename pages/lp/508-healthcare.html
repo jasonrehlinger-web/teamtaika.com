@@ -83,6 +83,27 @@
   </div>
 </section>
 
+<section style="max-width:1080px;margin:0 auto;padding:8px 24px 36px;">
+  <h2 style="font-family:'DM Serif Display',serif;font-size:clamp(1.4rem,2.6vw,2rem);color:var(--navy);text-align:center;margin:0 0 24px;">The compliance clock is already running.</h2>
+  <div class="deadline-countdown" role="group" aria-label="Time remaining until digital accessibility compliance deadlines">
+    <div class="dc-item" data-deadline="{{SEC504_DEADLINE_ISO}}">
+      <span class="dc-title">Section 504 · Healthcare</span>
+      <span class="dc-sub">Federally funded providers</span>
+      <span class="dc-date">Deadline <strong>{{SEC504_DEADLINE}}</strong></span>
+    </div>
+    <div class="dc-item" data-deadline="{{ADA_DEADLINE_LARGE_ISO}}">
+      <span class="dc-title">ADA Title II · WCAG 2.1 AA</span>
+      <span class="dc-sub">Public entities 50,000+</span>
+      <span class="dc-date">Deadline <strong>{{ADA_DEADLINE_LARGE}}</strong></span>
+    </div>
+    <div class="dc-item" data-deadline="{{ADA_DEADLINE_SMALL_ISO}}">
+      <span class="dc-title">ADA Title II · WCAG 2.1 AA</span>
+      <span class="dc-sub">Under 50,000 &amp; special districts</span>
+      <span class="dc-date">Deadline <strong>{{ADA_DEADLINE_SMALL}}</strong></span>
+    </div>
+  </div>
+</section>
+
 <div class="lp-badges">
   <span>GSA Schedule Holder</span><span>NASPO ValuePoint</span><span>SBA VOSB</span>
   <span>ATA Member</span><span>SAM Registered</span><span>BBB A+</span>
@@ -95,5 +116,6 @@
 </footer>
 
 <script defer src="/js/main.js"></script>
+<script defer src="/js/countdown.js?v=1"></script>
 </body>
 </html>

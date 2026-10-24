@@ -345,6 +345,23 @@
   status = 200
 
 [[redirects]]
+  from = "/title-i-language-access-accessibility"
+  to = "/pages/government/title-i-language-access-accessibility.html"
+  status = 200
+
+[[redirects]]
+  from = "/title-i"
+  to = "/pages/government/title-i-language-access-accessibility.html"
+  status = 200
+
+# Force the raw /pages path to the clean URL (avoids duplicate-content indexing)
+[[redirects]]
+  from = "/pages/government/title-i-language-access-accessibility.html"
+  to = "/title-i-language-access-accessibility"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "/captioning"
   to = "/pages/services/captioning.html"
   status = 200

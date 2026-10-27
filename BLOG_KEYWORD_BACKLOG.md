@@ -109,7 +109,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Title VI obligations attach to *recipients* of federal financial assistance, not only to government agencies — so subgrantees and pass-through recipients are covered, frequently without knowing it. Section 504 attaches the same way. HHS maintains the canonical Title VI guidance for federal financial assistance recipients.
   Category: `compliance` · CTA: `/index.html#quote` · Links: `/pages/industries/nonprofits.html`, `/blog/title-vi-language-access-plan`
 
-- [ ] **18. `hipaa-translation-vendor-baa-requirements`** — *Does Your Translation Vendor Need a BAA? HIPAA Requirements for Language Services*
+- [x] **18. `hipaa-translation-vendor-baa-requirements`** — *Does Your Translation Vendor Need a BAA? HIPAA Requirements for Language Services*
   Keyword: `HIPAA compliant translation services vendor`. **Lane B · Healthcare procurement.**
   Note: must NOT duplicate `hipaa-compliant-medical-translation`'s primary keyword. That post covers the compliance concept; this one is a **vendor-procurement** piece — when a translation or interpretation provider is a business associate, what the BAA must cover, subcontractor flow-down, minimum-necessary applied to source documents, secure transmission and retention, and interpreter confidentiality. Frame as questions to put to a vendor.
   Category: `healthcare` · CTA: `/pages/services/hipaa-compliant-translation.html` · Links: `/blog/hipaa-compliant-medical-translation`, `/pages/industries/healthcare.html`
@@ -198,6 +198,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] hospital-after-hours-interpretation — published 2026-10-09 → /blog/hospital-after-hours-interpretation
 - [x] translation-vendor-selection-criteria — published 2026-10-13 → /blog/translation-vendor-selection-criteria
 - [x] nonprofit-language-access-federal-funding — published 2026-10-20 → /blog/nonprofit-language-access-federal-funding
+- [x] hipaa-translation-vendor-baa-requirements — published 2026-10-27 → /blog/hipaa-translation-vendor-baa-requirements
 
 ---
 
@@ -221,6 +222,6 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] marriage-certificate-translation-uscis — upgraded 2026-10-09 (.inline-cta added after the USCIS-requirements section, inline-styled plus class name since this template has no .inline-cta CSS, linking /marriage-certificate-translation; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [x] certified-translation-cost — upgraded 2026-10-13 (.answer-box + .inline-cta added; no body copy, byline, dates, or prices touched)
 - [x] certified-vs-notarized-translation — upgraded 2026-10-20 (.inline-cta added, inline-styled since this template has no .inline-cta CSS; no body copy, byline, dates, or prices touched)
-- [ ] google-translate-official-documents
+- [x] google-translate-official-documents — upgraded 2026-10-27 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and end CTA left unchanged; no body copy, byline, dates, or prices touched)
 - [ ] divorce-decree-translation-uscis
 - [ ] translation-vs-interpretation

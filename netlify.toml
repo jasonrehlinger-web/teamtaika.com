@@ -145,6 +145,11 @@
   to = "/pages/resources/blog/elearning-localization-requirements.html"
   status = 200
 [[redirects]]
+  from = "/blog/on-site-vs-remote-interpretation"
+  to = "/pages/resources/blog/on-site-vs-remote-interpretation.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/hipaa-translation-vendor-baa-requirements"
   to = "/pages/resources/blog/hipaa-translation-vendor-baa-requirements.html"
   status = 200
@@ -1858,6 +1863,11 @@
 [[redirects]]
   from = "/pages/resources/blog/elearning-localization-requirements.html"
   to = "/blog/elearning-localization-requirements"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/on-site-vs-remote-interpretation.html"
+  to = "/blog/on-site-vs-remote-interpretation"
   status = 301
   force = true
 [[redirects]]

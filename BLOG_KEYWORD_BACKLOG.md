@@ -114,7 +114,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Note: must NOT duplicate `hipaa-compliant-medical-translation`'s primary keyword. That post covers the compliance concept; this one is a **vendor-procurement** piece — when a translation or interpretation provider is a business associate, what the BAA must cover, subcontractor flow-down, minimum-necessary applied to source documents, secure transmission and retention, and interpreter confidentiality. Frame as questions to put to a vendor.
   Category: `healthcare` · CTA: `/pages/services/hipaa-compliant-translation.html` · Links: `/blog/hipaa-compliant-medical-translation`, `/pages/industries/healthcare.html`
 
-- [ ] **19. `choosing-interpretation-modality`** — *On-Site, Phone, or Video: Choosing the Right Interpretation for Each Situation*
+- [x] **19. `choosing-interpretation-modality`** — *On-Site, Phone, or Video: Choosing the Right Interpretation for Each Situation*
   Keyword: `on-site vs remote interpretation`. Lane A · Interpretation, cross-audience.
   Note: must stay clearly distinct from `opi-vri-guide` (which compares OPI vs VRI only) by adding on-site/in-person and building a situation-to-modality decision table.
   Category: `interpretation` · CTA: `/pages/services/interpretation.html` · Links: `/blog/opi-vri-guide`, `/pages/services/conference-interpretation.html`
@@ -199,6 +199,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] translation-vendor-selection-criteria — published 2026-10-13 → /blog/translation-vendor-selection-criteria
 - [x] nonprofit-language-access-federal-funding — published 2026-10-20 → /blog/nonprofit-language-access-federal-funding
 - [x] hipaa-translation-vendor-baa-requirements — published 2026-10-27 → /blog/hipaa-translation-vendor-baa-requirements
+- [x] on-site-vs-remote-interpretation — published 2026-10-30 → /blog/on-site-vs-remote-interpretation (backlog topic 19; slug differs from the queue's choosing-interpretation-modality to match the searched phrase)
 
 ---
 
@@ -223,5 +224,5 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] certified-translation-cost — upgraded 2026-10-13 (.answer-box + .inline-cta added; no body copy, byline, dates, or prices touched)
 - [x] certified-vs-notarized-translation — upgraded 2026-10-20 (.inline-cta added, inline-styled since this template has no .inline-cta CSS; no body copy, byline, dates, or prices touched)
 - [x] google-translate-official-documents — upgraded 2026-10-27 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and end CTA left unchanged; no body copy, byline, dates, or prices touched)
-- [ ] divorce-decree-translation-uscis
+- [x] divorce-decree-translation-uscis — upgraded 2026-10-30 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [ ] translation-vs-interpretation

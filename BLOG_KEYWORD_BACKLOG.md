@@ -119,7 +119,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Note: must stay clearly distinct from `opi-vri-guide` (which compares OPI vs VRI only) by adding on-site/in-person and building a situation-to-modality decision table.
   Category: `interpretation` · CTA: `/pages/services/interpretation.html` · Links: `/blog/opi-vri-guide`, `/pages/services/conference-interpretation.html`
 
-- [ ] **20. `enterprise-localization-program-build`** — *Standing Up an Enterprise Localization Program: Governance, Terminology, and Throughput*
+- [x] **20. `enterprise-localization-program-build`** — *Standing Up an Enterprise Localization Program: Governance, Terminology, and Throughput*
   Keyword: `enterprise localization services`. **Lane B · Largest deal size; targets a program owner, not a one-off buyer.**
   Evidence: Move the reader from ad-hoc purchasing to a managed program — centralized intake, translation memory and terminology ownership (and why the client should own the TM, not the vendor), style guides, in-country review workflows, quality metrics, and vendor consolidation across translation, interpretation, captioning, and accessibility. Emphasize single-vendor coverage across all of Taika's lines plus contract vehicles procurement already recognizes.
   Category: `translation` · CTA: `/pages/services/enterprise-localization-services.html` · Links: `/pages/services/managed-translation-services.html`, `/pages/services/508-compliance.html`
@@ -200,6 +200,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] nonprofit-language-access-federal-funding — published 2026-10-20 → /blog/nonprofit-language-access-federal-funding
 - [x] hipaa-translation-vendor-baa-requirements — published 2026-10-27 → /blog/hipaa-translation-vendor-baa-requirements
 - [x] on-site-vs-remote-interpretation — published 2026-10-30 → /blog/on-site-vs-remote-interpretation (backlog topic 19; slug differs from the queue's choosing-interpretation-modality to match the searched phrase)
+- [x] enterprise-localization-program — published 2026-11-03 → /blog/enterprise-localization-program (backlog topic 20)
 
 ---
 
@@ -225,4 +226,4 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] certified-vs-notarized-translation — upgraded 2026-10-20 (.inline-cta added, inline-styled since this template has no .inline-cta CSS; no body copy, byline, dates, or prices touched)
 - [x] google-translate-official-documents — upgraded 2026-10-27 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and end CTA left unchanged; no body copy, byline, dates, or prices touched)
 - [x] divorce-decree-translation-uscis — upgraded 2026-10-30 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
-- [ ] translation-vs-interpretation
+- [x] translation-vs-interpretation — upgraded 2026-11-03 (.inline-cta added before the "need both" section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and end CTA left unchanged; no body copy, byline, dates, or prices touched)

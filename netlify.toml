@@ -145,6 +145,11 @@
   to = "/pages/resources/blog/elearning-localization-requirements.html"
   status = 200
 [[redirects]]
+  from = "/blog/enterprise-localization-program"
+  to = "/pages/resources/blog/enterprise-localization-program.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/on-site-vs-remote-interpretation"
   to = "/pages/resources/blog/on-site-vs-remote-interpretation.html"
   status = 200
@@ -1863,6 +1868,11 @@
 [[redirects]]
   from = "/pages/resources/blog/elearning-localization-requirements.html"
   to = "/blog/elearning-localization-requirements"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/enterprise-localization-program.html"
+  to = "/blog/enterprise-localization-program"
   status = 301
   force = true
 [[redirects]]

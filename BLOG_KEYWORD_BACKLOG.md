@@ -124,7 +124,7 @@ The queue runs **two interleaved lanes**. Alternate between them — never ship 
   Evidence: Move the reader from ad-hoc purchasing to a managed program — centralized intake, translation memory and terminology ownership (and why the client should own the TM, not the vendor), style guides, in-country review workflows, quality metrics, and vendor consolidation across translation, interpretation, captioning, and accessibility. Emphasize single-vendor coverage across all of Taika's lines plus contract vehicles procurement already recognizes.
   Category: `translation` · CTA: `/pages/services/enterprise-localization-services.html` · Links: `/pages/services/managed-translation-services.html`, `/pages/services/508-compliance.html`
 
-- [ ] **21. `school-district-language-access-plan`** — *Building a Language Access Plan for a School District*
+- [x] **21. `school-district-language-access-plan`** — *Building a Language Access Plan for a School District*
   Keyword: `school district language access plan`. Lane A · Schools × Compliance.
   Note: `title-vi-language-access-plan` already owns the generic term. This must be district-specific — enrollment cycles, IEP/special-ed workflows, student-information-system notices, staff training — or it will cannibalize. If a distinct angle cannot be sustained, drop it and take the next topic.
   Category: `compliance` · CTA: `/index.html#quote` · Links: `/blog/title-vi-language-access-plan`, `/pages/industries/schools.html`
@@ -201,6 +201,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] hipaa-translation-vendor-baa-requirements — published 2026-10-27 → /blog/hipaa-translation-vendor-baa-requirements
 - [x] on-site-vs-remote-interpretation — published 2026-10-30 → /blog/on-site-vs-remote-interpretation (backlog topic 19; slug differs from the queue's choosing-interpretation-modality to match the searched phrase)
 - [x] enterprise-localization-program — published 2026-11-03 → /blog/enterprise-localization-program (backlog topic 20)
+- [x] school-district-language-access-plan — published 2026-11-06 → /blog/school-district-language-access-plan (backlog topic 21; angle = workflow-per-touchpoint, plus the Aug 2025 rescission of the 2015 Dear Colleague letter not removing statutory duties)
 
 ---
 
@@ -227,3 +228,4 @@ The upgrade is narrow: add a mid-post `.inline-cta` where missing, and an `.answ
 - [x] google-translate-official-documents — upgraded 2026-10-27 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and end CTA left unchanged; no body copy, byline, dates, or prices touched)
 - [x] divorce-decree-translation-uscis — upgraded 2026-10-30 (.inline-cta added before the cost section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and .post-cta left unchanged; no body copy, byline, dates, or prices touched)
 - [x] translation-vs-interpretation — upgraded 2026-11-03 (.inline-cta added before the "need both" section, inline-styled since this template has no .inline-cta CSS; existing .answer-box and end CTA left unchanged; no body copy, byline, dates, or prices touched)
+- [x] LANE COMPLETE 2026-11-06 — every post in pages/resources/blog/ (except the index redirect stub) now has both .answer-box and .inline-cta; no legacy upgrade remained for this run.

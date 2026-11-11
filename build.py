@@ -11,6 +11,23 @@ DIST   = os.path.join(ROOT, 'dist')
 COMP   = os.path.join(ROOT, 'components')
 DATA   = os.path.join(ROOT, 'data')
 
+# ── Publication review gate (2026-11-11) ──────────────────────────────────
+# Jason: "If the agents can make mistakes, then you need to enforce a reviewer
+# agent that is mandatory for any publications." Netlify runs this file on
+# every deploy, so importing the gate here is what makes a content review
+# mandatory rather than advisory: an unreviewed page raises SystemExit and the
+# deploy dies before dist/ is written.
+#
+# There is no Python on the agents' machine, so review_gate.py cannot be tested
+# before it deploys. Hence this shape: a SyntaxError or any other breakage in
+# that file is an Exception and degrades to a warning, while a real violation
+# raises SystemExit — a BaseException, which passes straight through. Broken
+# gate = site still deploys. Unreviewed page = deploy fails.
+try:
+    import review_gate  # noqa: F401  (importing it runs it)
+except Exception as _gate_err:
+    print('WARNING: publication review gate could not run:', _gate_err)
+
 NAV_HTML    = open(os.path.join(COMP, 'nav.html'),    encoding='utf-8').read()
 FOOTER_HTML = open(os.path.join(COMP, 'footer.html'), encoding='utf-8').read()
 

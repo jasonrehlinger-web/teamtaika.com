@@ -13,7 +13,11 @@ node_modules/
 !.env.example
 
 # Local Claude Code helpers and reference (CLAUDE.md holds secrets)
-.claude/
+.claude/*
+# ...but agent definitions are shared project config, not local state. The
+# content-reviewer is what the build-time review gate requires before anything
+# publishes, so it has to be versioned with the guard that enforces it.
+!.claude/agents/
 CLAUDE.md
 HANDOFF.md
 

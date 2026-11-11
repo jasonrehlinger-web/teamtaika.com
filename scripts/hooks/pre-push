@@ -1,0 +1,31 @@
+#!/bin/sh
+# Publication review gate — the local half (OPTIONAL, not installed by default).
+#
+# Jason, 2026-11-11: "If the agents can make mistakes, then you need to enforce
+# a reviewer agent that is mandatory for any publications."
+#
+# The deploy-side gate is the mandatory one and it is already wired in: Netlify
+# runs it on every deploy and an unreviewed page fails that deploy. This hook
+# changes nothing about whether a bad page can publish — it only moves the
+# failure earlier, to the moment of `git push`, so a doomed deploy never spends
+# a Netlify credit and the agent sees the problem while it still has the page
+# in hand.
+#
+# Install it (hooks are not versioned, so this is a manual step per clone):
+#   cp scripts/hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+#
+# Escape hatch, only when the guard itself is wrong:
+#   SKIP_REVIEW_GUARD=1 git push
+GUARD="$(git rev-parse --show-toplevel)/scripts/check-publication-review.mjs"
+[ -f "$GUARD" ] || exit 0
+command -v node >/dev/null 2>&1 || {
+  echo "WARNING: node not found — publication review gate skipped on push."
+  exit 0
+}
+node "$GUARD" "$(git rev-parse --show-toplevel)" || {
+  echo ""
+  echo "PUSH BLOCKED: a page would publish without a passing content review."
+  echo "Run the content-reviewer subagent on each page named above, then push again."
+  exit 1
+}
+exit 0

@@ -12,8 +12,9 @@
  * SKILL.md file, and an agent that is confused, truncated or simply in a hurry
  * skips prose. This makes the review something the build checks instead.
  *
- * Ported from taikatranslations.com (scripts/check-publication-review.mjs,
- * commit 4e6732a). Same design, adapted for HTML pages instead of markdown.
+ * This site is INDEPENDENT. It has its own repo, its own deploy and its own
+ * claim rules, and this gate is a self-contained copy — it reads nothing from
+ * any other site and nothing else reads it. Keep it that way.
  *
  * HOW IT IS ACTUALLY ENFORCED HERE. build.py runs it before it builds anything
  * (see the call at the top of that file). Netlify runs build.py on every deploy,
@@ -105,13 +106,12 @@ files.sort((a, b) => a.rel.localeCompare(b.rel));
 
 // Line endings are normalised before hashing, and that is load-bearing.
 // This machine is Windows with core.autocrlf=true, so a file can sit in the
-// working copy as CRLF while git stores it as LF — measured 2026-11-11: 98 of
-// 253 pages on taikatranslations.com, 49 of 235 here. Netlify checks out the
-// LF blob on Linux. Hashing raw bytes therefore produced a review record that
-// could never match on the server: every one of those pages looked "changed
-// and unreviewed" and the deploy failed, which is exactly the outage this
-// guard exists to prevent. Normalising makes the hash mean the same thing on
-// both sides.
+// working copy as CRLF while git stores it as LF — measured 2026-11-11,
+// 49 of the 235 pages here. Netlify checks out the LF blob on Linux.
+// Hashing raw bytes therefore produces a review record that can never match on
+// the server: those pages look "changed and unreviewed" and the deploy fails,
+// which is exactly the outage this guard exists to prevent. Normalising makes
+// the hash mean the same thing on both sides.
 const sha = (s) => crypto.createHash("sha256").update(s.replace(/\r\n/g, "\n"), "utf8").digest("hex");
 
 // ---- the baseline, loaded first: both parts need to know what is new ------
@@ -139,8 +139,9 @@ const RULES = [
   { id: "iso", re: /\bISO[\s‑-]*\d{0,5}\s*(?:certified|certification|accredited|member)\b/gi,
     ask: 'Is this claiming the company HOLDS ISO certification? Only "meets and exceeds ISO 17100, 9001, 27001 and 18587 standards" as plain text is approved, and 18587 only where machine translation is genuinely in play.' },
   // ATA splits in two, because one half is approved and the other is banned,
-  // and treating them alike is what makes a guard unreadable. Measured on
-  // teamtaika.com 2026-11-11: 474 "ATA certified" vs 203 "ATA member".
+  // and treating them alike is what makes a guard unreadable: the approved
+  // phrasing is far more common than the banned one, so a single rule would
+  // bury the real finding under hundreds of correct sentences.
   //
   // APPROVED: "we use ATA Certified translators" — a true statement about the
   // linguists on a project. Stripping it is a known past error (taika commit
@@ -171,8 +172,7 @@ const NEGATORS = /\b(?:no such thing|does not exist|doesn't exist|no such certif
 // JSON-LD is DELIBERATELY NOT BLANKED. Structured data is published claim
 // content — it is what Google reads for rich results — so a false credential
 // there does more damage than one in the body copy, not less. Blanking every
-// <script> hid 150+ credential strings on teamtaika.com from this scan until
-// 2026-11-11.
+// <script> hides credential strings from this scan entirely.
 const blank = (m) => " ".repeat(m.length);
 const textOf = (html) => html
   .replace(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi, (m, attrs) =>

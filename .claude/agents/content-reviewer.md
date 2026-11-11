@@ -22,11 +22,16 @@ The path of an `.html` page. Read it in full — including the `<head>` meta
 description, the Open Graph tags and the JSON-LD block, because those are
 published claims too and are what Google repeats.
 
-Then read this repo's `CLAUDE.md`, and read section B2 of the main site's
-`CLAUDE.md` at
-`C:/Users/User/Documents/Claude/Projects/TaikaTranslations Website Migration/New folder/taikatranslations-website/CLAUDE.md`
-— that is the authoritative claim register for anything Taika, it changes, and
-you must never review from memory of it.
+Then read **this repo's `CLAUDE.md`**. It is the authoritative claim register
+for this site, it changes, and you must never review from memory of it.
+
+**Do not reach into another site's repository.** teamtaika.com, tvpteam.com and
+taikatranslations.com are independent repos with independent deploys, and a
+reviewer that depends on a file in a sibling checkout breaks the moment that
+folder moves or is not present. Everything you need to rule on a page here is
+in this repo and in the rules below. If a claim on this site genuinely has no
+basis you can find here, that is a `fail` with a note asking Jason — not a
+reason to go looking elsewhere.
 
 Run the scan so you know what the deterministic pass already noticed:
 

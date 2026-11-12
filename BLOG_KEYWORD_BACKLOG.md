@@ -202,6 +202,7 @@ _(The task appends here: `- [x] <slug> — published YYYY-MM-DD → /blog/<slug>
 - [x] on-site-vs-remote-interpretation — published 2026-10-30 → /blog/on-site-vs-remote-interpretation (backlog topic 19; slug differs from the queue's choosing-interpretation-modality to match the searched phrase)
 - [x] enterprise-localization-program — published 2026-11-03 → /blog/enterprise-localization-program (backlog topic 20)
 - [x] school-district-language-access-plan — published 2026-11-06 → /blog/school-district-language-access-plan (backlog topic 21; angle = workflow-per-touchpoint, plus the Aug 2025 rescission of the 2015 Dear Colleague letter not removing statutory duties)
+- [x] translation-services-for-legal-matters — published 2026-11-12 → /blog/translation-services-for-legal-matters (DEMAND-PICKED per BLOG_DEMAND_DOCTRINE, not from the queue: GSC query "translation services for legal" 85 impr / 0 clicks / pos 35.4, held by teamtaika /legal; body + .post-cta funnel to taikatranslations.com/legal-translation. Legacy lane exhausted — no legacy upgrade this run)
 
 ---
 

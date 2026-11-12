@@ -149,6 +149,11 @@
   to = "/pages/resources/blog/enterprise-localization-program.html"
   status = 200
 [[redirects]]
+  from = "/blog/translation-services-for-legal-matters"
+  to = "/pages/resources/blog/translation-services-for-legal-matters.html"
+  status = 200
+
+[[redirects]]
   from = "/blog/school-district-language-access-plan"
   to = "/pages/resources/blog/school-district-language-access-plan.html"
   status = 200
@@ -1877,6 +1882,11 @@
 [[redirects]]
   from = "/pages/resources/blog/enterprise-localization-program.html"
   to = "/blog/enterprise-localization-program"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/translation-services-for-legal-matters.html"
+  to = "/blog/translation-services-for-legal-matters"
   status = 301
   force = true
 [[redirects]]

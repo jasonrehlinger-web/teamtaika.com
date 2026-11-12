@@ -1,0 +1,15 @@
+{
+  "file": "pages/resources/blog.html",
+  "sha256": "d948eee56317ac7b8ca7c5a2f3ae89063b7745d0f9540dfd32a43ebdd0671512",
+  "verdict": "pass",
+  "reviewer": "content-reviewer",
+  "at": "2026-11-12T07:10:35.478Z",
+  "findings": [
+    {
+      "line": 626,
+      "rule": "ATA membership (open question, flagged not failed)",
+      "quote": "ATA Member",
+      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11 (CLAUDE.md B2 forbids it; nobody has confirmed whether Taika holds corporate membership). Per the reviewer spec it stays on existing pages and is not deleted until Jason answers; do not copy it onto new pages. Advisory only; it does not block this page."
+    }
+  ]
+}

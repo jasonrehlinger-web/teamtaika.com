@@ -152,6 +152,10 @@
   from = "/blog/translation-services-for-legal-matters"
   to = "/pages/resources/blog/translation-services-for-legal-matters.html"
   status = 200
+[[redirects]]
+  from = "/blog/bengali-translation-services-new-york"
+  to = "/pages/resources/blog/bengali-translation-services-new-york.html"
+  status = 200
 
 [[redirects]]
   from = "/blog/school-district-language-access-plan"
@@ -1887,6 +1891,11 @@
 [[redirects]]
   from = "/pages/resources/blog/translation-services-for-legal-matters.html"
   to = "/blog/translation-services-for-legal-matters"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pages/resources/blog/bengali-translation-services-new-york.html"
+  to = "/blog/bengali-translation-services-new-york"
   status = 301
   force = true
 [[redirects]]

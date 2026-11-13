@@ -1,15 +1,15 @@
 {
   "file": "pages/resources/blog.html",
-  "sha256": "d948eee56317ac7b8ca7c5a2f3ae89063b7745d0f9540dfd32a43ebdd0671512",
+  "sha256": "47b146b4405260aefb73ed7ccb3a718f45f83e640e92213875dd8d685b006bc9",
   "verdict": "pass",
   "reviewer": "content-reviewer",
-  "at": "2026-11-12T07:10:35.478Z",
+  "at": "2026-11-13T07:05:02.000Z",
   "findings": [
     {
-      "line": 626,
+      "line": 632,
       "rule": "ATA membership (open question, flagged not failed)",
       "quote": "ATA Member",
-      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11 (CLAUDE.md B2 forbids it; nobody has confirmed whether Taika holds corporate membership). Per the reviewer spec it stays on existing pages and is not deleted until Jason answers; do not copy it onto new pages. Advisory only; it does not block this page."
+      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11 (CLAUDE.md B2 forbids it; nobody has confirmed whether Taika holds corporate membership). Per the reviewer spec it stays on existing pages and is not deleted until Jason answers; do not copy it onto new pages. Pre-existing footer text, not part of today's change. Advisory only; it does not block this page."
     }
   ]
 }

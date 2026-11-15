@@ -1,0 +1,15 @@
+{
+  "file": "pages/resources/blog/translation-for-government.html",
+  "sha256": "635be943825c7d839d8e9a0bbf4f9975e95e41b3486ea270291cfe3e9af53fcd",
+  "verdict": "pass",
+  "reviewer": "content-reviewer",
+  "at": "2026-11-15T07:06:38Z",
+  "findings": [
+    {
+      "line": 336,
+      "rule": "ATA membership (open question, flagged not failed)",
+      "quote": "ATA Member",
+      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11. CLAUDE.md B2 is cited as forbidding it, and nobody has confirmed whether Taika holds corporate membership. Per the reviewer spec it stays on existing pages and is not deleted until Jason answers; do not copy it onto new pages. This is pre-existing footer text. Advisory only: it does not block this page."
+    }
+  ]
+}

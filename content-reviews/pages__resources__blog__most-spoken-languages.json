@@ -1,0 +1,27 @@
+{
+  "file": "pages/resources/blog/most-spoken-languages.html",
+  "sha256": "10cd912750e9cc1d4e968ce06378804f982ff83d6fd0cc5e6887338d634ae1a1",
+  "verdict": "pass",
+  "reviewer": "content-reviewer",
+  "at": "2026-11-17T07:05:02Z",
+  "findings": [
+    {
+      "line": 336,
+      "rule": "ATA membership (open question, flagged not failed)",
+      "quote": "ATA Member",
+      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11 and B2 is cited as forbidding it. Per the reviewer spec it stays on existing pages and is not deleted until Jason answers. Do not copy it onto new pages. This is pre-existing footer text. Advisory only, does not block this page."
+    },
+    {
+      "line": 217,
+      "rule": "Unverified facts (advisory)",
+      "quote": "Urdu (~230 million), though Urdu and Indonesian trade the tenth spot depending on the source",
+      "why": "~230M matches the older Ethnologue figure (about 231M, 2023 edition). Later editions report Urdu higher, and some place Indonesian 10th. The page labels all counts as rounded Ethnologue-based estimates and names the Urdu/Indonesian ambiguity (also at line 242), so it is not a false statement. If the post is meant to cite Ethnologue 2025, re-check this one figure. Advisory, not a fail."
+    },
+    {
+      "line": 238,
+      "rule": "Unverified facts (advisory)",
+      "quote": "primarily from Brazilian and Cape Verdean backgrounds",
+      "why": "This leaves out the long-established Portuguese (largely Azorean) communities, which are a major share of Portuguese speakers in southeastern Massachusetts, Rhode Island and California. Better wording: 'including Portuguese (Azorean), Brazilian and Cape Verdean communities'. It is a general demographic remark, not a claim about Taika. Advisory, not a fail."
+    }
+  ]
+}

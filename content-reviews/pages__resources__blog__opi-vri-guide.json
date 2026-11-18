@@ -1,0 +1,15 @@
+{
+  "file": "pages/resources/blog/opi-vri-guide.html",
+  "sha256": "dac438a650f30d055c0a0f31215df7cd8be7a0cd79718d66f76af9391e72d80a",
+  "verdict": "pass",
+  "reviewer": "content-reviewer",
+  "at": "2026-11-18T07:06:39Z",
+  "findings": [
+    {
+      "line": 343,
+      "rule": "ATA membership (open question, flagged not failed)",
+      "quote": "ATA Member",
+      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11; the reviewer spec says CLAUDE.md B2 forbids it and nobody has confirmed whether Taika holds corporate membership. Pre-existing footer text. Per the spec it stays on existing pages and is not deleted until Jason answers; do not copy it onto new pages. Advisory only: it does not block this page."
+    }
+  ]
+}

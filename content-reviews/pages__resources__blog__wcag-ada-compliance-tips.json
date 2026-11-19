@@ -1,0 +1,15 @@
+{
+  "file": "pages/resources/blog/wcag-ada-compliance-tips.html",
+  "sha256": "28bfbf6e36037b10e4c18f9ee354bb31f13c5ac6f948d641fecf8e1f8de8617d",
+  "verdict": "pass",
+  "reviewer": "content-reviewer",
+  "at": "2026-11-19T07:06:07Z",
+  "findings": [
+    {
+      "line": 329,
+      "rule": "ATA membership (open question, flagged not failed)",
+      "quote": "ATA Member",
+      "why": "Company-level ATA corporate membership is unresolved as of 2026-11-11, and B2 is cited as forbidding it. Per the reviewer spec it stays on existing pages and is not deleted until Jason answers; do not copy it onto new pages. This is pre-existing footer text. Advisory only, does not block this page."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "file": "pages/resources/blog/title-vi-language-access-plan.html",
+  "sha256": "a4fc2eece4060fa242f66b5733fb2120bc07faef6011d090cb84a06f0e7851f1",
+  "verdict": "pass",
+  "reviewer": "content-reviewer",
+  "at": "2026-11-21T07:07:22Z",
+  "findings": [
+    {
+      "line": 91,
+      "rule": "Capability claims (advisory, non-blocking)",
+      "quote": "We deliver certified translation with a signed certification statement on every file",
+      "why": "Not listed in the CLAUDE.md register, but a signed certification of accuracy is what defines a certified translation, and certified translation is Taika's core service. Not ruled a failure. Noted so Jason can confirm it holds for every delivery, including government vital-document jobs."
+    }
+  ]
+}
